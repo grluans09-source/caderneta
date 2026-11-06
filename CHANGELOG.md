@@ -3,6 +3,12 @@
 Formato: versão semântica (`MAIOR.MENOR.CORREÇÃO`). Cada versão diz **o que mudou para a pessoa que usa**.
 Antes da 1.0.0 as versões eram numeradas só pelo nome do cache do app (v1 a v16); estão aqui como marcos de desenvolvimento.
 
+## [1.1.0-beta.1]: 6 de novembro de 2026 · primeira versão para testadores
+- **Desfazer ao apagar**: ao apagar anotação, conta, bem, pessoa, conta fixa, caixinha ou categoria aparece o botão **Desfazer** por 8 segundos, e tudo volta como estava.
+- **Lembrete de cópia mais cedo**: aparece no Início com 3 anotações e depois de 7 dias sem cópia (antes: 5 anotações e 30 dias).
+- **Selo "beta"** na capa e novo cartão **"Ajude a melhorar"** em Ajustes: um toque abre o compartilhar do celular com um texto pronto (versão e aparelho) para a pessoa contar um problema ou ideia.
+- Novo teste de desfazer (476 verificações no total).
+
 ## [1.0.0]: 6 de novembro de 2026 · primeira versão completa e estável
 Consolida tudo o que foi construído (marcos abaixo) e organiza o projeto:
 - **Projeto organizado**: app em `app/`, testes em `tests/` (agora dentro do repositório), ferramentas em `tools/`, documentação em `docs/`, regras em `CLAUDE.md`.

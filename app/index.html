@@ -247,6 +247,9 @@ svg.grafico{width:100%;height:auto;display:block}
 .modal p.q{font-size:1.1rem;font-weight:700;margin-bottom:.5rem;font-family:Georgia,serif}
 .toast{position:fixed;left:50%;bottom:calc(5.7rem + env(safe-area-inset-bottom));transform:translate(-50%,20px);background:var(--capa);color:var(--capa-ink);padding:.75rem 1.1rem;border-radius:.6rem;font-weight:600;opacity:0;pointer-events:none;transition:.2s;z-index:80;max-width:90vw;text-align:center;border:1px solid var(--latao)}
 .toast.on{opacity:1;transform:translate(-50%,0)}
+.beta{font-size:.55em;letter-spacing:.08em;text-transform:uppercase;border:1px solid currentColor;border-radius:.4rem;padding:.05rem .35rem;vertical-align:middle;opacity:.85}
+.toast.com-botao{pointer-events:auto}
+.toast-desf{margin-left:.5rem;min-height:2.75rem;padding:0 1rem;border-radius:.5rem;border:1px solid var(--latao);background:var(--latao);color:var(--capa);font:inherit;font-weight:700;cursor:pointer}
 .onb{position:fixed;inset:0;background:var(--bg);z-index:70;overflow-y:auto;display:none;padding-bottom:3rem}
 .onb.on{display:block}
 .fino{height:.35rem;background:var(--rule);border-radius:.2rem;margin:1rem 0;overflow:hidden}
@@ -352,7 +355,7 @@ html.calmo *,html.calmo *:before{animation:none!important;transition:none!import
 /* ---------- utilidades ---------- */
 var KEY="caderneta:v2";
 /* versão do app (siga o CHANGELOG.md; subir junto com VERSAO em sw.js e "version" em package.json) */
-var VERSAO_APP="1.0.0";
+var VERSAO_APP="1.1.0-beta.1";
 var RE_ID=/^[A-Za-z0-9_-]+$/, RE_DATA=/^\d{4}-\d{2}-\d{2}$/;
 var MES=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
 var MES3=["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
@@ -803,7 +806,16 @@ function taxaMensal(valor,parc,n){
 
 /* ---------- toast e modal ---------- */
 var tmr;
-function toast(t){var el=$("#toast");el.textContent=t;el.classList.add("on");clearTimeout(tmr);tmr=setTimeout(function(){el.classList.remove("on")},2600)}
+var DESF=null;
+function toast(t){var el=$("#toast");DESF=null;el.textContent=t;el.classList.add("on");clearTimeout(tmr);tmr=setTimeout(function(){el.classList.remove("on")},2600)}
+/* Apagar com volta: guarda uma foto dos dados e mostra "Desfazer" por 8 segundos */
+function foto(){return JSON.stringify({contas:S.contas,categorias:S.categorias,lancamentos:S.lancamentos,fixas:S.fixas,caixas:S.caixas,reservas:S.reservas})}
+function toastDesfazer(t,sn){
+  var el=$("#toast");DESF=sn;el.textContent=t+" ";
+  var b=document.createElement("button");b.type="button";b.className="toast-desf";b.setAttribute("data-a","desfazer");b.textContent="Desfazer";el.appendChild(b);
+  el.classList.add("on","com-botao");clearTimeout(tmr);
+  tmr=setTimeout(function(){el.classList.remove("on","com-botao");DESF=null},8000);
+}
 var MOK=null;
 function abrirModal(html){$("#modal").innerHTML=html;$("#modalFundo").classList.add("on")}
 function fecharModal(){$("#modalFundo").classList.remove("on");MOK=null}
@@ -1077,8 +1089,8 @@ function avisos(){
     }
   });
   var u=S.config.ultimoBackup;
-  if(S.lancamentos.length>=5&&(!u||diasAte(u)<-30))
-    h+='<button class="alerta" data-a="backup"><div><b>Guarde uma cópia dos seus dados</b><span>'+(u?"Faz mais de 30 dias.":"Você ainda não guardou nenhuma.")+' Toque aqui.</span></div></button>';
+  if(S.lancamentos.length>=3&&(!u||diasAte(u)<-7))
+    h+='<button class="alerta" data-a="backup"><div><b>Guarde uma cópia dos seus dados</b><span>'+(u?"Faz mais de 7 dias.":"Você ainda não guardou nenhuma.")+' Toque aqui.</span></div></button>';
   return h;
 }
 
@@ -1138,7 +1150,7 @@ function telaInicio(){
   var d=new Date(), t=totais(), ym=hojeISO().slice(0,7), r=resumoMes(ym), sob=r.ent-r.sai, fr=fraseDoDia();
   var res=totalReservado(), metas=metasMes();
   var ult=S.lancamentos.slice().sort(ordemRecente).slice(0,6);
-  return '<header class="capa grande"><div class="topo-capa"><span>Folha de '+d.getDate()+' de '+MES[d.getMonth()]+'</span><h1>Caderneta</h1></div>'+
+  return '<header class="capa grande"><div class="topo-capa"><span>Folha de '+d.getDate()+' de '+MES[d.getMonth()]+'</span><h1>Caderneta <small class="beta">beta</small></h1></div>'+
     '<button class="frase" id="frase" data-a="frase" aria-label="Ver outra frase">'+fraseHTML(fr)+'</button></header>'+
     '<div class="hero"><div class="rot">'+esc(v("pl"))+'</div>'+
     '<div class="grande'+(t.pl<0?" neg":"")+'" data-roll="'+t.pl+'" data-k="pl">'+esc(brl(t.pl))+'</div>'+
@@ -1311,6 +1323,7 @@ function telaAjustes(){
     '<button class="btn" data-a="backup">Guardar uma cópia</button>'+
     '<button class="btn sec" data-a="restaurar">Recuperar de uma cópia</button>'+
     '<input type="file" id="arquivo" accept=".json,application/json" hidden></div>'+
+    '<h2>Ajude a melhorar</h2><div class="card"><p class="sub">Esta é uma versão de teste. Se algo travou, confundiu ou faltou, conte para mim: o texto já vai pronto, é só escolher o WhatsApp ou o e-mail e escrever o que aconteceu.</p><button class="btn" data-a="feedback">Contar um problema ou ideia</button></div>'+
     '<button class="btn perigo" data-a="zerar" style="margin-top:1.4rem">Apagar tudo e recomeçar</button>'+
     '<p class="faint" style="text-align:center;margin:1.2rem 0">Caderneta · versão '+VERSAO_APP+'</p>';
 }
@@ -2223,15 +2236,16 @@ var ACOES={
     confirmar(ls.length
       ?"Apagar "+c.nome+" e as "+ls.length+" anotações ligadas (empréstimos, pagamentos)? É como se isso nunca tivesse acontecido: o dinheiro das contas volta ao que era."
       :"Apagar "+c.nome+" do caderninho?","Apagar tudo",function(){
+      var sn=foto();
       S.lancamentos=S.lancamentos.filter(function(l){return l.contaId!==id&&l.destinoId!==id});
-      S.contas=S.contas.filter(function(x){return x.id!==id}); salvar(); desenhar(); toast("Apagado");
+      S.contas=S.contas.filter(function(x){return x.id!==id}); salvar(); desenhar(); toastDesfazer("Apagado.",sn);
     });
   },
   /* contas fixas */
   fixa:function(d){modalFixa(d.id||null)},
   xFreq:function(d){X.freq=d.f; document.querySelectorAll("#xFreqs button").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.f===d.f))}); $("#xMesWrap").hidden=d.f!=="anual"},
   xSalvar:salvarFixa,
-  xApagar:function(){var id=X.id; confirmar("Apagar esta conta fixa? As anotações já feitas continuam.","Apagar",function(){S.fixas=S.fixas.filter(function(x){return x.id!==id}); salvar(); desenhar(); toast("Conta fixa apagada")})},
+  xApagar:function(){var id=X.id; confirmar("Apagar esta conta fixa? As anotações já feitas continuam.","Apagar",function(){var sn=foto(); S.fixas=S.fixas.filter(function(x){return x.id!==id}); salvar(); desenhar(); toastDesfazer("Conta fixa apagada.",sn)})},
   fxPagar:function(d){
     var f=S.fixas.filter(function(x){return x.id===d.id})[0]; if(!f)return;
     novaFolha({tipo:"saida",cent:f.valor,contaId:f.contaId,catId:f.catId,desc:f.nome,data:d.data,fixaId:f.id,ref:d.ref});
@@ -2243,7 +2257,7 @@ var ACOES={
   /* caixinhas */
   caixa:function(d){modalCaixa(d.id||null,d.sobra||null)},
   cxSalvar:salvarCaixa,
-  cxApagar:function(){var id=CX.id; confirmar("Apagar esta caixinha?","Apagar",function(){S.caixas=S.caixas.filter(function(x){return x.id!==id}); S.reservas=S.reservas.filter(function(r){return r.de!==id&&r.para!==id}); salvar(); desenhar(); toast("Caixinha apagada")})},
+  cxApagar:function(){var id=CX.id; confirmar("Apagar esta caixinha?","Apagar",function(){var sn=foto(); S.caixas=S.caixas.filter(function(x){return x.id!==id}); S.reservas=S.reservas.filter(function(r){return r.de!==id&&r.para!==id}); salvar(); desenhar(); toastDesfazer("Caixinha apagada.",sn)})},
   cxMov:function(d){modalMov(d.id,d.m)},
   mvSalvar:salvarMov,
   novaMeta:modalMeta,
@@ -2297,9 +2311,10 @@ var ACOES={
     if(finLivre)txt+=" A dívida “"+fin.nome+"” (sem nenhum pagamento) também será apagada.";
     else if(fin)txt+=" A dívida “"+fin.nome+"” já tem pagamentos e continua no app.";
     confirmar(txt,"Apagar tudo",function(){
+      var sn=foto();
       S.lancamentos=S.lancamentos.filter(function(l){return l.contaId!==id&&l.destinoId!==id});
       S.contas=S.contas.filter(function(c){return c.id!==id&&!(finLivre&&c.id===fin.id)});
-      salvar(); desenhar(); toast("Bem apagado");
+      salvar(); desenhar(); toastDesfazer("Bem apagado.",sn);
     });
   },
   sTipo:function(d){SIM.bem=d.b==="1"; document.querySelectorAll("#sTipo .chip").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.b===d.b))}); calcSim()},
@@ -2325,11 +2340,12 @@ var ACOES={
       ?"Apagar a conta "+c.nome+(ls.length?" e as "+ls.length+" anotações ligadas a ela (gastos, ganhos, transferências)":"")+(fx.length?(ls.length?" e ":" e as ")+fx.length+" contas fixas que saem dela":"")+(rs.length?" e o dinheiro guardado em caixinhas que estava nela":"")+"? É como se essa conta nunca tivesse existido: o saldo das outras contas muda junto, porque as transferências de e para ela também somem."
       :"Apagar a conta "+c.nome+"?";
     confirmar(txt,"Apagar tudo",function(){
+      var sn=foto();
       S.lancamentos=S.lancamentos.filter(function(l){return l.contaId!==id&&l.destinoId!==id});
       S.fixas=S.fixas.filter(function(x){return x.contaId!==id});
       S.reservas=S.reservas.filter(function(x){return x.conta!==id});
       S.contas=S.contas.filter(function(x){return x.id!==id});
-      salvar(); desenhar(); toast("Conta apagada");
+      salvar(); desenhar(); toastDesfazer("Conta apagada.",sn);
     });
   },
   categoria:function(d){modalCategoria(d.id||null,d.tipo||null)},
@@ -2337,13 +2353,24 @@ var ACOES={
   kSalvar:salvarCategoria,
   kApagar:function(){
     var id=K.id; confirmar("Apagar a categoria "+nomeCat(id)+"?","Apagar",function(){
-      S.categorias=S.categorias.filter(function(c){return c.id!==id}); salvar(); desenhar(); toast("Categoria apagada")});
+      var sn=foto(); S.categorias=S.categorias.filter(function(c){return c.id!==id}); salvar(); desenhar(); toastDesfazer("Categoria apagada.",sn)});
   },
   mOk:function(){var a=MOK; fecharModal(); if(a)a()},
   mFechar:fecharModal,
   cfg:function(d){
     var val=d.val==="true"?true:d.val==="false"?false:d.val;
     S.config[d.g]=val; salvar(); aplicarConfig(); desenhar();
+  },
+  desfazer:function(){
+    if(!DESF)return; var d=JSON.parse(DESF); DESF=null;
+    S.contas=d.contas;S.categorias=d.categorias;S.lancamentos=d.lancamentos;S.fixas=d.fixas;S.caixas=d.caixas;S.reservas=d.reservas;
+    atualizarBens(); salvar(); desenhar(); toast("Voltou como estava");
+  },
+  feedback:function(){
+    var NL=String.fromCharCode(10);
+    var t="Caderneta (teste "+VERSAO_APP+")"+NL+"O que aconteceu / o que sugiro:"+NL+NL+NL+"---"+NL+"Aparelho: "+(navigator.userAgent||"").slice(0,120);
+    if(navigator.share){navigator.share({title:"Caderneta: minha opinião",text:t}).catch(function(){});return}
+    try{navigator.clipboard.writeText(t).then(function(){toast("Texto copiado. Cole numa mensagem para mim.")},function(){toast("Não consegui copiar aqui")})}catch(e){toast("Não consegui copiar aqui")}
   },
   backup:guardarCopia,
   restaurar:function(){var f=$("#arquivo"); if(f)f.click()},
@@ -2364,7 +2391,7 @@ var ACOES={
   fSalvar:salvarFolha,
   fApagar:function(){
     var id=F.id; confirmar("Apagar esta anotação?","Apagar",function(){
-      S.lancamentos=S.lancamentos.filter(function(x){return x.id!==id}); salvar(); fecharFolha(); desenhar(); toast("Anotação apagada")});
+      var sn=foto(); S.lancamentos=S.lancamentos.filter(function(x){return x.id!==id}); salvar(); fecharFolha(); desenhar(); toastDesfazer("Anotação apagada.",sn)});
   },
   /* primeiros passos */
   oProx:function(){

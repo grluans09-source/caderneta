@@ -94,3 +94,5 @@ Por quê: o botão fixo atrapalhava a visualização. Consequência: nada de `po
 **D33 · Hospedagem definitiva recomendada: Cloudflare Pages (C, aguarda confirmação do dono).** Por quê: tráfego ilimitado no plano gratuito, uso comercial permitido segundo as fontes, aceita repositório privado e tem caminho para um servidor mínimo. O plano gratuito do Netlify funciona por créditos e pausa o site se acabarem. Consequência: conta no Cloudflare (feita pelo dono), pasta de publicação `app`, arquivo `app/_headers`. Confirmar os termos nos sites oficiais antes de contratar.
 
 **D34 · Domínio próprio antes da primeira venda (C, recomendação pendente).** Por quê: os dados dos usuários pertencem ao endereço; o domínio impede que uma troca de hospedagem faça alguém perder dados. Custo: cerca de R$ 40 a R$ 60 por ano.
+
+**D35 · Beta para testadores: desfazer, lembrete de cópia a cada 7 dias, selo beta e feedback por compartilhar (A).** Por quê: proteger dados antes de pessoas reais usarem. Feedback sem servidor: o botão abre o compartilhar do celular com texto pronto. Consequência: "Apagar tudo e recomeçar" ainda não tem desfazer.

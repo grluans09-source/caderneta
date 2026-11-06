@@ -23,8 +23,8 @@ Este documento diz **o que fazer a seguir, em que ordem e por quê**. Atualize-o
 
 | Prioridade | Item | Por quê | Esforço |
 |---|---|---|---|
-| Alta | **Desfazer / lixeira** ao apagar (alguns segundos para voltar atrás) | Apagar é definitivo hoje | Médio |
-| Alta | **Backup mais fácil**: lembrete mais presente e botão "Guardar cópia" no Início quando fizer tempo; compartilhar direto por WhatsApp/e-mail | Perda de dados é o maior risco | Médio |
+| ✅ 1.1.0-beta.1 | **Desfazer** ao apagar (8 segundos) | Feito; falta só `Zerar tudo` | Feito |
+| Parcial | **Backup mais fácil**: lembrete a cada 7 dias (feito); falta botão "Guardar cópia" no Início quando fizer tempo; compartilhar direto por WhatsApp/e-mail | Perda de dados é o maior risco | Médio |
 | Alta | **Migração de hospedagem** para Netlify, com **aviso de mudança de endereço** e botão de cópia no endereço antigo | Plano em `PUBLICACAO.md` | Médio |
 | Média | **Modo simples**: Início mostra só o essencial (quanto é meu, o que falta pagar, últimas anotações) e o resto fica em "Ver mais" | Tela longa para idosos e apressados | Médio |
 | Média | **Tour curto e dicas na primeira visita** de cada área (caixinhas, bens, pessoas) | Muitos conceitos para iniciantes | Médio |

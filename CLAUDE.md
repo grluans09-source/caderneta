@@ -4,9 +4,9 @@
 > aqui estão **as regras e o jeito de trabalhar**. O resto está em `docs/` (veja a tabela no fim).
 
 ## Em que pé estamos
-- **Versão 1.0.0** (6 nov 2026): primeira versão completa e estável, **ainda sem teste com pessoas reais em celular**.
+- **Versão 1.1.0-beta.1** (6 nov 2026): primeira versão para testadores (desfazer ao apagar, lembrete de cópia, selo beta e feedback). **Ainda sem teste com pessoas reais em celular.**
 - App no ar em https://grluans09-source.github.io/caderneta/ (GitHub Pages, publicado por GitHub Actions a partir da pasta `app/`).
-- 1 arquivo de app (`app/index.html`, ~2.400 linhas), 15 arquivos de teste (470 verificações) que rodam com `npm test`.
+- 1 arquivo de app (`app/index.html`, ~2.400 linhas), 16 arquivos de teste (476 verificações) que rodam com `npm test`.
 - Próximos passos em `docs/ROTEIRO.md`. Estado, riscos e dívidas em `docs/AVALIACAO.md`.
 
 ## Quem é o dono e como falar com ele
