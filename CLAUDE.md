@@ -55,7 +55,7 @@ Falar como a pessoa fala. Na tela: "conta" (carteira, banco, poupança, cartão)
 - Menu: Início · Dinheiro · [+ Anotar] · Planejar · Mais. Planejar leva a Caixinhas, Contas fixas e Simulador; Mais leva a Relatórios e Ajustes (`ABA` marca a aba certa).
 - **Pessoas** (gaveta com `pessoa:true`, `cobrar?`): emprestei = conta `ativo` (a receber), peguei emprestado = conta `passivo`. É tudo transferência (nada de gasto). Perdoar dívida = saída para a categoria "Dívidas não pagas" (aí sim vira despesa). Dívida com pessoa `passivo` entra em `aPagar()`.
 - **Contas fixas** (`S.fixas`): compromisso futuro, NÃO é despesa até a pessoa tocar em "Paguei" (cria saída com `fixaId` + `ref` "AAAA-MM"). `puladas` guarda meses pulados. Sem notificação (não há servidor): o app avisa ao abrir, na agenda e na tela inicial.
-- **Caixinhas**: (a) meta do mês = `categoria.meta`, só planejamento, fora do razão; (b) caixinha de guardar (`S.caixas`) = reserva dentro do patrimônio, movida por `S.reservas {de,para}` onde `"livre"` é o PL livre. Gasto pago com caixinha = `lancamento.caixaId`. Invariante: PL = livre + soma das caixinhas (`livreAgora`, `totalReservado`). Guardar: D PL livre / C Reserva. Gasto da caixinha: D Despesa / C Banco + D Reserva / C PL livre.
+- **Caixinhas** = organização PESSOAL, fora da contabilidade (não geram partidas, não aparecem no balancete, não mexem no PL). (a) meta do mês = `categoria.meta`; (b) caixinha de guardar (`S.caixas`), movida por `S.reservas {de,para}` onde `"livre"` é o dinheiro livre. Gasto pago com caixinha = `lancamento.caixaId`. Regra: só contam o **dinheiro que existe nas contas** (`dinheiroEmConta()` = contas de dinheiro, sem dívidas, bens nem o que devem a você). Invariante: `dinheiroEmConta = livreAgora + totalReservado`. Livre pode ficar negativo se o dinheiro sair das contas por fora; a tela avisa.
 - **Simulador**: não grava nada. `comprometidoMeses(12)` = dívidas em aberto + contas fixas por mês; compara com a renda (`rendaMedia()` ou `config.renda`). Semáforo é referência, não conselho.
 - Gráfico "para onde o que é meu está indo": do primeiro mês de uso (até 5 atrás) até 6 meses à frente; futuro = projeção pela sobra média dos últimos meses, pontilhado.
 - Frases da capa: lista `FRASES` (autores reais, tradução livre); troca por dia e ao tocar. Conferir a fonte ao incluir novas.
@@ -67,7 +67,7 @@ Falar como a pessoa fala. Na tela: "conta" (carteira, banco, poupança, cartão)
 - Valor muda por `lancamento.tipo="ajuste"` (`sinal:"alta"|"baixa"`, `contaId`=bem): alta = D bem / C "Valorização de bens" (categoria virtual `__valoriza`); baixa = D "Desvalorização de bens" (`__desvaloriza`) / C bem. Ajuste NÃO entra em Entrou/Saiu (é `resumoMes().aj`); entra no PL e no balancete.
 - `atualizarBens()` roda ao abrir e ao restaurar backup: um ajuste por mês completo, composto (taxa/12 sobre o valor do fim do mês), idempotente via `ajustadoAte`.
 - Venda: ajuste até o preço (ganho/perda) + transferência bem → gaveta.
-- `livreAgora()` = PL − bens − caixinhas (dinheiro que dá para guardar/gastar). Invariante: PL = bens + livre + caixinhas.
+- `livreAgora()` = dinheiro nas contas − caixinhas (ver Caixinhas); dívidas e bens não entram.
 - Balança: esquerda = dinheiro (moedas verdes) + bens (azuis); direita = dívidas (vermelhas) + sobra (douradas).
 
 ## Bem que já se tem (quitado ou ainda pagando)
