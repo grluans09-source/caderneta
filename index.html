@@ -767,7 +767,7 @@ function balanca(t){
       '<ellipse cx="'+cx+'" cy="146" rx="43" ry="5.6" style="fill:var(--card)" opacity=".55"/>'+
       pilha(lista,cx)+'</g>';
   }
-  return '<svg class="bal" id="bal" viewBox="0 0 320 214" role="img" aria-label="Balança em equilíbrio: tudo o que você tem pesa o mesmo que o que você deve mais o que é seu">'+
+  return '<svg class="bal" id="bal" viewBox="0 0 320 214" role="img" aria-label="Balança em equilíbrio: o dinheiro que você tem pesa o mesmo que as suas dívidas mais o que sobra e é seu">'+
     '<defs><linearGradient id="bronze" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F0CF73"/><stop offset=".5" stop-color="#C99A1E"/><stop offset="1" stop-color="#7C5D10"/></linearGradient>'+
     '<linearGradient id="coluna" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7C5D10"/><stop offset=".45" stop-color="#F0CF73"/><stop offset="1" stop-color="#8F6A10"/></linearGradient></defs>'+
     '<ellipse cx="160" cy="205" rx="64" ry="7" fill="#1F3D2F" opacity=".25"/>'+
@@ -782,17 +782,22 @@ function balanca(t){
 }
 function legendaBalanca(t){
   var c=S.config.contador;
-  return '<div class="legenda"><span><i class="pt g"></i>'+(c?"Ativo":"O que eu tenho")+' <b>'+esc(brl(t.ativo))+'</b></span>'+
-    '<span><i class="pt r"></i>'+(c?"Passivo":"O que eu devo")+' <b>'+esc(brl(t.passivo))+'</b></span>'+
-    '<span><i class="pt o"></i>'+(c?"Patrimônio líquido":"É meu")+' <b>'+esc(brl(t.pl))+'</b></span></div>';
+  var leg='<div class="legenda"><span><i class="pt g"></i>'+(c?"Ativo":"Dinheiro que eu tenho")+' <b>'+esc(brl(t.ativo))+'</b></span>'+
+    '<span><i class="pt r"></i>'+(c?"Passivo":"Dívidas (o que eu devo)")+' <b>'+esc(brl(t.passivo))+'</b></span>'+
+    '<span><i class="pt o"></i>'+(c?"Patrimônio líquido":"Sobra, é meu de verdade")+' <b>'+esc(brl(t.pl))+'</b></span></div>';
+  if(c)return leg;
+  return leg+'<p class="eq">'+(t.pl>=0
+    ?'Se você pagasse tudo o que deve hoje, sobrariam <b>'+esc(brl(t.pl))+'</b> só seus.'
+    :'Para pagar tudo o que deve hoje, ainda faltariam <b>'+esc(brl(-t.pl))+'</b>.')+'</p>';
 }
 function modalComoLer(){
   abrirModal('<p class="q">Como ler a balança</p>'+
-    '<p class="sub" style="margin-bottom:.6rem">Imagine que você vendesse tudo o que tem hoje e juntasse o dinheiro num prato só.</p>'+
-    '<p style="margin-bottom:.6rem"><b>Prato da esquerda:</b> tudo o que você tem (carteira, banco, dinheiro que te devem).</p>'+
-    '<p style="margin-bottom:.6rem"><b>Prato da direita:</b> de onde esse dinheiro veio. As moedas <b>vermelhas</b> são o que você deve aos outros (cartão, empréstimos). As <b>douradas</b> são o que sobra e é seu de verdade.</p>'+
-    '<p style="margin-bottom:.6rem">Os dois pratos <b>sempre pesam igual</b>, porque tudo o que você tem veio de dívida ou é seu. É a mesma ideia do livro de contas: nada some, tudo tem origem.</p>'+
-    '<p class="faint">Se a dívida for maior que o que você tem, aparecem moedas tracejadas na esquerda: é o que falta para fechar a conta.</p>'+
+    '<p style="margin-bottom:.7rem"><b>Prato da esquerda:</b> todo o dinheiro que você tem (carteira, banco e o que as pessoas te devem).</p>'+
+    '<p style="margin-bottom:.7rem">Agora imagine usar esse dinheiro para <b>pagar tudo o que você deve</b>. O que sobra é <b>seu de verdade</b>.</p>'+
+    '<p style="margin-bottom:.7rem"><b>Prato da direita:</b> as dívidas (moedas <b>vermelhas</b>) mais a sobra (moedas <b>douradas</b>). Os dois pratos sempre pesam igual, porque a sobra é justamente o que falta para igualar.</p>'+
+    '<p style="margin-bottom:.7rem"><b>Exemplo:</b> você gasta R$ 100 em comida no cartão. O dinheiro que você tem continua igual, a dívida sobe R$ 100 e a sobra cai R$ 100. A comida acabou, mas a dívida ficou, e a balança mostra isso.</p>'+
+    '<p class="faint">O app conta só dinheiro, não objetos como geladeira, carro ou casa. Para ele, tudo o que você compra e consome ou usa é um gasto.</p>'+
+    '<p class="faint" style="margin-top:.4rem">Se a dívida for maior que o dinheiro, aparecem moedas tracejadas na esquerda: é o que falta para pagar tudo.</p>'+
     '<button class="btn" data-a="mFechar">Entendi</button>');
 }
 function fmtRoll(k,c){
