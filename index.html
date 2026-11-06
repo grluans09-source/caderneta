@@ -1425,11 +1425,11 @@ function atualizarBens(){
   if(mudou)salvar();
 }
 function blocoBens(){
-  var bs=bensLista().filter(function(b){return saldoConta(b)>0}), tot=bensTotal();
+  var bs=bensLista(), tot=bensTotal();
   var h='<h2>Meus bens</h2><div class="card" style="padding:.2rem 1rem">';
   if(!bs.length)h+='<div class="vazio"><b>Nenhum bem cadastrado</b>Carro, casa, celular... entram no que é seu e ganham ou perdem valor com o tempo.</div>';
   else h+=bs.map(function(b){
-    return '<button class="gaveta" data-a="bem" data-id="'+b.id+'"><span class="marca bem"></span><span class="txt"><b>'+esc(b.nome)+'</b><i>'+textoVariacao(b)+'</i></span><span class="pont"></span><span class="vl">'+esc(brl(saldoConta(b)))+'</span></button>';
+    return '<button class="gaveta" data-a="bem" data-id="'+b.id+'"><span class="marca bem"></span><span class="txt"><b>'+esc(b.nome)+'</b><i>'+(saldoConta(b)>0?textoVariacao(b):S.lancamentos.some(function(l){return l.tipo==="transferencia"&&l.contaId===b.id})?"Vendido":"Sem valor anotado · toque para ajustar ou apagar")+'</i></span><span class="pont"></span><span class="vl">'+esc(brl(saldoConta(b)))+'</span></button>';
   }).join("")+'<p class="faint" style="padding:.5rem 0">Total em bens: <b style="color:var(--ink)">'+esc(brl(tot))+'</b></p>';
   return h+'</div><div class="opc" style="margin-top:.5rem"><button data-a="bemNovo">+ Já tenho um bem</button><button data-a="comprarBem">+ Comprei um bem</button></div>';
 }

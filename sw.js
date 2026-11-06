@@ -1,6 +1,6 @@
 /* Caderneta: guarda o app no aparelho para abrir sem internet.
    Os dados do usuário NÃO passam por aqui (ficam no localStorage). */
-const VERSAO = "caderneta-v10";
+const VERSAO = "caderneta-v11";
 const ARQUIVOS = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg", "./icon-180.png", "./icon-192.png", "./icon-512.png", "./icon-maskable-512.png"];
 
 self.addEventListener("install", (e) => {
