@@ -21,7 +21,8 @@ Idioma de tudo: **português do Brasil**. Público: do idoso ao jovem e ao adult
 
 ## Modelo
 - `S = { contas, categorias, lancamentos, config }`, chave `caderneta:v2`.
-- Conta (gaveta): `{ id, nome, tipo: "ativo"|"passivo", inicial, fecha?, vence?, limite? }`.
+- Conta (gaveta): `{ id, nome, tipo: "ativo"|"passivo", inicial, fecha?, vence?, limite?, abertas? }`.
+- `abertas: [{data|null, valor}]` (só em dívida): o que a pessoa já devia ao começar, separado por vencimento (ex.: 190 em 05/11 + 15 em 05/12). `inicial` é sempre a soma de `abertas` quando existe. Sem `abertas`, `inicial` vira um item sem data.
 - Categoria: `{ id, nome, tipo: "despesa"|"receita" }`.
 - Lançamento: `{ id, tipo: "saida"|"entrada"|"transferencia", valor, desc, contaId, destinoId, catId, data, parcelas? }`.
 - `parcelas: [{data, valor}]` é só o cronograma de pagamento; a despesa inteira nasce na data da compra (competência). Compra em gaveta de dívida sempre gera `parcelas` (mesmo à vista = 1).

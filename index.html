@@ -102,6 +102,9 @@ nav .fab em{font-style:normal;font-weight:700;color:var(--ink)}
 /* folha (anotar) e telas cheias */
 .folha{position:fixed;inset:0;background:var(--bg);z-index:40;overflow-y:auto;display:none;padding-bottom:3rem}
 .folha.on{display:block}
+.linha-f{display:grid;grid-template-columns:1.3fr 1fr 3rem;gap:.4rem;margin-bottom:.45rem;align-items:center}
+.linha-f input{width:100%;min-height:3.1rem;border:2px solid var(--rule);border-radius:.8rem;padding:.4rem .6rem;background:var(--card)}
+.linha-f .x{min-height:3rem;border-radius:.8rem;border:2px solid var(--rule);background:var(--card);font-size:1.3rem;text-align:center}
 .acoes{position:sticky;bottom:0;margin:0 -1rem;padding:1.2rem 1rem calc(.8rem + env(safe-area-inset-bottom));background:linear-gradient(to bottom,transparent,var(--bg) 30%)}
 .acoes .btn{margin-top:0}
 .topo{display:flex;align-items:center;gap:.5rem;margin-bottom:.8rem}
@@ -288,6 +291,11 @@ function higienizar(p){
     var n={id:c.id,nome:c.nome,tipo:c.tipo,inicial:cent(c.inicial)||0};
     ["fecha","vence"].forEach(function(k){var d=parseInt(c[k],10);if(d>=1&&d<=31)n[k]=d});
     if(cent(c.limite)>0)n.limite=cent(c.limite);
+    if(c.tipo==="passivo"&&Array.isArray(c.abertas)){
+      var ab=c.abertas.filter(function(a){return ehObj(a)&&cent(a.valor)>0&&(a.data==null||(typeof a.data==="string"&&RE_DATA.test(a.data)))})
+        .map(function(a){return {data:a.data||null,valor:cent(a.valor)}});
+      if(ab.length){n.abertas=ab; n.inicial=ab.reduce(function(s,a){return s+a.valor},0)}
+    }
     out.contas.push(n);
   });
   (Array.isArray(p.categorias)?p.categorias:[]).forEach(function(c){
@@ -407,7 +415,9 @@ function ordemRecente(a,b){return a.data<b.data?1:a.data>b.data?-1:(a.id<b.id?1:
    Pagamentos (mudar de lugar para a dívida) quitam os itens mais antigos primeiro. */
 function itensDevidos(c){
   var it=[];
-  if(c.inicial>0)it.push({data:null,valor:c.inicial,desc:"Dívida de antes de usar o app",n:1,de:1});
+  if(c.abertas&&c.abertas.length)
+    c.abertas.forEach(function(a){it.push({data:a.data,valor:a.valor,desc:"Dívida de antes de usar o app",n:1,de:1})});
+  else if(c.inicial>0)it.push({data:null,valor:c.inicial,desc:"Dívida de antes de usar o app",n:1,de:1});
   S.lancamentos.forEach(function(l){
     if(l.tipo!=="saida"||l.contaId!==c.id)return;
     var base=l.desc||nomeCat(l.catId);
@@ -803,7 +813,10 @@ function modalGaveta(id){
       '<button data-a="gTipo" data-t="ativo" aria-pressed="'+(G.tipo==="ativo")+'"'+(G.bloqueado?" disabled":"")+'>Tenho dinheiro aqui</button>'+
       '<button data-a="gTipo" data-t="passivo" aria-pressed="'+(G.tipo==="passivo")+'"'+(G.bloqueado?" disabled":"")+'>Devo aqui (cartão, empréstimo)</button></div>'+
     (G.bloqueado?'<p class="faint" style="margin-top:.3rem">O tipo não muda porque já há anotações nesta gaveta.</p>':"")+
-    '<div class="campo"><label for="gInicial" id="gInicialRot"></label><input id="gInicial" inputmode="numeric" placeholder="R$ 0,00"></div>'+
+    '<div class="campo" id="gInicialWrap"><label for="gInicial">Quanto tem aí hoje?</label><input id="gInicial" inputmode="numeric" placeholder="R$ 0,00"></div>'+
+    '<div class="campo" id="gFaturasWrap"><label>O que você já deve aqui</label>'+
+      '<p class="faint" style="margin-bottom:.5rem">Separe por vencimento. Ex.: R$ 190 que vence em 05/11 e R$ 15 que vence em 05/12. Se não souber a data, deixe em branco.</p>'+
+      '<div id="gFaturas"></div><button class="btn sec peq" data-a="fAdd" data-c="#gFaturas">+ Outro vencimento</button></div>'+
     '<div id="gCartao"><div class="campo"><label for="gFecha">Dia que a fatura fecha (opcional)</label><input id="gFecha" type="number" min="1" max="31" inputmode="numeric" value="'+(c&&c.fecha||"")+'"></div>'+
     '<div class="campo"><label for="gVence">Dia que a fatura vence (opcional)</label><input id="gVence" type="number" min="1" max="31" inputmode="numeric" value="'+(c&&c.vence||"")+'"></div>'+
     '<div class="campo"><label for="gLimite">Limite (opcional)</label><input id="gLimite" inputmode="numeric" placeholder="R$ 0,00"></div></div>'+
@@ -811,12 +824,34 @@ function modalGaveta(id){
     (c&&!uso?'<button class="btn perigo" data-a="gApagar">Apagar gaveta</button>':"")+
     '<button class="btn sec" data-a="mFechar">Cancelar</button>';
   abrirModal(h);
-  ligarDinheiro($("#gInicial"),c?c.inicial:0);
+  ligarDinheiro($("#gInicial"),c&&c.tipo==="ativo"?c.inicial:0);
   ligarDinheiro($("#gLimite"),c&&c.limite||0);
+  var linhas=c&&c.tipo==="passivo"?(c.abertas&&c.abertas.length?c.abertas:(c.inicial>0?[{data:null,valor:c.inicial}]:[])):[];
+  if(!linhas.length)linhas=[null];
+  linhas.forEach(function(f){addLinhaFatura("#gFaturas",f)});
   rotuloGaveta();
 }
+/* linhas "quanto devo e quando vence" (usadas na gaveta e no primeiro uso) */
+function addLinhaFatura(sel,f){
+  var div=document.createElement("div"); div.className="linha-f";
+  div.innerHTML='<input type="date" class="fd" aria-label="Data de vencimento" value="'+esc(f&&f.data||"")+'">'+
+    '<input class="fv" inputmode="numeric" placeholder="R$ 0,00" aria-label="Valor que vence nessa data">'+
+    '<button class="x" data-a="fDel" aria-label="Tirar esta linha">×</button>';
+  $(sel).appendChild(div);
+  ligarDinheiro(div.querySelector(".fv"),f?f.valor:0);
+}
+function lerFaturas(sel){
+  var out=[];
+  document.querySelectorAll(sel+" .linha-f").forEach(function(r){
+    var val=cent(r.querySelector(".fv")), dt=r.querySelector(".fd").value;
+    if(val>0)out.push({data:RE_DATA.test(dt)?dt:null,valor:val});
+  });
+  return out;
+}
+function somaFaturas(l){return l.reduce(function(s,a){return s+a.valor},0)}
 function rotuloGaveta(){
-  $("#gInicialRot").textContent = G.tipo==="ativo"?"Quanto tem aí hoje?":"Quanto você já deve hoje?";
+  $("#gInicialWrap").hidden = G.tipo!=="ativo";
+  $("#gFaturasWrap").hidden = G.tipo!=="passivo";
   $("#gCartao").hidden = G.tipo!=="passivo";
   document.querySelectorAll("#gTipos button").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.t===G.tipo))});
 }
@@ -828,8 +863,9 @@ function salvarGaveta(){
   var nome=$("#gNome").value.trim();
   if(!nome){toast("Dê um nome para a gaveta");return}
   if(repetido(nome,S.contas,G.id)){toast("Já existe uma gaveta com esse nome");return}
-  var o={nome:nome,tipo:G.tipo,inicial:cent($("#gInicial"))};
+  var o={nome:nome,tipo:G.tipo,inicial:G.tipo==="ativo"?cent($("#gInicial")):0};
   if(G.tipo==="passivo"){
+    var ab=lerFaturas("#gFaturas"); o.inicial=somaFaturas(ab); if(ab.length)o.abertas=ab;
     var f=parseInt($("#gFecha").value,10), vc=parseInt($("#gVence").value,10), lim=cent($("#gLimite"));
     if((f>=1&&f<=31)!==(vc>=1&&vc<=31)){toast("Preencha o dia que fecha e o dia que vence (ou deixe os dois vazios)");return}
     if(f>=1&&f<=31){o.fecha=f;o.vence=vc}
@@ -838,7 +874,7 @@ function salvarGaveta(){
   var c=G.id?conta(G.id):null;
   if(c){
     c.nome=o.nome;c.tipo=o.tipo;c.inicial=o.inicial;
-    delete c.fecha;delete c.vence;delete c.limite;
+    delete c.fecha;delete c.vence;delete c.limite;delete c.abertas;
     Object.keys(o).forEach(function(k){c[k]=o[k]});
   }else{o.id=uid();S.contas.push(o)}
   salvar(); fecharModal(); desenhar(); toast("Gaveta salva");
@@ -942,11 +978,14 @@ function desenharOnb(){
         '<div class="campo"><label for="oFecha">Dia que a fatura fecha</label><input id="oFecha" type="number" min="1" max="31" inputmode="numeric"></div>'+
         '<div class="campo"><label for="oVence">Dia que a fatura vence</label><input id="oVence" type="number" min="1" max="31" inputmode="numeric"></div>'+
         '<div class="campo"><label for="oLimite">Limite</label><input id="oLimite" inputmode="numeric" placeholder="R$ 0,00"></div>'+
-        '<div class="campo"><label for="oDeve">Quanto já deve nele hoje?</label><input id="oDeve" inputmode="numeric" placeholder="R$ 0,00"></div></div>'+
+        '<div class="campo"><label>O que você já deve nele</label>'+
+          '<p class="faint" style="margin-bottom:.5rem">Separe por vencimento. Ex.: R$ 190 que vence em 05/11 e R$ 15 que vence em 05/12. Sem dívida? Deixe vazio.</p>'+
+          '<div id="oFaturas"></div><button class="btn sec peq" data-a="fAdd" data-c="#oFaturas">+ Outro vencimento</button></div></div>'+
       '<button class="btn" data-a="oFim">Pronto, entrar</button>';
   }
   $("#onbCorpo").innerHTML=h;
-  ["oCarteira","oBanco","oPoup","oLimite","oDeve"].forEach(function(id){var el=document.getElementById(id);if(el)ligarDinheiro(el,0)});
+  ["oCarteira","oBanco","oPoup","oLimite"].forEach(function(id){var el=document.getElementById(id);if(el)ligarDinheiro(el,0)});
+  if(O.passo===3)addLinhaFatura("#oFaturas",null);
 }
 function finalizarOnb(){
   var contas=[];
@@ -955,7 +994,9 @@ function finalizarOnb(){
   if(!contas.length)contas.push({id:uid(),nome:"Carteira",tipo:"ativo",inicial:0});
   if(O.cartao){
     var nome=($("#oNome").value||"").trim()||"Cartão", f=parseInt($("#oFecha").value,10), vc=parseInt($("#oVence").value,10);
-    var cc={id:uid(),nome:nome,tipo:"passivo",inicial:cent($("#oDeve"))};
+    var ab=lerFaturas("#oFaturas");
+    var cc={id:uid(),nome:nome,tipo:"passivo",inicial:somaFaturas(ab)};
+    if(ab.length)cc.abertas=ab;
     if(f>=1&&f<=31&&vc>=1&&vc<=31){cc.fecha=f;cc.vence=vc}
     if(cent($("#oLimite"))>0)cc.limite=cent($("#oLimite"));
     contas.push(cc);
@@ -991,6 +1032,8 @@ var ACOES={
     novaFolha({tipo:"transferencia",contaId:banco.id,destinoId:c.id,cent:+d.valor,desc:"Pagamento "+c.nome});
   },
   gaveta:function(d){modalGaveta(d.id||null)},
+  fAdd:function(d){addLinhaFatura(d.c,null)},
+  fDel:function(d,b){b.closest(".linha-f").remove()},
   gTipo:function(d){if(G&&!G.bloqueado){G.tipo=d.t;rotuloGaveta()}},
   gSalvar:salvarGaveta,
   gApagar:function(){
