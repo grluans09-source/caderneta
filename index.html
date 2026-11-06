@@ -292,6 +292,13 @@ svg.grafico{width:100%;height:auto;display:block}
 .pt.b{background:#5A86C9}
 .marca.bem{background:#5A86C9}
 .seg3 button[aria-pressed="true"].b{background:var(--ouro-bg);border-color:var(--ouro);color:var(--ouro)}
+.pagar .rot2{font-weight:700;color:var(--ink2);font-size:.95rem}
+.pagar .gr{font-family:Georgia,serif;font-size:2.1rem;font-weight:700;color:var(--out);line-height:1.15;margin:.1rem 0}
+.pagar .gr.zero{color:var(--tr)}
+.pagar .it{display:flex;justify-content:space-between;gap:.6rem;font-size:.92rem;padding:.3rem 0;border-bottom:1px solid var(--rule)}
+.pagar .it:last-of-type{border-bottom:0}
+.pagar .it b{white-space:nowrap;font-family:Georgia,serif}
+.pagar .it em{font-style:normal;color:var(--out);font-size:.8rem;font-weight:700}
 @media (prefers-reduced-motion:reduce){*,*:before{animation:none!important;transition:none!important}}
 html.calmo *,html.calmo *:before{animation:none!important;transition:none!important}
 </style>
@@ -667,6 +674,49 @@ function quandoTxt(data,verbo){
 function quandoFrase(data,rec){
   return diasAte(data)<0?quandoTxt(data,rec?"cobrar":""):(rec?"cobrar ":"vence ")+quandoTxt(data,rec?"cobrar":"");
 }
+/* tudo o que vence num mês: o que ainda falta pagar e o que já foi pago.
+   No mês de hoje entram também as contas atrasadas e as sem data. */
+function pagarNoMes(ym){
+  var hoje=hojeISO().slice(0,7), ini=ym+"-01", falta=[], pago=[];
+  aPagar().forEach(function(g){
+    var dentro=!!g.data&&g.data.slice(0,7)===ym, resto=ym===hoje&&(!g.data||g.data<ini);
+    if(dentro||resto)falta.push({k:"divida",data:g.data,valor:g.valor,titulo:g.conta.nome,atrasada:!!g.data&&g.data<ini});
+  });
+  S.fixas.forEach(function(fx){
+    ocorrencias(fx,ym===hoje?ymMais(ym,-2):ym,ym).forEach(function(o){
+      if(fixaPaga(fx,o.ref))return;
+      if(o.ref===ym||(ym===hoje&&o.ref<ym))falta.push({k:"fixa",data:o.data,valor:fx.valor,titulo:fx.nome,atrasada:o.ref<ym});
+    });
+  });
+  S.lancamentos.forEach(function(l){
+    if(l.data.slice(0,7)!==ym)return;
+    var dv=l.tipo==="transferencia"?conta(l.destinoId):null, c=conta(l.contaId), k=l.catId?cat(l.catId):null;
+    if(dv&&dv.tipo==="passivo")pago.push({data:l.data,valor:l.valor,titulo:"Pagamento: "+dv.nome});
+    else if(l.tipo==="saida"&&l.fixaId&&c&&c.tipo==="ativo")pago.push({data:l.data,valor:l.valor,titulo:l.desc||"Conta fixa"});
+    else if(l.tipo==="saida"&&k&&k.nome==="Juros e multas")pago.push({data:l.data,valor:l.valor,titulo:l.desc||"Juros e multas"});
+  });
+  falta.sort(cmpData); pago.sort(cmpData);
+  var soma=function(a){return a.reduce(function(s,x){return s+x.valor},0)};
+  return {falta:falta,pago:pago,tf:soma(falta),tp:soma(pago)};
+}
+function cartaoPagar(ym,o){
+  o=o||{};
+  var p=pagarNoMes(ym), hoje=hojeISO().slice(0,7), mes=MES[+ym.slice(5)-1], tot=p.tf+p.tp;
+  if(!p.falta.length&&!p.pago.length)return '<div class="card pagar"><div class="rot2">Contas de '+mes+'</div><div class="gr zero">Nada para pagar</div></div>';
+  var tit=ym===hoje?"Falta pagar em "+mes:ym>hoje?"Vai vencer em "+mes:"Ficou em aberto em "+mes;
+  var pc=tot?Math.round(p.tp/tot*100):0;
+  var h='<div class="card pagar"><div class="rot2">'+esc(tit)+'</div><div class="gr'+(p.tf===0?" zero":"")+'">'+esc(brl(p.tf))+'</div>';
+  if(p.tp>0)h+='<div class="barra2" role="img" aria-label="'+pc+'% já pago"><div style="width:'+pc+'%;background:var(--tr)"></div></div><p class="faint">Já pagou <b style="color:var(--ink)">'+esc(brl(p.tp))+'</b> de <b style="color:var(--ink)">'+esc(brl(tot))+'</b> neste mês</p>';
+  if(o.lista!==false&&p.falta.length){
+    h+=p.falta.slice(0,o.max||5).map(function(x){
+      var dt=x.data?dataBR(x.data).slice(0,5):"sem data";
+      return '<div class="it"><span>'+esc(x.titulo)+' <span class="faint">'+dt+'</span>'+(x.atrasada?' <em>atrasada</em>':'')+'</span><b>'+esc(brl(x.valor))+'</b></div>';
+    }).join("");
+    if(p.falta.length>(o.max||5))h+='<p class="faint">e mais '+(p.falta.length-(o.max||5))+' conta(s)</p>';
+  }
+  if(o.botao)h+='<button class="link" data-a="ir" data-v="planejar">Ver a agenda e pagar</button>';
+  return h+'</div>';
+}
 function rendaMedia(){
   if(S.config.renda>0)return S.config.renda;
   var ym=hojeISO().slice(0,7), soma=0, n=0, i;
@@ -942,6 +992,7 @@ function telaInicio(){
       '<div><span>'+esc(v("sobrou"))+'</span><b data-roll="'+sob+'" data-k="sob" style="color:'+(sob<0?"var(--out)":"var(--ink)")+'">'+(sob<0?"−":"")+num(sob)+'</b></div></div>'+
     '<p class="faint" style="text-align:center;margin-top:.4rem">Valores de '+MES[d.getMonth()]+'</p>'+
     (r.aj?'<p class="faint" style="text-align:center">Seus bens mudaram de valor: <b style="color:var(--ink)">'+(r.aj>0?"+":"−")+num(r.aj)+'</b> (não é dinheiro que entrou ou saiu)</p>':'')+
+    cartaoPagar(ym,{botao:true,max:4})+
     avisos()+
     (metas.length?'<h2>Caixinhas do mês</h2><div class="card"><div class="jarras">'+metas.slice(0,4).map(function(k){return jarraMeta(k,r.porSai)}).join("")+'</div><button class="link" data-a="ir" data-v="caixinhas">Ver todas as caixinhas</button></div>':'')+
     '<h2>Últimas anotações</h2><div class="card" style="padding:.3rem 1rem">'+
@@ -1007,6 +1058,7 @@ function telaRel(){
   var h=capa("Livro de "+MES[REF.getMonth()],"Relatórios","mais")+'<div class="mes"><button data-a="mes" data-n="-1" aria-label="Mês anterior">‹</button><b>'+MES[REF.getMonth()]+' de '+REF.getFullYear()+'</b><button data-a="mes" data-n="1" aria-label="Próximo mês">›</button></div>';
   h+='<div class="tri"><div class="e"><span>'+esc(v("entrou"))+'</span><b>+'+num(r.ent)+'</b></div><div class="s"><span>'+esc(v("saiu"))+'</span><b>−'+num(r.sai)+'</b></div>'+
      '<div><span>'+esc(v("sobrou"))+'</span><b style="color:'+(sob<0?"var(--out)":"var(--ink)")+'">'+(sob<0?"−":"")+num(sob)+'</b></div></div>';
+  h+='<h2>O que pagar em '+MES[REF.getMonth()]+'</h2>'+cartaoPagar(ym,{max:8});
   if(r.aj)h+='<p class="faint" style="text-align:center">Valor dos bens: <b style="color:var(--ink)">'+(r.aj>0?"+":"−")+num(r.aj)+'</b> neste mês (o bem ganhou ou perdeu valor, não é dinheiro).</p>';
   h+='<h2>Para onde foi o dinheiro</h2><div class="card">'+barras(r.porSai,r.sai,"s")+'</div>';
   h+='<h2>De onde veio</h2><div class="card">'+barras(r.porEnt,r.ent,"e")+'</div>';
@@ -1629,6 +1681,7 @@ function telaMais(){
 function telaPlanejar(){
   var ag=agenda(), mensal=S.fixas.filter(function(f){return f.freq!=="anual"}).reduce(function(s,f){return s+f.valor},0), res=totalReservado(), livre=livreAgora();
   return capa("O que vem pela frente","Planejar")+
+    '<div style="margin-top:.9rem">'+cartaoPagar(hojeISO().slice(0,7),{lista:false})+'</div>'+
     '<h2>Agenda dos próximos dias</h2><div class="card" style="padding:.3rem 1rem">'+
     (ag.length?ag.slice(0,8).map(linhaAgenda).join(""):'<div class="vazio"><b>Nada para os próximos dias</b>Contas do cartão, contas fixas e cobranças aparecem aqui.</div>')+'</div>'+
     '<h2>Ferramentas</h2>'+

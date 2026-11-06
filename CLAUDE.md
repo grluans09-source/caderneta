@@ -27,6 +27,9 @@ Conceito: um escritório de contabilidade antigo, vivo. A pessoa sente a contabi
 - Letra "Enorme" (`data-tam="gg"`): a conta em T vira lista de uma coluna e o fio some.
 - Testes em jsdom rodam com a classe `calmo` ligada (sem esperas de animação). Animação só se confere no navegador, com o painel visível (painel escondido congela as animações).
 
+## O que pagar no mês
+- `pagarNoMes(ym)` soma o que vence naquele mês: parcelas/faturas de dívidas (`aPagar()`, já abatidas pelos pagamentos), contas fixas não pagas nem puladas e dívidas com pessoas. No mês de hoje entram também as atrasadas e as sem data. "Já pago" = transferências para dívidas, contas fixas pagas por conta de dinheiro (não por cartão, para não contar duas vezes) e juros/multas. `cartaoPagar(ym,opções)` desenha o cartão (Início, Planejar só com o total, Relatórios no mês escolhido). Rótulos: "Falta pagar em / Vai vencer em / Ficou em aberto em".
+
 ## Vocabulário na tela (regra)
 Falar como a pessoa fala. Na tela: "conta" (carteira, banco, poupança, cartão), "Transferi entre contas", "previsão", "Perdeu valor / Ganhou valor", "anotação", "ANOTADO" (carimbo), "o que ainda deve". NUNCA na tela comum: gaveta, partida dobrada, lançamento, saldo devedor, comprometido, projeção, débito/crédito (esses só no Modo contador). Nomes internos (`data-a="gaveta"`, `modalGaveta`, `tipo:"transferencia"`) continuam como estão. O teste `t9` varre todas as telas atrás dessas palavras: rodar sempre que mexer em textos.
 - Apagar conta, bem ou pessoa com anotações é permitido, com aviso do que sai junto (anotações, contas fixas); equivale a "nunca existiu".
