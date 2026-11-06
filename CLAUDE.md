@@ -27,6 +27,9 @@ Conceito: um escritório de contabilidade antigo, vivo. A pessoa sente a contabi
 - Letra "Enorme" (`data-tam="gg"`): a conta em T vira lista de uma coluna e o fio some.
 - Testes em jsdom rodam com a classe `calmo` ligada (sem esperas de animação). Animação só se confere no navegador, com o painel visível (painel escondido congela as animações).
 
+## Procurar, filtrar e ordenar anotações
+- Listas longas nunca aparecem inteiras: no máximo 15 linhas por vez, com "Mostrar mais (N restantes)". Tela `anotacoes` (atalho no Início e em Mais) e a lista de Relatórios usam o mesmo bloco (`blocoAnotacoes` + `pintarAnot`, estado `AN`). Ordenar por Data, Valor ou Nome (tocar de novo inverte ↑↓; data e valor começam do maior/mais recente, nome de A a Z). Busca por nome, categoria, conta, valor ou data, sem diferenciar acento ou maiúscula. Filtros: tipo (Tudo/Gastos/Ganhos/Transferências/Bens) e "Mais filtros" (período, conta, categoria; em Relatórios não há período porque o mês já vem das setas). Padrão da tela Anotações = "Este mês". `pintarAnot` só repinta `#anotCtl`/`#anotLista` para a busca não perder o foco. Se criar outra lista que possa crescer, reutilizar esse bloco.
+
 ## O que pagar no mês
 - `pagarNoMes(ym)` soma o que vence naquele mês: parcelas/faturas de dívidas (`aPagar()`, já abatidas pelos pagamentos), contas fixas não pagas nem puladas e dívidas com pessoas. No mês de hoje entram também as atrasadas e as sem data. "Já pago" = transferências para dívidas, contas fixas pagas por conta de dinheiro (não por cartão, para não contar duas vezes) e juros/multas. `cartaoPagar(ym,opções)` desenha o cartão (Início, Planejar só com o total, Relatórios no mês escolhido). Rótulos: "Falta pagar em / Vai vencer em / Ficou em aberto em".
 

@@ -312,6 +312,12 @@ svg.grafico{width:100%;height:auto;display:block}
 .mesnav button:disabled{opacity:.3}
 .mesnav b{font-family:Georgia,serif;font-weight:400;font-size:1.05rem}
 .mesnav b::first-letter{text-transform:uppercase}
+.busca input{width:100%;min-height:3.1rem;border:2px solid var(--rule2);border-radius:.6rem;padding:.5rem .9rem;background:var(--card);font-size:1rem}
+.filtros{margin-top:.6rem}
+.filtros .chips{margin:.3rem 0 .6rem}
+.chip.sm{min-height:2.6rem;padding:.3rem .8rem;font-size:.9rem}
+.filtros select{width:100%;min-height:3rem;border:2px solid var(--rule2);border-radius:.6rem;padding:.4rem .7rem;background:var(--card);margin-bottom:.6rem}
+.filtros label{display:block;font-weight:700;margin:.2rem 0 .3rem;font-size:.92rem}
 @media (prefers-reduced-motion:reduce){*,*:before{animation:none!important;transition:none!important}}
 html.calmo *,html.calmo *:before{animation:none!important;transition:none!important}
 </style>
@@ -823,9 +829,10 @@ function cent(el){return parseInt(el.dataset.cent,10)||0}
    NAVEGAÇÃO
    ===================================================================== */
 var VIEW="inicio", REF=new Date(); REF.setDate(1);
-var ABA={relatorios:"mais",ajustes:"mais",caixinhas:"planejar",fixas:"planejar",simulador:"planejar"};
+var ABA={anotacoes:"mais",relatorios:"mais",ajustes:"mais",caixinhas:"planejar",fixas:"planejar",simulador:"planejar"};
 
 function ir(vw){
+  if(vw==="anotacoes"&&VIEW!=="anotacoes"){AN_VOLTA=(VIEW==="mais"||VIEW==="relatorios")?VIEW:"inicio";AN.q="";AN.n=15}
   VIEW=vw;
   if(vw==="inicio")PAG_OFF=0;
   $("#tela").classList.remove("vira-d","vira-e");
@@ -837,11 +844,12 @@ function ir(vw){
 }
 function desenhar(){
   var t=$("#tela");
-  var tela={inicio:telaInicio,contas:telaContas,planejar:telaPlanejar,caixinhas:telaCaixinhas,fixas:telaFixas,simulador:telaSimulador,mais:telaMais,relatorios:telaRel,ajustes:telaAjustes}[VIEW]||telaInicio;
+  var tela={inicio:telaInicio,contas:telaContas,planejar:telaPlanejar,caixinhas:telaCaixinhas,fixas:telaFixas,simulador:telaSimulador,mais:telaMais,relatorios:telaRel,ajustes:telaAjustes,anotacoes:telaAnotacoes}[VIEW]||telaInicio;
   t.innerHTML = tela();
   ULTIMO=null;
   if(VIEW==="inicio")animarInicio();
   if(VIEW==="simulador")iniciarSim();
+  if(VIEW==="anotacoes"||VIEW==="relatorios")iniciarAnot();
 }
 
 /* ---------- visual vivo: capa, balança, números que rolam, carimbo ---------- */
@@ -963,6 +971,82 @@ function moedaFio(){
   m.animate([{transform:"translate("+a.x+"px,"+a.y+"px)"},{transform:"translate("+b.x+"px,"+b.y+"px)"}],{duration:650,easing:"ease-in-out"}).onfinish=function(){m.remove()};
 }
 
+/* ---------- procurar, filtrar e ordenar as anotações ---------- */
+var AN={q:"",ordem:"data",dir:"desc",tipo:"todos",periodo:"mes",conta:"",cat:"",n:15,aberto:false}, AN_VOLTA="inicio";
+function semAcento(s){return String(s==null?"":s).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"")}
+function tituloLanc(l){
+  return l.desc||(l.tipo==="bem"?"Comprei "+nomeConta(l.destinoId):l.tipo==="ajuste"?"Ajuste de valor":l.tipo==="transferencia"?"Transferência":nomeCat(l.catId));
+}
+function textoBusca(l){
+  return semAcento([tituloLanc(l),nomeCat(l.catId),nomeConta(l.contaId),l.destinoId?nomeConta(l.destinoId):"",num(l.valor),l.data,dataBR(l.data)].join(" "));
+}
+function anotacoesFiltradas(modo,ym){
+  var q=semAcento(AN.q.trim()), hoje=hojeISO().slice(0,7), ini=null, fim=null;
+  if(modo!=="mes"){
+    if(AN.periodo==="mes"){ini=hoje+"-01";fim=hoje+"-31"}
+    else if(AN.periodo==="passado"){var pm=ymMais(hoje,-1);ini=pm+"-01";fim=pm+"-31"}
+    else if(AN.periodo==="3m"){ini=ymMais(hoje,-2)+"-01";fim=hoje+"-31"}
+    else if(AN.periodo==="ano"){ini=hoje.slice(0,4)+"-01-01";fim=hoje.slice(0,4)+"-12-31"}
+  }
+  var tiposOk={todos:null,saida:["saida"],entrada:["entrada"],transferencia:["transferencia"],bens:["bem","ajuste"]}[AN.tipo];
+  var r=S.lancamentos.filter(function(l){
+    if(modo==="mes"&&l.data.slice(0,7)!==ym)return false;
+    if(ini&&(l.data<ini||l.data>fim))return false;
+    if(tiposOk&&tiposOk.indexOf(l.tipo)<0)return false;
+    if(AN.conta&&l.contaId!==AN.conta&&l.destinoId!==AN.conta)return false;
+    if(AN.cat&&l.catId!==AN.cat)return false;
+    if(q&&textoBusca(l).indexOf(q)<0)return false;
+    return true;
+  });
+  var m=AN.dir==="asc"?1:-1;
+  r.sort(function(a,b){
+    var c=0;
+    if(AN.ordem==="valor")c=a.valor-b.valor;
+    else if(AN.ordem==="nome")c=tituloLanc(a).localeCompare(tituloLanc(b),"pt-BR",{sensitivity:"base"});
+    else c=a.data<b.data?-1:a.data>b.data?1:0;
+    if(c===0)c=a.data<b.data?-1:a.data>b.data?1:(a.id<b.id?-1:1);
+    return c*m;
+  });
+  return r;
+}
+function blocoAnotacoes(){
+  return '<div class="busca"><input id="fBusca" type="search" placeholder="Procurar nome, conta ou valor" value="'+esc(AN.q)+'" aria-label="Procurar anotações" autocomplete="off"></div><div id="anotCtl"></div><div id="anotLista"></div>';
+}
+function pintarAnot(){
+  var ctl=$("#anotCtl"), lista=$("#anotLista"); if(!ctl||!lista)return;
+  var modo=VIEW==="relatorios"?"mes":"tudo", ym=REF.getFullYear()+"-"+pad(REF.getMonth()+1);
+  var tudo=anotacoesFiltradas(modo,ym), mostra=tudo.slice(0,AN.n);
+  function chip(a,attrs,rot,sel){return '<button class="chip sm" data-a="'+a+'" '+attrs+' aria-pressed="'+sel+'">'+rot+'</button>'}
+  function seta(o){return AN.ordem===o?(AN.dir==="asc"?" ↑":" ↓"):""}
+  function opts(lista,sel){return lista.map(function(o){return '<option value="'+o[0]+'"'+(o[0]===sel?" selected":"")+'>'+esc(o[1])+'</option>'}).join("")}
+  var periodoAtivo=modo!=="mes"&&AN.periodo!=="mes", extras=(AN.conta?1:0)+(AN.cat?1:0)+(periodoAtivo?1:0);
+  var h='<div class="filtros"><span class="faint">Ordenar por</span><div class="chips">'+
+    chip("anOrdem",'data-o="data"',"Data"+seta("data"),AN.ordem==="data")+chip("anOrdem",'data-o="valor"',"Valor"+seta("valor"),AN.ordem==="valor")+chip("anOrdem",'data-o="nome"',"Nome"+seta("nome"),AN.ordem==="nome")+'</div>'+
+    '<span class="faint">Mostrar</span><div class="chips">'+
+    [["todos","Tudo"],["saida","Gastos"],["entrada","Ganhos"],["transferencia","Transferências"],["bens","Bens"]].map(function(t){return chip("anTipo",'data-t="'+t[0]+'"',t[1],AN.tipo===t[0])}).join("")+
+    '<button class="chip sm novo" data-a="anMais" aria-expanded="'+AN.aberto+'">'+(AN.aberto?"Menos filtros":"Mais filtros"+(extras?" ("+extras+")":""))+'</button></div>';
+  if(AN.aberto){
+    h+=(modo!=="mes"?'<label for="anPeriodo">Período</label><select id="anPeriodo">'+opts([["mes","Este mês"],["passado","Mês passado"],["3m","Últimos 3 meses"],["ano","Este ano"],["tudo","Tudo"]],AN.periodo)+'</select>':'')+
+      '<label for="anConta">Conta</label><select id="anConta">'+opts([["","Todas"]].concat(S.contas.map(function(c){return [c.id,c.nome]})),AN.conta)+'</select>'+
+      '<label for="anCat">Categoria</label><select id="anCat">'+opts([["","Todas"]].concat(S.categorias.map(function(c){return [c.id,c.nome]})),AN.cat)+'</select>';
+  }
+  var filtrado=AN.q.trim()||AN.tipo!=="todos"||AN.conta||AN.cat||periodoAtivo;
+  h+=(filtrado?'<button class="link" data-a="anLimpar">Limpar filtros</button>':'')+'</div>';
+  ctl.innerHTML=h;
+  var ent=0, sai=0; tudo.forEach(function(l){if(l.tipo==="entrada")ent+=l.valor; else if(l.tipo==="saida")sai+=l.valor});
+  lista.innerHTML='<p class="faint" style="margin:.4rem 0">'+tudo.length+(tudo.length===1?" anotação":" anotações")+(modo!=="mes"&&AN.periodo==="mes"?" neste mês":"")+((ent||sai)?' · Entrou <b style="color:var(--in)">+'+num(ent)+'</b> · Saiu <b style="color:var(--out)">−'+num(sai)+'</b>':'')+'</p>'+
+    (tudo.length
+      ?'<div class="card" style="padding:.3rem 1rem"><div class="lista">'+mostra.map(linha).join("")+'</div></div>'+(tudo.length>mostra.length?'<button class="btn sec" data-a="anVerMais">Mostrar mais ('+(tudo.length-mostra.length)+' restantes)</button>':'')
+      :'<div class="card"><div class="vazio"><b>Nada encontrado</b>Tente outra palavra ou limpe os filtros.'+(modo!=="mes"&&AN.periodo==="mes"?' Por padrão aparece só este mês: use “Mais filtros” para ver outro período.':'')+'</div></div>');
+}
+function iniciarAnot(){
+  var b=$("#fBusca"); if(b)b.addEventListener("input",function(){AN.q=this.value;AN.n=15;pintarAnot()});
+  pintarAnot();
+}
+function telaAnotacoes(){
+  return capa("Procure e ordene","Anotações",AN_VOLTA)+'<div style="margin-top:.9rem">'+blocoAnotacoes()+'</div>';
+}
+
 /* ---------- linhas de lançamento ---------- */
 function linha(l){
   var p=l.data.split("-"), aj=l.tipo==="ajuste", mov=l.tipo==="transferencia"||l.tipo==="bem",
@@ -1071,7 +1155,7 @@ function telaInicio(){
     '<h2>Últimas anotações</h2><div class="card" style="padding:.3rem 1rem">'+
     (ult.length?'<div class="lista">'+ult.map(linha).join("")+'</div>'
       :'<div class="vazio"><b>Nada anotado ainda</b>Toque no botão <b style="display:inline">+</b> embaixo para começar.</div>')+
-    '</div>';
+    '</div>'+(ult.length?'<button class="link" data-a="ir" data-v="anotacoes">Ver todas as anotações, procurar e ordenar</button>':'');
 }
 
 /* ---------- TELA: GAVETAS ---------- */
@@ -1138,7 +1222,7 @@ function telaRel(){
   h+='<h2>De onde veio</h2><div class="card">'+barras(r.porEnt,r.ent,"e")+'</div>';
 
   var pend=aPagar();
-  h+='<h2>Contas a pagar</h2><div class="card" style="padding:.3rem 1rem">'+(pend.length?'<div class="lista">'+pend.slice(0,30).map(function(g){
+  h+='<h2>Contas a pagar</h2><div class="card" style="padding:.3rem 1rem">'+(pend.length?'<div class="lista">'+pend.slice(0,10).map(function(g){
     var p=g.data?g.data.split("-"):null, d=g.data?diasAte(g.data):null;
     var quando=!g.data?"sem data":d<0?"atrasada há "+(-d)+(d===-1?" dia":" dias"):d===0?"vence hoje":d===1?"vence amanhã":"vence em "+d+" dias";
     var resumo=g.itens.slice(0,2).map(function(x){return x.desc+(x.de>1?" "+x.n+"/"+x.de:"")}).join(", ")+(g.itens.length>2?" e mais "+(g.itens.length-2):"");
@@ -1148,7 +1232,7 @@ function telaRel(){
 
   h+='<h2>'+esc(v("evo"))+'</h2><div class="card">'+graficoEvolucao()+'</div>';
 
-  h+='<h2>Anotações do mês</h2><div class="card" style="padding:.3rem 1rem">'+(r.lanc.length?'<div class="lista">'+r.lanc.map(linha).join("")+'</div>':'<div class="vazio"><b>Nada neste mês</b>Use as setas para ver outro mês.</div>')+'</div>';
+  h+='<h2>Anotações do mês</h2>'+blocoAnotacoes();
 
   if(S.config.contador)h+=blocoContador(r);
   return h;
@@ -1743,6 +1827,7 @@ function linhaAgenda(a){
 function atalho(v,t,s){return '<button class="atalho" data-a="ir" data-v="'+v+'"><div><b>'+esc(t)+'</b><span>'+esc(s)+'</span></div><i>›</i></button>'}
 function telaMais(){
   return capa("Tudo o resto","Mais")+'<div style="margin-top:.9rem">'+
+    atalho("anotacoes","Anotações","Procure e ordene por data, valor ou nome")+
     atalho("relatorios","Relatórios","Para onde foi o dinheiro, balancete e anotações do mês")+
     atalho("ajustes","Ajustes","Letra, cores, movimento, categorias e cópia dos dados")+'</div>';
 }
@@ -2216,6 +2301,15 @@ var ACOES={
     });
   },
   sTipo:function(d){SIM.bem=d.b==="1"; document.querySelectorAll("#sTipo .chip").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.b===d.b))}); calcSim()},
+  /* procurar e ordenar anotações */
+  anOrdem:function(d){
+    if(AN.ordem===d.o)AN.dir=AN.dir==="asc"?"desc":"asc"; else{AN.ordem=d.o;AN.dir=d.o==="nome"?"asc":"desc"}
+    AN.n=15; pintarAnot();
+  },
+  anTipo:function(d){AN.tipo=d.t;AN.n=15;pintarAnot()},
+  anMais:function(){AN.aberto=!AN.aberto;pintarAnot()},
+  anVerMais:function(){AN.n+=15;pintarAnot()},
+  anLimpar:function(){AN.q="";AN.tipo="todos";AN.conta="";AN.cat="";AN.periodo="mes";AN.n=15;var b=$("#fBusca");if(b)b.value="";pintarAnot()},
   fAdd:function(d){addLinhaFatura(d.c,null)},
   fDel:function(d,b){b.closest(".linha-f").remove()},
   gTipo:function(d){if(G&&!G.bloqueado){G.tipo=d.t;rotuloGaveta()}},
@@ -2287,6 +2381,13 @@ document.addEventListener("click",function(e){
 });
 document.addEventListener("change",function(e){
   if(e.target.id==="arquivo"&&e.target.files&&e.target.files[0]){lerCopia(e.target.files[0]);e.target.value=""}
+});
+document.addEventListener("change",function(e){
+  var id=e.target.id;
+  if(id==="anPeriodo"||id==="anConta"||id==="anCat"){
+    if(id==="anPeriodo")AN.periodo=e.target.value; else if(id==="anConta")AN.conta=e.target.value; else AN.cat=e.target.value;
+    AN.n=15; pintarAnot();
+  }
 });
 document.addEventListener("keydown",function(e){
   if(e.key==="Escape"){ if($("#modalFundo").classList.contains("on"))fecharModal(); else if(FOLHA_ABERTA)fecharFolha() }
