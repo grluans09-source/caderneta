@@ -63,6 +63,9 @@ Conceito: um escritório de contabilidade antigo, vivo. A pessoa sente a contabi
 - `livreAgora()` = PL − bens − caixinhas (dinheiro que dá para guardar/gastar). Invariante: PL = bens + livre + caixinhas.
 - Balança: esquerda = dinheiro (moedas verdes) + bens (azuis); direita = dívidas (vermelhas) + sobra (douradas).
 
+## Pagar dívida com juros
+- Ao "Mudar de lugar" para uma gaveta `passivo`, o campo opcional "quanto foi de juros ou multa?" (`F.juros`) divide o pagamento em DOIS lançamentos: a transferência só do principal (abate a dívida) e uma saída do mesmo valor de juros, paga pela gaveta de origem, na categoria "Juros e multas" (`jurosCat()`, criada sob demanda). Assim o gasto aparece em Saiu e o PL cai só pelos juros. Juros devem ser menores que o valor pago.
+
 ## Como testar depois de qualquer mudança
 1. Extrair o `<script>` e rodar `node --check`.
 2. Testar com jsdom numa CÓPIA do arquivo com um hook temporário (`window.__T`), nunca no original: onboarding, gasto, compra parcelada, pagar fatura, editar/apagar, backup ida e volta, todas as telas.

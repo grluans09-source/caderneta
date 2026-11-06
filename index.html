@@ -1154,6 +1154,8 @@ function ajustarFolha(){
   var c=conta(F.contaId);
   if((F.tipo!=="saida"&&F.tipo!=="bem")||!c||c.tipo!=="passivo")F.n=1;
   if(F.tipo!=="saida")F.caixaId=null;
+  var dj=conta(F.destinoId);
+  if(F.tipo!=="transferencia"||!dj||dj.tipo!=="passivo")F.juros=0;
 }
 function gerarParcelas(contaId,data,total,n){
   var c=conta(contaId); if(!c||c.tipo!=="passivo")return null;
@@ -1203,6 +1205,9 @@ function desenharFolha(){
   if((F.tipo==="saida"||F.tipo==="bem")&&c&&c.tipo==="passivo")
     h+='<span class="rot">Em quantas vezes?</span><div class="passo"><button data-a="fN" data-n="-1" aria-label="Menos uma parcela">−</button><b id="fNtxt"></b><button data-a="fN" data-n="1" aria-label="Mais uma parcela">+</button></div>';
 
+  var dv=conta(F.destinoId);
+  if(F.tipo==="transferencia"&&dv&&dv.tipo==="passivo")
+    h+='<div class="campo" id="wJuros"><label for="fJuros">Desse valor, quanto foi de juros ou multa? (opcional)</label><p class="faint" style="margin-bottom:.4rem">Só os juros viram gasto. O resto abate a dívida.</p><input id="fJuros" inputmode="numeric" placeholder="R$ 0,00"></div>';
   h+='<div class="campo"><label for="fDesc">Anotação (opcional)</label><input id="fDesc" maxlength="60" placeholder="'+(F.tipo==="saida"?"Ex.: mercado do mês":F.tipo==="entrada"?"Ex.: salário de novembro":F.tipo==="bem"?"Ex.: TV nova da sala":"Ex.: saquei no caixa")+'" value="'+esc(F.desc)+'"></div>';
   var cxs=S.caixas.filter(function(x){return saldoCaixa(x.id)>0||x.id===F.caixaId});
   if(F.tipo==="saida"&&cxs.length)h+='<span class="rot">Pagar com o dinheiro de uma caixinha? (opcional)</span><div class="chips"><button class="chip" data-a="fCaixa" data-id="" aria-pressed="'+(!F.caixaId)+'">Nenhuma</button>'+
@@ -1213,6 +1218,7 @@ function desenharFolha(){
   $("#folhaCorpo").innerHTML=h;
 
   ligarDinheiro($("#fValor"),F.cent,function(c){F.cent=c;previa()});
+  if($("#fJuros"))ligarDinheiro($("#fJuros"),F.juros||0,function(c){F.juros=c;previa()});
   $("#fDesc").addEventListener("input",function(){F.desc=this.value});
   $("#fData").addEventListener("change",function(){if(RE_DATA.test(this.value)){F.data=this.value;previa()}});
   previa();
@@ -1251,7 +1257,7 @@ function previa(){
     }
   }else if(F.tipo==="entrada")h='O dinheiro entra em <b>'+esc(c?c.nome:"?")+'</b>, vindo de <b>'+esc(k?k.nome:"?")+'</b>.';
   else{
-    h=d&&d.tipo==="passivo"?'Você está <b>pagando uma dívida</b> ('+esc(d.nome)+'). Isso não é um gasto novo: o gasto já foi anotado quando você comprou.'
+    h=d&&d.tipo==="passivo"?'Você está <b>pagando uma dívida</b> ('+esc(d.nome)+'). Isso não é um gasto novo: o gasto já foi anotado quando você comprou.'+(F.juros>0&&valor>F.juros?' Só os <b>'+esc(brl(F.juros))+'</b> de juros viram gasto; <b>'+esc(brl(valor-F.juros))+'</b> abatem a dívida.':'')
       :'O dinheiro só <b>muda de lugar</b>, de <b>'+esc(c?c.nome:"?")+'</b> para <b>'+esc(d?d.nome:"?")+'</b>. Não é gasto nem ganho.';
   }
   if(S.config.contador){
@@ -1268,13 +1274,20 @@ function salvarFolha(){
     if(!F.destinoId||!conta(F.destinoId)){toast("Escolha o bem ou crie um novo");return}
   }else if(!F.catId){toast("Escolha uma categoria");return}
   if(!RE_DATA.test(F.data)){toast("Escolha uma data válida");return}
+  if(F.juros>0&&F.juros>=F.cent){toast("Os juros precisam ser menores que o valor pago");return}
   if(F.salvando)return; F.salvando=true;
   var l={id:F.id||uid(),tipo:F.tipo,valor:F.cent,desc:F.desc.trim(),contaId:F.contaId,
     destinoId:(F.tipo==="transferencia"||F.tipo==="bem")?F.destinoId:null,catId:(F.tipo==="transferencia"||F.tipo==="bem")?null:F.catId,data:F.data};
   if(F.tipo==="bem"){var pbm=gerarParcelas(F.contaId,F.data,F.cent,F.n); if(pbm)l.parcelas=pbm}
   if(F.tipo==="saida"){var ps=gerarParcelas(F.contaId,F.data,F.cent,F.n); if(ps)l.parcelas=ps; if(F.caixaId)l.caixaId=F.caixaId; if(F.fixaId){l.fixaId=F.fixaId;l.ref=F.ref}}
+  var extra=null, dj=conta(F.destinoId);
+  if(F.tipo==="transferencia"&&F.juros>0&&dj&&dj.tipo==="passivo"){
+    l.valor=F.cent-F.juros;
+    extra={id:uid(),tipo:"saida",valor:F.juros,desc:"Juros e multa — "+(F.desc.trim()||dj.nome),contaId:F.contaId,destinoId:null,catId:jurosCat().id,data:F.data};
+  }
   var i=-1; S.lancamentos.forEach(function(x,k){if(x.id===l.id)i=k});
   if(i>=0)S.lancamentos[i]=l; else S.lancamentos.push(l);
+  if(extra)S.lancamentos.push(extra);
   salvar(); ULTIMO=l.id; WOB=true;
   var fim=function(){var u=ULTIMO; fecharFolha(); toast(i>=0?"Alterado!":"Pronto, anotado!"); ULTIMO=u; desenhar()};
   if(calmo()){fim();return}
@@ -1538,6 +1551,11 @@ function modalPessoa(id){
     '<button class="btn sec" data-a="mFechar">Fechar</button>');
 }
 function primeiraGaveta(){return S.contas.filter(function(x){return x.tipo==="ativo"&&!x.pessoa&&!x.bem})[0]||null}
+function jurosCat(){
+  var k=S.categorias.filter(function(x){return x.tipo==="despesa"&&x.nome==="Juros e multas"})[0];
+  if(!k){k={id:uid(),nome:"Juros e multas",tipo:"despesa"};S.categorias.push(k)}
+  return k;
+}
 function perdasCat(){
   var k=S.categorias.filter(function(x){return x.tipo==="despesa"&&x.nome==="Dívidas não pagas"})[0];
   if(!k){k={id:uid(),nome:"Dívidas não pagas",tipo:"despesa"};S.categorias.push(k)}
