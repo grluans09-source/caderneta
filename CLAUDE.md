@@ -19,6 +19,14 @@ Idioma de tudo: **português do Brasil**. Público: do idoso ao jovem e ao adult
 - Linguagem da tela: "gaveta", "gastei/recebi/mudei de lugar", "É meu de verdade". Termos técnicos só no "Modo contador" (`VOC`).
 - Alvos de toque grandes, cor nunca é a única pista (sempre + / − e texto), suporte a letra grande (`data-tam`) e tema escuro.
 
+## Identidade visual: "o livro-razão vivo"
+Conceito: um escritório de contabilidade antigo, vivo. A pessoa sente a contabilidade pela estrutura da tela, sem jargão. O "exótico" vive no visual; navegação e textos continuam em português comum.
+- Peças que passam o ar contábil: conta em T na tela Anotar (de onde saiu | para onde foi, com fio dourado), balança (Tenho = Devo + É meu) que balança e assenta ao lançar, papel com margem vermelha e linhas pontilhadas entre nome e valor, sublinhado duplo em totais, carimbo "LANÇADO", capa verde de livro-caixa com filete de latão.
+- Cores: papel creme, verde de capa (`--capa`), latão (`--latao`), azul tinta = entrou, vermelho tinta = saiu. Modo escuro = "lamparina".
+- Movimento (config `movimento`: "vivo"|"parado"): números que rolam (`data-roll`), balança (`WOB`), moeda no fio, carimbo, página virando nos relatórios, linha nova entrando. Tudo respeita "Parado" e `prefers-reduced-motion` (classe `calmo` no `<html>`; `calmo()` no JS). Animar só `transform`/`opacity`.
+- Letra "Enorme" (`data-tam="gg"`): a conta em T vira lista de uma coluna e o fio some.
+- Testes em jsdom rodam com a classe `calmo` ligada (sem esperas de animação). Animação só se confere no navegador, com o painel visível (painel escondido congela as animações).
+
 ## Modelo
 - `S = { contas, categorias, lancamentos, config }`, chave `caderneta:v2`.
 - Conta (gaveta): `{ id, nome, tipo: "ativo"|"passivo", inicial, fecha?, vence?, limite?, abertas? }`.
