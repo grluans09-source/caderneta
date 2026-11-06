@@ -89,27 +89,47 @@ Tudo do **projeto**: código do app, testes, ferramentas, documentação, regras
 - Mantenha um **e-mail de recuperação** que você acessa de qualquer aparelho.
 - Opcional, mas recomendado: **uma cópia extra** do repositório em outro lugar (por exemplo, `git clone --mirror` em um HD externo de vez em quando, ou um segundo repositório privado).
 
-## 6. Plano: migrar para o Netlify e deixar o GitHub privado
+## 6. Plano: hospedagem definitiva (Cloudflare Pages) e GitHub privado
 
-**Por quê:** o GitHub Pages gratuito só publica de repositório **público**. O Netlify publica a partir de repositório **privado**, de graça, com endereço mais bonito e controle de cache.
+**Modelo de negócio decidido: venda única** (sem assinatura, sem login). Combina com um app sem servidor.
 
-**Atenção (dados):** o app guarda os dados **por endereço**. No endereço novo, o app começa **vazio**. Por isso a troca precisa de **aviso e cópia** (passo 4). Se hoje só o dono usa, é só guardar e recuperar uma cópia.
+### Qual hospedagem
+Conferido em novembro de 2026 em sites de comparação (**confirme nos sites oficiais antes de contratar**):
 
-Ordem certa (não pule etapas):
-1. **Criar a conta no Netlify** (gratuita) com o e-mail pessoal. *(Só o dono pode fazer: criar conta e autorizar o GitHub.)*
-2. **Conectar o repositório:** "Add new site" → "Import an existing project" → GitHub → repositório `caderneta`. Configuração: pasta de publicação `app`, sem comando de build. (Ou usar o arquivo `netlify.toml` abaixo.)
-3. **Testar o endereço novo** no celular: abrir, instalar na tela inicial, usar sem internet.
-4. **Aviso no endereço antigo** (versão 1.x): uma faixa "Mudamos de endereço" com botão **Guardar uma cópia** e o link do novo. Cada pessoa guarda a cópia, abre o novo e usa **Recuperar de uma cópia**.
-5. Passar os dados do dono.
-6. Só **depois** de todos estarem no endereço novo: tornar o repositório **privado** (GitHub → Settings → Danger zone → *Change repository visibility*). ⚠ O endereço `github.io` **para de funcionar** nesse momento. Desligue também o workflow do Pages (ou deixe falhar sem problema).
-7. Atualizar `README.md` (link do app), `CLAUDE.md` e este documento com o endereço novo.
+| | Cloudflare Pages | Netlify | GitHub Pages (hoje) |
+|---|---|---|---|
+| Plano gratuito | Tráfego **ilimitado**; ~500 publicações por mês | Funciona por **créditos** (cerca de 300 por mês): cada publicação e cada GB gasta crédito; **se acabar, o site pausa** | Gratuito, mas **só repositório público** |
+| Uso comercial (venda) | Permitido segundo as fontes | Permitido segundo as fontes | **Não recomendado**: as regras não permitem uso para negócio |
+| Repositório privado | Sim | Sim | Só em plano pago |
+| Se um dia precisar de um servidor pequeno (chave de licença) | Mesmo painel (Workers) | Precisa de outro serviço | Não |
+| Custo-benefício para este app | **Melhor** | Bom, mas com risco de pausar por créditos | Só para a fase de teste |
 
-`netlify.toml` (colocar na raiz do repositório quando for migrar):
+**Recomendação: Cloudflare Pages.** O app tem ~200 KB, então qualquer um aguenta o tráfego; o que pesa é **não ter limite que pause o site no meio das vendas** e **ter caminho para crescer** (licenças) no mesmo lugar. O Netlify é uma alternativa boa (arquivo `netlify.toml` mais abaixo).
+
+### Endereço: o que decide tudo
+O app guarda os dados **por endereço**. Trocar de endereço = os dados dos usuários **ficam para trás** (precisam de "Guardar uma cópia" e "Recuperar"). Opções:
+- **A (100% gratuita):** testar no endereço gratuito (`github.io` hoje, depois `*.pages.dev`). Cada testador faz **uma** troca guardando e recuperando a cópia. Vale porque são poucas pessoas.
+- **B (cerca de R$ 40 a R$ 60 por ano):** registrar o **domínio próprio** antes de vender e usá-lo daqui em diante. **Nunca mais muda**, mesmo que a hospedagem mude. **Obrigatório antes de vender**, para nenhum cliente perder dados.
+
+### Passo a passo (Cloudflare Pages)
+1. **Criar a conta** gratuita em https://dash.cloudflare.com (e-mail pessoal). *(Só o dono faz: criar conta e autorizar o GitHub.)*
+2. **Workers & Pages → Create → Pages → Connect to Git** → autorizar o GitHub → escolher o repositório `caderneta` (pode ser privado).
+3. Configurar: **Production branch** `main` · **Build command** vazio · **Build output directory** `app` → Save and Deploy.
+4. Endereço gratuito: `<nome>.pages.dev`. Testar no celular (instalar, usar sem internet).
+5. Se o painel oferecer só "Workers": escolher a opção de **arquivos estáticos (static assets)** apontando para a pasta `app`.
+6. **Aviso de mudança de endereço** na versão antiga (faixa "Mudamos de endereço" + botão Guardar cópia + link novo); cada pessoa recupera a cópia no novo.
+7. Só depois de todos migrarem: tornar o repositório **privado** (GitHub → Settings → Danger zone → *Change repository visibility*). ⚠ O endereço `github.io` **para de funcionar**. Desligue o workflow do Pages do GitHub.
+8. Com domínio comprado: Cloudflare → *Custom domains* → adicionar. (Depois dos primeiros testadores, é mais uma troca de endereço com cópia.)
+9. Atualizar `README.md`, `CLAUDE.md`, `docs/GUIA-TESTADORES.md` e este documento com o endereço novo.
+
+O arquivo `app/_headers` (já no repositório) faz o celular buscar o `sw.js` e o HTML sempre atualizados no Cloudflare.
+
+### Alternativa: Netlify
+Mesmos passos (Add new site → Import from Git → pasta `app`). Arquivo `netlify.toml` na raiz:
 ```toml
 [build]
   publish = "app"
 
-# o celular precisa buscar o sw.js e o HTML sempre atualizados
 [[headers]]
   for = "/sw.js"
   [headers.values]
@@ -125,10 +145,19 @@ Ordem certa (não pule etapas):
   [headers.values]
     Content-Type = "application/manifest+json"
 ```
+Atenção ao consumo de créditos do plano gratuito (publicar muitas vezes por mês gasta crédito).
 
-Depois da migração, o fluxo continua o mesmo: `git push` publica sozinho (o Netlify roda o deploy). Se quiser manter os testes bloqueando a publicação, mantenha o workflow de testes do GitHub (sem a parte do Pages) e configure o Netlify para só publicar quando o check passar.
-
-**Domínio próprio (opcional):** no Netlify → Domain management. Se mudar de endereço de novo, o problema dos dados por endereço volta: só mude com aviso e cópia.
+### Antes de vender (checklist)
+- [ ] Teste de campo feito e problemas graves corrigidos (`GUIA-TESTADORES.md`)
+- [ ] Domínio próprio registrado e apontado para a hospedagem
+- [ ] Backup mais fácil e "desfazer" ao apagar (roteiro)
+- [ ] Termos de Uso e Política de Privacidade **revisados por advogado**
+- [ ] Aviso claro de que o app **não é consultoria financeira**
+- [ ] CNPJ/MEI e emissão de nota (converse com um contador)
+- [ ] Nome conferido (pesquisa no INPI)
+- [ ] Meio de pagamento e entrega (venda única): Hotmart, Kiwify, Mercado Pago ou similar
+- [ ] Canal de suporte (WhatsApp ou e-mail) e política de reembolso (7 dias no comércio online)
+- [ ] Repositório privado e licença proprietária (`LICENSE`)
 
 ## 7. Problemas comuns
 

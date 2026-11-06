@@ -57,7 +57,7 @@
 - Versão semântica `MAJOR.MINOR.PATCH`: **PATCH** = correção; **MINOR** = função nova compatível; **MAJOR** = quebra de dados/compatibilidade.
 - A versão fica em **3 lugares que sobem juntos**: `package.json` ("version"), `app/index.html` (`VERSAO_APP`) e `app/sw.js` (`VERSAO = "caderneta-<versão>"`). **Esquecer o `sw.js` faz os celulares não atualizarem.**
 - Marcar cada versão no Git: `git tag -a vX.Y.Z -m "..."` e `git push --tags`.
-- Checklist completo e plano de migração para Netlify: `docs/PUBLICACAO.md`.
+- Checklist completo e plano de migração (Cloudflare Pages recomendado; Netlify como alternativa): `docs/PUBLICACAO.md`. Modelo de venda: pagamento único (D31).
 
 ## Comandos
 ```bash
@@ -83,5 +83,5 @@ npm run icones  # regenera os ícones PNG a partir do desenho em tools/gerar-ico
 | `docs/AVALIACAO.md` | Estado atual, riscos, dívidas técnicas |
 | `docs/ROTEIRO.md` | Próximos passos por prioridade |
 | `docs/DECISOES.md` | Decisões e motivos |
-| `docs/PUBLICACAO.md` | Publicar, backup, recuperar o projeto, migrar para Netlify |
+| `docs/PUBLICACAO.md` | Publicar, backup, recuperar o projeto, migrar de hospedagem |
 | `CHANGELOG.md` | Histórico de versões |

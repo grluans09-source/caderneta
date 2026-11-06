@@ -34,6 +34,20 @@ Este documento diz **o que fazer a seguir, em que ordem e por quê**. Atualize-o
 | Baixa | **Política de segurança de conteúdo (CSP)** no HTML | Proteção extra barata | Pequeno |
 | Baixa | **Exportar para planilha (CSV)** | Quem quer analisar fora do app | Pequeno |
 
+## Fase comercial: venda única (depois da Fase 0 e das correções de maior risco)
+**Objetivo: poder cobrar com segurança.** Detalhes e checklist em `PUBLICACAO.md` (seção 6).
+
+| Item | Observação |
+|---|---|
+| Migrar para o Cloudflare Pages e deixar o GitHub privado | Só o dono cria a conta; passos em `PUBLICACAO.md` |
+| **Domínio próprio** | Antes da primeira venda; nunca mais mudar |
+| Termos de Uso, Política de Privacidade, aviso "não é consultoria" | Rascunho do Claude, **revisão de advogado** |
+| CNPJ/MEI, nota fiscal, nome (INPI) | Com contador |
+| Página de venda, pagamento único e entrega do link | Hotmart, Kiwify, Mercado Pago ou similar |
+| Suporte e reembolso (7 dias) | Canal definido antes de vender |
+| Pré-venda ou lista de espera com os testadores | Descobrir se pagam e quanto, antes de investir mais |
+| (Depois) Chave de licença com servidor mínimo; app nas lojas | Só se o uso real pedir |
+
 ## Fase 2: crescer com segurança
 - **Dividir o código em módulos** quando passar de ~3.500 linhas ou quando mais de uma pessoa mexer: pasta `src/` + script que gera o `app/index.html` único. Os testes continuam iguais.
 - **Passo de migração de dados** (`migrar(dados)` por versão do formato) antes da primeira mudança incompatível de formato.

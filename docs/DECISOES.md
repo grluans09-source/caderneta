@@ -84,3 +84,13 @@ Por quê: o botão fixo atrapalhava a visualização. Consequência: nada de `po
 **D29 · Hospedagem hoje: GitHub Pages (repositório público). Plano: Netlify + repositório privado (A, "por enquanto só organizar").** Por quê: Pages gratuito exige repositório público. Consequência: a troca muda o endereço e **os dados não acompanham**; exige aviso e cópia (ver `PUBLICACAO.md`).
 
 **D30 · Frases da capa só de autores reais, atribuição conferida (A).** Consequência: texto é tradução livre; ao incluir novas, conferir a fonte.
+
+## Venda e hospedagem (6 nov 2026)
+
+**D31 · Modelo de venda: pagamento único (A).** Por quê: combina com um app sem servidor e sem login. Consequência: o app não sabe "quem pagou"; o link pode ser repassado. A defesa é suporte, atualizações e marca. Chave de licença com servidor mínimo só se o uso real pedir. Assinatura exigiria servidor.
+
+**D32 · Fase de teste 100% gratuita, no endereço atual do GitHub Pages (A).** Por quê: o dono quer que as pessoas já usem, sem custo. Consequência: o GitHub Pages não deve ser usado para vender; migrar **antes** da primeira venda. Os testadores farão uma troca de endereço guardando e recuperando a cópia.
+
+**D33 · Hospedagem definitiva recomendada: Cloudflare Pages (C, aguarda confirmação do dono).** Por quê: tráfego ilimitado no plano gratuito, uso comercial permitido segundo as fontes, aceita repositório privado e tem caminho para um servidor mínimo. O plano gratuito do Netlify funciona por créditos e pausa o site se acabarem. Consequência: conta no Cloudflare (feita pelo dono), pasta de publicação `app`, arquivo `app/_headers`. Confirmar os termos nos sites oficiais antes de contratar.
+
+**D34 · Domínio próprio antes da primeira venda (C, recomendação pendente).** Por quê: os dados dos usuários pertencem ao endereço; o domínio impede que uma troca de hospedagem faça alguém perder dados. Custo: cerca de R$ 40 a R$ 60 por ano.

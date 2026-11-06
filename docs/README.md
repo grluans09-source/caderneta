@@ -10,6 +10,7 @@ Comece pelo que você precisa:
 | Saber **o que fazer a seguir** | [ROTEIRO.md](ROTEIRO.md) |
 | Entender **por que uma escolha foi feita** (e não desfazer sem querer) | [DECISOES.md](DECISOES.md) |
 | **Publicar**, versionar, voltar atrás, **recuperar o projeto** ou migrar de hospedagem | [PUBLICACAO.md](PUBLICACAO.md) |
+| **Mandar o app a testadores** e anotar o que acontece (mensagem pronta, tarefas, ficha) | [GUIA-TESTADORES.md](GUIA-TESTADORES.md) |
 | As **regras de trabalho** (para pessoas e para o Claude) | [../CLAUDE.md](../CLAUDE.md) |
 | O **histórico de versões** | [../CHANGELOG.md](../CHANGELOG.md) |
 
