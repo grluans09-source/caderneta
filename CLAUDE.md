@@ -44,6 +44,16 @@ Conceito: um escritório de contabilidade antigo, vivo. A pessoa sente a contabi
 - Ciclo do cartão (`proximoFechamento`, `primeiroVencimento`): compra até o dia do fechamento (inclusive) entra na fatura que fecha neste mês. Se `vence > fecha`, vence no mesmo mês do fechamento; senão, no seguinte. Dia inexistente cai no último dia do mês. `addMes` nunca "rola" para o mês seguinte.
 - Casos que não podem regredir: fecha 25/vence 5 (20/set→05/out, 27/set→05/nov); fecha 1/vence 5 (12/set→05/out, 01/set→05/set); fecha 5/vence 15 (04/set→15/09, 06/set→15/10); virada de ano; vencimento 31 em fevereiro.
 
+## Funções de planejamento (v3)
+- Menu: Início · Dinheiro · [+ Anotar] · Planejar · Mais. Planejar leva a Caixinhas, Contas fixas e Simulador; Mais leva a Relatórios e Ajustes (`ABA` marca a aba certa).
+- **Pessoas** (gaveta com `pessoa:true`, `cobrar?`): emprestei = conta `ativo` (a receber), peguei emprestado = conta `passivo`. É tudo transferência (nada de gasto). Perdoar dívida = saída para a categoria "Dívidas não pagas" (aí sim vira despesa). Dívida com pessoa `passivo` entra em `aPagar()`.
+- **Contas fixas** (`S.fixas`): compromisso futuro, NÃO é despesa até a pessoa tocar em "Paguei" (cria saída com `fixaId` + `ref` "AAAA-MM"). `puladas` guarda meses pulados. Sem notificação (não há servidor): o app avisa ao abrir, na agenda e na tela inicial.
+- **Caixinhas**: (a) meta do mês = `categoria.meta`, só planejamento, fora do razão; (b) caixinha de guardar (`S.caixas`) = reserva dentro do patrimônio, movida por `S.reservas {de,para}` onde `"livre"` é o PL livre. Gasto pago com caixinha = `lancamento.caixaId`. Invariante: PL = livre + soma das caixinhas (`livreAgora`, `totalReservado`). Guardar: D PL livre / C Reserva. Gasto da caixinha: D Despesa / C Banco + D Reserva / C PL livre.
+- **Simulador**: não grava nada. `comprometidoMeses(12)` = dívidas em aberto + contas fixas por mês; compara com a renda (`rendaMedia()` ou `config.renda`). Semáforo é referência, não conselho.
+- Gráfico "para onde o que é meu está indo": do primeiro mês de uso (até 5 atrás) até 6 meses à frente; futuro = projeção pela sobra média dos últimos meses, pontilhado.
+- Frases da capa: lista `FRASES` (autores reais, tradução livre); troca por dia e ao tocar. Conferir a fonte ao incluir novas.
+- Valores digitados sempre mostram "R$" (`ligarDinheiro`). O botão Salvar da tela Anotar fica no fim do formulário, em ordem de uso (não é fixo/sticky).
+
 ## Como testar depois de qualquer mudança
 1. Extrair o `<script>` e rodar `node --check`.
 2. Testar com jsdom numa CÓPIA do arquivo com um hook temporário (`window.__T`), nunca no original: onboarding, gasto, compra parcelada, pagar fatura, editar/apagar, backup ida e volta, todas as telas.
