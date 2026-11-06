@@ -299,6 +299,7 @@ svg.grafico{width:100%;height:auto;display:block}
 .pagar .it:last-of-type{border-bottom:0}
 .pagar .it b{white-space:nowrap;font-family:Georgia,serif}
 .pagar .it em{font-style:normal;color:var(--out);font-size:.8rem;font-weight:700}
+.pt.q{background:#A98BD6}
 @media (prefers-reduced-motion:reduce){*,*:before{animation:none!important;transition:none!important}}
 html.calmo *,html.calmo *:before{animation:none!important;transition:none!important}
 </style>
@@ -812,14 +813,16 @@ function balanca(t){
   t=t||totais();
   var A=Math.max(0,t.ativo), P=Math.max(0,t.passivo), B=Math.max(0,t.bens!=null?t.bens:bensTotal()), base=Math.max(A,P), U=12;
   var cA=base?Math.round(U*A/base):0, cP=base?Math.round(U*P/base):0, cB=A>0?Math.round(cA*Math.min(B,A)/A):0;
+  var Gd=Math.max(0,Math.min(t.guardado!=null?t.guardado:(S.config.contador?0:totalReservado()),A-Math.min(B,A))), cG=A>0?Math.min(cA-cB,Math.round(cA*Gd/A)):0;
   var meu=t.pl>0?Math.max(0,cA-cP):0, buraco=t.pl<0?Math.max(0,cP-cA):0;
   var esq=[], dir=[], i;
-  for(i=0;i<cA-cB;i++)esq.push("g");
+  for(i=0;i<cA-cB-cG;i++)esq.push("g");
+  for(i=0;i<cG;i++)esq.push("q");
   for(i=0;i<cB;i++)esq.push("b");
   for(i=0;i<buraco;i++)esq.push("x");
   for(i=0;i<cP;i++)dir.push("r");
   for(i=0;i<meu;i++)dir.push("o");
-  var cor={g:["#2C6B52","#4F9A78"],b:["#2F5A99","#5A86C9"],r:["#8E1F18","#D2584D"],o:["#9A7414","#E8C14F"],x:null};
+  var cor={g:["#2C6B52","#4F9A78"],b:["#2F5A99","#5A86C9"],q:["#6B4E9B","#A98BD6"],r:["#8E1F18","#D2584D"],o:["#9A7414","#E8C14F"],x:null};
   function pilha(lista,cx){
     var s="", col, n=lista.length, cols=n>6?2:1;
     lista.forEach(function(k,j){
@@ -852,8 +855,10 @@ function balanca(t){
     '</svg>';
 }
 function legendaBalanca(t){
-  var c=S.config.contador, B=Math.max(0,t.bens!=null?t.bens:bensTotal()), din=t.ativo-B;
+  var c=S.config.contador, B=Math.max(0,t.bens!=null?t.bens:bensTotal());
+  var Gu=c?0:Math.max(0,Math.min(t.guardado!=null?t.guardado:totalReservado(),t.ativo-B)), din=t.ativo-B-Gu;
   var leg='<div class="legenda"><span><i class="pt g"></i>'+(c?"Ativo disponível":"Dinheiro que eu tenho")+' <b>'+esc(brl(din))+'</b></span>'+
+    (Gu>0?'<span><i class="pt q"></i>Guardado nas caixinhas <b>'+esc(brl(Gu))+'</b></span>':'')+
     (B>0?'<span><i class="pt b"></i>'+(c?"Imobilizado":"Meus bens")+' <b>'+esc(brl(B))+'</b></span>':'')+
     '<span><i class="pt r"></i>'+(c?"Passivo":"Dívidas (o que eu devo)")+' <b>'+esc(brl(t.passivo))+'</b></span>'+
     '<span><i class="pt o"></i>'+(c?"Patrimônio líquido":"Sobra, é meu de verdade")+' <b>'+esc(brl(t.pl))+'</b></span></div>';
@@ -868,6 +873,7 @@ function modalComoLer(){
     '<p style="margin-bottom:.7rem"><b>Prato da esquerda:</b> o que você tem. O <b>dinheiro</b> (carteira, banco, o que te devem) e, se você cadastrou, os seus <b>bens</b> (carro, casa, celular), em moedas azuis.</p>'+
     '<p style="margin-bottom:.7rem">Agora imagine usar tudo isso para <b>pagar o que você deve</b>. O que sobra é <b>seu de verdade</b>.</p>'+
     '<p style="margin-bottom:.7rem"><b>Prato da direita:</b> as dívidas (moedas <b>vermelhas</b>) mais a sobra (moedas <b>douradas</b>). Os dois pratos sempre pesam igual, porque a sobra é justamente o que falta para igualar.</p>'+
+    '<p style="margin-bottom:.7rem"><b>Caixinhas:</b> quando você guarda um dinheiro numa caixinha, ele sai do <b>dinheiro que eu tenho</b> e vira <b>guardado</b> (moedas roxas). Se você tirar de volta, ele volta a ser dinheiro que você tem. O "é meu" não muda: o dinheiro continua seu, só separado.</p>'+
     '<p style="margin-bottom:.7rem"><b>Comida no cartão:</b> o dinheiro fica igual, a dívida sobe e a sobra cai. A comida acabou, mas a dívida ficou. Por isso é um <b>gasto</b>.</p>'+
     '<p style="margin-bottom:.7rem"><b>Carro ou TV no cartão:</b> você anota como <b>"Comprei um bem"</b>. A dívida sobe e o bem aparece no prato da esquerda, então a sobra <b>não cai</b> na hora. Depois o bem vai perdendo valor com o tempo e a sobra acompanha.</p>'+
     '<p class="faint">Se a dívida for maior que o que você tem, aparecem moedas tracejadas na esquerda: é o que falta para pagar tudo.</p>'+
@@ -990,7 +996,7 @@ function telaInicio(){
     '<div class="hero"><div class="rot">'+esc(v("pl"))+'</div>'+
     '<div class="grande'+(t.pl<0?" neg":"")+'" data-roll="'+t.pl+'" data-k="pl">'+esc(brl(t.pl))+'</div>'+
     balanca(t)+legendaBalanca(t)+'<button class="como" data-a="como">Como ler a balança?</button>'+
-    (res>0?'<p class="eq">Guardado nas caixinhas <b>'+esc(brl(res))+'</b> · Livre em dinheiro <b>'+esc(brl(livreAgora()))+'</b></p>':'')+'</div>'+
+    (res>0&&!S.config.contador?'<button class="como" data-a="tirarCx">Usar o dinheiro guardado (tirar de uma caixinha)</button>':'')+'</div>'+
     '<div class="tri" aria-label="Resumo de '+MES[d.getMonth()]+'">'+
       '<div class="e"><span>'+esc(v("entrou"))+'</span><b data-roll="'+r.ent+'" data-k="ent">+'+num(r.ent)+'</b></div>'+
       '<div class="s"><span>'+esc(v("saiu"))+'</span><b data-roll="'+r.sai+'" data-k="sai">−'+num(r.sai)+'</b></div>'+
@@ -1013,7 +1019,8 @@ function telaContas(){
   h+='<h2>'+esc(v("ativo"))+'</h2><div class="card" style="padding:.2rem 1rem">'+
     (ativos.length?ativos.map(function(c){
       return '<button class="gaveta" data-a="gaveta" data-id="'+c.id+'"><span class="marca"></span><span class="txt"><b>'+esc(c.nome)+'</b><i>Toque para editar</i></span><span class="pont"></span><span class="vl">'+esc(brl(saldoConta(c)))+'</span></button>';
-    }).join(""):'<div class="vazio"><b>Nenhuma ainda</b>Crie uma carteira ou conta de banco.</div>')+'</div>';
+    }).join(""):'<div class="vazio"><b>Nenhuma ainda</b>Crie uma carteira ou conta de banco.</div>')+
+    (totalReservado()>0?'<p class="faint" style="padding:.5rem 0">Os saldos acima são os reais, iguais aos do banco. Desse dinheiro, <b style="color:var(--ink)">'+esc(brl(totalReservado()))+'</b> está guardado nas caixinhas. Dinheiro que eu tenho agora: <b style="color:var(--ink)">'+esc(brl(livreAgora()))+'</b>.</p>':'')+'</div>';
   h+='<h2>'+esc(v("passivo"))+'</h2>';
   if(!pas.length)h+='<div class="card"><div class="vazio"><b>Nenhuma dívida cadastrada</b>Cartão de crédito, empréstimo, carnê...</div></div>';
   pas.forEach(function(c){
@@ -1710,7 +1717,7 @@ function telaCaixinhas(){
   h+='<div class="card" style="margin-top:.9rem"><p class="sub">Caixinhas são uma organização sua: separam o dinheiro que <b>realmente está nas suas contas</b>. Dívidas não entram aqui. Nada sai do banco, o app só separa, como envelopes de papel.</p>'+
     '<p class="faint" style="margin-top:.5rem">Dinheiro nas contas: <b style="color:var(--ink)">'+esc(brl(din))+'</b></p>'+
     '<div class="barra2" role="img" aria-label="Guardado '+Math.round(pg)+'% e livre '+Math.round(100-pg)+'%"><div style="width:'+pg.toFixed(1)+'%;background:var(--tr)"></div></div>'+
-    '<div class="legenda"><span><i class="pt o"></i>Livre <b>'+esc(brl(livre))+'</b></span><span><i class="pt g"></i>Guardado <b>'+esc(brl(res))+'</b></span></div>'+
+    '<div class="legenda"><span><i class="pt o"></i>Livre (dinheiro que eu tenho) <b>'+esc(brl(livre))+'</b></span><span><i class="pt g"></i>Guardado <b>'+esc(brl(res))+'</b></span></div>'+
     (livre<0?'<p class="faint" style="color:var(--out);margin-top:.4rem">Atenção: você separou <b>'+esc(brl(-livre))+'</b> a mais do que tem nas contas. Tire um pouco de alguma caixinha.</p>':'')+'</div>';
   if(sob){
     h+='<div class="card" style="margin-top:.8rem;border-left:6px solid var(--latao)"><b>Sobrou '+esc(brl(sob.valor))+' das metas de '+sob.mes+'</b>'+
@@ -1729,7 +1736,7 @@ function telaCaixinhas(){
     h+='<div class="cartao"><div class="t"><b>'+esc(x.nome)+'</b><button class="link" data-a="caixa" data-id="'+x.id+'">Editar</button></div>'+
       '<p class="serif" style="font-size:1.5rem;color:var(--ouro);margin-top:.2rem">'+esc(brl(s))+'</p>'+
       (x.alvo>0?'<div class="barra-lim" role="img" aria-label="'+Math.round(pc)+'% do alvo"><div style="width:'+pc.toFixed(1)+'%"></div></div><p class="faint">Alvo '+esc(brl(x.alvo))+(falta>0?" · faltam "+esc(brl(falta)):" · alvo batido")+'</p>'+(por?'<p class="faint">'+esc(por)+'</p>':''):'')+
-      '<button class="btn peq" data-a="cxMov" data-id="'+x.id+'" data-m="guardar">Guardar</button> <button class="btn peq sec" data-a="cxMov" data-id="'+x.id+'" data-m="tirar">Tirar</button></div>';
+      '<button class="btn peq" data-a="cxMov" data-id="'+x.id+'" data-m="guardar">Guardar</button> <button class="btn peq sec" data-a="cxMov" data-id="'+x.id+'" data-m="tirar">Tirar e usar</button></div>';
   });
   return h+'<button class="btn" data-a="caixa" data-id="">+ Nova caixinha</button>';
 }
@@ -1778,7 +1785,17 @@ function salvarMov(){
     if(v2>saldoCaixa(MV.id)){toast("A caixinha só tem "+brl(saldoCaixa(MV.id)));return}
     guardarNaCaixa(MV.id,v2,MV.id,"livre");
   }
-  salvar(); fecharModal(); desenhar(); toast(MV.modo==="guardar"?"Guardado!":"Voltou para o livre");
+  salvar(); fecharModal(); desenhar(); toast(MV.modo==="guardar"?"Guardado! Saiu do dinheiro que você tem":"Voltou para o dinheiro que você tem");
+}
+function modalTirarRapido(){
+  var cx=S.caixas.filter(function(x){return saldoCaixa(x.id)>0});
+  if(!cx.length){toast("Nenhuma caixinha com dinheiro guardado");return}
+  MV={id:cx[0].id,modo:"tirar"};
+  abrirModal('<p class="q">Usar o dinheiro guardado</p><p class="sub">O dinheiro sai da caixinha e volta a ser dinheiro que você tem.</p>'+
+    '<span class="rot">De qual caixinha?</span><div class="chips" id="tqChips">'+cx.map(function(x,i){return '<button class="chip" data-a="tirarEsc" data-id="'+x.id+'" aria-pressed="'+(i===0)+'">'+esc(x.nome)+' · '+esc(brl(saldoCaixa(x.id)))+'</button>'}).join("")+'</div>'+
+    '<div class="campo"><label for="mvValor">Quanto?</label><input id="mvValor" class="dinheiro" inputmode="numeric" placeholder="R$ 0,00"></div>'+
+    '<button class="btn" data-a="mvSalvar">Tirar</button><button class="btn sec" data-a="mFechar">Cancelar</button>');
+  ligarDinheiro($("#mvValor"),0);
 }
 function modalMeta(){
   var ks=S.categorias.filter(function(k){return k.tipo==="despesa"&&!(k.meta>0)});
@@ -2055,6 +2072,8 @@ var ACOES={
   cxMov:function(d){modalMov(d.id,d.m)},
   mvSalvar:salvarMov,
   novaMeta:modalMeta,
+  tirarCx:modalTirarRapido,
+  tirarEsc:function(d){MV.id=d.id; document.querySelectorAll("#tqChips .chip").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.id===d.id))})},
   metaSalvar:function(){
     var k=cat($("#meCat").value), val=cent($("#meValor")); if(!k||!val){toast("Escolha a categoria e o valor");return}
     k.meta=val; salvar(); fecharModal(); desenhar(); toast("Meta salva");
