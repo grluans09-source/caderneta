@@ -1441,7 +1441,11 @@ function modalBem(id,daFolha){
   abrirModal('<p class="q">'+(b?esc(b.nome):"Novo bem")+'</p>'+
     (b?'<p class="sub">Vale hoje <b>'+esc(brl(saldoConta(b)))+'</b></p>':'')+
     '<div class="campo"><label for="bNome">Nome</label><input id="bNome" maxlength="30" placeholder="Ex.: Carro, Casa, Celular" value="'+esc(b?b.nome:"")+'"></div>'+
-    (!b&&!daFolha?'<div class="campo"><label for="bValor">Quanto vale hoje?</label><input id="bValor" inputmode="numeric" placeholder="R$ 0,00"></div>':'')+
+    (!b&&!daFolha?'<div class="campo"><label for="bValor">Quanto vale hoje?</label><p class="faint" style="margin-bottom:.4rem">Já está quitado? Então é só isso. Se ainda falta pagar, ligue a opção abaixo.</p><input id="bValor" inputmode="numeric" placeholder="R$ 0,00"></div>'+
+      '<div class="linha-sw" style="margin-top:.9rem"><div><b>Ainda estou pagando</b><p class="faint">Financiamento, consórcio ou parcelas que faltam.</p></div><button class="sw" id="bDevo" data-a="bDevo" role="switch" aria-checked="false" aria-pressed="false" aria-label="Ainda estou pagando"></button></div>'+
+      '<div id="bDevoWrap" hidden><div class="campo"><label for="bFalta">Quanto ainda falta pagar?</label><p class="faint" style="margin-bottom:.4rem">Só o que você ainda deve hoje (saldo devedor), sem os juros que ainda vão vir. Os juros você separa quando for pagando cada parcela.</p><input id="bFalta" inputmode="numeric" placeholder="R$ 0,00"></div>'+
+      '<div class="campo"><label for="bParc">Em quantas parcelas?</label><input id="bParc" type="number" min="1" max="360" inputmode="numeric" value="12"></div>'+
+      '<div class="campo"><label for="bProx">A próxima parcela vence em</label><input id="bProx" type="date" value="'+addMes(hojeISO(),1)+'"></div></div>':'')+
     '<span class="rot">Com o tempo, esse bem...</span><div class="opc" id="bVar"><button data-a="bVar" data-s="-1">Perde valor</button><button data-a="bVar" data-s="1">Ganha valor</button><button data-a="bVar" data-s="0">Mantém</button></div>'+
     '<div class="campo" id="bTaxaWrap"><label for="bTaxa">Quanto por ano? (%)</label><input id="bTaxa" type="number" min="0" max="100" step="0.5" inputmode="decimal" value="'+Math.abs(b&&b.taxa||(BM.sinal<0?15:5))+'"></div>'+
     '<p class="faint">É uma estimativa e você corrige quando quiser. Exemplos: carro 10 a 15% ao ano, celular uns 30%, casa costuma ganhar uns 3 a 6%.</p>'+
@@ -1450,6 +1454,7 @@ function modalBem(id,daFolha){
     (b&&!uso?'<button class="btn perigo" data-a="bApagar">Apagar</button>':'')+
     '<button class="btn sec" data-a="mFechar">Cancelar</button>');
   if($("#bValor"))ligarDinheiro($("#bValor"),0);
+  if($("#bFalta"))ligarDinheiro($("#bFalta"),0);
   $("#bTaxa").addEventListener("input",function(){BM.tocou=true});
   rotuloBem();
 }
@@ -1463,13 +1468,22 @@ function salvarBem(){
   if(repetido(nome,S.contas,BM.id)){toast("Já existe uma gaveta ou bem com esse nome");return}
   var hojeYM=hojeISO().slice(0,7), b=BM.id?conta(BM.id):null, novoId=null;
   if(!b){
-    var val=$("#bValor")?cent($("#bValor")):0;
+    var val=$("#bValor")?cent($("#bValor")):0, fin=null;
     if(!BM.daFolha&&!val){toast("Diga quanto vale hoje");return}
+    if(BM.devo&&!BM.daFolha){
+      var falta=cent($("#bFalta")), np=parseInt($("#bParc").value,10), px=$("#bProx").value, nf="Financiamento: "+nome;
+      if(!falta){toast("Diga quanto ainda falta pagar");return}
+      if(!(np>=1&&np<=360)){toast("Diga em quantas parcelas (de 1 a 360)");return}
+      if(!RE_DATA.test(px)){toast("Diga quando vence a próxima parcela");return}
+      if(repetido(nf,S.contas,null)){toast("Já existe uma dívida com esse nome");return}
+      fin={id:uid(),nome:nf,tipo:"passivo",inicial:falta,abertas:dividir(falta,np).map(function(vv,i){return {data:addMes(px,i),valor:vv}})};
+    }
     b={id:uid(),nome:nome,tipo:"ativo",inicial:val,bem:true,desde:hojeYM,ajustadoAte:hojeYM};
     S.contas.push(b); novoId=b.id;
+    if(fin)S.contas.push(fin);
   }
   b.nome=nome; if(taxa){b.taxa=taxa; if(!b.ajustadoAte)b.ajustadoAte=hojeYM} else delete b.taxa;
-  salvar(); fecharModal(); toast("Bem salvo");
+  salvar(); fecharModal(); toast(BM.devo&&!BM.daFolha?"Bem e dívida salvos":"Bem salvo");
   if(novoId&&BM.daFolha&&FOLHA_ABERTA&&F){F.destinoId=novoId; desenharFolha()}
   desenhar();
 }
@@ -2004,6 +2018,7 @@ var ACOES={
   comprarBem:function(){novaFolha({tipo:"bem"})},
   fBemNovo:function(){modalBem(null,true)},
   bVar:function(d){BM.sinal=+d.s; var t=$("#bTaxa"); if(t&&BM.sinal&&(!BM.tocou||!(parseFloat(t.value)>0)))t.value=BM.sinal<0?15:5; rotuloBem()},
+  bDevo:function(){BM.devo=!BM.devo; var b=$("#bDevo"); b.setAttribute("aria-pressed",String(BM.devo)); b.setAttribute("aria-checked",String(BM.devo)); $("#bDevoWrap").hidden=!BM.devo},
   bSalvar:salvarBem,
   bAjuste:function(){var id=BM.id; modalAjusteBem(id)},
   ajSalvar:salvarAjusteBem,

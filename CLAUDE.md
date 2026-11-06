@@ -63,6 +63,10 @@ Conceito: um escritório de contabilidade antigo, vivo. A pessoa sente a contabi
 - `livreAgora()` = PL − bens − caixinhas (dinheiro que dá para guardar/gastar). Invariante: PL = bens + livre + caixinhas.
 - Balança: esquerda = dinheiro (moedas verdes) + bens (azuis); direita = dívidas (vermelhas) + sobra (douradas).
 
+## Bem que já se tem (quitado ou ainda pagando)
+- "Já tenho um bem" cria a conta do bem com `inicial` = valor de hoje. Se "Ainda estou pagando" estiver ligado, cria também a dívida `"Financiamento: <bem>"` (`passivo`, `inicial` = saldo devedor, `abertas` = parcelas mês a mês a partir da data informada, via `dividir`). PL inicial = valor − saldo devedor. O saldo devedor NÃO inclui juros futuros: os juros entram parcela a parcela pelo campo de juros ao pagar.
+- Compra com entrada + financiamento: anotar dois "Comprei um bem" para o mesmo bem (um pagando com a gaveta, outro na dívida).
+
 ## Pagar dívida com juros
 - Ao "Mudar de lugar" para uma gaveta `passivo`, o campo opcional "quanto foi de juros ou multa?" (`F.juros`) divide o pagamento em DOIS lançamentos: a transferência só do principal (abate a dívida) e uma saída do mesmo valor de juros, paga pela gaveta de origem, na categoria "Juros e multas" (`jurosCat()`, criada sob demanda). Assim o gasto aparece em Saiu e o PL cai só pelos juros. Juros devem ser menores que o valor pago.
 
