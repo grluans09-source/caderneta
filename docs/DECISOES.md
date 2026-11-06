@@ -1,0 +1,86 @@
+# Registro de decisões
+
+Cada decisão importante, **o motivo** e o que ela exige. Antes de mudar algo daqui, converse com o dono: foram escolhas dele ou foram feitas com a concordância dele.
+
+Formato: **Decisão** · Por quê · Consequência. (A = decidido pelo dono · C = proposto pelo Claude e aceito)
+
+## Produto
+
+**D01 · Projeto novo do zero, só aproveitando lições do protótipo (A).**
+Por quê: o protótipo tinha falhas de fundo (sem editar anotação, sem saldo inicial, compra à vista no cartão fora da fatura, balancete que "sempre fecha"). Consequência: nada de código antigo foi reaproveitado; as lições viraram requisitos.
+
+**D02 · Para pessoa física, usável do idoso ao jovem (A).**
+Por quê: o objetivo é levar a contabilidade para a vida das pessoas. Consequência: palavras comuns, letras grandes, poucas decisões por tela, avisos claros.
+
+**D03 · Contabilidade escondida, "Modo contador" opcional (A).**
+Por quê: a pessoa quer entender o dinheiro, não aprender contabilidade; quem quiser vê os termos técnicos. Consequência: dois vocabulários (`VOC`); a partida dobrada nunca é quebrada por "atalho".
+
+**D04 · Vocabulário comum na tela (A).**
+Por quê: "gaveta" e outros termos deixavam as pessoas perdidas. Consequência: lista de palavras proibidas na tela comum, conferida por teste (`08-vocabulario-e-apagar-conta`).
+
+**D05 · Sem servidor e sem banco de dados; dados no aparelho (A).**
+Por quê: simplicidade, custo zero e privacidade (os dados nunca saem do celular). Consequência: sem sincronização, sem notificações com o app fechado, backup manual, dados "por endereço". Reavaliar **só depois de uso real**.
+
+**D06 · Distribuição por link, instalável na tela inicial (PWA) (C, aceito).**
+Por quê: mandar o arquivo por WhatsApp não funciona bem (principalmente no iPhone) e não instala. Consequência: precisa de hospedagem estática (hoje GitHub Pages; plano de ir para Netlify).
+
+**D07 · Dados de cada pessoa ficam só no celular dela (A).**
+Consequência: o repositório nunca contém dados de usuários; o aviso de "guardar uma cópia" é parte do produto.
+
+## Visual
+
+**D08 · Identidade "livro-razão vivo" (A).**
+Por quê: o dono pediu algo "vivo, com movimento, que faça a pessoa sentir-se num universo contábil, mesmo sem perceber", sem perder a simplicidade. Consequência: conta em T, balança de latão, carimbo, papel, sublinhado duplo, animações com propósito. O "exótico" fica no visual, **nunca** na navegação.
+
+**D09 · Movimento "Vivo" por padrão, com "Parado" e respeito ao `prefers-reduced-motion` (A/C).**
+Por quê: dar vida sem prejudicar quem tem tontura ou aparelho fraco. Consequência: classe `calmo`; animar só `transform`/`opacity`.
+
+**D10 · Tela Anotar em duas colunas (de onde saiu | para onde foi) (A).**
+Por quê: passa a ideia de partida dobrada sem jargão. Consequência: vira lista de uma coluna com a letra "Enorme".
+
+**D11 · Botão Salvar no fim do formulário, na ordem de uso, sem "grudar" na tela (A).**
+Por quê: o botão fixo atrapalhava a visualização. Consequência: nada de `position: sticky` no Salvar.
+
+## Contabilidade
+
+**D12 · Valores em centavos inteiros (C).** Por quê: nunca errar contas por arredondamento. Consequência: proibido ponto flutuante para dinheiro.
+
+**D13 · Só regime de competência (C).** Por quê: o botão "Competência/Caixa" confundia. Consequência: a despesa nasce na data da compra; `parcelas` é só o cronograma de pagamento.
+
+**D14 · Pagar fatura é transferência, nunca gasto novo (C).** Por quê: o gasto já foi anotado na compra. Consequência: pagamentos quitam as parcelas mais antigas (FIFO).
+
+**D15 · O app conta DINHEIRO e BENS cadastrados, não objetos consumidos (A, após o exemplo da comida).** Por quê: "se a dívida for de comida eu não tenho comida". Consequência: consumo é gasto; carro/TV/casa é "Comprei um bem" (não reduz o "é meu"); o valor do bem muda por estimativa.
+
+**D16 · Bens perdem/ganham valor por taxa anual, com ajuste mensal composto (C, aceito).** Por quê: contabilmente é depreciação/valorização. Consequência: ajuste **não** entra em "Saiu" (não é dinheiro); aparece em "Seus bens mudaram de valor".
+
+**D17 · Juros: a pessoa informa quanto de cada pagamento foi juros (C).** Por quê: cada banco calcula de um jeito; o app não deve inventar. Consequência: só os juros viram gasto; o resto abate a dívida.
+
+**D18 · Dívida inicial separada por vencimento (A).** Por quê: "devo 205, sendo 190 este mês e 15 no próximo". Consequência: campo `abertas` na conta.
+
+**D19 · Contas fixas não lançam sozinhas: a pessoa confirma "Paguei" (A).** Por quê: evita registrar algo que não aconteceu. Consequência: contam como compromisso, não como despesa, até confirmar.
+
+**D20 · Caixinhas são organização pessoal, FORA da contabilidade, e olham só o dinheiro real nas contas (A).** Por quê: "caixinha é coisa pessoal para organização e não deve considerar dívidas". Consequência: sem partidas, fora do balancete, não mudam o PL; o guardado **sai** de "Dinheiro que eu tenho" e **volta** ao tirar; é possível escolher **de qual conta** sai.
+
+**D21 · Metas do mês são só anotação, não bloqueiam (A).** Por quê: "não é condição obrigatória". Consequência: o pote enche/esvazia; a sobra vira **sugestão** de guardar.
+
+## Dados e segurança
+
+**D22 · Tudo que vem de fora passa por `higienizar()` (C).** Consequência: item inválido é descartado e o original é guardado em `caderneta:v2:corrompido`.
+
+**D23 · Apagar conta, bem ou pessoa com anotações é permitido, com aviso do que sai junto (A).** Por quê: ficavam "presos". Consequência: cascata irreversível (sem "desfazer" ainda; está no roteiro).
+
+**D24 · Listas longas mostram 15 por vez, com busca e ordem por data, valor ou nome (A).** Consequência: bloco único reutilizável (`blocoAnotacoes`).
+
+## Engenharia e hospedagem
+
+**D25 · Um arquivo só para o app, sem framework nem dependências (A/C).** Por quê: simples de publicar e guardar. Consequência: dividir em módulos só quando passar de ~3.500 linhas (com script que gera o arquivo único).
+
+**D26 · Testes em jsdom dentro do repositório; publicar só se passarem (C).** Consequência: `npm test` e GitHub Actions.
+
+**D27 · Versão semântica nos 3 lugares (`package.json`, `VERSAO_APP`, `sw.js`) (C).** Por quê: o nome do cache do `sw.js` é o que faz o celular atualizar.
+
+**D28 · GitHub pessoal `grluans09-source`; a conta da empresa não é usada (A).**
+
+**D29 · Hospedagem hoje: GitHub Pages (repositório público). Plano: Netlify + repositório privado (A, "por enquanto só organizar").** Por quê: Pages gratuito exige repositório público. Consequência: a troca muda o endereço e **os dados não acompanham**; exige aviso e cópia (ver `PUBLICACAO.md`).
+
+**D30 · Frases da capa só de autores reais, atribuição conferida (A).** Consequência: texto é tradução livre; ao incluir novas, conferir a fonte.

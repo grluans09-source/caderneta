@@ -1,0 +1,17 @@
+{
+  "name": "caderneta",
+  "version": "1.0.0",
+  "description": "Caderneta: finanças pessoais simples e intuitivas, com contabilidade de partida dobrada por trás. App instalável (PWA), sem servidor e sem banco de dados.",
+  "private": true,
+  "scripts": {
+    "test": "node tests/rodar.js",
+    "start": "node tools/servidor-local.js",
+    "icones": "node tools/gerar-icones.js app"
+  },
+  "devDependencies": {
+    "jsdom": "^31.0.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

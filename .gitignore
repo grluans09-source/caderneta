@@ -1,0 +1,11 @@
+# dependências e arquivos gerados
+node_modules/
+tests/.tmp/
+
+# configurações locais do Claude Code / editor (não fazem parte do projeto)
+.claude/
+.vscode/
+*.bak
+*.antes
+.DS_Store
+Thumbs.db

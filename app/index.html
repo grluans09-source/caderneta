@@ -351,6 +351,8 @@ html.calmo *,html.calmo *:before{animation:none!important;transition:none!import
 
 /* ---------- utilidades ---------- */
 var KEY="caderneta:v2";
+/* versão do app (siga o CHANGELOG.md; subir junto com VERSAO em sw.js e "version" em package.json) */
+var VERSAO_APP="1.0.0";
 var RE_ID=/^[A-Za-z0-9_-]+$/, RE_DATA=/^\d{4}-\d{2}-\d{2}$/;
 var MES=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
 var MES3=["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
@@ -1310,7 +1312,7 @@ function telaAjustes(){
     '<button class="btn sec" data-a="restaurar">Recuperar de uma cópia</button>'+
     '<input type="file" id="arquivo" accept=".json,application/json" hidden></div>'+
     '<button class="btn perigo" data-a="zerar" style="margin-top:1.4rem">Apagar tudo e recomeçar</button>'+
-    '<p class="faint" style="text-align:center;margin:1.2rem 0">Caderneta · versão 2</p>';
+    '<p class="faint" style="text-align:center;margin:1.2rem 0">Caderneta · versão '+VERSAO_APP+'</p>';
 }
 
 /* =====================================================================
@@ -2049,7 +2051,7 @@ function calcSim(){
    BACKUP
    ===================================================================== */
 function guardarCopia(){
-  var txt=JSON.stringify({app:"caderneta",versao:2,dados:S},null,1), nome="caderneta-"+hojeISO()+".json";
+  var txt=JSON.stringify({app:"caderneta",versao:2,appVersao:VERSAO_APP,dados:S},null,1), nome="caderneta-"+hojeISO()+".json";
   function marcar(){S.config.ultimoBackup=hojeISO();salvar();toast("Cópia guardada!");desenhar()}
   function baixar(){
     try{

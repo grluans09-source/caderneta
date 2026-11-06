@@ -1,96 +1,87 @@
-# Caderneta (v2, do zero)
+# Caderneta: regras e contexto para trabalhar no projeto
 
-App de finanças pessoais (pessoa física), mobile-first, instalável (PWA), **sem servidor e sem banco de dados**. Cada pessoa guarda os próprios dados no celular (`localStorage`). Contabilidade de partida dobrada por baixo; na tela, só linguagem comum.
+> Este arquivo é lido primeiro por quem (pessoa ou Claude) for mexer no projeto. É curto de propósito:
+> aqui estão **as regras e o jeito de trabalhar**. O resto está em `docs/` (veja a tabela no fim).
 
-Idioma de tudo: **português do Brasil**. Público: do idoso ao jovem e ao adulto na correria. Em qualquer dúvida de design, escolher o mais simples de entender.
+## Em que pé estamos
+- **Versão 1.0.0** (6 nov 2026): primeira versão completa e estável, **ainda sem teste com pessoas reais em celular**.
+- App no ar em https://grluans09-source.github.io/caderneta/ (GitHub Pages, publicado por GitHub Actions a partir da pasta `app/`).
+- 1 arquivo de app (`app/index.html`, ~2.400 linhas), 15 arquivos de teste (470 verificações) que rodam com `npm test`.
+- Próximos passos em `docs/ROTEIRO.md`. Estado, riscos e dívidas em `docs/AVALIACAO.md`.
 
-## Arquivos
-- `index.html`: app inteiro (HTML + CSS + JS puro, uma IIFE). Sem framework, sem dependência externa, sem fontes da internet.
-- `sw.js`: cache para abrir sem internet. **Subir `VERSAO` a cada release** (e listar arquivos novos em `ARQUIVOS`).
-- `manifest.webmanifest`, `icon.svg`, `icon-*.png`: instalação na tela inicial.
+## Quem é o dono e como falar com ele
+- O dono **não é programador**. Idioma: **português do Brasil**, sempre.
+- Ele pediu: explicar com **analogias** e **linguagem comum**. Evitar jargão; se usar um termo técnico, explicar em uma frase.
+- Responder com: o que mudou, o que foi testado, o que **não** foi verificado (ex.: celular real), e uma decisão clara quando houver. Nada de enrolação.
+- Antes de qualquer ação que **publica, cria algo público, cria conta ou mexe em configuração do GitHub**, confirmar com ele.
+- Contas: o GitHub certo é a pessoal **grluans09-source**. A conta `lnfinanceiro9-commits` é da empresa e **não deve ser usada** neste projeto. Nunca guardar senhas, tokens ou chaves no repositório.
 
-## Regras de ouro
-- Nunca `alert()`, `confirm()`, `prompt()`. Usar `confirmar()` e os modais próprios.
-- Valores em **centavos (inteiros)**. Nunca float para dinheiro.
-- Lançamentos apontam para gavetas e categorias por **id**, nunca por nome.
-- Todo dado vindo do `localStorage` ou de backup passa por `higienizar()`. Dado ilegível nunca é sobrescrito sem antes guardar cópia (`caderneta:v2:corrompido`).
-- Acesso ao storage só via `lsGet`/`lsSet` (pode lançar exceção em modo privado).
-- Texto de usuário sempre com `esc()`. Ids só `[A-Za-z0-9_-]`.
-- Linguagem da tela: "gaveta", "gastei/recebi/mudei de lugar", "É meu de verdade". Termos técnicos só no "Modo contador" (`VOC`).
-- Alvos de toque grandes, cor nunca é a única pista (sempre + / − e texto), suporte a letra grande (`data-tam`) e tema escuro.
+## O produto em 6 linhas
+1. App de finanças **pessoa física**, mobile-first, instalável (PWA), **sem servidor e sem banco de dados**. Dados em `localStorage`, por aparelho.
+2. Tem que ser usável por um **idoso**, um **jovem** e um **adulto na correria**: simples, intuitivo, letras grandes, poucas decisões por tela.
+3. A **contabilidade (partida dobrada) trabalha por trás**; a pessoa vê palavras comuns. O "Modo contador" (opcional) mostra os termos técnicos.
+4. Visual **"livro-razão vivo"**: papel, tinta, balança de latão, carimbo, animações com propósito. O "exótico" está no visual, nunca na navegação.
+5. Tudo em **um arquivo HTML autocontido** (sem framework, sem build, sem fontes ou scripts externos).
+6. Distribuído por **link**; a pessoa instala na tela inicial. Backup manual pelo botão "Guardar uma cópia".
 
-## Identidade visual: "o livro-razão vivo"
-Conceito: um escritório de contabilidade antigo, vivo. A pessoa sente a contabilidade pela estrutura da tela, sem jargão. O "exótico" vive no visual; navegação e textos continuam em português comum.
-- Peças que passam o ar contábil: conta em T na tela Anotar (de onde saiu | para onde foi, com fio dourado), balança (Tenho = Devo + É meu) que balança e assenta ao lançar, papel com margem vermelha e linhas pontilhadas entre nome e valor, sublinhado duplo em totais, carimbo "LANÇADO", capa verde de livro-caixa com filete de latão.
-- Cores: papel creme, verde de capa (`--capa`), latão (`--latao`), azul tinta = entrou, vermelho tinta = saiu. Modo escuro = "lamparina".
-- Movimento (config `movimento`: "vivo"|"parado"): números que rolam (`data-roll`), balança (`WOB`), moeda no fio, carimbo, página virando nos relatórios, linha nova entrando. Tudo respeita "Parado" e `prefers-reduced-motion` (classe `calmo` no `<html>`; `calmo()` no JS). Animar só `transform`/`opacity`.
-- Letra "Enorme" (`data-tam="gg"`): a conta em T vira lista de uma coluna e o fio some.
-- Testes em jsdom rodam com a classe `calmo` ligada (sem esperas de animação). Animação só se confere no navegador, com o painel visível (painel escondido congela as animações).
+## Regras de ouro do código (não quebrar)
+1. **Um arquivo só**: `app/index.html` com HTML, CSS e JS dentro. Sem framework, bundler ou dependência externa no app. Todo o JS fica dentro de uma IIFE.
+2. **Dinheiro em centavos (inteiros)**. Nunca ponto flutuante para valor.
+3. **Nunca** `alert()`, `confirm()` ou `prompt()` nativos. Usar `confirmar()` e os modais próprios.
+4. **Dados de fora são desconfiados**: tudo que vem do `localStorage` ou de um backup passa por `higienizar()`. Dado ilegível nunca é sobrescrito sem guardar cópia (`caderneta:v2:corrompido`).
+5. **Storage só por `lsGet`/`lsSet`** (podem falhar em modo privado). 
+6. **Todo texto de usuário passa por `esc()`** ao entrar em HTML. Ids só `[A-Za-z0-9_-]`.
+7. Lançamentos apontam para contas e categorias por **id**, nunca por nome.
+8. **Todo lançamento vira partidas de mesmo valor** (débito = crédito). Não criar "atalhos" que quebrem isso. Os testes conferem.
+9. **Acessibilidade**: alvos de toque grandes; cor nunca é a única pista (sempre também sinal +/− e texto); respeitar letra grande (`data-tam`), tema escuro e "Movimento: Parado" / `prefers-reduced-motion`. Animar só `transform` e `opacity`.
+10. **Não copiar** identidade visual nem código de outros sistemas do dono.
 
-## Procurar, filtrar e ordenar anotações
-- Listas longas nunca aparecem inteiras: no máximo 15 linhas por vez, com "Mostrar mais (N restantes)". Tela `anotacoes` (atalho no Início e em Mais) e a lista de Relatórios usam o mesmo bloco (`blocoAnotacoes` + `pintarAnot`, estado `AN`). Ordenar por Data, Valor ou Nome (tocar de novo inverte ↑↓; data e valor começam do maior/mais recente, nome de A a Z). Busca por nome, categoria, conta, valor ou data, sem diferenciar acento ou maiúscula. Filtros: tipo (Tudo/Gastos/Ganhos/Transferências/Bens) e "Mais filtros" (período, conta, categoria; em Relatórios não há período porque o mês já vem das setas). Padrão da tela Anotações = "Este mês". `pintarAnot` só repinta `#anotCtl`/`#anotLista` para a busca não perder o foco. Se criar outra lista que possa crescer, reutilizar esse bloco.
+## Regras de produto (o que o dono decidiu)
+- **Vocabulário comum na tela**: "conta", "Transferi entre contas", "previsão", "Perdeu valor / Ganhou valor", "anotação", "ANOTADO", "o que ainda deve". **Proibido na tela comum**: gaveta, partida dobrada, lançamento, saldo devedor, comprometido, projeção, débito/crédito (só no Modo contador). O teste `08-vocabulario-e-apagar-conta` varre todas as telas atrás dessas palavras.
+- **O app conta dinheiro e bens cadastrados.** Comida/consumo é gasto; carro/TV/casa é "Comprei um bem" (não reduz o "é meu" na compra).
+- **Caixinhas são organização pessoal**, fora da contabilidade: olham só o **dinheiro real nas contas** (sem dívidas), o guardado sai de "Dinheiro que eu tenho" e volta ao tirar.
+- **Listas longas nunca aparecem inteiras**: 15 por vez, com busca e ordem por data, valor ou nome.
+- **Apagar** conta, bem ou pessoa com anotações é permitido, **com aviso claro** do que sai junto.
+- Conteúdo educativo (frases da capa): só autores reais, atribuição conferida.
 
-## O que pagar no mês
-- `pagarNoMes(ym)` soma o que vence naquele mês: parcelas/faturas de dívidas (`aPagar()`, já abatidas pelos pagamentos), contas fixas não pagas nem puladas e dívidas com pessoas. No mês de hoje entram também as atrasadas e as sem data. "Já pago" = transferências para dívidas, contas fixas pagas por conta de dinheiro (não por cartão, para não contar duas vezes) e juros/multas. `cartaoPagar(ym,opções)` desenha o cartão (Início, Planejar só com o total, Relatórios no mês escolhido). Rótulos: "Falta pagar em / Vai vencer em / Ficou em aberto em".
+## Como trabalhar (fluxo de toda mudança)
+1. **Entender** o pedido e conferir `docs/DECISOES.md` e esta página (não desfazer decisão do dono sem perguntar).
+2. **Mudar** em `app/index.html` (e só nela, salvo ícones/manifest/sw).
+3. **Testar**: `npm test` (tem que dar "TUDO CERTO"). Mudança de comportamento ⇒ **escrever ou ajustar um teste** em `tests/`. Bug encontrado ⇒ teste que o reproduz **antes** da correção.
+4. **Ver no navegador** em 375×812 (`npm start`), inclusive letra "Enorme" e tema escuro quando mexer em layout. Animação só se confere com o painel visível.
+5. **Documentar**: atualizar `docs/ARQUITETURA.md` se mudou modelo/regra, `docs/DECISOES.md` se foi uma decisão, `docs/ROTEIRO.md` se mudou o plano, e `CHANGELOG.md`.
+6. **Versionar** (ver "Versão e publicação") e **enviar ao GitHub**. O GitHub roda os testes e publica sozinho.
+7. **Reportar** ao dono em português simples, dizendo o que **não** foi verificado.
 
-## Vocabulário na tela (regra)
-Falar como a pessoa fala. Na tela: "conta" (carteira, banco, poupança, cartão), "Transferi entre contas", "previsão", "Perdeu valor / Ganhou valor", "anotação", "ANOTADO" (carimbo), "o que ainda deve". NUNCA na tela comum: gaveta, partida dobrada, lançamento, saldo devedor, comprometido, projeção, débito/crédito (esses só no Modo contador). Nomes internos (`data-a="gaveta"`, `modalGaveta`, `tipo:"transferencia"`) continuam como estão. O teste `t9` varre todas as telas atrás dessas palavras: rodar sempre que mexer em textos.
-- Apagar conta, bem ou pessoa com anotações é permitido, com aviso do que sai junto (anotações, contas fixas); equivale a "nunca existiu".
+## Versão e publicação
+- Versão semântica `MAJOR.MINOR.PATCH`: **PATCH** = correção; **MINOR** = função nova compatível; **MAJOR** = quebra de dados/compatibilidade.
+- A versão fica em **3 lugares que sobem juntos**: `package.json` ("version"), `app/index.html` (`VERSAO_APP`) e `app/sw.js` (`VERSAO = "caderneta-<versão>"`). **Esquecer o `sw.js` faz os celulares não atualizarem.**
+- Marcar cada versão no Git: `git tag -a vX.Y.Z -m "..."` e `git push --tags`.
+- Checklist completo e plano de migração para Netlify: `docs/PUBLICACAO.md`.
 
-## Modelo
-- `S = { contas, categorias, lancamentos, config }`, chave `caderneta:v2`.
-- Conta (gaveta): `{ id, nome, tipo: "ativo"|"passivo", inicial, fecha?, vence?, limite?, abertas? }`.
-- `abertas: [{data|null, valor}]` (só em dívida): o que a pessoa já devia ao começar, separado por vencimento (ex.: 190 em 05/11 + 15 em 05/12). `inicial` é sempre a soma de `abertas` quando existe. Sem `abertas`, `inicial` vira um item sem data.
-- Categoria: `{ id, nome, tipo: "despesa"|"receita" }`.
-- Lançamento: `{ id, tipo: "saida"|"entrada"|"transferencia", valor, desc, contaId, destinoId, catId, data, parcelas? }`.
-- `parcelas: [{data, valor}]` é só o cronograma de pagamento; a despesa inteira nasce na data da compra (competência). Compra em gaveta de dívida sempre gera `parcelas` (mesmo à vista = 1).
-- Backup: `{ app:"caderneta", versao:2, dados:S }`.
+## Comandos
+```bash
+npm install     # uma vez, instala o jsdom (só para os testes)
+npm test        # roda tudo; sai com erro se algo falhar
+npm start       # app em http://localhost:8765 (pasta app/)
+npm run icones  # regenera os ícones PNG a partir do desenho em tools/gerar-icones.js
+```
 
-## Motor contábil
-- saída: D categoria / C gaveta · entrada: D gaveta / C categoria · transferência: D destino / C origem.
-- Ativo cresce a débito, passivo a crédito. PL = ativo − passivo. Só competência (sem regime de caixa).
-- Pagar fatura = **transferência** banco → cartão, nunca nova despesa.
-- Contas a pagar (`itensDevidos`/`aPagar`): pagamentos quitam as parcelas mais antigas primeiro (FIFO).
-- Ciclo do cartão (`proximoFechamento`, `primeiroVencimento`): compra até o dia do fechamento (inclusive) entra na fatura que fecha neste mês. Se `vence > fecha`, vence no mesmo mês do fechamento; senão, no seguinte. Dia inexistente cai no último dia do mês. `addMes` nunca "rola" para o mês seguinte.
-- Casos que não podem regredir: fecha 25/vence 5 (20/set→05/out, 27/set→05/nov); fecha 1/vence 5 (12/set→05/out, 01/set→05/set); fecha 5/vence 15 (04/set→15/09, 06/set→15/10); virada de ano; vencimento 31 em fevereiro.
+## Armadilhas conhecidas
+- O **service worker** serve a versão antiga: ao testar no navegador, desregistre o SW e limpe o cache (ou use janela anônima).
+- O painel de navegador escondido **congela animações**: mostre-o antes de conferir.
+- Os testes usam uma **cópia** do app com um "gancho" (`window.__T`). Se um teste novo precisar de outra função interna, acrescente o nome em `tests/preparar.js`.
+- Nomes internos antigos continuam (`modalGaveta`, `data-a="gaveta"`): na tela já é "conta". **Não renomear às cegas**; se for renomear, faça com teste rodando.
+- Cuidado com `desenhar()`: refaz a tela inteira. Para campos com foco (busca), repintar só o pedaço (veja `pintarAnot`).
 
-## Funções de planejamento (v3)
-- Menu: Início · Dinheiro · [+ Anotar] · Planejar · Mais. Planejar leva a Caixinhas, Contas fixas e Simulador; Mais leva a Relatórios e Ajustes (`ABA` marca a aba certa).
-- **Pessoas** (gaveta com `pessoa:true`, `cobrar?`): emprestei = conta `ativo` (a receber), peguei emprestado = conta `passivo`. É tudo transferência (nada de gasto). Perdoar dívida = saída para a categoria "Dívidas não pagas" (aí sim vira despesa). Dívida com pessoa `passivo` entra em `aPagar()`.
-- **Contas fixas** (`S.fixas`): compromisso futuro, NÃO é despesa até a pessoa tocar em "Paguei" (cria saída com `fixaId` + `ref` "AAAA-MM"). `puladas` guarda meses pulados. Sem notificação (não há servidor): o app avisa ao abrir, na agenda e na tela inicial.
-- **Caixinhas** = organização PESSOAL, fora da contabilidade (não geram partidas, não aparecem no balancete, não mexem no PL). (a) meta do mês = `categoria.meta`; (b) caixinha de guardar (`S.caixas`), movida por `S.reservas {de,para}` onde `"livre"` é o dinheiro livre. Gasto pago com caixinha = `lancamento.caixaId`. Regra: só contam o **dinheiro que existe nas contas** (`dinheiroEmConta()` = contas de dinheiro, sem dívidas, bens nem o que devem a você). Invariante: `dinheiroEmConta = livreAgora + totalReservado`. Livre pode ficar negativo se o dinheiro sair das contas por fora; a tela avisa. Na balança/legenda (modo comum) o guardado SAI de "Dinheiro que eu tenho" e aparece como "Guardado nas caixinhas" (moedas roxas, `t.guardado`); o "é meu" não muda. No Modo contador as caixinhas são ignoradas. Os saldos de cada conta (Dinheiro) continuam reais, iguais ao banco. Botão "Usar o dinheiro guardado" (Início) = `modalTirarRapido`.
-- **Guardado por conta**: cada movimento em `S.reservas` pode ter `conta` (de qual conta sai o dinheiro ao guardar). `bucketsCaixa(id)` calcula em qual conta está o dinheiro de cada caixinha (movimentos e gastos `caixaId` em ordem de data; tirar e gasto liberam primeiro o da conta escolhida/que pagou, depois o resto). `guardadoConta(c)`, `livreConta(c)` = saldo real − guardado dela; guardar só vale até o livre da conta escolhida. Movimento antigo sem `conta` cai na primeira conta de dinheiro. Apagar a conta apaga os movimentos de caixinha dela.
-- **Início**: "Minhas caixinhas" = cofres animados (`cofreSvg`: moedas empilhadas por % do alvo, moeda caindo em loop e brilho) e "Metas do mês" = potes. O cartão "O que pagar" tem setas de mês (`PAG_OFF`, de −2 a +11; reinicia ao voltar ao Início) que só atualizam `#cardPagar`.
-- **Simulador**: não grava nada. `comprometidoMeses(12)` = dívidas em aberto + contas fixas por mês; compara com a renda (`rendaMedia()` ou `config.renda`). Semáforo é referência, não conselho.
-- Gráfico "para onde o que é meu está indo": do primeiro mês de uso (até 5 atrás) até 6 meses à frente; futuro = projeção pela sobra média dos últimos meses, pontilhado.
-- Frases da capa: lista `FRASES` (autores reais, tradução livre); troca por dia e ao tocar. Conferir a fonte ao incluir novas.
-- Valores digitados sempre mostram "R$" (`ligarDinheiro`). O botão Salvar da tela Anotar fica no fim do formulário, em ordem de uso (não é fixo/sticky).
-
-## Bens (carro, casa, TV, celular)
-- Regra contábil: o app conta DINHEIRO e BENS cadastrados. Consumo (comida, conta de luz) é gasto e reduz o "é meu". Bem que guarda valor é "Comprei um bem": `lancamento.tipo="bem"` com `destinoId` = conta `bem:true`. Partidas: D bem / C gaveta (ou cartão, com parcelas). Não é despesa e o PL não muda na compra.
-- Conta de bem: `{bem:true, tipo:"ativo", taxa (% ao ano; negativo = perde valor), desde, ajustadoAte}`. Bens ficam fora das listas de gavetas do Anotar e de `contasNormais()`.
-- Valor muda por `lancamento.tipo="ajuste"` (`sinal:"alta"|"baixa"`, `contaId`=bem): alta = D bem / C "Valorização de bens" (categoria virtual `__valoriza`); baixa = D "Desvalorização de bens" (`__desvaloriza`) / C bem. Ajuste NÃO entra em Entrou/Saiu (é `resumoMes().aj`); entra no PL e no balancete.
-- `atualizarBens()` roda ao abrir e ao restaurar backup: um ajuste por mês completo, composto (taxa/12 sobre o valor do fim do mês), idempotente via `ajustadoAte`.
-- Venda: ajuste até o preço (ganho/perda) + transferência bem → gaveta.
-- `livreAgora()` = dinheiro nas contas − caixinhas (ver Caixinhas); dívidas e bens não entram.
-- Balança: esquerda = dinheiro (moedas verdes) + bens (azuis); direita = dívidas (vermelhas) + sobra (douradas).
-
-## Bem que já se tem (quitado ou ainda pagando)
-- "Já tenho um bem" cria a conta do bem com `inicial` = valor de hoje. Se "Ainda estou pagando" estiver ligado, cria também a dívida `"Financiamento: <bem>"` (`passivo`, `inicial` = saldo devedor, `abertas` = parcelas mês a mês a partir da data informada, via `dividir`). PL inicial = valor − saldo devedor. O saldo devedor NÃO inclui juros futuros: os juros entram parcela a parcela pelo campo de juros ao pagar.
-- Compra com entrada + financiamento: anotar dois "Comprei um bem" para o mesmo bem (um pagando com a gaveta, outro na dívida).
-
-## Pagar dívida com juros
-- Ao "Mudar de lugar" para uma gaveta `passivo`, o campo opcional "quanto foi de juros ou multa?" (`F.juros`) divide o pagamento em DOIS lançamentos: a transferência só do principal (abate a dívida) e uma saída do mesmo valor de juros, paga pela gaveta de origem, na categoria "Juros e multas" (`jurosCat()`, criada sob demanda). Assim o gasto aparece em Saiu e o PL cai só pelos juros. Juros devem ser menores que o valor pago.
-
-## Como testar depois de qualquer mudança
-1. Extrair o `<script>` e rodar `node --check`.
-2. Testar com jsdom numa CÓPIA do arquivo com um hook temporário (`window.__T`), nunca no original: onboarding, gasto, compra parcelada, pagar fatura, editar/apagar, backup ida e volta, todas as telas.
-3. Conferir no navegador em 375×812 (tela de Anotar, Início, Gavetas, Relatórios) e em letra "Enorme".
-4. Durante o desenvolvimento, o service worker serve a versão antiga: desregistrar o SW e limpar o cache antes de conferir.
-
-## Pendências / ideias
-- Gastos fixos que se repetem (aluguel, salário) e envelopes/limite por categoria.
-- Lembrete de vencimento por notificação (exige permissão do navegador; avaliar).
-- Gráfico de rosca por categoria.
-- Teste com pessoas reais: um idoso, um jovem, alguém na correria.
-- Hospedagem estática gratuita (GitHub Pages ou Netlify) para distribuir o link.
+## Onde está o resto
+| Documento | Para quê |
+|---|---|
+| `README.md` | Visão geral e como rodar |
+| `docs/CONTEXTO.md` | Por que o app é assim; o que o dono pediu; glossário |
+| `docs/ARQUITETURA.md` | Dados, motor contábil, telas, mapa das funções, testes |
+| `docs/AVALIACAO.md` | Estado atual, riscos, dívidas técnicas |
+| `docs/ROTEIRO.md` | Próximos passos por prioridade |
+| `docs/DECISOES.md` | Decisões e motivos |
+| `docs/PUBLICACAO.md` | Publicar, backup, recuperar o projeto, migrar para Netlify |
+| `CHANGELOG.md` | Histórico de versões |

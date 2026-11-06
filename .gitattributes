@@ -1,0 +1,3 @@
+# Fim de linha sempre LF (evita avisos e diferenças entre Windows, Mac e Linux)
+* text=auto eol=lf
+*.png binary
