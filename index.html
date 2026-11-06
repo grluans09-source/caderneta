@@ -1451,7 +1451,7 @@ function modalBem(id,daFolha){
     '<p class="faint">É uma estimativa e você corrige quando quiser. Exemplos: carro 10 a 15% ao ano, celular uns 30%, casa costuma ganhar uns 3 a 6%.</p>'+
     '<button class="btn" data-a="bSalvar">Salvar</button>'+
     (b?'<button class="btn sec" data-a="bAjuste">Atualizar o valor</button><button class="btn sec" data-a="bVenda">Vendi</button>':'')+
-    (b&&!uso?'<button class="btn perigo" data-a="bApagar">Apagar</button>':'')+
+    (b?'<button class="btn perigo" data-a="bApagar">Apagar</button>':'')+
     '<button class="btn sec" data-a="mFechar">Cancelar</button>');
   if($("#bValor"))ligarDinheiro($("#bValor"),0);
   if($("#bFalta"))ligarDinheiro($("#bFalta"),0);
@@ -1561,7 +1561,7 @@ function modalPessoa(id){
     '<button class="btn" data-a="pEditar">Salvar nome e data</button>'+
     (rec?(s>0?'<button class="btn sec" data-a="pReceber">Recebi (devolveu)</button>':'')+'<button class="btn sec" data-a="pMais">Emprestei mais</button>'+(s>0?'<button class="btn perigo" data-a="pPerdoar">Perdoar a dívida</button>':'')
         :(s>0?'<button class="btn sec" data-a="pPagar">Paguei</button>':'')+'<button class="btn sec" data-a="pMais">Peguei mais</button>')+
-    (!uso?'<button class="btn perigo" data-a="pApagar">Apagar</button>':'')+
+    '<button class="btn perigo" data-a="pApagar">Apagar</button>'+
     '<button class="btn sec" data-a="mFechar">Fechar</button>');
 }
 function primeiraGaveta(){return S.contas.filter(function(x){return x.tipo==="ativo"&&!x.pessoa&&!x.bem})[0]||null}
@@ -1972,7 +1972,16 @@ var ACOES={
       salvar(); desenhar(); toast("Dívida perdoada");
     });
   },
-  pApagar:function(){var id=PS.id; confirmar("Apagar "+nomeConta(id)+" do caderninho?","Apagar",function(){S.contas=S.contas.filter(function(c){return c.id!==id}); salvar(); desenhar(); toast("Apagado")})},
+  pApagar:function(){
+    var id=PS.id, c=conta(id); if(!c)return;
+    var ls=S.lancamentos.filter(function(l){return l.contaId===id||l.destinoId===id});
+    confirmar(ls.length
+      ?"Apagar "+c.nome+" e as "+ls.length+" anotações ligadas (empréstimos, pagamentos)? É como se isso nunca tivesse acontecido: o dinheiro das gavetas volta ao que era."
+      :"Apagar "+c.nome+" do caderninho?","Apagar tudo",function(){
+      S.lancamentos=S.lancamentos.filter(function(l){return l.contaId!==id&&l.destinoId!==id});
+      S.contas=S.contas.filter(function(x){return x.id!==id}); salvar(); desenhar(); toast("Apagado");
+    });
+  },
   /* contas fixas */
   fixa:function(d){modalFixa(d.id||null)},
   xFreq:function(d){X.freq=d.f; document.querySelectorAll("#xFreqs button").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.f===d.f))}); $("#xMesWrap").hidden=d.f!=="anual"},
@@ -2025,7 +2034,22 @@ var ACOES={
   bVenda:function(){var id=BM.id; modalVendaBem(id)},
   vdGav:function(d){BM.gav=d.id; document.querySelectorAll("#vdGavs .chip").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.id===d.id))})},
   vdSalvar:salvarVendaBem,
-  bApagar:function(){var id=BM.id; confirmar("Apagar "+nomeConta(id)+"?","Apagar",function(){S.contas=S.contas.filter(function(c){return c.id!==id}); salvar(); desenhar(); toast("Bem apagado")})},
+  bApagar:function(){
+    var id=BM.id, b=conta(id); if(!b)return;
+    var ls=S.lancamentos.filter(function(l){return l.contaId===id||l.destinoId===id});
+    var fin=S.contas.filter(function(c){return c.tipo==="passivo"&&c.nome==="Financiamento: "+b.nome})[0];
+    var finLivre=!!fin&&!S.lancamentos.some(function(l){return l.contaId===fin.id||l.destinoId===fin.id});
+    var txt=ls.length
+      ?"Apagar "+b.nome+" e as "+ls.length+" anotações ligadas a ele (compra, vendas, ajustes de valor)? É como se o bem nunca tivesse existido: o dinheiro das gavetas volta ao que era. Se você vendeu o bem, use “Vendi” em vez de apagar."
+      :"Apagar "+b.nome+"?";
+    if(finLivre)txt+=" A dívida “"+fin.nome+"” (sem nenhum pagamento) também será apagada.";
+    else if(fin)txt+=" A dívida “"+fin.nome+"” já tem pagamentos e continua no app.";
+    confirmar(txt,"Apagar tudo",function(){
+      S.lancamentos=S.lancamentos.filter(function(l){return l.contaId!==id&&l.destinoId!==id});
+      S.contas=S.contas.filter(function(c){return c.id!==id&&!(finLivre&&c.id===fin.id)});
+      salvar(); desenhar(); toast("Bem apagado");
+    });
+  },
   sTipo:function(d){SIM.bem=d.b==="1"; document.querySelectorAll("#sTipo .chip").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.b===d.b))}); calcSim()},
   fAdd:function(d){addLinhaFatura(d.c,null)},
   fDel:function(d,b){b.closest(".linha-f").remove()},
