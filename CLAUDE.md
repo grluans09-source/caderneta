@@ -27,6 +27,10 @@ Conceito: um escritório de contabilidade antigo, vivo. A pessoa sente a contabi
 - Letra "Enorme" (`data-tam="gg"`): a conta em T vira lista de uma coluna e o fio some.
 - Testes em jsdom rodam com a classe `calmo` ligada (sem esperas de animação). Animação só se confere no navegador, com o painel visível (painel escondido congela as animações).
 
+## Vocabulário na tela (regra)
+Falar como a pessoa fala. Na tela: "conta" (carteira, banco, poupança, cartão), "Transferi entre contas", "previsão", "Perdeu valor / Ganhou valor", "anotação", "ANOTADO" (carimbo), "o que ainda deve". NUNCA na tela comum: gaveta, partida dobrada, lançamento, saldo devedor, comprometido, projeção, débito/crédito (esses só no Modo contador). Nomes internos (`data-a="gaveta"`, `modalGaveta`, `tipo:"transferencia"`) continuam como estão. O teste `t9` varre todas as telas atrás dessas palavras: rodar sempre que mexer em textos.
+- Apagar conta, bem ou pessoa com anotações é permitido, com aviso do que sai junto (anotações, contas fixas); equivale a "nunca existiu".
+
 ## Modelo
 - `S = { contas, categorias, lancamentos, config }`, chave `caderneta:v2`.
 - Conta (gaveta): `{ id, nome, tipo: "ativo"|"passivo", inicial, fecha?, vence?, limite?, abertas? }`.

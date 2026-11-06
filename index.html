@@ -185,7 +185,7 @@ html[data-tam="gg"] .lnk{display:none}
 .carimbo.on{animation:car 1.1s ease-out}
 @keyframes car{0%{opacity:0;transform:translate(-50%,-50%) rotate(-12deg) scale(2.3)}20%{opacity:1;transform:translate(-50%,-50%) rotate(-12deg) scale(1)}75%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) rotate(-12deg) scale(1)}}
 
-/* gavetas */
+/* contas */
 .gaveta{display:flex;align-items:center;gap:.75rem;width:100%;padding:.8rem 0;border-bottom:1px solid var(--rule);min-height:3.6rem}
 .gaveta:last-child{border-bottom:0}
 .marca{width:.65rem;height:2.4rem;border-radius:.2rem;background:var(--in);flex:none}
@@ -312,8 +312,7 @@ html.calmo *,html.calmo *:before{animation:none!important;transition:none!import
 <section class="onb" id="onb" aria-label="Primeiros passos"><div class="wrap" id="onbCorpo"></div></section>
 <div class="modal-fundo" id="modalFundo"><div class="modal" id="modal" role="dialog" aria-modal="true"></div></div>
 <div class="toast" id="toast" role="status"></div>
-<div class="carimbo" id="carimbo" aria-hidden="true">LANÇADO</div>
-<div class="carimbo" id="carimbo" aria-hidden="true">LANÇADO</div>
+<div class="carimbo" id="carimbo" aria-hidden="true">ANOTADO</div>
 
 <script>
 (function(){
@@ -492,7 +491,7 @@ function salvar(){
 
 function conta(id){for(var i=0;i<S.contas.length;i++)if(S.contas[i].id===id)return S.contas[i];return null}
 function cat(id){for(var i=0;i<S.categorias.length;i++)if(S.categorias[i].id===id)return S.categorias[i];return null}
-function nomeConta(id){var c=conta(id);return c?c.nome:"(gaveta apagada)"}
+function nomeConta(id){var c=conta(id);return c?c.nome:"(conta apagada)"}
 function nomeCat(id){if(id==="__valoriza")return "Valorização de bens"; if(id==="__desvaloriza")return "Desvalorização de bens"; var c=cat(id);return c?c.nome:"Sem categoria"}
 
 /* ---------- vocabulário: comum x contador ---------- */
@@ -507,9 +506,9 @@ function v(k){return VOC[S.config.contador?"contador":"simples"][k]}
 /* =====================================================================
    MOTOR DE PARTIDA DOBRADA
    Toda moeda tem duas faces: de onde saiu e para onde foi.
-   gasto        : D categoria (despesa) / C gaveta que pagou
-   ganho        : D gaveta que recebeu  / C categoria (receita)
-   mudar lugar  : D gaveta destino      / C gaveta de origem
+   gasto        : D categoria (despesa) / C conta que pagou
+   ganho        : D conta que recebeu  / C categoria (receita)
+   mudar lugar  : D conta destino      / C conta de origem
    Ativo cresce a débito; passivo cresce a crédito. PL = ativo − passivo.
    ===================================================================== */
 function partidas(l){
@@ -554,7 +553,7 @@ function resumoMes(ym){
 }
 function ordemRecente(a,b){return a.data<b.data?1:a.data>b.data?-1:(a.id<b.id?1:-1)}
 
-/* o que ainda falta pagar numa gaveta de dívida (cartão, empréstimo...).
+/* o que ainda falta pagar numa conta de dívida (cartão, empréstimo...).
    Pagamentos (mudar de lugar para a dívida) quitam os itens mais antigos primeiro. */
 function itensDevidos(c){
   if(c.pessoa){var sp=saldoConta(c); return sp>0?[{data:c.cobrar||null,valor:sp,desc:"Dívida com "+c.nome,n:1,de:1}]:[]}
@@ -582,7 +581,7 @@ function itensDevidos(c){
   });
   return out;
 }
-/* contas a pagar: itens em aberto agrupados por gaveta e data de vencimento */
+/* contas a pagar: itens em aberto agrupados por conta e data de vencimento */
 function aPagar(){
   var out=[];
   S.contas.filter(function(c){return c.tipo==="passivo"}).forEach(function(c){
@@ -871,7 +870,7 @@ function linha(l){
       sinal=aj?(l.sinal==="alta"?"↑":"↓"):l.tipo==="entrada"?"+":l.tipo==="saida"?"−":"⇄",
       det=mov?nomeConta(l.contaId)+" → "+nomeConta(l.destinoId):aj?nomeConta(l.contaId)+" · valor do bem mudou":nomeCat(l.catId)+" · "+nomeConta(l.contaId),
       par=l.parcelas&&l.parcelas.length>1?" · "+l.parcelas.length+"x":"",
-      tit=l.desc||(l.tipo==="bem"?"Comprei "+nomeConta(l.destinoId):aj?"Ajuste de valor":l.tipo==="transferencia"?"Mudança de lugar":nomeCat(l.catId));
+      tit=l.desc||(l.tipo==="bem"?"Comprei "+nomeConta(l.destinoId):aj?"Ajuste de valor":l.tipo==="transferencia"?"Transferência":nomeCat(l.catId));
   return '<button class="lanc'+(l.id===ULTIMO?" novo-lin":"")+'" data-a="editar" data-id="'+l.id+'" aria-label="Editar: '+esc(tit)+'">'+
     '<span class="dia"><b>'+p[2]+'</b><i>'+MES3[+p[1]-1]+'</i></span>'+
     '<span class="txt"><b>'+esc(tit)+'</b><i>'+esc(det+par)+'</i></span><span class="pont"></span>'+
@@ -954,7 +953,7 @@ function telaInicio(){
 /* ---------- TELA: GAVETAS ---------- */
 function telaContas(){
   var ativos=S.contas.filter(function(c){return c.tipo==="ativo"&&!c.pessoa&&!c.bem}), pas=S.contas.filter(function(c){return c.tipo==="passivo"&&!c.pessoa});
-  var pend=aPagar(), h=capa("Onde está tudo","Dinheiro")+'<p class="sub lead">Cada gaveta é um lugar onde seu dinheiro está (ou uma dívida que você tem).</p>';
+  var pend=aPagar(), h=capa("Onde está tudo","Dinheiro")+'<p class="sub lead">Cada conta é um lugar onde seu dinheiro está (carteira, banco, poupança) ou uma dívida que você tem (cartão, empréstimo).</p>';
   h+='<h2>'+esc(v("ativo"))+'</h2><div class="card" style="padding:.2rem 1rem">'+
     (ativos.length?ativos.map(function(c){
       return '<button class="gaveta" data-a="gaveta" data-id="'+c.id+'"><span class="marca"></span><span class="txt"><b>'+esc(c.nome)+'</b><i>Toque para editar</i></span><span class="pont"></span><span class="vl">'+esc(brl(saldoConta(c)))+'</span></button>';
@@ -972,7 +971,7 @@ function telaContas(){
         :'<p class="faint" style="margin-top:.3rem">Devo: <b style="color:var(--ink)">'+esc(brl(uso))+'</b></p>')+
       (prox?'<button class="btn peq" data-a="pagar" data-id="'+c.id+'" data-valor="'+prox.valor+'">Pagar '+esc(brl(prox.valor))+'</button>':'')+'</div>';
   });
-  h+=blocoBens()+blocoPessoas()+'<button class="btn" data-a="gaveta" data-id="">+ Nova gaveta</button>';
+  h+=blocoBens()+blocoPessoas()+'<button class="btn" data-a="gaveta" data-id="">+ Nova conta</button>';
   return h;
 }
 
@@ -1008,7 +1007,7 @@ function telaRel(){
   var h=capa("Livro de "+MES[REF.getMonth()],"Relatórios","mais")+'<div class="mes"><button data-a="mes" data-n="-1" aria-label="Mês anterior">‹</button><b>'+MES[REF.getMonth()]+' de '+REF.getFullYear()+'</b><button data-a="mes" data-n="1" aria-label="Próximo mês">›</button></div>';
   h+='<div class="tri"><div class="e"><span>'+esc(v("entrou"))+'</span><b>+'+num(r.ent)+'</b></div><div class="s"><span>'+esc(v("saiu"))+'</span><b>−'+num(r.sai)+'</b></div>'+
      '<div><span>'+esc(v("sobrou"))+'</span><b style="color:'+(sob<0?"var(--out)":"var(--ink)")+'">'+(sob<0?"−":"")+num(sob)+'</b></div></div>';
-  if(r.aj)h+='<p class="faint" style="text-align:center">Valor dos bens: <b style="color:var(--ink)">'+(r.aj>0?"+":"−")+num(r.aj)+'</b> neste mês (valorização ou desvalorização, não é dinheiro).</p>';
+  if(r.aj)h+='<p class="faint" style="text-align:center">Valor dos bens: <b style="color:var(--ink)">'+(r.aj>0?"+":"−")+num(r.aj)+'</b> neste mês (o bem ganhou ou perdeu valor, não é dinheiro).</p>';
   h+='<h2>Para onde foi o dinheiro</h2><div class="card">'+barras(r.porSai,r.sai,"s")+'</div>';
   h+='<h2>De onde veio</h2><div class="card">'+barras(r.porEnt,r.ent,"e")+'</div>';
 
@@ -1059,7 +1058,7 @@ function graficoEvolucao(){
   var last=pts[pts.length-1];
   s+='<text x="'+(W-pR)+'" y="14" font-size="11" font-weight="700" fill="var(--ink)" text-anchor="end">em 6 meses: '+esc(brl(last.pl))+'</text>';
   var nota=sobras.length
-    ? 'A linha pontilhada é uma <b>projeção</b>: se você continuar '+(media>=0?"sobrando":"gastando a mais")+' cerca de <b>'+esc(brl(Math.abs(media)))+'</b> por mês, o que é seu chega a <b>'+esc(brl(last.pl))+'</b> em 6 meses.'
+    ? 'A linha pontilhada é uma <b>previsão</b>: se você continuar '+(media>=0?"sobrando":"gastando a mais")+' cerca de <b>'+esc(brl(Math.abs(media)))+'</b> por mês, o que é seu chega a <b>'+esc(brl(last.pl))+'</b> em 6 meses.'
     : 'Anote por um tempo e a linha pontilhada mostra para onde o que é seu está indo nos próximos 6 meses.';
   return '<svg class="grafico" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Do começo até 6 meses à frente">'+s+'</svg><p class="sub" style="margin-top:.4rem">'+nota+'</p>';
 }
@@ -1130,7 +1129,7 @@ window.addEventListener("popstate",function(){
 });
 
 function novaFolha(o){
-  if(!S.contas.length){toast("Crie uma gaveta primeiro");ir("contas");return}
+  if(!S.contas.length){toast("Crie uma conta primeiro");ir("contas");return}
   F=Object.assign({id:null,tipo:"saida",cent:0,contaId:null,destinoId:null,catId:null,desc:"",data:hojeISO(),n:1},o||{});
   ajustarFolha(); abrirFolha(); desenharFolha();
 }
@@ -1170,7 +1169,7 @@ function desenharFolha(){
   h+='<div class="seg3" role="group" aria-label="O que aconteceu">'+
     '<button class="s" data-a="fTipo" data-t="saida" aria-pressed="'+(F.tipo==="saida")+'">Gastei</button>'+
     '<button class="e" data-a="fTipo" data-t="entrada" aria-pressed="'+(F.tipo==="entrada")+'">Recebi</button>'+
-    '<button class="t" data-a="fTipo" data-t="transferencia" aria-pressed="'+(F.tipo==="transferencia")+'">Mudei de lugar</button>'+
+    '<button class="t" data-a="fTipo" data-t="transferencia" aria-pressed="'+(F.tipo==="transferencia")+'">Transferi entre contas</button>'+
     '<button class="b" data-a="fTipo" data-t="bem" aria-pressed="'+(F.tipo==="bem")+'">Comprei um bem</button></div>';
   h+='<label class="rot" for="fValor">Quanto?</label><input id="fValor" class="dinheiro '+cl+'" inputmode="numeric" autocomplete="off" placeholder="R$ 0,00">';
 
@@ -1246,7 +1245,7 @@ function previa(){
       h='A compra fica em <b>'+esc(c.nome)+'</b> como dívida e ainda não mexe no seu dinheiro vivo.';
       if(ps)h+='<div style="margin-top:.5rem">'+ps.slice(0,12).map(function(p,i){return '<div class="parc"><span>'+(F.n>1?(i+1)+'/'+F.n+' · ':'')+'vence '+dataBR(p.data)+'</span><b>'+brl(p.valor)+'</b></div>'}).join("")+
         (ps.length>12?'<div class="faint">... e mais '+(ps.length-12)+' parcelas</div>':'')+'</div>';
-      if(!(c.fecha&&c.vence))h+='<p class="faint" style="margin-top:.4rem">Dica: cadastre o dia que a fatura fecha e vence nessa gaveta para o app calcular a data certa.</p>';
+      if(!(c.fecha&&c.vence))h+='<p class="faint" style="margin-top:.4rem">Dica: cadastre o dia que a fatura fecha e vence nessa conta para o app calcular a data certa.</p>';
     }else h='O dinheiro sai de <b>'+esc(c?c.nome:"?")+'</b> e fica registrado em <b>'+esc(k?k.nome:"?")+'</b>.';
   }else if(F.tipo==="bem"){
     h='O dinheiro vira o bem <b>'+esc(d?d.nome:"?")+'</b>: você troca dinheiro por algo que guarda valor. O seu "é meu" <b>não cai</b> agora.';
@@ -1258,7 +1257,7 @@ function previa(){
   }else if(F.tipo==="entrada")h='O dinheiro entra em <b>'+esc(c?c.nome:"?")+'</b>, vindo de <b>'+esc(k?k.nome:"?")+'</b>.';
   else{
     h=d&&d.tipo==="passivo"?'Você está <b>pagando uma dívida</b> ('+esc(d.nome)+'). Isso não é um gasto novo: o gasto já foi anotado quando você comprou.'+(F.juros>0&&valor>F.juros?' Só os <b>'+esc(brl(F.juros))+'</b> de juros viram gasto; <b>'+esc(brl(valor-F.juros))+'</b> abatem a dívida.':'')
-      :'O dinheiro só <b>muda de lugar</b>, de <b>'+esc(c?c.nome:"?")+'</b> para <b>'+esc(d?d.nome:"?")+'</b>. Não é gasto nem ganho.';
+      :'O dinheiro só <b>passa de uma conta para outra</b>, de <b>'+esc(c?c.nome:"?")+'</b> para <b>'+esc(d?d.nome:"?")+'</b>. Não é gasto nem ganho.';
   }
   if(S.config.contador){
     var deb=F.tipo==="saida"?(k&&k.nome):F.tipo==="entrada"?(c&&c.nome):(d&&d.nome), cre=F.tipo==="saida"?(c&&c.nome):F.tipo==="entrada"?(k&&k.nome):(c&&c.nome);
@@ -1269,7 +1268,7 @@ function previa(){
 function salvarFolha(){
   if(!F.cent){toast("Diga quanto foi");$("#fValor").focus();return}
   if(F.tipo==="transferencia"){
-    if(!F.destinoId||F.destinoId===F.contaId){toast("Escolha duas gavetas diferentes");return}
+    if(!F.destinoId||F.destinoId===F.contaId){toast("Escolha duas contas diferentes");return}
   }else if(F.tipo==="bem"){
     if(!F.destinoId||!conta(F.destinoId)){toast("Escolha o bem ou crie um novo");return}
   }else if(!F.catId){toast("Escolha uma categoria");return}
@@ -1291,23 +1290,23 @@ function salvarFolha(){
   salvar(); ULTIMO=l.id; WOB=true;
   var fim=function(){var u=ULTIMO; fecharFolha(); toast(i>=0?"Alterado!":"Pronto, anotado!"); ULTIMO=u; desenhar()};
   if(calmo()){fim();return}
-  carimbo(i>=0?"ALTERADO":"LANÇADO"); moedaFio();
+  carimbo(i>=0?"ALTERADO":"ANOTADO"); moedaFio();
   setTimeout(fim,800);
 }
 
 /* =====================================================================
-   MODAIS: gaveta e categoria
+   MODAIS: conta e categoria
    ===================================================================== */
 var G=null;
 function modalGaveta(id){
   var c=id?conta(id):null, uso=c&&S.lancamentos.some(function(l){return l.contaId===id||l.destinoId===id});
   G={id:id||null,tipo:c?c.tipo:"ativo",bloqueado:!!uso};
-  var h='<p class="q">'+(c?"Editar gaveta":"Nova gaveta")+'</p>'+
+  var h='<p class="q">'+(c?"Editar conta":"Nova conta")+'</p>'+
     '<div class="campo"><label for="gNome">Nome</label><input id="gNome" maxlength="30" placeholder="Ex.: Carteira, Nubank, Poupança" value="'+esc(c?c.nome:"")+'"></div>'+
     '<span class="rot">Que tipo é?</span><div class="opc" id="gTipos">'+
       '<button data-a="gTipo" data-t="ativo" aria-pressed="'+(G.tipo==="ativo")+'"'+(G.bloqueado?" disabled":"")+'>Tenho dinheiro aqui</button>'+
       '<button data-a="gTipo" data-t="passivo" aria-pressed="'+(G.tipo==="passivo")+'"'+(G.bloqueado?" disabled":"")+'>Devo aqui (cartão, empréstimo)</button></div>'+
-    (G.bloqueado?'<p class="faint" style="margin-top:.3rem">O tipo não muda porque já há anotações nesta gaveta.</p>':"")+
+    (G.bloqueado?'<p class="faint" style="margin-top:.3rem">O tipo não muda porque já há anotações nesta conta.</p>':"")+
     '<div class="campo" id="gInicialWrap"><label for="gInicial">Quanto tem aí hoje?</label><input id="gInicial" inputmode="numeric" placeholder="R$ 0,00"></div>'+
     '<div class="campo" id="gFaturasWrap"><label>O que você já deve aqui</label>'+
       '<p class="faint" style="margin-bottom:.5rem">Separe por vencimento. Ex.: R$ 190 que vence em 05/11 e R$ 15 que vence em 05/12. Se não souber a data, deixe em branco.</p>'+
@@ -1316,7 +1315,7 @@ function modalGaveta(id){
     '<div class="campo"><label for="gVence">Dia que a fatura vence (opcional)</label><input id="gVence" type="number" min="1" max="31" inputmode="numeric" value="'+(c&&c.vence||"")+'"></div>'+
     '<div class="campo"><label for="gLimite">Limite (opcional)</label><input id="gLimite" inputmode="numeric" placeholder="R$ 0,00"></div></div>'+
     '<button class="btn" data-a="gSalvar">Salvar</button>'+
-    (c&&!uso?'<button class="btn perigo" data-a="gApagar">Apagar gaveta</button>':"")+
+    (c?'<button class="btn perigo" data-a="gApagar">Apagar conta</button>':"")+
     '<button class="btn sec" data-a="mFechar">Cancelar</button>';
   abrirModal(h);
   ligarDinheiro($("#gInicial"),c&&c.tipo==="ativo"?c.inicial:0);
@@ -1326,7 +1325,7 @@ function modalGaveta(id){
   linhas.forEach(function(f){addLinhaFatura("#gFaturas",f)});
   rotuloGaveta();
 }
-/* linhas "quanto devo e quando vence" (usadas na gaveta e no primeiro uso) */
+/* linhas "quanto devo e quando vence" (usadas na conta e no primeiro uso) */
 function addLinhaFatura(sel,f){
   var div=document.createElement("div"); div.className="linha-f";
   div.innerHTML='<input type="date" class="fd" aria-label="Data de vencimento" value="'+esc(f&&f.data||"")+'">'+
@@ -1356,8 +1355,8 @@ function repetido(nome,lista,ignorar){
 }
 function salvarGaveta(){
   var nome=$("#gNome").value.trim();
-  if(!nome){toast("Dê um nome para a gaveta");return}
-  if(repetido(nome,S.contas,G.id)){toast("Já existe uma gaveta com esse nome");return}
+  if(!nome){toast("Dê um nome para a conta");return}
+  if(repetido(nome,S.contas,G.id)){toast("Já existe uma conta com esse nome");return}
   var o={nome:nome,tipo:G.tipo,inicial:G.tipo==="ativo"?cent($("#gInicial")):0};
   if(G.tipo==="passivo"){
     var ab=lerFaturas("#gFaturas"); o.inicial=somaFaturas(ab); if(ab.length)o.abertas=ab;
@@ -1372,7 +1371,7 @@ function salvarGaveta(){
     delete c.fecha;delete c.vence;delete c.limite;delete c.abertas;
     Object.keys(o).forEach(function(k){c[k]=o[k]});
   }else{o.id=uid();S.contas.push(o)}
-  salvar(); fecharModal(); desenhar(); toast("Gaveta salva");
+  salvar(); fecharModal(); desenhar(); toast("Conta salva");
 }
 
 var K=null;
@@ -1405,7 +1404,7 @@ function salvarCategoria(){
 }
 
 /* ---------- BENS (carro, casa, TV...) ---------- */
-/* Comprar um bem só troca dinheiro por bem (D bem / C gaveta): o "é meu" não cai.
+/* Comprar um bem só troca dinheiro por bem (D bem / C conta): o "é meu" não cai.
    O valor muda depois por ajustes: valorização (D bem / C receita) ou desvalorização (D despesa / C bem). */
 function textoVariacao(b){
   return !b.taxa?"Mantém o valor":b.taxa<0?"Perde "+String(-b.taxa).replace(".",",")+"% ao ano":"Ganha "+String(b.taxa).replace(".",",")+"% ao ano";
@@ -1419,7 +1418,7 @@ function atualizarBens(){
       ym=ymMais(ym,1);
       var p=ym.split("-").map(Number), fim=ym+"-"+pad(ultimoDia(p[0],p[1]-1)), base=saldoConta(b,fim), delta=Math.round(base*b.taxa/1200);
       if(base>0&&delta!==0)S.lancamentos.push({id:uid(),tipo:"ajuste",valor:Math.abs(delta),sinal:delta>0?"alta":"baixa",
-        desc:(delta>0?"Valorização de ":"Desvalorização de ")+b.nome,contaId:b.id,destinoId:null,catId:null,data:fim});
+        desc:(delta>0?"Ganhou valor: ":"Perdeu valor: ")+b.nome,contaId:b.id,destinoId:null,catId:null,data:fim});
       b.ajustadoAte=ym; mudou=true;
     }
   });
@@ -1443,7 +1442,7 @@ function modalBem(id,daFolha){
     '<div class="campo"><label for="bNome">Nome</label><input id="bNome" maxlength="30" placeholder="Ex.: Carro, Casa, Celular" value="'+esc(b?b.nome:"")+'"></div>'+
     (!b&&!daFolha?'<div class="campo"><label for="bValor">Quanto vale hoje?</label><p class="faint" style="margin-bottom:.4rem">Já está quitado? Então é só isso. Se ainda falta pagar, ligue a opção abaixo.</p><input id="bValor" inputmode="numeric" placeholder="R$ 0,00"></div>'+
       '<div class="linha-sw" style="margin-top:.9rem"><div><b>Ainda estou pagando</b><p class="faint">Financiamento, consórcio ou parcelas que faltam.</p></div><button class="sw" id="bDevo" data-a="bDevo" role="switch" aria-checked="false" aria-pressed="false" aria-label="Ainda estou pagando"></button></div>'+
-      '<div id="bDevoWrap" hidden><div class="campo"><label for="bFalta">Quanto ainda falta pagar?</label><p class="faint" style="margin-bottom:.4rem">Só o que você ainda deve hoje (saldo devedor), sem os juros que ainda vão vir. Os juros você separa quando for pagando cada parcela.</p><input id="bFalta" inputmode="numeric" placeholder="R$ 0,00"></div>'+
+      '<div id="bDevoWrap" hidden><div class="campo"><label for="bFalta">Quanto ainda falta pagar?</label><p class="faint" style="margin-bottom:.4rem">Só o que você ainda deve hoje, sem os juros que ainda vão vir. Os juros você separa quando for pagando cada parcela.</p><input id="bFalta" inputmode="numeric" placeholder="R$ 0,00"></div>'+
       '<div class="campo"><label for="bParc">Em quantas parcelas?</label><input id="bParc" type="number" min="1" max="360" inputmode="numeric" value="12"></div>'+
       '<div class="campo"><label for="bProx">A próxima parcela vence em</label><input id="bProx" type="date" value="'+addMes(hojeISO(),1)+'"></div></div>':'')+
     '<span class="rot">Com o tempo, esse bem...</span><div class="opc" id="bVar"><button data-a="bVar" data-s="-1">Perde valor</button><button data-a="bVar" data-s="1">Ganha valor</button><button data-a="bVar" data-s="0">Mantém</button></div>'+
@@ -1465,7 +1464,7 @@ function rotuloBem(){
 function salvarBem(){
   var nome=$("#bNome").value.trim(), pct=parseFloat($("#bTaxa").value)||0, taxa=BM.sinal===0?0:BM.sinal*Math.max(0,Math.min(100,pct));
   if(!nome){toast("Dê um nome para o bem");return}
-  if(repetido(nome,S.contas,BM.id)){toast("Já existe uma gaveta ou bem com esse nome");return}
+  if(repetido(nome,S.contas,BM.id)){toast("Já existe uma conta ou bem com esse nome");return}
   var hojeYM=hojeISO().slice(0,7), b=BM.id?conta(BM.id):null, novoId=null;
   if(!b){
     var val=$("#bValor")?cent($("#bValor")):0, fin=null;
@@ -1504,7 +1503,7 @@ function salvarAjusteBem(){
 }
 function modalVendaBem(id){
   var b=conta(id), gs=contasNormais().filter(function(c){return c.tipo==="ativo"}); if(!b)return;
-  if(!gs.length){toast("Crie uma gaveta com dinheiro para receber a venda");return}
+  if(!gs.length){toast("Crie uma conta com dinheiro para receber a venda");return}
   BM={id:id,gav:gs[0].id};
   abrirModal('<p class="q">Vendi '+esc(b.nome)+'</p><p class="sub">No livro vale <b>'+esc(brl(saldoConta(b)))+'</b>. Se vendeu por mais ou por menos, a diferença vira ganho ou perda.</p>'+
     '<div class="campo"><label for="vdValor">Vendi por</label><input id="vdValor" class="dinheiro" inputmode="numeric" placeholder="R$ 0,00"></div>'+
@@ -1529,9 +1528,9 @@ function modalPessoaNova(dir){
     '<div class="campo"><label for="pNome">'+(emp?"Para quem?":"De quem?")+'</label><input id="pNome" maxlength="30" placeholder="Nome da pessoa"></div>'+
     '<div class="campo"><label for="pValor">Quanto?</label><input id="pValor" inputmode="numeric" placeholder="R$ 0,00"></div>'+
     '<div class="campo"><label for="pData">'+(emp?"Combinou de pagar até quando?":"Até quando você precisa pagar?")+' (opcional)</label><input id="pData" type="date"></div>'+
-    '<div id="pGavWrap"><span class="rot">'+(emp?"De qual gaveta saiu o dinheiro?":"Em qual gaveta o dinheiro entrou?")+'</span><div class="chips" id="pGavs">'+
+    '<div id="pGavWrap"><span class="rot">'+(emp?"De qual conta saiu o dinheiro?":"Em qual conta o dinheiro entrou?")+'</span><div class="chips" id="pGavs">'+
       ativos.map(function(c){return '<button class="chip" data-a="pGav" data-id="'+c.id+'" aria-pressed="'+(PS.gav===c.id)+'">'+esc(c.nome)+'</button>'}).join("")+'</div></div>'+
-    '<div class="linha-sw" style="margin-top:.9rem"><div><b>Foi antes de eu usar o app</b><p class="faint">Só anota a dívida, sem mexer no saldo das gavetas.</p></div>'+
+    '<div class="linha-sw" style="margin-top:.9rem"><div><b>Foi antes de eu usar o app</b><p class="faint">Só anota a dívida, sem mexer no saldo das contas.</p></div>'+
       '<button class="sw" id="pAntes" data-a="pAntes" role="switch" aria-checked="false" aria-pressed="false" aria-label="Foi antes de eu usar o app"></button></div>'+
     '<button class="btn" data-a="pSalvar">Salvar</button><button class="btn sec" data-a="mFechar">Cancelar</button>');
   ligarDinheiro($("#pValor"),0);
@@ -1540,8 +1539,8 @@ function salvarPessoaNova(){
   var nome=$("#pNome").value.trim(), val=cent($("#pValor")), data=$("#pData").value, emp=PS.dir==="emprestei";
   if(!nome){toast("Diga o nome da pessoa");return}
   if(!val){toast("Diga quanto foi");return}
-  if(repetido(nome,S.contas,null)){toast("Já existe uma gaveta com esse nome. Toque nela para emprestar mais.");return}
-  if(!PS.antes&&!PS.gav){toast("Crie uma gaveta com dinheiro primeiro");return}
+  if(repetido(nome,S.contas,null)){toast("Já existe uma conta com esse nome. Toque nela para emprestar mais.");return}
+  if(!PS.antes&&!PS.gav){toast("Crie uma conta com dinheiro primeiro");return}
   var nova={id:uid(),nome:nome,tipo:emp?"ativo":"passivo",inicial:PS.antes?val:0,pessoa:true};
   if(RE_DATA.test(data))nova.cobrar=data;
   S.contas.push(nova);
@@ -1580,7 +1579,7 @@ function perdasCat(){
 var X=null;
 function modalFixa(id){
   var f=id?S.fixas.filter(function(x){return x.id===id})[0]:null, cs=contasNormais(), ks=S.categorias.filter(function(k){return k.tipo==="despesa"});
-  if(!cs.length||!ks.length){toast("Crie uma gaveta e uma categoria de gasto primeiro");return}
+  if(!cs.length||!ks.length){toast("Crie uma conta e uma categoria de gasto primeiro");return}
   X={id:id||null,freq:f?f.freq:"mensal"};
   function opt(lista,sel){return lista.map(function(o){return '<option value="'+o.id+'"'+(o.id===sel?" selected":"")+'>'+esc(o.nome)+'</option>'}).join("")}
   var meses=MES.map(function(m,i){return '<option value="'+i+'"'+(f&&f.mes===i?" selected":"")+'>'+m+'</option>'}).join("");
@@ -1590,7 +1589,7 @@ function modalFixa(id){
     '<span class="rot">Repete</span><div class="opc" id="xFreqs"><button data-a="xFreq" data-f="mensal" aria-pressed="'+(X.freq==="mensal")+'">Todo mês</button><button data-a="xFreq" data-f="anual" aria-pressed="'+(X.freq==="anual")+'">Todo ano</button></div>'+
     '<div class="campo"><label for="xDia">Vence no dia</label><input id="xDia" type="number" min="1" max="31" inputmode="numeric" value="'+(f?f.dia:"")+'"></div>'+
     '<div class="campo" id="xMesWrap"><label for="xMes">No mês de</label><select id="xMes">'+meses+'</select></div>'+
-    '<div class="campo"><label for="xConta">Sai de qual gaveta?</label><select id="xConta">'+opt(cs,f&&f.contaId)+'</select></div>'+
+    '<div class="campo"><label for="xConta">Sai de qual conta?</label><select id="xConta">'+opt(cs,f&&f.contaId)+'</select></div>'+
     '<div class="campo"><label for="xCat">Categoria do gasto</label><select id="xCat">'+opt(ks,f&&f.catId)+'</select></div>'+
     '<div class="campo"><label for="xInicio">Começa em</label><input id="xInicio" type="date" value="'+esc(f?f.inicio:hojeISO())+'"></div>'+
     '<div class="campo"><label for="xVezes">Quantas vezes? (vazio = para sempre)</label><input id="xVezes" type="number" min="1" max="240" inputmode="numeric" value="'+(f&&f.vezes||"")+'"></div>'+
@@ -1763,7 +1762,7 @@ function calcSim(){
   var el=$("#sRes"); if(!el)return;
   var c=conta(SIM.contaId), pa=$("#sParc"); if(pa)pa.hidden=!(c&&c.tipo==="passivo");
   var nt=$("#sNtxt"); if(nt)nt.textContent=SIM.n===1?"À vista":SIM.n+" vezes";
-  if(!c){el.innerHTML='<div class="vazio">Crie uma gaveta primeiro.</div>';return}
+  if(!c){el.innerHTML='<div class="vazio">Crie uma conta primeiro.</div>';return}
   if(!SIM.cent){el.innerHTML='<div class="vazio"><b>Digite o valor</b>para ver quanto essa compra compromete.</div>';return}
   var R=rendaMedia(), n=c.tipo==="passivo"?SIM.n:1, total=(n>1&&SIM.total>SIM.cent)?SIM.total:SIM.cent;
   var ps=c.tipo==="passivo"?gerarParcelas(c.id,hojeISO(),total,n):[{data:hojeISO(),valor:total}];
@@ -1789,15 +1788,15 @@ function calcSim(){
   var sem1="";
   if(R>0){
     var pp=pico/R*100, cls=pp<30?"ok":pp<50?"at":"ru", tx2=pp<30?"Tranquilo":pp<50?"Atenção":"Aperta o orçamento";
-    sem1='<div class="semaforo '+cls+'"><span class="pt" style="background:currentColor"></span><span>'+tx2+': no mês mais apertado, '+Math.round(pp)+'% da sua renda já estaria comprometida.</span></div>';
+    sem1='<div class="semaforo '+cls+'"><span class="pt" style="background:currentColor"></span><span>'+tx2+': no mês mais apertado, '+Math.round(pp)+'% da sua renda já estaria destinada a contas e parcelas.</span></div>';
     li+='<li>Peso médio nos 12 meses: de <b>'+Math.round(mSem/R*100)+'%</b> para <b>'+Math.round(mCom/R*100)+'%</b> da renda.</li>';
     li+='<li>Sobra livre por mês (média): de <b>'+esc(brl(R-mSem))+'</b> para <b>'+esc(brl(R-mCom))+'</b>.</li>';
   }else sem1='<div class="semaforo at"><span>Informe sua renda por mês acima para eu calcular o peso disso.</span></div>';
   if(c.tipo==="passivo"&&c.limite){var disp=c.limite-Math.max(0,saldoConta(c)); li+='<li>Limite livre em '+esc(c.nome)+': <b>'+esc(brl(disp))+'</b> '+(total<=disp?"(cabe)":"(<b>não cabe</b>)")+'.</li>'}
   if(c.tipo==="ativo"){var sd=saldoConta(c); li+='<li>Em '+esc(c.nome)+' tem <b>'+esc(brl(sd))+'</b>: '+(total<=sd?"cabe, sobrando "+esc(brl(sd-total)):"<b>não cabe</b>")+'.</li>';
     li+='<li>Livre fora das caixinhas: <b>'+esc(brl(livreAgora()))+'</b> '+(total<=livreAgora()?"(dá para pagar sem mexer nas caixinhas)":"(você teria que mexer nas caixinhas)")+'.</li>'}
-  el.innerHTML=sem1+'<div class="card"><svg class="grafico" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Comprometido nos próximos 12 meses"><line x1="8" x2="'+(W-8)+'" y1="'+(H-pB)+'" y2="'+(H-pB)+'" style="stroke:var(--rule2)"/>'+s+'</svg>'+
-    '<p class="faint">Cinza: o que já está comprometido (cartão, contas fixas, dívidas). Dourado: essa compra.</p><ul class="res">'+li+'</ul></div>'+
+  el.innerHTML=sem1+'<div class="card"><svg class="grafico" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="O que você já tem para pagar nos próximos 12 meses"><line x1="8" x2="'+(W-8)+'" y1="'+(H-pB)+'" y2="'+(H-pB)+'" style="stroke:var(--rule2)"/>'+s+'</svg>'+
+    '<p class="faint">Cinza: o que você já tem para pagar (cartão, contas fixas, dívidas). Dourado: essa compra.</p><ul class="res">'+li+'</ul></div>'+
     '<p class="faint" style="margin-top:.5rem">É uma referência para pensar, não uma recomendação financeira.</p>'+
     '<button class="btn" data-a="sComprar">Vou comprar de verdade</button>';
 }
@@ -1862,7 +1861,7 @@ function desenharOnb(){
       '<button class="btn" data-a="oProx">Vamos começar</button>';
   }else if(O.passo===2){
     h='<div class="fino"><div style="width:66%"></div></div><h1>Onde está seu dinheiro hoje?</h1>'+
-      '<p class="sub">Pense em "gavetas". Diga quanto tem em cada uma. Se não tiver, deixe vazio.</p>'+
+      '<p class="sub">Diga quanto você tem em cada lugar. Se não tiver, deixe vazio.</p>'+
       [["oCarteira","Carteira (dinheiro vivo)"],["oBanco","Conta no banco"],["oPoup","Poupança ou reserva"]].map(function(x){
         return '<div class="campo"><label for="'+x[0]+'">'+x[1]+'</label><input id="'+x[0]+'" inputmode="numeric" placeholder="R$ 0,00"></div>'}).join("")+
       '<button class="btn" data-a="oProx">Continuar</button>';
@@ -1922,7 +1921,7 @@ var ACOES={
   editar:function(d){
     var l=null; S.lancamentos.forEach(function(x){if(x.id===d.id)l=x}); if(!l)return;
     if(l.tipo==="ajuste"){
-      confirmar("Este é um ajuste do valor de "+nomeConta(l.contaId)+" ("+(l.sinal==="alta"?"valorização":"desvalorização")+" de "+brl(l.valor)+"). Quer apagar?","Apagar o ajuste",function(){
+      confirmar("Este é um ajuste do valor de "+nomeConta(l.contaId)+" ("+(l.sinal==="alta"?"ganho de valor":"perda de valor")+" de "+brl(l.valor)+"). Quer apagar?","Apagar o ajuste",function(){
         S.lancamentos=S.lancamentos.filter(function(x){return x.id!==l.id}); salvar(); desenhar(); toast("Ajuste apagado")});
       return;
     }
@@ -1935,7 +1934,7 @@ var ACOES={
   pagar:function(d){
     var c=conta(d.id); if(!c)return;
     var banco=S.contas.filter(function(x){return x.tipo==="ativo"&&!x.pessoa&&!x.bem})[0];
-    if(!banco){toast("Crie uma gaveta com dinheiro para pagar");return}
+    if(!banco){toast("Crie uma conta com dinheiro para pagar");return}
     novaFolha({tipo:"transferencia",contaId:banco.id,destinoId:c.id,cent:+d.valor,desc:"Pagamento "+c.nome});
   },
   gaveta:function(d){modalGaveta(d.id||null)},
@@ -1953,15 +1952,15 @@ var ACOES={
   pEditar:function(){
     var c=conta(PS.id), nome=$("#pNome").value.trim(), dt=$("#pData").value;
     if(!nome){toast("Diga o nome");return}
-    if(repetido(nome,S.contas,PS.id)){toast("Já existe uma gaveta com esse nome");return}
+    if(repetido(nome,S.contas,PS.id)){toast("Já existe uma conta com esse nome");return}
     c.nome=nome; if(RE_DATA.test(dt))c.cobrar=dt; else delete c.cobrar;
     salvar(); fecharModal(); desenhar(); toast("Salvo");
   },
-  pReceber:function(){var c=conta(PS.id),g=primeiraGaveta(); fecharModal(); if(!g){toast("Crie uma gaveta com dinheiro primeiro");return} novaFolha({tipo:"transferencia",contaId:c.id,destinoId:g.id,cent:Math.max(0,saldoConta(c)),desc:"Recebi de "+c.nome})},
-  pReceberId:function(d){var c=conta(d.id),g=primeiraGaveta(); if(!c)return; if(!g){toast("Crie uma gaveta com dinheiro primeiro");return} novaFolha({tipo:"transferencia",contaId:c.id,destinoId:g.id,cent:Math.max(0,saldoConta(c)),desc:"Recebi de "+c.nome})},
-  pPagar:function(){var c=conta(PS.id),g=primeiraGaveta(); fecharModal(); if(!g){toast("Crie uma gaveta com dinheiro primeiro");return} novaFolha({tipo:"transferencia",contaId:g.id,destinoId:c.id,cent:Math.max(0,saldoConta(c)),desc:"Paguei "+c.nome})},
+  pReceber:function(){var c=conta(PS.id),g=primeiraGaveta(); fecharModal(); if(!g){toast("Crie uma conta com dinheiro primeiro");return} novaFolha({tipo:"transferencia",contaId:c.id,destinoId:g.id,cent:Math.max(0,saldoConta(c)),desc:"Recebi de "+c.nome})},
+  pReceberId:function(d){var c=conta(d.id),g=primeiraGaveta(); if(!c)return; if(!g){toast("Crie uma conta com dinheiro primeiro");return} novaFolha({tipo:"transferencia",contaId:c.id,destinoId:g.id,cent:Math.max(0,saldoConta(c)),desc:"Recebi de "+c.nome})},
+  pPagar:function(){var c=conta(PS.id),g=primeiraGaveta(); fecharModal(); if(!g){toast("Crie uma conta com dinheiro primeiro");return} novaFolha({tipo:"transferencia",contaId:g.id,destinoId:c.id,cent:Math.max(0,saldoConta(c)),desc:"Paguei "+c.nome})},
   pMais:function(){
-    var c=conta(PS.id),g=primeiraGaveta(); fecharModal(); if(!g){toast("Crie uma gaveta com dinheiro primeiro");return}
+    var c=conta(PS.id),g=primeiraGaveta(); fecharModal(); if(!g){toast("Crie uma conta com dinheiro primeiro");return}
     if(c.tipo==="ativo")novaFolha({tipo:"transferencia",contaId:g.id,destinoId:c.id,desc:"Empréstimo para "+c.nome});
     else novaFolha({tipo:"transferencia",contaId:c.id,destinoId:g.id,desc:"Empréstimo de "+c.nome});
   },
@@ -1976,7 +1975,7 @@ var ACOES={
     var id=PS.id, c=conta(id); if(!c)return;
     var ls=S.lancamentos.filter(function(l){return l.contaId===id||l.destinoId===id});
     confirmar(ls.length
-      ?"Apagar "+c.nome+" e as "+ls.length+" anotações ligadas (empréstimos, pagamentos)? É como se isso nunca tivesse acontecido: o dinheiro das gavetas volta ao que era."
+      ?"Apagar "+c.nome+" e as "+ls.length+" anotações ligadas (empréstimos, pagamentos)? É como se isso nunca tivesse acontecido: o dinheiro das contas volta ao que era."
       :"Apagar "+c.nome+" do caderninho?","Apagar tudo",function(){
       S.lancamentos=S.lancamentos.filter(function(l){return l.contaId!==id&&l.destinoId!==id});
       S.contas=S.contas.filter(function(x){return x.id!==id}); salvar(); desenhar(); toast("Apagado");
@@ -2040,7 +2039,7 @@ var ACOES={
     var fin=S.contas.filter(function(c){return c.tipo==="passivo"&&c.nome==="Financiamento: "+b.nome})[0];
     var finLivre=!!fin&&!S.lancamentos.some(function(l){return l.contaId===fin.id||l.destinoId===fin.id});
     var txt=ls.length
-      ?"Apagar "+b.nome+" e as "+ls.length+" anotações ligadas a ele (compra, vendas, ajustes de valor)? É como se o bem nunca tivesse existido: o dinheiro das gavetas volta ao que era. Se você vendeu o bem, use “Vendi” em vez de apagar."
+      ?"Apagar "+b.nome+" e as "+ls.length+" anotações ligadas a ele (compra, vendas, ajustes de valor)? É como se o bem nunca tivesse existido: o dinheiro das contas volta ao que era. Se você vendeu o bem, use “Vendi” em vez de apagar."
       :"Apagar "+b.nome+"?";
     if(finLivre)txt+=" A dívida “"+fin.nome+"” (sem nenhum pagamento) também será apagada.";
     else if(fin)txt+=" A dívida “"+fin.nome+"” já tem pagamentos e continua no app.";
@@ -2056,8 +2055,18 @@ var ACOES={
   gTipo:function(d){if(G&&!G.bloqueado){G.tipo=d.t;rotuloGaveta()}},
   gSalvar:salvarGaveta,
   gApagar:function(){
-    var id=G.id; confirmar("Apagar a gaveta "+nomeConta(id)+"?","Apagar",function(){
-      S.contas=S.contas.filter(function(c){return c.id!==id}); salvar(); desenhar(); toast("Gaveta apagada")});
+    var id=G.id, c=conta(id); if(!c)return;
+    var ls=S.lancamentos.filter(function(l){return l.contaId===id||l.destinoId===id});
+    var fx=S.fixas.filter(function(x){return x.contaId===id});
+    var txt=ls.length||fx.length
+      ?"Apagar a conta "+c.nome+(ls.length?" e as "+ls.length+" anotações ligadas a ela (gastos, ganhos, transferências)":"")+(fx.length?(ls.length?" e ":" e as ")+fx.length+" contas fixas que saem dela":"")+"? É como se essa conta nunca tivesse existido: o saldo das outras contas muda junto, porque as transferências de e para ela também somem."
+      :"Apagar a conta "+c.nome+"?";
+    confirmar(txt,"Apagar tudo",function(){
+      S.lancamentos=S.lancamentos.filter(function(l){return l.contaId!==id&&l.destinoId!==id});
+      S.fixas=S.fixas.filter(function(x){return x.contaId!==id});
+      S.contas=S.contas.filter(function(x){return x.id!==id});
+      salvar(); desenhar(); toast("Conta apagada");
+    });
   },
   categoria:function(d){modalCategoria(d.id||null,d.tipo||null)},
   kTipo:function(d){if(K&&!K.bloqueado){K.tipo=d.t;$("#kMetaWrap").hidden=d.t!=="despesa";document.querySelectorAll("#kTipos button").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.t===K.tipo))})}},
@@ -2075,7 +2084,7 @@ var ACOES={
   backup:guardarCopia,
   restaurar:function(){var f=$("#arquivo"); if(f)f.click()},
   zerar:function(){
-    confirmar("Isso apaga TODAS as suas gavetas e anotações deste aparelho. Não dá para desfazer. Tem certeza?","Sim, apagar tudo",function(){
+    confirmar("Isso apaga TODAS as suas contas e anotações deste aparelho. Não dá para desfazer. Tem certeza?","Sim, apagar tudo",function(){
       S.contas=[];S.categorias=[];S.lancamentos=[];S.fixas=[];S.caixas=[];S.reservas=[];S.config.pronto=false;salvar();iniciarOnb();
     });
   },
