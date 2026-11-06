@@ -136,7 +136,7 @@ nav .fab em{font-style:normal;font-weight:700;color:var(--capa-ink)}
 .volta{min-height:2.75rem;min-width:2.75rem;display:grid;place-items:center;font-size:1.5rem;color:var(--capa-ink);margin-left:-.6rem}
 .capa.f{align-items:center;justify-content:flex-start}
 .capa.f h1{flex:1}
-.seg3{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem;margin-top:.9rem}
+.seg3{display:grid;grid-template-columns:repeat(2,1fr);gap:.4rem;margin-top:.9rem}
 .seg3 button{min-height:3.4rem;border-radius:.7rem;border:2px solid var(--rule2);background:var(--card);text-align:center;font-weight:700;font-size:.95rem;padding:.4rem .2rem}
 .seg3 button[aria-pressed="true"].s{background:var(--out-bg);border-color:var(--out);color:var(--out)}
 .seg3 button[aria-pressed="true"].e{background:var(--in-bg);border-color:var(--in);color:var(--in)}
@@ -289,6 +289,9 @@ svg.grafico{width:100%;height:auto;display:block}
 .semaforo.ok{background:var(--tr-bg);color:var(--tr)}.semaforo.at{background:var(--ouro-bg);color:var(--ouro)}.semaforo.ru{background:var(--out-bg);color:var(--out)}
 .res li{margin:.35rem 0 .35rem 1.1rem;font-size:.95rem}
 .res{padding:0;list-style:disc}
+.pt.b{background:#5A86C9}
+.marca.bem{background:#5A86C9}
+.seg3 button[aria-pressed="true"].b{background:var(--ouro-bg);border-color:var(--ouro);color:var(--ouro)}
 @media (prefers-reduced-motion:reduce){*,*:before{animation:none!important;transition:none!important}}
 html.calmo *,html.calmo *:before{animation:none!important;transition:none!important}
 </style>
@@ -392,6 +395,10 @@ function higienizar(p){
     ["fecha","vence"].forEach(function(k){var d=parseInt(c[k],10);if(d>=1&&d<=31)n[k]=d});
     if(cent(c.limite)>0)n.limite=cent(c.limite);
     if(c.pessoa===true)n.pessoa=true;
+    if(c.bem===true&&c.tipo==="ativo"){
+      n.bem=true; var tx=Number(c.taxa); if(isFinite(tx)&&tx!==0)n.taxa=Math.max(-100,Math.min(100,Math.round(tx*10)/10));
+      ["desde","ajustadoAte"].forEach(function(k){if(typeof c[k]==="string"&&/^\d{4}-\d{2}$/.test(c[k]))n[k]=c[k]});
+    }
     if(typeof c.cobrar==="string"&&RE_DATA.test(c.cobrar))n.cobrar=c.cobrar;
     if(c.tipo==="passivo"&&Array.isArray(c.abertas)){
       var ab=c.abertas.filter(function(a){return ehObj(a)&&cent(a.valor)>0&&(a.data==null||(typeof a.data==="string"&&RE_DATA.test(a.data)))})
@@ -408,7 +415,7 @@ function higienizar(p){
   });
   (Array.isArray(p.lancamentos)?p.lancamentos:[]).forEach(function(l){
     var val=ehObj(l)?cent(l.valor):NaN;
-    if(!ehObj(l)||!id(l.id)||["saida","entrada","transferencia"].indexOf(l.tipo)<0||!isFinite(val)||val<=0||
+    if(!ehObj(l)||!id(l.id)||["saida","entrada","transferencia","bem","ajuste"].indexOf(l.tipo)<0||!isFinite(val)||val<=0||
        typeof l.data!=="string"||!RE_DATA.test(l.data)){out.perdidos++;return}
     var n={id:l.id,tipo:l.tipo,valor:val,desc:typeof l.desc==="string"?l.desc:"",
       contaId:id(l.contaId)?l.contaId:null,destinoId:id(l.destinoId)?l.destinoId:null,
@@ -418,6 +425,7 @@ function higienizar(p){
         .map(function(q){return {data:q.data,valor:cent(q.valor)}});
       if(ps.length===l.parcelas.length)n.parcelas=ps;
     }
+    if(l.tipo==="ajuste"){if(l.sinal!=="alta"&&l.sinal!=="baixa"){out.perdidos++;return} n.sinal=l.sinal}
     if(id(l.caixaId))n.caixaId=l.caixaId;
     if(id(l.fixaId))n.fixaId=l.fixaId;
     if(typeof l.ref==="string"&&/^\d{4}-\d{2}$/.test(l.ref))n.ref=l.ref;
@@ -485,7 +493,7 @@ function salvar(){
 function conta(id){for(var i=0;i<S.contas.length;i++)if(S.contas[i].id===id)return S.contas[i];return null}
 function cat(id){for(var i=0;i<S.categorias.length;i++)if(S.categorias[i].id===id)return S.categorias[i];return null}
 function nomeConta(id){var c=conta(id);return c?c.nome:"(gaveta apagada)"}
-function nomeCat(id){var c=cat(id);return c?c.nome:"Sem categoria"}
+function nomeCat(id){if(id==="__valoriza")return "Valorização de bens"; if(id==="__desvaloriza")return "Desvalorização de bens"; var c=cat(id);return c?c.nome:"Sem categoria"}
 
 /* ---------- vocabulário: comum x contador ---------- */
 var VOC={
@@ -507,6 +515,9 @@ function v(k){return VOC[S.config.contador?"contador":"simples"][k]}
 function partidas(l){
   if(l.tipo==="saida")return [{k:"cat",id:l.catId,lado:"D"},{k:"conta",id:l.contaId,lado:"C"}];
   if(l.tipo==="entrada")return [{k:"conta",id:l.contaId,lado:"D"},{k:"cat",id:l.catId,lado:"C"}];
+  if(l.tipo==="ajuste")return l.sinal==="alta"
+    ?[{k:"conta",id:l.contaId,lado:"D"},{k:"cat",id:"__valoriza",lado:"C"}]
+    :[{k:"cat",id:"__desvaloriza",lado:"D"},{k:"conta",id:l.contaId,lado:"C"}];
   return [{k:"conta",id:l.destinoId,lado:"D"},{k:"conta",id:l.contaId,lado:"C"}];
 }
 function saldoConta(c,ate){
@@ -516,7 +527,8 @@ function saldoConta(c,ate){
     var d=0;
     if(l.tipo==="saida"&&l.contaId===c.id)d=-l.valor;
     else if(l.tipo==="entrada"&&l.contaId===c.id)d=l.valor;
-    else if(l.tipo==="transferencia"){
+    else if(l.tipo==="ajuste"&&l.contaId===c.id)d=l.sinal==="alta"?l.valor:-l.valor;
+    else if(l.tipo==="transferencia"||l.tipo==="bem"){
       if(l.destinoId===c.id)d=l.valor; else if(l.contaId===c.id)d=-l.valor;
     }
     s+= c.tipo==="ativo"? d : -d;   /* no passivo, pagar reduz a dívida */
@@ -529,12 +541,13 @@ function totais(ate){
   return {ativo:a,passivo:p,pl:a-p};
 }
 function resumoMes(ym){
-  var r={ent:0,sai:0,porEnt:{},porSai:{},lanc:[]};
+  var r={ent:0,sai:0,aj:0,porEnt:{},porSai:{},lanc:[]};
   S.lancamentos.forEach(function(l){
     if(l.data.slice(0,7)!==ym)return;
     r.lanc.push(l);
     if(l.tipo==="entrada"){r.ent+=l.valor;r.porEnt[l.catId]=(r.porEnt[l.catId]||0)+l.valor}
     else if(l.tipo==="saida"){r.sai+=l.valor;r.porSai[l.catId]=(r.porSai[l.catId]||0)+l.valor}
+    else if(l.tipo==="ajuste")r.aj+=(l.sinal==="alta"?l.valor:-l.valor);   /* bens mudando de valor: não é dinheiro entrando ou saindo */
   });
   r.lanc.sort(ordemRecente);
   return r;
@@ -550,8 +563,8 @@ function itensDevidos(c){
     c.abertas.forEach(function(a){it.push({data:a.data,valor:a.valor,desc:"Dívida de antes de usar o app",n:1,de:1})});
   else if(c.inicial>0)it.push({data:null,valor:c.inicial,desc:"Dívida de antes de usar o app",n:1,de:1});
   S.lancamentos.forEach(function(l){
-    if(l.tipo!=="saida"||l.contaId!==c.id)return;
-    var base=l.desc||nomeCat(l.catId);
+    if((l.tipo!=="saida"&&l.tipo!=="bem")||l.contaId!==c.id)return;
+    var base=l.desc||(l.tipo==="bem"?nomeConta(l.destinoId):nomeCat(l.catId));
     if(l.parcelas&&l.parcelas.length)
       l.parcelas.forEach(function(p,i){it.push({data:p.data,valor:p.valor,desc:base,n:i+1,de:l.parcelas.length})});
     else it.push({data:l.data,valor:l.valor,desc:base,n:1,de:1});
@@ -597,7 +610,10 @@ function saldoCaixa(id){
   return s;
 }
 function totalReservado(){return S.caixas.reduce(function(s,c){return s+saldoCaixa(c.id)},0)}
-function livreAgora(){return totais().pl-totalReservado()}
+function bensLista(){return S.contas.filter(function(c){return c.bem})}
+function bensTotal(){return bensLista().reduce(function(s,c){return s+saldoConta(c)},0)}
+/* livre em dinheiro: o que sobra do dinheiro depois de pagar dívidas e separar as caixinhas (bens não entram: não dá para gastar a casa) */
+function livreAgora(){return totais().pl-bensTotal()-totalReservado()}
 function metasMes(){return S.categorias.filter(function(k){return k.tipo==="despesa"&&k.meta>0})}
 function sobraMesPassado(){
   var ym=ymMais(hojeISO().slice(0,7),-1);
@@ -608,7 +624,7 @@ function sobraMesPassado(){
   return {ym:ym,valor:soma,mes:MES[+ym.slice(5)-1]};
 }
 function pessoasLista(){return S.contas.filter(function(c){return c.pessoa})}
-function contasNormais(){return S.contas.filter(function(c){return !c.pessoa})}
+function contasNormais(){return S.contas.filter(function(c){return !c.pessoa&&!c.bem})}
 function aReceber(){
   return pessoasLista().filter(function(c){return c.tipo==="ativo"&&saldoConta(c)>0}).map(function(c){return {conta:c,data:c.cobrar||null,valor:saldoConta(c)}}).sort(cmpData);
 }
@@ -740,15 +756,16 @@ function calmo(){return document.documentElement.classList.contains("calmo")}
 function capa(esq,tit,voltar){return '<header class="capa"><span>'+(voltar?'<button class="volta2" data-a="ir" data-v="'+voltar+'" aria-label="Voltar">←</button>':'')+esc(esq)+'</span><h1>'+esc(tit)+'</h1></header>'}
 function balanca(t){
   t=t||totais();
-  var A=Math.max(0,t.ativo), P=Math.max(0,t.passivo), base=Math.max(A,P), U=12;
-  var cA=base?Math.round(U*A/base):0, cP=base?Math.round(U*P/base):0;
+  var A=Math.max(0,t.ativo), P=Math.max(0,t.passivo), B=Math.max(0,t.bens!=null?t.bens:bensTotal()), base=Math.max(A,P), U=12;
+  var cA=base?Math.round(U*A/base):0, cP=base?Math.round(U*P/base):0, cB=A>0?Math.round(cA*Math.min(B,A)/A):0;
   var meu=t.pl>0?Math.max(0,cA-cP):0, buraco=t.pl<0?Math.max(0,cP-cA):0;
   var esq=[], dir=[], i;
-  for(i=0;i<cA;i++)esq.push("g");
+  for(i=0;i<cA-cB;i++)esq.push("g");
+  for(i=0;i<cB;i++)esq.push("b");
   for(i=0;i<buraco;i++)esq.push("x");
   for(i=0;i<cP;i++)dir.push("r");
   for(i=0;i<meu;i++)dir.push("o");
-  var cor={g:["#2C6B52","#4F9A78"],r:["#8E1F18","#D2584D"],o:["#9A7414","#E8C14F"],x:null};
+  var cor={g:["#2C6B52","#4F9A78"],b:["#2F5A99","#5A86C9"],r:["#8E1F18","#D2584D"],o:["#9A7414","#E8C14F"],x:null};
   function pilha(lista,cx){
     var s="", col, n=lista.length, cols=n>6?2:1;
     lista.forEach(function(k,j){
@@ -767,7 +784,7 @@ function balanca(t){
       '<ellipse cx="'+cx+'" cy="146" rx="43" ry="5.6" style="fill:var(--card)" opacity=".55"/>'+
       pilha(lista,cx)+'</g>';
   }
-  return '<svg class="bal" id="bal" viewBox="0 0 320 214" role="img" aria-label="Balança em equilíbrio: o dinheiro que você tem pesa o mesmo que as suas dívidas mais o que sobra e é seu">'+
+  return '<svg class="bal" id="bal" viewBox="0 0 320 214" role="img" aria-label="Balança em equilíbrio: o dinheiro e os bens que você tem pesam o mesmo que as suas dívidas mais o que sobra e é seu">'+
     '<defs><linearGradient id="bronze" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F0CF73"/><stop offset=".5" stop-color="#C99A1E"/><stop offset="1" stop-color="#7C5D10"/></linearGradient>'+
     '<linearGradient id="coluna" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7C5D10"/><stop offset=".45" stop-color="#F0CF73"/><stop offset="1" stop-color="#8F6A10"/></linearGradient></defs>'+
     '<ellipse cx="160" cy="205" rx="64" ry="7" fill="#1F3D2F" opacity=".25"/>'+
@@ -781,23 +798,25 @@ function balanca(t){
     '</svg>';
 }
 function legendaBalanca(t){
-  var c=S.config.contador;
-  var leg='<div class="legenda"><span><i class="pt g"></i>'+(c?"Ativo":"Dinheiro que eu tenho")+' <b>'+esc(brl(t.ativo))+'</b></span>'+
+  var c=S.config.contador, B=Math.max(0,t.bens!=null?t.bens:bensTotal()), din=t.ativo-B;
+  var leg='<div class="legenda"><span><i class="pt g"></i>'+(c?"Ativo disponível":"Dinheiro que eu tenho")+' <b>'+esc(brl(din))+'</b></span>'+
+    (B>0?'<span><i class="pt b"></i>'+(c?"Imobilizado":"Meus bens")+' <b>'+esc(brl(B))+'</b></span>':'')+
     '<span><i class="pt r"></i>'+(c?"Passivo":"Dívidas (o que eu devo)")+' <b>'+esc(brl(t.passivo))+'</b></span>'+
     '<span><i class="pt o"></i>'+(c?"Patrimônio líquido":"Sobra, é meu de verdade")+' <b>'+esc(brl(t.pl))+'</b></span></div>';
   if(c)return leg;
+  var quem=B>0?"usando o dinheiro e vendendo os seus bens":"usando o dinheiro que tem";
   return leg+'<p class="eq">'+(t.pl>=0
-    ?'Se você pagasse tudo o que deve hoje, sobrariam <b>'+esc(brl(t.pl))+'</b> só seus.'
+    ?'Se você pagasse tudo o que deve hoje, '+quem+', sobrariam <b>'+esc(brl(t.pl))+'</b> só seus.'
     :'Para pagar tudo o que deve hoje, ainda faltariam <b>'+esc(brl(-t.pl))+'</b>.')+'</p>';
 }
 function modalComoLer(){
   abrirModal('<p class="q">Como ler a balança</p>'+
-    '<p style="margin-bottom:.7rem"><b>Prato da esquerda:</b> todo o dinheiro que você tem (carteira, banco e o que as pessoas te devem).</p>'+
-    '<p style="margin-bottom:.7rem">Agora imagine usar esse dinheiro para <b>pagar tudo o que você deve</b>. O que sobra é <b>seu de verdade</b>.</p>'+
+    '<p style="margin-bottom:.7rem"><b>Prato da esquerda:</b> o que você tem. O <b>dinheiro</b> (carteira, banco, o que te devem) e, se você cadastrou, os seus <b>bens</b> (carro, casa, celular), em moedas azuis.</p>'+
+    '<p style="margin-bottom:.7rem">Agora imagine usar tudo isso para <b>pagar o que você deve</b>. O que sobra é <b>seu de verdade</b>.</p>'+
     '<p style="margin-bottom:.7rem"><b>Prato da direita:</b> as dívidas (moedas <b>vermelhas</b>) mais a sobra (moedas <b>douradas</b>). Os dois pratos sempre pesam igual, porque a sobra é justamente o que falta para igualar.</p>'+
-    '<p style="margin-bottom:.7rem"><b>Exemplo:</b> você gasta R$ 100 em comida no cartão. O dinheiro que você tem continua igual, a dívida sobe R$ 100 e a sobra cai R$ 100. A comida acabou, mas a dívida ficou, e a balança mostra isso.</p>'+
-    '<p class="faint">O app conta só dinheiro, não objetos como geladeira, carro ou casa. Para ele, tudo o que você compra e consome ou usa é um gasto.</p>'+
-    '<p class="faint" style="margin-top:.4rem">Se a dívida for maior que o dinheiro, aparecem moedas tracejadas na esquerda: é o que falta para pagar tudo.</p>'+
+    '<p style="margin-bottom:.7rem"><b>Comida no cartão:</b> o dinheiro fica igual, a dívida sobe e a sobra cai. A comida acabou, mas a dívida ficou. Por isso é um <b>gasto</b>.</p>'+
+    '<p style="margin-bottom:.7rem"><b>Carro ou TV no cartão:</b> você anota como <b>"Comprei um bem"</b>. A dívida sobe e o bem aparece no prato da esquerda, então a sobra <b>não cai</b> na hora. Depois o bem vai perdendo valor com o tempo e a sobra acompanha.</p>'+
+    '<p class="faint">Se a dívida for maior que o que você tem, aparecem moedas tracejadas na esquerda: é o que falta para pagar tudo.</p>'+
     '<button class="btn" data-a="mFechar">Entendi</button>');
 }
 function fmtRoll(k,c){
@@ -847,11 +866,12 @@ function moedaFio(){
 
 /* ---------- linhas de lançamento ---------- */
 function linha(l){
-  var p=l.data.split("-"), cls=l.tipo==="entrada"?"in":l.tipo==="saida"?"out":"tr",
-      sinal=l.tipo==="entrada"?"+":l.tipo==="saida"?"−":"⇄",
-      det=l.tipo==="transferencia"?nomeConta(l.contaId)+" → "+nomeConta(l.destinoId):nomeCat(l.catId)+" · "+nomeConta(l.contaId),
+  var p=l.data.split("-"), aj=l.tipo==="ajuste", mov=l.tipo==="transferencia"||l.tipo==="bem",
+      cls=aj?(l.sinal==="alta"?"in":"out"):l.tipo==="entrada"?"in":l.tipo==="saida"?"out":"tr",
+      sinal=aj?(l.sinal==="alta"?"↑":"↓"):l.tipo==="entrada"?"+":l.tipo==="saida"?"−":"⇄",
+      det=mov?nomeConta(l.contaId)+" → "+nomeConta(l.destinoId):aj?nomeConta(l.contaId)+" · valor do bem mudou":nomeCat(l.catId)+" · "+nomeConta(l.contaId),
       par=l.parcelas&&l.parcelas.length>1?" · "+l.parcelas.length+"x":"",
-      tit=l.desc||(l.tipo==="transferencia"?"Mudança de lugar":nomeCat(l.catId));
+      tit=l.desc||(l.tipo==="bem"?"Comprei "+nomeConta(l.destinoId):aj?"Ajuste de valor":l.tipo==="transferencia"?"Mudança de lugar":nomeCat(l.catId));
   return '<button class="lanc'+(l.id===ULTIMO?" novo-lin":"")+'" data-a="editar" data-id="'+l.id+'" aria-label="Editar: '+esc(tit)+'">'+
     '<span class="dia"><b>'+p[2]+'</b><i>'+MES3[+p[1]-1]+'</i></span>'+
     '<span class="txt"><b>'+esc(tit)+'</b><i>'+esc(det+par)+'</i></span><span class="pont"></span>'+
@@ -916,12 +936,13 @@ function telaInicio(){
     '<div class="hero"><div class="rot">'+esc(v("pl"))+'</div>'+
     '<div class="grande'+(t.pl<0?" neg":"")+'" data-roll="'+t.pl+'" data-k="pl">'+esc(brl(t.pl))+'</div>'+
     balanca(t)+legendaBalanca(t)+'<button class="como" data-a="como">Como ler a balança?</button>'+
-    (res>0?'<p class="eq">Guardado nas caixinhas <b>'+esc(brl(res))+'</b> · Livre <b>'+esc(brl(t.pl-res))+'</b></p>':'')+'</div>'+
+    (res>0?'<p class="eq">Guardado nas caixinhas <b>'+esc(brl(res))+'</b> · Livre em dinheiro <b>'+esc(brl(livreAgora()))+'</b></p>':'')+'</div>'+
     '<div class="tri" aria-label="Resumo de '+MES[d.getMonth()]+'">'+
       '<div class="e"><span>'+esc(v("entrou"))+'</span><b data-roll="'+r.ent+'" data-k="ent">+'+num(r.ent)+'</b></div>'+
       '<div class="s"><span>'+esc(v("saiu"))+'</span><b data-roll="'+r.sai+'" data-k="sai">−'+num(r.sai)+'</b></div>'+
       '<div><span>'+esc(v("sobrou"))+'</span><b data-roll="'+sob+'" data-k="sob" style="color:'+(sob<0?"var(--out)":"var(--ink)")+'">'+(sob<0?"−":"")+num(sob)+'</b></div></div>'+
     '<p class="faint" style="text-align:center;margin-top:.4rem">Valores de '+MES[d.getMonth()]+'</p>'+
+    (r.aj?'<p class="faint" style="text-align:center">Seus bens mudaram de valor: <b style="color:var(--ink)">'+(r.aj>0?"+":"−")+num(r.aj)+'</b> (não é dinheiro que entrou ou saiu)</p>':'')+
     avisos()+
     (metas.length?'<h2>Caixinhas do mês</h2><div class="card"><div class="jarras">'+metas.slice(0,4).map(function(k){return jarraMeta(k,r.porSai)}).join("")+'</div><button class="link" data-a="ir" data-v="caixinhas">Ver todas as caixinhas</button></div>':'')+
     '<h2>Últimas anotações</h2><div class="card" style="padding:.3rem 1rem">'+
@@ -932,7 +953,7 @@ function telaInicio(){
 
 /* ---------- TELA: GAVETAS ---------- */
 function telaContas(){
-  var ativos=S.contas.filter(function(c){return c.tipo==="ativo"&&!c.pessoa}), pas=S.contas.filter(function(c){return c.tipo==="passivo"&&!c.pessoa});
+  var ativos=S.contas.filter(function(c){return c.tipo==="ativo"&&!c.pessoa&&!c.bem}), pas=S.contas.filter(function(c){return c.tipo==="passivo"&&!c.pessoa});
   var pend=aPagar(), h=capa("Onde está tudo","Dinheiro")+'<p class="sub lead">Cada gaveta é um lugar onde seu dinheiro está (ou uma dívida que você tem).</p>';
   h+='<h2>'+esc(v("ativo"))+'</h2><div class="card" style="padding:.2rem 1rem">'+
     (ativos.length?ativos.map(function(c){
@@ -951,7 +972,7 @@ function telaContas(){
         :'<p class="faint" style="margin-top:.3rem">Devo: <b style="color:var(--ink)">'+esc(brl(uso))+'</b></p>')+
       (prox?'<button class="btn peq" data-a="pagar" data-id="'+c.id+'" data-valor="'+prox.valor+'">Pagar '+esc(brl(prox.valor))+'</button>':'')+'</div>';
   });
-  h+=blocoPessoas()+'<button class="btn" data-a="gaveta" data-id="">+ Nova gaveta</button>';
+  h+=blocoBens()+blocoPessoas()+'<button class="btn" data-a="gaveta" data-id="">+ Nova gaveta</button>';
   return h;
 }
 
@@ -987,6 +1008,7 @@ function telaRel(){
   var h=capa("Livro de "+MES[REF.getMonth()],"Relatórios","mais")+'<div class="mes"><button data-a="mes" data-n="-1" aria-label="Mês anterior">‹</button><b>'+MES[REF.getMonth()]+' de '+REF.getFullYear()+'</b><button data-a="mes" data-n="1" aria-label="Próximo mês">›</button></div>';
   h+='<div class="tri"><div class="e"><span>'+esc(v("entrou"))+'</span><b>+'+num(r.ent)+'</b></div><div class="s"><span>'+esc(v("saiu"))+'</span><b>−'+num(r.sai)+'</b></div>'+
      '<div><span>'+esc(v("sobrou"))+'</span><b style="color:'+(sob<0?"var(--out)":"var(--ink)")+'">'+(sob<0?"−":"")+num(sob)+'</b></div></div>';
+  if(r.aj)h+='<p class="faint" style="text-align:center">Valor dos bens: <b style="color:var(--ink)">'+(r.aj>0?"+":"−")+num(r.aj)+'</b> neste mês (valorização ou desvalorização, não é dinheiro).</p>';
   h+='<h2>Para onde foi o dinheiro</h2><div class="card">'+barras(r.porSai,r.sai,"s")+'</div>';
   h+='<h2>De onde veio</h2><div class="card">'+barras(r.porEnt,r.ent,"e")+'</div>';
 
@@ -1061,7 +1083,7 @@ function blocoContador(r){
     (ordem.length?'<table><thead><tr><th>Conta</th><th>Débito</th><th>Crédito</th></tr></thead><tbody>'+linhas+'<tr class="tot"><td>Totais</td><td>'+num(td)+'</td><td>'+num(tc)+'</td></tr></tbody></table>'+
       '<div class="confere'+(td===tc?"":" erro")+'">'+(td===tc?"Débito e crédito batem: "+num(td):"Diferença de "+num(Math.abs(td-tc)))+'</div>'
       :'<div class="vazio">Sem lançamentos neste mês.</div>')+
-    '<p class="faint" style="margin-top:.7rem">Equação hoje: Ativo '+num(t.ativo)+' = Passivo '+num(t.passivo)+' + Patrimônio líquido '+num(t.pl)+'. O patrimônio líquido se divide em PL livre '+num(t.pl-res)+' + reservas das caixinhas '+num(res)+'.</p></div>';
+    '<p class="faint" style="margin-top:.7rem">Equação hoje: Ativo '+num(t.ativo)+' = Passivo '+num(t.passivo)+' + Patrimônio líquido '+num(t.pl)+'. O patrimônio líquido = bens '+num(bensTotal())+' + PL livre '+num(livreAgora())+' + reservas das caixinhas '+num(res)+'.</p></div>';
 }
 
 /* ---------- TELA: AJUSTES ---------- */
@@ -1113,9 +1135,13 @@ function novaFolha(o){
   ajustarFolha(); abrirFolha(); desenharFolha();
 }
 function ajustarFolha(){
-  var primAtivo=S.contas.filter(function(c){return c.tipo==="ativo"&&!c.pessoa})[0]||S.contas[0];
-  if(!F.contaId||!conta(F.contaId))F.contaId=primAtivo.id;
-  if(F.tipo==="transferencia"){
+  var primAtivo=S.contas.filter(function(c){return c.tipo==="ativo"&&!c.pessoa&&!c.bem})[0]||S.contas[0];
+  if(!F.contaId||!conta(F.contaId)||conta(F.contaId).bem)F.contaId=primAtivo.id;
+  if(F.tipo==="bem"){
+    var bm=F.destinoId&&conta(F.destinoId);
+    if(!bm||!bm.bem){var b1=bensLista()[0]; F.destinoId=b1?b1.id:null}
+    F.catId=null;
+  }else if(F.tipo==="transferencia"){
     if(!F.destinoId||F.destinoId===F.contaId||!conta(F.destinoId)){
       var outra=S.contas.filter(function(c){return c.id!==F.contaId})[0]; F.destinoId=outra?outra.id:null;
     }
@@ -1126,7 +1152,7 @@ function ajustarFolha(){
     if(!k||k.tipo!==want){var p=S.categorias.filter(function(c){return c.tipo===want})[0]; F.catId=p?p.id:null}
   }
   var c=conta(F.contaId);
-  if(F.tipo!=="saida"||!c||c.tipo!=="passivo")F.n=1;
+  if((F.tipo!=="saida"&&F.tipo!=="bem")||!c||c.tipo!=="passivo")F.n=1;
   if(F.tipo!=="saida")F.caixaId=null;
 }
 function gerarParcelas(contaId,data,total,n){
@@ -1142,11 +1168,12 @@ function desenharFolha(){
   h+='<div class="seg3" role="group" aria-label="O que aconteceu">'+
     '<button class="s" data-a="fTipo" data-t="saida" aria-pressed="'+(F.tipo==="saida")+'">Gastei</button>'+
     '<button class="e" data-a="fTipo" data-t="entrada" aria-pressed="'+(F.tipo==="entrada")+'">Recebi</button>'+
-    '<button class="t" data-a="fTipo" data-t="transferencia" aria-pressed="'+(F.tipo==="transferencia")+'">Mudei de lugar</button></div>';
+    '<button class="t" data-a="fTipo" data-t="transferencia" aria-pressed="'+(F.tipo==="transferencia")+'">Mudei de lugar</button>'+
+    '<button class="b" data-a="fTipo" data-t="bem" aria-pressed="'+(F.tipo==="bem")+'">Comprei um bem</button></div>';
   h+='<label class="rot" for="fValor">Quanto?</label><input id="fValor" class="dinheiro '+cl+'" inputmode="numeric" autocomplete="off" placeholder="R$ 0,00">';
 
   function gav(acao,sel,excl){
-    return S.contas.filter(function(x){return x.id!==excl}).map(function(x){
+    return S.contas.filter(function(x){return x.id!==excl&&!x.bem}).map(function(x){
       return '<button class="opt" data-a="'+acao+'" data-id="'+x.id+'" aria-pressed="'+(sel===x.id)+'">'+esc(x.nome)+
         '<small>'+(x.pessoa?(x.tipo==="ativo"?"te deve ":"você deve ")+brl(saldoConta(x)):x.tipo==="passivo"?"dívida · devo "+brl(saldoConta(x)):brl(saldoConta(x)))+'</small></button>';
     }).join("");
@@ -1158,6 +1185,10 @@ function desenharFolha(){
   var tE, tD, cE, cD;
   if(F.tipo==="saida"){tE="De onde saiu";tD="Para onde foi";cE=gav("fConta",F.contaId);cD=cats}
   else if(F.tipo==="entrada"){tE="De onde veio";tD="Onde entrou";cE=cats;cD=gav("fConta",F.contaId)}
+  else if(F.tipo==="bem"){
+    tE="Paguei com";tD="Qual bem?";cE=gav("fConta",F.contaId);
+    cD=bensLista().map(function(b){return '<button class="opt" data-a="fDestino" data-id="'+b.id+'" aria-pressed="'+(F.destinoId===b.id)+'">'+esc(b.nome)+'<small>vale '+esc(brl(saldoConta(b)))+'</small></button>'}).join("")+'<button class="opt novo" data-a="fBemNovo">+ Novo bem</button>';
+  }
   else{tE="De onde sai";tD="Para onde vai";cE=gav("fConta",F.contaId);cD=gav("fDestino",F.destinoId,F.contaId)}
   h+='<div class="tt" id="tt"><div class="th"><span>'+tE+'</span><span>'+tD+'</span></div>'+
     '<div class="tc"><div><p class="colrot">'+tE+'</p>'+cE+'</div><div><p class="colrot">'+tD+'</p>'+cD+'</div></div>'+
@@ -1169,10 +1200,10 @@ function desenharFolha(){
     '<button class="chip" data-a="fOutraData" aria-pressed="'+(F.data!==hoje&&F.data!==ontem)+'">Outro dia</button></div>'+
     '<div class="campo" id="wData" '+((F.data===hoje||F.data===ontem)?"hidden":"")+'><input type="date" id="fData" aria-label="Data" value="'+esc(F.data)+'"></div>';
 
-  if(F.tipo==="saida"&&c&&c.tipo==="passivo")
+  if((F.tipo==="saida"||F.tipo==="bem")&&c&&c.tipo==="passivo")
     h+='<span class="rot">Em quantas vezes?</span><div class="passo"><button data-a="fN" data-n="-1" aria-label="Menos uma parcela">−</button><b id="fNtxt"></b><button data-a="fN" data-n="1" aria-label="Mais uma parcela">+</button></div>';
 
-  h+='<div class="campo"><label for="fDesc">Anotação (opcional)</label><input id="fDesc" maxlength="60" placeholder="'+(F.tipo==="saida"?"Ex.: mercado do mês":F.tipo==="entrada"?"Ex.: salário de novembro":"Ex.: saquei no caixa")+'" value="'+esc(F.desc)+'"></div>';
+  h+='<div class="campo"><label for="fDesc">Anotação (opcional)</label><input id="fDesc" maxlength="60" placeholder="'+(F.tipo==="saida"?"Ex.: mercado do mês":F.tipo==="entrada"?"Ex.: salário de novembro":F.tipo==="bem"?"Ex.: TV nova da sala":"Ex.: saquei no caixa")+'" value="'+esc(F.desc)+'"></div>';
   var cxs=S.caixas.filter(function(x){return saldoCaixa(x.id)>0||x.id===F.caixaId});
   if(F.tipo==="saida"&&cxs.length)h+='<span class="rot">Pagar com o dinheiro de uma caixinha? (opcional)</span><div class="chips"><button class="chip" data-a="fCaixa" data-id="" aria-pressed="'+(!F.caixaId)+'">Nenhuma</button>'+
     cxs.map(function(x){return '<button class="chip" data-a="fCaixa" data-id="'+x.id+'" aria-pressed="'+(F.caixaId===x.id)+'">'+esc(x.nome)+' · '+esc(brl(saldoCaixa(x.id)))+'</button>'}).join("")+'</div>';
@@ -1211,6 +1242,13 @@ function previa(){
         (ps.length>12?'<div class="faint">... e mais '+(ps.length-12)+' parcelas</div>':'')+'</div>';
       if(!(c.fecha&&c.vence))h+='<p class="faint" style="margin-top:.4rem">Dica: cadastre o dia que a fatura fecha e vence nessa gaveta para o app calcular a data certa.</p>';
     }else h='O dinheiro sai de <b>'+esc(c?c.nome:"?")+'</b> e fica registrado em <b>'+esc(k?k.nome:"?")+'</b>.';
+  }else if(F.tipo==="bem"){
+    h='O dinheiro vira o bem <b>'+esc(d?d.nome:"?")+'</b>: você troca dinheiro por algo que guarda valor. O seu "é meu" <b>não cai</b> agora.';
+    if(c&&c.tipo==="passivo"){
+      var pb=valor?gerarParcelas(F.contaId,F.data,valor,F.n):null;
+      h+=' A compra fica como dívida em <b>'+esc(c.nome)+'</b>.';
+      if(pb)h+='<div style="margin-top:.5rem">'+pb.slice(0,12).map(function(p,i){return '<div class="parc"><span>'+(F.n>1?(i+1)+'/'+F.n+' · ':'')+'vence '+dataBR(p.data)+'</span><b>'+brl(p.valor)+'</b></div>'}).join("")+(pb.length>12?'<div class="faint">... e mais '+(pb.length-12)+' parcelas</div>':'')+'</div>';
+    }
   }else if(F.tipo==="entrada")h='O dinheiro entra em <b>'+esc(c?c.nome:"?")+'</b>, vindo de <b>'+esc(k?k.nome:"?")+'</b>.';
   else{
     h=d&&d.tipo==="passivo"?'Você está <b>pagando uma dívida</b> ('+esc(d.nome)+'). Isso não é um gasto novo: o gasto já foi anotado quando você comprou.'
@@ -1226,11 +1264,14 @@ function salvarFolha(){
   if(!F.cent){toast("Diga quanto foi");$("#fValor").focus();return}
   if(F.tipo==="transferencia"){
     if(!F.destinoId||F.destinoId===F.contaId){toast("Escolha duas gavetas diferentes");return}
+  }else if(F.tipo==="bem"){
+    if(!F.destinoId||!conta(F.destinoId)){toast("Escolha o bem ou crie um novo");return}
   }else if(!F.catId){toast("Escolha uma categoria");return}
   if(!RE_DATA.test(F.data)){toast("Escolha uma data válida");return}
   if(F.salvando)return; F.salvando=true;
   var l={id:F.id||uid(),tipo:F.tipo,valor:F.cent,desc:F.desc.trim(),contaId:F.contaId,
-    destinoId:F.tipo==="transferencia"?F.destinoId:null,catId:F.tipo==="transferencia"?null:F.catId,data:F.data};
+    destinoId:(F.tipo==="transferencia"||F.tipo==="bem")?F.destinoId:null,catId:(F.tipo==="transferencia"||F.tipo==="bem")?null:F.catId,data:F.data};
+  if(F.tipo==="bem"){var pbm=gerarParcelas(F.contaId,F.data,F.cent,F.n); if(pbm)l.parcelas=pbm}
   if(F.tipo==="saida"){var ps=gerarParcelas(F.contaId,F.data,F.cent,F.n); if(ps)l.parcelas=ps; if(F.caixaId)l.caixaId=F.caixaId; if(F.fixaId){l.fixaId=F.fixaId;l.ref=F.ref}}
   var i=-1; S.lancamentos.forEach(function(x,k){if(x.id===l.id)i=k});
   if(i>=0)S.lancamentos[i]=l; else S.lancamentos.push(l);
@@ -1350,10 +1391,112 @@ function salvarCategoria(){
   desenhar();
 }
 
+/* ---------- BENS (carro, casa, TV...) ---------- */
+/* Comprar um bem só troca dinheiro por bem (D bem / C gaveta): o "é meu" não cai.
+   O valor muda depois por ajustes: valorização (D bem / C receita) ou desvalorização (D despesa / C bem). */
+function textoVariacao(b){
+  return !b.taxa?"Mantém o valor":b.taxa<0?"Perde "+String(-b.taxa).replace(".",",")+"% ao ano":"Ganha "+String(b.taxa).replace(".",",")+"% ao ano";
+}
+function atualizarBens(){
+  var hojeYM=hojeISO().slice(0,7), mudou=false;
+  S.contas.forEach(function(b){
+    if(!b.bem||!b.taxa)return;
+    var ym=b.ajustadoAte||b.desde||hojeYM, guarda=0;
+    while(ymMais(ym,1)<hojeYM&&guarda++<240){
+      ym=ymMais(ym,1);
+      var p=ym.split("-").map(Number), fim=ym+"-"+pad(ultimoDia(p[0],p[1]-1)), base=saldoConta(b,fim), delta=Math.round(base*b.taxa/1200);
+      if(base>0&&delta!==0)S.lancamentos.push({id:uid(),tipo:"ajuste",valor:Math.abs(delta),sinal:delta>0?"alta":"baixa",
+        desc:(delta>0?"Valorização de ":"Desvalorização de ")+b.nome,contaId:b.id,destinoId:null,catId:null,data:fim});
+      b.ajustadoAte=ym; mudou=true;
+    }
+  });
+  if(mudou)salvar();
+}
+function blocoBens(){
+  var bs=bensLista().filter(function(b){return saldoConta(b)>0}), tot=bensTotal();
+  var h='<h2>Meus bens</h2><div class="card" style="padding:.2rem 1rem">';
+  if(!bs.length)h+='<div class="vazio"><b>Nenhum bem cadastrado</b>Carro, casa, celular... entram no que é seu e ganham ou perdem valor com o tempo.</div>';
+  else h+=bs.map(function(b){
+    return '<button class="gaveta" data-a="bem" data-id="'+b.id+'"><span class="marca bem"></span><span class="txt"><b>'+esc(b.nome)+'</b><i>'+textoVariacao(b)+'</i></span><span class="pont"></span><span class="vl">'+esc(brl(saldoConta(b)))+'</span></button>';
+  }).join("")+'<p class="faint" style="padding:.5rem 0">Total em bens: <b style="color:var(--ink)">'+esc(brl(tot))+'</b></p>';
+  return h+'</div><div class="opc" style="margin-top:.5rem"><button data-a="bemNovo">+ Já tenho um bem</button><button data-a="comprarBem">+ Comprei um bem</button></div>';
+}
+var BM=null;
+function modalBem(id,daFolha){
+  var b=id?conta(id):null, uso=b&&S.lancamentos.some(function(l){return l.contaId===id||l.destinoId===id});
+  BM={id:id||null,sinal:b?(b.taxa>0?1:b.taxa<0?-1:0):-1,daFolha:!!daFolha};
+  abrirModal('<p class="q">'+(b?esc(b.nome):"Novo bem")+'</p>'+
+    (b?'<p class="sub">Vale hoje <b>'+esc(brl(saldoConta(b)))+'</b></p>':'')+
+    '<div class="campo"><label for="bNome">Nome</label><input id="bNome" maxlength="30" placeholder="Ex.: Carro, Casa, Celular" value="'+esc(b?b.nome:"")+'"></div>'+
+    (!b&&!daFolha?'<div class="campo"><label for="bValor">Quanto vale hoje?</label><input id="bValor" inputmode="numeric" placeholder="R$ 0,00"></div>':'')+
+    '<span class="rot">Com o tempo, esse bem...</span><div class="opc" id="bVar"><button data-a="bVar" data-s="-1">Perde valor</button><button data-a="bVar" data-s="1">Ganha valor</button><button data-a="bVar" data-s="0">Mantém</button></div>'+
+    '<div class="campo" id="bTaxaWrap"><label for="bTaxa">Quanto por ano? (%)</label><input id="bTaxa" type="number" min="0" max="100" step="0.5" inputmode="decimal" value="'+Math.abs(b&&b.taxa||(BM.sinal<0?15:5))+'"></div>'+
+    '<p class="faint">É uma estimativa e você corrige quando quiser. Exemplos: carro 10 a 15% ao ano, celular uns 30%, casa costuma ganhar uns 3 a 6%.</p>'+
+    '<button class="btn" data-a="bSalvar">Salvar</button>'+
+    (b?'<button class="btn sec" data-a="bAjuste">Atualizar o valor</button><button class="btn sec" data-a="bVenda">Vendi</button>':'')+
+    (b&&!uso?'<button class="btn perigo" data-a="bApagar">Apagar</button>':'')+
+    '<button class="btn sec" data-a="mFechar">Cancelar</button>');
+  if($("#bValor"))ligarDinheiro($("#bValor"),0);
+  $("#bTaxa").addEventListener("input",function(){BM.tocou=true});
+  rotuloBem();
+}
+function rotuloBem(){
+  document.querySelectorAll("#bVar button").forEach(function(x){x.setAttribute("aria-pressed",String(+x.dataset.s===BM.sinal))});
+  $("#bTaxaWrap").hidden=BM.sinal===0;
+}
+function salvarBem(){
+  var nome=$("#bNome").value.trim(), pct=parseFloat($("#bTaxa").value)||0, taxa=BM.sinal===0?0:BM.sinal*Math.max(0,Math.min(100,pct));
+  if(!nome){toast("Dê um nome para o bem");return}
+  if(repetido(nome,S.contas,BM.id)){toast("Já existe uma gaveta ou bem com esse nome");return}
+  var hojeYM=hojeISO().slice(0,7), b=BM.id?conta(BM.id):null, novoId=null;
+  if(!b){
+    var val=$("#bValor")?cent($("#bValor")):0;
+    if(!BM.daFolha&&!val){toast("Diga quanto vale hoje");return}
+    b={id:uid(),nome:nome,tipo:"ativo",inicial:val,bem:true,desde:hojeYM,ajustadoAte:hojeYM};
+    S.contas.push(b); novoId=b.id;
+  }
+  b.nome=nome; if(taxa){b.taxa=taxa; if(!b.ajustadoAte)b.ajustadoAte=hojeYM} else delete b.taxa;
+  salvar(); fecharModal(); toast("Bem salvo");
+  if(novoId&&BM.daFolha&&FOLHA_ABERTA&&F){F.destinoId=novoId; desenharFolha()}
+  desenhar();
+}
+function modalAjusteBem(id){
+  var b=conta(id); if(!b)return;
+  BM={id:id};
+  abrirModal('<p class="q">Atualizar o valor de '+esc(b.nome)+'</p><p class="sub">No livro vale <b>'+esc(brl(saldoConta(b)))+'</b>. Diga quanto vale hoje de verdade.</p>'+
+    '<div class="campo"><label for="ajValor">Vale hoje</label><input id="ajValor" class="dinheiro" inputmode="numeric" placeholder="R$ 0,00"></div>'+
+    '<button class="btn" data-a="ajSalvar">Atualizar</button><button class="btn sec" data-a="mFechar">Cancelar</button>');
+  ligarDinheiro($("#ajValor"),0);
+}
+function salvarAjusteBem(){
+  var b=conta(BM.id), novo=cent($("#ajValor")), dif=novo-saldoConta(b);
+  if(!novo){toast("Diga quanto vale hoje");return}
+  if(dif===0){toast("Já está com esse valor");return}
+  S.lancamentos.push({id:uid(),tipo:"ajuste",valor:Math.abs(dif),sinal:dif>0?"alta":"baixa",desc:"Ajuste de valor de "+b.nome,contaId:b.id,destinoId:null,catId:null,data:hojeISO()});
+  salvar(); fecharModal(); desenhar(); toast(dif>0?"Valorizou "+brl(dif):"Desvalorizou "+brl(-dif));
+}
+function modalVendaBem(id){
+  var b=conta(id), gs=contasNormais().filter(function(c){return c.tipo==="ativo"}); if(!b)return;
+  if(!gs.length){toast("Crie uma gaveta com dinheiro para receber a venda");return}
+  BM={id:id,gav:gs[0].id};
+  abrirModal('<p class="q">Vendi '+esc(b.nome)+'</p><p class="sub">No livro vale <b>'+esc(brl(saldoConta(b)))+'</b>. Se vendeu por mais ou por menos, a diferença vira ganho ou perda.</p>'+
+    '<div class="campo"><label for="vdValor">Vendi por</label><input id="vdValor" class="dinheiro" inputmode="numeric" placeholder="R$ 0,00"></div>'+
+    '<span class="rot">O dinheiro entrou em</span><div class="chips" id="vdGavs">'+gs.map(function(c){return '<button class="chip" data-a="vdGav" data-id="'+c.id+'" aria-pressed="'+(c.id===BM.gav)+'">'+esc(c.nome)+'</button>'}).join("")+'</div>'+
+    '<button class="btn" data-a="vdSalvar">Registrar venda</button><button class="btn sec" data-a="mFechar">Cancelar</button>');
+  ligarDinheiro($("#vdValor"),0);
+}
+function salvarVendaBem(){
+  var b=conta(BM.id), preco=cent($("#vdValor")), atual=saldoConta(b);
+  if(!preco){toast("Diga por quanto vendeu");return}
+  if(preco!==atual)S.lancamentos.push({id:uid(),tipo:"ajuste",valor:Math.abs(preco-atual),sinal:preco>atual?"alta":"baixa",desc:(preco>atual?"Ganho":"Perda")+" na venda de "+b.nome,contaId:b.id,destinoId:null,catId:null,data:hojeISO()});
+  S.lancamentos.push({id:uid(),tipo:"transferencia",valor:preco,desc:"Venda de "+b.nome,contaId:b.id,destinoId:BM.gav,catId:null,data:hojeISO()});
+  salvar(); fecharModal(); desenhar(); toast("Venda registrada");
+}
+
 /* ---------- PESSOAS (emprestei / devo) ---------- */
 var PS=null;
 function modalPessoaNova(dir){
-  var ativos=S.contas.filter(function(c){return c.tipo==="ativo"&&!c.pessoa}), emp=dir==="emprestei";
+  var ativos=S.contas.filter(function(c){return c.tipo==="ativo"&&!c.pessoa&&!c.bem}), emp=dir==="emprestei";
   PS={dir:dir,gav:ativos[0]?ativos[0].id:null,antes:false};
   abrirModal('<p class="q">'+(emp?"Emprestei dinheiro":"Peguei dinheiro emprestado")+'</p>'+
     '<div class="campo"><label for="pNome">'+(emp?"Para quem?":"De quem?")+'</label><input id="pNome" maxlength="30" placeholder="Nome da pessoa"></div>'+
@@ -1394,7 +1537,7 @@ function modalPessoa(id){
     (!uso?'<button class="btn perigo" data-a="pApagar">Apagar</button>':'')+
     '<button class="btn sec" data-a="mFechar">Fechar</button>');
 }
-function primeiraGaveta(){return S.contas.filter(function(x){return x.tipo==="ativo"&&!x.pessoa})[0]||null}
+function primeiraGaveta(){return S.contas.filter(function(x){return x.tipo==="ativo"&&!x.pessoa&&!x.bem})[0]||null}
 function perdasCat(){
   var k=S.categorias.filter(function(x){return x.tipo==="despesa"&&x.nome==="Dívidas não pagas"})[0];
   if(!k){k={id:uid(),nome:"Dívidas não pagas",tipo:"despesa"};S.categorias.push(k)}
@@ -1453,7 +1596,7 @@ function telaMais(){
     atalho("ajustes","Ajustes","Letra, cores, movimento, categorias e cópia dos dados")+'</div>';
 }
 function telaPlanejar(){
-  var ag=agenda(), mensal=S.fixas.filter(function(f){return f.freq!=="anual"}).reduce(function(s,f){return s+f.valor},0), res=totalReservado(), livre=totais().pl-res;
+  var ag=agenda(), mensal=S.fixas.filter(function(f){return f.freq!=="anual"}).reduce(function(s,f){return s+f.valor},0), res=totalReservado(), livre=livreAgora();
   return capa("O que vem pela frente","Planejar")+
     '<h2>Agenda dos próximos dias</h2><div class="card" style="padding:.3rem 1rem">'+
     (ag.length?ag.slice(0,8).map(linhaAgenda).join(""):'<div class="vazio"><b>Nada para os próximos dias</b>Contas do cartão, contas fixas e cobranças aparecem aqui.</div>')+'</div>'+
@@ -1478,12 +1621,12 @@ function telaFixas(){
 /* ---------- CAIXINHAS ---------- */
 var CX=null, MV=null;
 function telaCaixinhas(){
-  var t=totais(), res=totalReservado(), livre=t.pl-res, ym=hojeISO().slice(0,7), r=resumoMes(ym), metas=metasMes(), sob=sobraMesPassado();
+  var t=totais(), res=totalReservado(), livre=livreAgora(), ym=hojeISO().slice(0,7), r=resumoMes(ym), metas=metasMes(), sob=sobraMesPassado();
   var pg=t.pl>0?Math.max(0,Math.min(100,res/t.pl*100)):0;
   var h=capa("Separe sem mexer no banco","Caixinhas","planejar");
   h+='<div class="card" style="margin-top:.9rem"><p class="sub">Caixinhas dividem o dinheiro que já é seu, como envelopes de papel. Nada sai do banco: o app só separa.</p>'+
     '<div class="barra2" role="img" aria-label="Guardado '+Math.round(pg)+'% e livre '+Math.round(100-pg)+'%"><div style="width:'+pg.toFixed(1)+'%;background:var(--tr)"></div></div>'+
-    '<div class="legenda"><span><i class="pt o"></i>Livre <b>'+esc(brl(livre))+'</b></span><span><i class="pt g"></i>Guardado <b>'+esc(brl(res))+'</b></span></div></div>';
+    '<div class="legenda"><span><i class="pt o"></i>Livre em dinheiro <b>'+esc(brl(livre))+'</b></span><span><i class="pt g"></i>Guardado <b>'+esc(brl(res))+'</b></span>'+(bensTotal()>0?'<span><i class="pt b"></i>Bens <b>'+esc(brl(bensTotal()))+'</b></span>':'')+'</div></div>';
   if(sob){
     h+='<div class="card" style="margin-top:.8rem;border-left:6px solid var(--latao)"><b>Sobrou '+esc(brl(sob.valor))+' das metas de '+sob.mes+'</b>'+
       '<p class="sub">Quer guardar esse valor? É só uma sugestão: você escolhe.</p>'+
@@ -1563,7 +1706,7 @@ function modalMeta(){
 }
 
 /* ---------- SIMULADOR ---------- */
-var SIM={cent:0,n:1,total:0,contaId:null};
+var SIM={cent:0,n:1,total:0,contaId:null,bem:false};
 function telaSimulador(){
   var cs=contasNormais();
   if(!SIM.contaId||!conta(SIM.contaId))SIM.contaId=cs[0]?cs[0].id:null;
@@ -1572,6 +1715,7 @@ function telaSimulador(){
     '<p class="sub lead">Veja o peso de uma compra nos próximos 12 meses antes de decidir. Nada é salvo.</p>'+
     '<label class="rot" for="sValor">Quanto custa?</label><input id="sValor" class="dinheiro s" inputmode="numeric" placeholder="R$ 0,00">'+
     '<span class="rot">Vai pagar com</span><div class="chips" id="sContas">'+cs.map(function(c){return '<button class="chip" data-a="sConta" data-id="'+c.id+'" aria-pressed="'+(SIM.contaId===c.id)+'">'+esc(c.nome)+(c.tipo==="passivo"?" (dívida)":"")+'</button>'}).join("")+'</div>'+
+    '<span class="rot">Essa compra é...</span><div class="chips" id="sTipo"><button class="chip" data-a="sTipo" data-b="0" aria-pressed="'+(!SIM.bem)+'">Um gasto (consumo)</button><button class="chip" data-a="sTipo" data-b="1" aria-pressed="'+(!!SIM.bem)+'">Um bem que guarda valor</button></div>'+
     '<div id="sParc"><span class="rot">Em quantas vezes?</span><div class="passo"><button data-a="sN" data-n="-1" aria-label="Menos uma parcela">−</button><b id="sNtxt"></b><button data-a="sN" data-n="1" aria-label="Mais uma parcela">+</button></div>'+
       '<div class="campo"><label for="sTotal">Total pago no final, se tiver juros (opcional)</label><input id="sTotal" inputmode="numeric" placeholder="R$ 0,00"></div></div>'+
     '<div class="campo"><label for="sRenda">Minha renda por mês'+(auto?' (se vazio, uso a média do que entrou)':'')+'</label><input id="sRenda" inputmode="numeric" placeholder="R$ 0,00"></div>'+
@@ -1609,7 +1753,7 @@ function calcSim(){
   var li='';
   if(n>1)li+='<li>'+n+' parcelas de <b>'+esc(brl(Math.round(total/n)))+'</b> (total '+esc(brl(total))+').</li>';
   if(total>SIM.cent&&n>1){var tx=taxaMensal(SIM.cent,total/n,n); li+='<li>Juros embutidos: <b>'+esc(brl(total-SIM.cent))+'</b>, cerca de <b>'+(tx*100).toFixed(1).replace(".",",")+'% ao mês</b>.</li>'}
-  li+='<li>O que é seu cai <b>'+esc(brl(total))+'</b>: a compra é um gasto.</li>';
+  li+=SIM.bem?'<li>O que é seu <b>não cai hoje</b>: o dinheiro vira um bem, que vai perdendo valor com o tempo. Mesmo assim as parcelas pesam no mês.</li>':'<li>O que é seu cai <b>'+esc(brl(total))+'</b>: a compra é um gasto.</li>';
   var sem1="";
   if(R>0){
     var pp=pico/R*100, cls=pp<30?"ok":pp<50?"at":"ru", tx2=pp<30?"Tranquilo":pp<50?"Atenção":"Aperta o orçamento";
@@ -1658,7 +1802,7 @@ function lerCopia(file){
       if(!h.contas.length&&!h.lancamentos.length)throw 0;
       confirmar("Isso troca tudo que está neste aparelho pelo conteúdo da cópia."+(h.perdidos?" ("+h.perdidos+" item(ns) com problema serão ignorados.)":"")+" Continuar?","Sim, recuperar",function(){
         S.contas=h.contas;S.categorias=h.categorias;S.lancamentos=h.lancamentos;S.fixas=h.fixas;S.caixas=h.caixas;S.reservas=h.reservas;S.config.pronto=true;
-        salvar(); toast("Dados recuperados!"); ir("inicio");
+        atualizarBens(); salvar(); toast("Dados recuperados!"); ir("inicio");
       });
     }catch(e){toast("Esse arquivo não é uma cópia da Caderneta")}
   };
@@ -1680,7 +1824,7 @@ function iniciarOnb(){
 function desenharOnb(){
   var h="";
   if(O.passo===1){
-    h='<div class="fino"><div style="width:33%"></div></div><div style="margin:.5rem 0 1rem">'+balanca({ativo:100,passivo:40,pl:60})+'</div><h1>Bem-vindo à Caderneta</h1>'+
+    h='<div class="fino"><div style="width:33%"></div></div><div style="margin:.5rem 0 1rem">'+balanca({ativo:100,passivo:40,pl:60,bens:0})+'</div><h1>Bem-vindo à Caderneta</h1>'+
       '<p class="sub" style="font-size:1.05rem;margin-top:.5rem">É um caderno de contas que fica no seu celular. Você anota o que gasta e o que recebe, e ela mostra quanto <b>realmente é seu</b>.</p>'+
       '<div class="card" style="margin-top:1rem"><p>🔒 Seus dados ficam <b>só neste aparelho</b>. Não precisa de cadastro nem de senha.</p></div>'+
       '<button class="btn" data-a="oProx">Vamos começar</button>';
@@ -1745,6 +1889,11 @@ var ACOES={
   novo:function(){novaFolha()},
   editar:function(d){
     var l=null; S.lancamentos.forEach(function(x){if(x.id===d.id)l=x}); if(!l)return;
+    if(l.tipo==="ajuste"){
+      confirmar("Este é um ajuste do valor de "+nomeConta(l.contaId)+" ("+(l.sinal==="alta"?"valorização":"desvalorização")+" de "+brl(l.valor)+"). Quer apagar?","Apagar o ajuste",function(){
+        S.lancamentos=S.lancamentos.filter(function(x){return x.id!==l.id}); salvar(); desenhar(); toast("Ajuste apagado")});
+      return;
+    }
     novaFolha({id:l.id,tipo:l.tipo,cent:l.valor,contaId:l.contaId,destinoId:l.destinoId,catId:l.catId,desc:l.desc,data:l.data,n:l.parcelas?l.parcelas.length:1,caixaId:l.caixaId||null,fixaId:l.fixaId||null,ref:l.ref||null});
   },
   mes:function(d){
@@ -1753,7 +1902,7 @@ var ACOES={
   },
   pagar:function(d){
     var c=conta(d.id); if(!c)return;
-    var banco=S.contas.filter(function(x){return x.tipo==="ativo"&&!x.pessoa})[0];
+    var banco=S.contas.filter(function(x){return x.tipo==="ativo"&&!x.pessoa&&!x.bem})[0];
     if(!banco){toast("Crie uma gaveta com dinheiro para pagar");return}
     novaFolha({tipo:"transferencia",contaId:banco.id,destinoId:c.id,cent:+d.valor,desc:"Pagamento "+c.nome});
   },
@@ -1829,8 +1978,22 @@ var ACOES={
   sComprar:function(){
     var c=conta(SIM.contaId); if(!c||!SIM.cent)return;
     var n=c.tipo==="passivo"?SIM.n:1, total=(n>1&&SIM.total>SIM.cent)?SIM.total:SIM.cent;
-    novaFolha({tipo:"saida",cent:total,contaId:c.id,n:n});
+    novaFolha({tipo:SIM.bem?"bem":"saida",cent:total,contaId:c.id,n:n});
   },
+  /* bens */
+  bem:function(d){modalBem(d.id)},
+  bemNovo:function(){modalBem(null,false)},
+  comprarBem:function(){novaFolha({tipo:"bem"})},
+  fBemNovo:function(){modalBem(null,true)},
+  bVar:function(d){BM.sinal=+d.s; var t=$("#bTaxa"); if(t&&BM.sinal&&(!BM.tocou||!(parseFloat(t.value)>0)))t.value=BM.sinal<0?15:5; rotuloBem()},
+  bSalvar:salvarBem,
+  bAjuste:function(){var id=BM.id; modalAjusteBem(id)},
+  ajSalvar:salvarAjusteBem,
+  bVenda:function(){var id=BM.id; modalVendaBem(id)},
+  vdGav:function(d){BM.gav=d.id; document.querySelectorAll("#vdGavs .chip").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.id===d.id))})},
+  vdSalvar:salvarVendaBem,
+  bApagar:function(){var id=BM.id; confirmar("Apagar "+nomeConta(id)+"?","Apagar",function(){S.contas=S.contas.filter(function(c){return c.id!==id}); salvar(); desenhar(); toast("Bem apagado")})},
+  sTipo:function(d){SIM.bem=d.b==="1"; document.querySelectorAll("#sTipo .chip").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.b===d.b))}); calcSim()},
   fAdd:function(d){addLinhaFatura(d.c,null)},
   fDel:function(d,b){b.closest(".linha-f").remove()},
   gTipo:function(d){if(G&&!G.bloqueado){G.tipo=d.t;rotuloGaveta()}},
@@ -1897,6 +2060,7 @@ document.addEventListener("keydown",function(e){
 
 /* ---------- início ---------- */
 carregar();
+atualizarBens();
 aplicarConfig();
 if("serviceWorker" in navigator && /^https?:$/.test(location.protocol)){
   navigator.serviceWorker.register("sw.js").catch(function(){});

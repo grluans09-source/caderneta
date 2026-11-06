@@ -54,6 +54,15 @@ Conceito: um escritório de contabilidade antigo, vivo. A pessoa sente a contabi
 - Frases da capa: lista `FRASES` (autores reais, tradução livre); troca por dia e ao tocar. Conferir a fonte ao incluir novas.
 - Valores digitados sempre mostram "R$" (`ligarDinheiro`). O botão Salvar da tela Anotar fica no fim do formulário, em ordem de uso (não é fixo/sticky).
 
+## Bens (carro, casa, TV, celular)
+- Regra contábil: o app conta DINHEIRO e BENS cadastrados. Consumo (comida, conta de luz) é gasto e reduz o "é meu". Bem que guarda valor é "Comprei um bem": `lancamento.tipo="bem"` com `destinoId` = conta `bem:true`. Partidas: D bem / C gaveta (ou cartão, com parcelas). Não é despesa e o PL não muda na compra.
+- Conta de bem: `{bem:true, tipo:"ativo", taxa (% ao ano; negativo = perde valor), desde, ajustadoAte}`. Bens ficam fora das listas de gavetas do Anotar e de `contasNormais()`.
+- Valor muda por `lancamento.tipo="ajuste"` (`sinal:"alta"|"baixa"`, `contaId`=bem): alta = D bem / C "Valorização de bens" (categoria virtual `__valoriza`); baixa = D "Desvalorização de bens" (`__desvaloriza`) / C bem. Ajuste NÃO entra em Entrou/Saiu (é `resumoMes().aj`); entra no PL e no balancete.
+- `atualizarBens()` roda ao abrir e ao restaurar backup: um ajuste por mês completo, composto (taxa/12 sobre o valor do fim do mês), idempotente via `ajustadoAte`.
+- Venda: ajuste até o preço (ganho/perda) + transferência bem → gaveta.
+- `livreAgora()` = PL − bens − caixinhas (dinheiro que dá para guardar/gastar). Invariante: PL = bens + livre + caixinhas.
+- Balança: esquerda = dinheiro (moedas verdes) + bens (azuis); direita = dívidas (vermelhas) + sobra (douradas).
+
 ## Como testar depois de qualquer mudança
 1. Extrair o `<script>` e rodar `node --check`.
 2. Testar com jsdom numa CÓPIA do arquivo com um hook temporário (`window.__T`), nunca no original: onboarding, gasto, compra parcelada, pagar fatura, editar/apagar, backup ida e volta, todas as telas.
