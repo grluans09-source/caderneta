@@ -4,9 +4,9 @@
 > aqui estão **as regras e o jeito de trabalhar**. O resto está em `docs/` (veja a tabela no fim).
 
 ## Em que pé estamos
-- **Versão 1.1.0-beta.1** (6 nov 2026): primeira versão para testadores (desfazer ao apagar, lembrete de cópia, selo beta e feedback). **Ainda sem teste com pessoas reais em celular.**
+- **Versão 1.7.1-beta.1** (6 nov 2026): app reorganizado (`docs/MAPA-DO-APP.md`) e com **3 jeitos de usar** em todas as telas, escolhidos nos Primeiros passos (`docs/JEITOS-DE-USAR.md`), conferidos com letra Enorme e tema escuro. **Ainda sem teste com pessoas reais em celular.**
 - App no ar em https://grluans09-source.github.io/caderneta/ (GitHub Pages, publicado por GitHub Actions a partir da pasta `app/`).
-- 1 arquivo de app (`app/index.html`, ~2.400 linhas), 16 arquivos de teste (476 verificações) que rodam com `npm test`.
+- 1 arquivo de app (`app/index.html`, ~2.400 linhas), 17 arquivos de teste que rodam com `npm test`.
 - Próximos passos em `docs/ROTEIRO.md`. Estado, riscos e dívidas em `docs/AVALIACAO.md`.
 
 ## Quem é o dono e como falar com ele
@@ -39,7 +39,7 @@
 ## Regras de produto (o que o dono decidiu)
 - **Vocabulário comum na tela**: "conta", "Transferi entre contas", "previsão", "Perdeu valor / Ganhou valor", "anotação", "ANOTADO", "o que ainda deve". **Proibido na tela comum**: gaveta, partida dobrada, lançamento, saldo devedor, comprometido, projeção, débito/crédito (só no Modo contador). O teste `08-vocabulario-e-apagar-conta` varre todas as telas atrás dessas palavras.
 - **O app conta dinheiro e bens cadastrados.** Comida/consumo é gasto; carro/TV/casa é "Comprei um bem" (não reduz o "é meu" na compra).
-- **Caixinhas são organização pessoal**, fora da contabilidade: olham só o **dinheiro real nas contas** (sem dívidas), o guardado sai de "Dinheiro que eu tenho" e volta ao tirar.
+- **Caixinhas são organização pessoal**, fora da contabilidade: olham só o **dinheiro real nas contas** (sem dívidas), o guardado **continua na conta e continua sendo da pessoa** (como a caixinha de um banco: o total não muda), só sai de "Dinheiro para usar agora" e volta ao tirar. Na tela, "livre" virou "para usar".
 - **Listas longas nunca aparecem inteiras**: 15 por vez, com busca e ordem por data, valor ou nome.
 - **Apagar** conta, bem ou pessoa com anotações é permitido, **com aviso claro** do que sai junto.
 - Conteúdo educativo (frases da capa): só autores reais, atribuição conferida.

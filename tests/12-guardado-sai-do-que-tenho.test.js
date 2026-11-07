@@ -11,53 +11,58 @@ const dom=new JSDOM(html,{runScripts:"dangerously",url:"http://localhost/",virtu
 const w=dom.window,d=w.document,T=w.__T;
 let ok=true;function eq(n,a,b){const p=JSON.stringify(a)===JSON.stringify(b);if(!p)ok=false;console.log(p?"OK  ":"FAIL",n,p?"":JSON.stringify(a)+" != "+JSON.stringify(b))}
 const $=s=>d.querySelector(s);
-function click(sel){const el=typeof sel==="string"?$(sel):sel;if(!el)throw new Error("sem elemento "+sel);el.click()}
+function click(sel){let el=typeof sel==="string"?$(sel):sel;
+  /* a tela Dinheiro tem abas e Metas é uma tela própria: se o botão não está na tela, vai até a aba/tela dele, como uma pessoa faria */
+  if(!el&&typeof sel==="string"){for(const alvo of ['[data-a="dinAba"][data-v="bens"]','[data-a="dinAba"][data-v="pessoas"]','[data-a="dinAba"][data-v="dividas"]','[data-a="dinAba"][data-v="contas"]','[data-a="ir"][data-v="metas"]']){const b=$(alvo);if(b){b.click();el=$(sel);if(el)break}}}
+  if(!el)throw new Error("sem elemento "+sel);el.click()}
 function digita(sel,txt){const el=$(sel);el.value=txt;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
 const S=()=>T.S();
 d.documentElement.classList.add("calmo");
 function tela(){return $("#tela").textContent}
+function caix(){click('nav [data-v="planejar"]');click('#tela [data-a="ir"][data-v="caixinhas"]')}
 function guardar(id,v){click('nav [data-v="planejar"]');click('#tela [data-a="ir"][data-v="caixinhas"]');click('[data-a="cxMov"][data-id="'+id+'"][data-m="guardar"]');digita("#mvValor",String(v));click('[data-a="mvSalvar"]')}
 
 // ---- antes de guardar ----
 click('nav [data-v="inicio"]');
-eq("sem caixinhas: dinheiro que eu tenho = 1.000, sem item de guardado",/Dinheiro que eu tenho R\$ 1\.000,00/.test(tela())&&!/Guardado nas caixinhas/.test(tela()),true);
-eq("sem dinheiro guardado não há botão de usar",!$('[data-a="tirarCx"]'),true);
+eq("sem caixinhas: o que eu tenho = 1.000, sem item de guardado",/O que eu tenho R\$ 1\.000,00/.test(tela())&&!/Guardado nas caixinhas/.test(tela()),true);
+caix();eq("sem dinheiro guardado não há botão de usar",!$('[data-a="tirarCx"]'),true);
 const pl0=T.totais().pl;
 
 // ---- guardar 300: sai do dinheiro que eu tenho ----
 guardar("x1",30000);
 click('nav [data-v="inicio"]');
-eq("dinheiro que eu tenho caiu para 700",/Dinheiro que eu tenho R\$ 700,00/.test(tela()),true);
-eq("aparece separado: Guardado nas caixinhas 300",/Guardado nas caixinhas R\$ 300,00/.test(tela()),true);
+eq("guardar NÃO tira do total: o que eu tenho continua 1.000",/O que eu tenho R\$ 1\.000,00/.test(tela()),true);
+caix();eq("na tela Caixinhas, para usar agora caiu para 700",/Para usar agora R\$ 700,00/.test(tela()),true);click('nav [data-v="inicio"]');
+eq("aparece separado: Guardado nas caixinhas 300",/Guardado nas caixinhas \(continua seu\) R\$ 300,00/.test(tela()),true);
 eq("a balança ganhou moedas roxas do guardado",$("#bal").innerHTML.includes("#A98BD6"),true);
 eq("o é meu de verdade NÃO mudou",T.totais().pl,pl0);
-eq("aparece o botão para usar o dinheiro guardado",!!$('[data-a="tirarCx"]'),true);
+caix();eq("aparece o botão para usar o dinheiro guardado",!!$('[data-a="tirarCx"]'),true);
 // tela Dinheiro: saldos reais + explicação
 click('nav [data-v="contas"]');
 eq("Dinheiro: contas mostram o saldo real do banco (100 + 900)",/R\$ 100,00/.test(tela())&&/R\$ 900,00/.test(tela()),true);
-eq("Dinheiro explica o que está guardado e o que eu tenho agora",/R\$ 300,00 está guardado nas caixinhas/.test(tela())&&/Dinheiro que eu tenho agora: R\$ 700,00/.test(tela()),true);
+eq("Dinheiro explica o que está guardado e o que eu tenho agora",/R\$ 300,00 está guardado nas caixinhas/.test(tela())&&/Para usar agora: R\$ 700,00/.test(tela()),true);
 
 // ---- usar o dinheiro guardado: sobe de novo ----
-click('nav [data-v="inicio"]');click('[data-a="tirarCx"]');
+caix();click('[data-a="tirarCx"]');
 eq("janela mostra as caixinhas com dinheiro",/Reserva · R\$ 300,00/.test($("#modal").textContent)&&!/Viagem/.test($("#modal").textContent),true);
 digita("#mvValor","10000");click('[data-a="mvSalvar"]');
 eq("tirou 100 da caixinha",T.saldoCaixa("x1"),20000);
-click('nav [data-v="inicio"]');
-eq("dinheiro que eu tenho subiu para 800",/Dinheiro que eu tenho R\$ 800,00/.test(tela())&&/Guardado nas caixinhas R\$ 200,00/.test(tela()),true);
+caix();
+eq("para usar agora subiu para 800",/Para usar agora R\$ 800,00/.test(tela())&&/Guardado R\$ 200,00/.test(tela()),true);
 // tirar mais do que tem é barrado
 click('[data-a="tirarCx"]');digita("#mvValor","99999");click('[data-a="mvSalvar"]');
 eq("não deixa tirar mais do que tem na caixinha",[T.saldoCaixa("x1"),/só tem/.test($("#toast").textContent)],[20000,true]);
 click('[data-a="mFechar"]');
 // duas caixinhas: escolher qual
 guardar("x2",15000);
-click('nav [data-v="inicio"]');click('[data-a="tirarCx"]');
+caix();click('[data-a="tirarCx"]');
 eq("agora aparecem as duas caixinhas",/Reserva/.test($("#modal").textContent)&&/Viagem/.test($("#modal").textContent),true);
 click('[data-a="tirarEsc"][data-id="x2"]');digita("#mvValor","15000");click('[data-a="mvSalvar"]');
 eq("tirou da Viagem (a escolhida) e a Reserva ficou",[T.saldoCaixa("x2"),T.saldoCaixa("x1")],[0,20000]);
 // tirar tudo: não há mais o botão se não sobrou nada
-click('nav [data-v="inicio"]');click('[data-a="tirarCx"]');digita("#mvValor","20000");click('[data-a="mvSalvar"]');
-click('nav [data-v="inicio"]');
-eq("sem nada guardado volta ao normal: 1.000 e sem botão",/Dinheiro que eu tenho R\$ 1\.000,00/.test(tela())&&!/Guardado nas caixinhas/.test(tela())&&!$('[data-a="tirarCx"]'),true);
+caix();click('[data-a="tirarCx"]');digita("#mvValor","20000");click('[data-a="mvSalvar"]');
+caix();
+eq("sem nada guardado volta ao normal: para usar 1.000 e sem botão",/Para usar agora R\$ 1\.000,00/.test(tela())&&!$('[data-a="tirarCx"]'),true);click('nav [data-v="inicio"]');
 eq("sem caixinha com dinheiro, o botão avisa",(function(){return true})(),true);
 
 // ---- como ler explica as caixinhas ----

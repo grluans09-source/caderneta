@@ -20,7 +20,10 @@ const dom=new JSDOM(html,{runScripts:"dangerously",url:"http://localhost/",virtu
 const w=dom.window,d=w.document,T=w.__T;
 let ok=true;function eq(n,a,b){const p=JSON.stringify(a)===JSON.stringify(b);if(!p)ok=false;console.log(p?"OK  ":"FAIL",n,p?"":JSON.stringify(a)+" != "+JSON.stringify(b))}
 const $=s=>d.querySelector(s);
-function click(sel){const el=typeof sel==="string"?$(sel):sel;if(!el)throw new Error("sem elemento "+sel);el.click()}
+function click(sel){let el=typeof sel==="string"?$(sel):sel;
+  /* a tela Dinheiro tem abas e Metas é uma tela própria: se o botão não está na tela, vai até a aba/tela dele, como uma pessoa faria */
+  if(!el&&typeof sel==="string"){for(const alvo of ['[data-a="dinAba"][data-v="bens"]','[data-a="dinAba"][data-v="pessoas"]','[data-a="dinAba"][data-v="dividas"]','[data-a="dinAba"][data-v="contas"]','[data-a="ir"][data-v="metas"]']){const b=$(alvo);if(b){b.click();el=$(sel);if(el)break}}}
+  if(!el)throw new Error("sem elemento "+sel);el.click()}
 d.documentElement.classList.add("calmo");
 
 // ---- este mês ----
@@ -41,18 +44,18 @@ eq("mês passado sem pendências antigas",a.tf,0);
 // ---- telas ----
 click('nav [data-v="inicio"]');
 const ini=$("#tela").textContent;
-eq("Início mostra 'Falta pagar em' com o total",/Falta pagar em/.test(ini)&&/R\$ 550,00/.test(ini),true);
-eq("Início mostra o já pago",/Já pagou R\$ 850,00 de R\$ 1\.400,00/.test(ini),true);
-eq("Início lista as contas (Internet, Maria, Nubank)",/Internet/.test(ini)&&/Maria/.test(ini)&&/Nubank/.test(ini),true);
-eq("Início tem atalho para a agenda",!!$('#tela .pagar [data-a="ir"][data-v="planejar"]'),true);
-click('nav [data-v="planejar"]');
-eq("Planejar mostra o total do mês",/Falta pagar em/.test($("#tela").textContent)&&/R\$ 550,00/.test($("#tela").textContent),true);
+eq("Início mostra só UMA linha: 'Falta pagar em' com o total",/Falta pagar em/.test(ini)&&/R\$ 550,00/.test(ini)&&!$('#tela #cardPagar'),true);
+eq("Início não repete a lista nem o já pago",!/Já pagou/.test(ini)&&!/Internet/.test(ini.split("Últimas anotações")[0].replace(/Falta pagar[^›]*›?/,"")),true);
+eq("a linha do Início leva ao Planejar",!!$('#tela .linha-falta[data-a="ir"][data-v="planejar"]'),true);
+click('#tela .linha-falta');
+const pl=$("#tela").textContent;
+eq("Planejar é a casa: mostra o total, o já pago e a lista",/Falta pagar em/.test(pl)&&/R\$ 550,00/.test(pl)&&/Já pagou R\$ 850,00 de R\$ 1\.400,00/.test(pl)&&/Internet/.test(pl)&&/Maria/.test(pl)&&/Nubank/.test(pl),true);
+click('#cardPagar [data-a="pagMes"][data-n="1"]');
+eq("seta para o mês seguinte mostra 'Vai vencer em' com o total previsto (1.050)",/Vai vencer em/.test($("#cardPagar").textContent)&&/R\$ 1.050,00/.test($("#cardPagar").textContent),true);
+for(let i=0;i<3;i++)click('#cardPagar [data-a="pagMes"][data-n="-1"]');
+eq("mês antigo sem nada mostra 'Nada para pagar'",/Nada para pagar/.test($("#cardPagar").textContent),true);
 click('nav [data-v="mais"]');click('#tela [data-a="ir"][data-v="relatorios"]');
-eq("Relatórios mostra 'O que pagar em' o mês",/O que pagar em/.test($("#tela").textContent)&&/Falta pagar em/.test($("#tela").textContent),true);
-click('[data-a="mes"][data-n="1"]');
-eq("mês seguinte mostra 'Vai vencer em' com o total previsto (1.050)",/Vai vencer em/.test($("#tela").textContent)&&/R\$ 1\.050,00/.test($("#tela").textContent),true);
-for(let i=0;i<4;i++)click('[data-a="mes"][data-n="-1"]');
-eq("mês antigo sem nada mostra 'Nada para pagar'",/Nada para pagar/.test($("#tela").textContent),true);
+eq("Relatórios NÃO repete o 'O que pagar'",/O que pagar em/.test($("#tela").textContent)||/Contas a pagar/.test($("#tela").textContent),false);
 
 // ---- pagar muda o número ----
 click('nav [data-v="planejar"]');

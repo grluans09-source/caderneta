@@ -22,7 +22,10 @@ const dom=new JSDOM(html,{runScripts:"dangerously",url:"http://localhost/",virtu
 const w=dom.window,d=w.document,T=w.__T;
 let ok=true;function eq(n,a,b){const p=JSON.stringify(a)===JSON.stringify(b);if(!p)ok=false;console.log(p?"OK  ":"FAIL",n,p?"":JSON.stringify(a)+" != "+JSON.stringify(b))}
 const $=s=>d.querySelector(s);
-function click(sel){const el=typeof sel==="string"?$(sel):sel;if(!el)throw new Error("sem elemento "+sel);el.click()}
+function click(sel){let el=typeof sel==="string"?$(sel):sel;
+  /* a tela Dinheiro tem abas e Metas é uma tela própria: se o botão não está na tela, vai até a aba/tela dele, como uma pessoa faria */
+  if(!el&&typeof sel==="string"){for(const alvo of ['[data-a="dinAba"][data-v="bens"]','[data-a="dinAba"][data-v="pessoas"]','[data-a="dinAba"][data-v="dividas"]','[data-a="dinAba"][data-v="contas"]','[data-a="ir"][data-v="metas"]']){const b=$(alvo);if(b){b.click();el=$(sel);if(el)break}}}
+  if(!el)throw new Error("sem elemento "+sel);el.click()}
 function digita(sel,txt){const el=$(sel);el.value=txt;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
 const S=()=>T.S();
 d.documentElement.classList.add("calmo");
@@ -52,7 +55,7 @@ click('[data-a="bem"][data-id="b1"]');colhe("bem");click('[data-a="bAjuste"]');c
 click('[data-a="bem"][data-id="b1"]');click('[data-a="bVenda"]');colhe("venda do bem");click('[data-a="mFechar"]');
 nav("fixas");click('[data-a="fixa"][data-id=""]');colhe("nova conta fixa");click('[data-a="mFechar"]');
 nav("caixinhas");click('[data-a="caixa"][data-id=""]');colhe("nova caixinha");click('[data-a="mFechar"]');
-click('[data-a="novaMeta"]');colhe("nova meta");click('[data-a="mFechar"]');
+click('nav [data-v="planejar"]');click('#tela [data-a="ir"][data-v="metas"]');click('[data-a="novaMeta"]');colhe("nova meta");click('[data-a="mFechar"]');
 const proibidas=[/gaveta/i,/Mudei de lugar/,/Mudança de lugar/,/projeção/i,/saldo devedor/i,/comprometid/i,/Desvalorização/,/LANÇADO/,/lançamento/i,/partida/i];
 let achou=[];
 textos.forEach(([rot,t])=>proibidas.forEach(p=>{if(p.test(t))achou.push(rot+" -> "+p)}));
@@ -85,7 +88,7 @@ eq("o app continua funcionando depois de apagar",$("#tela").textContent.length>1
 // ---- onboarding também sem jargão ----
 const dom2=new JSDOM(html,{runScripts:"dangerously",url:"http://localhost/",virtualConsole:vc,pretendToBeVisual:true});
 const d2=dom2.window.document;let tx2="";
-tx2+=d2.getElementById("onbCorpo").textContent;d2.querySelector('[data-a="oProx"]').click();tx2+=d2.getElementById("onbCorpo").textContent;d2.querySelector('[data-a="oProx"]').click();tx2+=d2.getElementById("onbCorpo").textContent;
+tx2+=d2.getElementById("onbCorpo").textContent;d2.querySelector('[data-a="oProx"]').click();tx2+=d2.getElementById("onbCorpo").textContent;d2.querySelector('[data-a="oProx"]').click();tx2+=d2.getElementById("onbCorpo").textContent;d2.querySelector('[data-a="oProx"]').click();tx2+=d2.getElementById("onbCorpo").textContent;
 eq("primeiros passos sem jargão",/gaveta/i.test(tx2),false);
 eq("erros de script",errs,[]);
 console.log(ok?"TUDO OK":"HÁ FALHAS");process.exit(ok?0:1);

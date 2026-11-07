@@ -5,14 +5,17 @@ const dom=new JSDOM(html,{runScripts:"dangerously",url:"http://localhost/",virtu
 const w=dom.window,d=w.document,T=w.__T;
 let ok=true;function eq(n,a,b){const p=JSON.stringify(a)===JSON.stringify(b);if(!p)ok=false;console.log(p?"OK  ":"FAIL",n,p?"":JSON.stringify(a)+" != "+JSON.stringify(b))}
 const $=s=>d.querySelector(s);
-function click(sel){const el=typeof sel==="string"?$(sel):sel;if(!el)throw new Error("sem elemento "+sel);el.click()}
+function click(sel){let el=typeof sel==="string"?$(sel):sel;
+  /* a tela Dinheiro tem abas e Metas é uma tela própria: se o botão não está na tela, vai até a aba/tela dele, como uma pessoa faria */
+  if(!el&&typeof sel==="string"){for(const alvo of ['[data-a="dinAba"][data-v="bens"]','[data-a="dinAba"][data-v="pessoas"]','[data-a="dinAba"][data-v="dividas"]','[data-a="dinAba"][data-v="contas"]','[data-a="ir"][data-v="metas"]']){const b=$(alvo);if(b){b.click();el=$(sel);if(el)break}}}
+  if(!el)throw new Error("sem elemento "+sel);el.click()}
 function digita(el,txt){el.value=txt;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
 const S=()=>T.S();
 function irV(v){if(v==='caixinhas'||v==='fixas'||v==='simulador')click('[data-a="ir"][data-v="planejar"]');if(v==='relatorios'||v==='ajustes')click('[data-a="ir"][data-v="mais"]');click('[data-a="ir"][data-v="'+v+'"]')}
 d.documentElement.classList.add("calmo");
 
 // primeiro uso: cartão devendo 190 (vence 05/11) + 15 (vence 05/12)
-click('[data-a="oProx"]');click('[data-a="oProx"]');
+click('[data-a="oProx"]');click('[data-a="oProx"]');click('[data-a="oProx"]');
 click('[data-a="oCartao"][data-s="1"]');
 $("#oNome").value="Nubank";$("#oFecha").value="25";$("#oVence").value="5";
 let linhas=d.querySelectorAll("#oFaturas .linha-f");
@@ -32,7 +35,7 @@ eq("PL = -205",T.totais().pl,-20500);
 
 // tela de gavetas mostra a próxima fatura de 190
 click('[data-a="ir"][data-v="contas"]');
-eq("mostra próxima conta 190",/190,00/.test($("#tela").textContent),true);
+click('[data-a="dinAba"][data-v="dividas"]');eq("mostra próxima conta 190",/190,00/.test($("#tela").textContent),true);
 
 // pagar 190 -> sobra só 15
 click('[data-a="pagar"]');
@@ -57,8 +60,8 @@ eq("após editar só 15 (190 saiu)",[n2.inicial,n2.abertas],[1500,[{data:"2026-1
 // gaveta antiga sem datas (só inicial) continua funcionando
 S().contas.push({id:"velha",nome:"Carnê",tipo:"passivo",inicial:7000});
 eq("dívida sem data aparece",T.aPagar().some(g=>g.conta.id==="velha"&&g.data===null&&g.valor===7000),true);
-irV('relatorios');
-eq("relatório mostra 'sem data'",/sem data/.test($("#tela").textContent),true);
+irV('planejar');
+eq("planejar mostra 'sem data'",/sem data/.test($("#tela").textContent),true);
 
 // backup preserva as faturas abertas
 const h=T.higienizar(JSON.parse(JSON.stringify(S())));

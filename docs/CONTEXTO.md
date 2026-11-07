@@ -45,7 +45,7 @@ A contabilidade (partida dobrada) é **o mecânico debaixo do capô**: trabalha 
 12. **Apagar** bem, pessoa e conta mesmo com anotações (com aviso).
 13. **Vocabulário comum**: trocar "gaveta" e outros termos técnicos por palavras que todo mundo usa.
 14. **"Quanto falta pagar no mês"** em destaque, com setas para os meses seguintes.
-15. **Caixinhas só com dinheiro real** (sem dívidas); o guardado **sai** de "Dinheiro que eu tenho" e **volta** ao tirar; escolher **de qual conta** o guardado sai.
+15. **Caixinhas só com dinheiro real** (sem dívidas); o guardado **continua sendo seu e continua na conta** (o total não muda, como numa caixinha de banco), só sai de "Dinheiro para usar agora" e **volta** ao tirar; escolher **de qual conta** o guardado sai.
 16. **Filtros** para listas não ficarem enormes: busca e ordem por **data, valor, nome**, 15 por vez.
 17. **Organizar o projeto e guardar tudo no GitHub** (este documento faz parte disso).
 
@@ -63,7 +63,7 @@ A contabilidade (partida dobrada) é **o mecânico debaixo do capô**: trabalha 
 |---|---|
 | Conta (carteira, banco, poupança) | Ativo disponível |
 | Cartão, empréstimo, "devo" | Passivo |
-| Dinheiro que eu tenho | Ativo disponível (livre de caixinhas) |
+| Dinheiro para usar agora | Ativo disponível (livre de caixinhas) |
 | Meus bens | Ativo imobilizado |
 | Dívidas (o que eu devo) | Passivo |
 | **É meu de verdade / Sobra** | **Patrimônio líquido** = ativo − passivo |

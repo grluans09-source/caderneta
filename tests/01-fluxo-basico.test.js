@@ -5,7 +5,10 @@ const dom=new JSDOM(html,{runScripts:"dangerously",url:"http://localhost/",virtu
 const w=dom.window,d=w.document,T=w.__T;
 let ok=true;function eq(n,a,b){const p=JSON.stringify(a)===JSON.stringify(b);if(!p)ok=false;console.log(p?"OK  ":"FAIL",n,p?"":JSON.stringify(a)+" != "+JSON.stringify(b))}
 const $=s=>d.querySelector(s);
-function click(sel){const el=typeof sel==="string"?$(sel):sel;if(!el)throw new Error("sem elemento "+sel);el.click()}
+function click(sel){let el=typeof sel==="string"?$(sel):sel;
+  /* a tela Dinheiro tem abas e Metas é uma tela própria: se o botão não está na tela, vai até a aba/tela dele, como uma pessoa faria */
+  if(!el&&typeof sel==="string"){for(const alvo of ['[data-a="dinAba"][data-v="bens"]','[data-a="dinAba"][data-v="pessoas"]','[data-a="dinAba"][data-v="dividas"]','[data-a="dinAba"][data-v="contas"]','[data-a="ir"][data-v="metas"]']){const b=$(alvo);if(b){b.click();el=$(sel);if(el)break}}}
+  if(!el)throw new Error("sem elemento "+sel);el.click()}
 function digita(sel,txt){const el=$(sel);el.value=txt;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
 function muda(sel,txt){const el=$(sel);el.value=txt;el.dispatchEvent(new w.Event("change",{bubbles:true}))}
 const S=()=>T.S();
@@ -26,7 +29,7 @@ eq("fev venc 31",T.primeiroVencimento("2026-01-26",25,31),"2026-02-28");
 
 // onboarding
 eq("onboarding aparece",$("#onb").classList.contains("on"),true);
-click('[data-a="oProx"]');
+click('[data-a="oProx"]');click('[data-a="oProx"]');
 digita("#oCarteira","10000");digita("#oBanco","500000");
 eq("máscara",$("#oBanco").value,"R$ 5.000,00");
 click('[data-a="oProx"]');

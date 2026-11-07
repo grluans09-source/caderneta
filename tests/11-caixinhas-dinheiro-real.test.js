@@ -16,7 +16,10 @@ const dom=new JSDOM(html,{runScripts:"dangerously",url:"http://localhost/",virtu
 const w=dom.window,d=w.document,T=w.__T;
 let ok=true;function eq(n,a,b){const p=JSON.stringify(a)===JSON.stringify(b);if(!p)ok=false;console.log(p?"OK  ":"FAIL",n,p?"":JSON.stringify(a)+" != "+JSON.stringify(b))}
 const $=s=>d.querySelector(s);
-function click(sel){const el=typeof sel==="string"?$(sel):sel;if(!el)throw new Error("sem elemento "+sel);el.click()}
+function click(sel){let el=typeof sel==="string"?$(sel):sel;
+  /* a tela Dinheiro tem abas e Metas é uma tela própria: se o botão não está na tela, vai até a aba/tela dele, como uma pessoa faria */
+  if(!el&&typeof sel==="string"){for(const alvo of ['[data-a="dinAba"][data-v="bens"]','[data-a="dinAba"][data-v="pessoas"]','[data-a="dinAba"][data-v="dividas"]','[data-a="dinAba"][data-v="contas"]','[data-a="ir"][data-v="metas"]']){const b=$(alvo);if(b){b.click();el=$(sel);if(el)break}}}
+  if(!el)throw new Error("sem elemento "+sel);el.click()}
 function digita(sel,txt){const el=$(sel);el.value=txt;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
 const S=()=>T.S();
 d.documentElement.classList.add("calmo");
@@ -43,7 +46,7 @@ eq("livre agora zero",T.livreAgora(),0);
 eq("caixinha não mexe no é meu",T.totais().pl,pl0);
 // mais que o dinheiro existente é barrado
 nav("caixinhas");click('[data-a="cxMov"][data-id="x1"][data-m="guardar"]');digita("#mvValor","100");click('[data-a="mvSalvar"]');
-eq("não deixa guardar além do dinheiro que existe",[T.saldoCaixa("x1"),/só tem .* livres para guardar/.test($("#toast").textContent)],[100000,true]);
+eq("não deixa guardar além do dinheiro que existe",[T.saldoCaixa("x1"),/só tem .* para usar/.test($("#toast").textContent)],[100000,true]);
 click('[data-a="mFechar"]');
 
 // comprar no cartão ou bem não muda o livre (não saiu dinheiro da conta)

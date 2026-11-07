@@ -96,3 +96,9 @@ Por quê: o botão fixo atrapalhava a visualização. Consequência: nada de `po
 **D34 · Domínio próprio antes da primeira venda (C, recomendação pendente).** Por quê: os dados dos usuários pertencem ao endereço; o domínio impede que uma troca de hospedagem faça alguém perder dados. Custo: cerca de R$ 40 a R$ 60 por ano.
 
 **D35 · Beta para testadores: desfazer, lembrete de cópia a cada 7 dias, selo beta e feedback por compartilhar (A).** Por quê: proteger dados antes de pessoas reais usarem. Feedback sem servidor: o botão abre o compartilhar do celular com texto pronto. Consequência: "Apagar tudo e recomeçar" ainda não tem desfazer.
+
+**D36 · Caixinhas funcionam como a caixinha de um banco (A).** O guardado continua sendo dinheiro da pessoa, na mesma conta; só deixa de estar "para usar agora". Substitui o texto do Marco 14 ("guardado sai do que eu tenho"). O motor não mudou (o total já incluía o guardado); mudaram os nomes e as explicações. "Livre" virou "para usar".
+
+**D37 · Reorganização por lugar único (A).** Decisões Q1 a Q7 da auditoria aceitas: Início enxuto com uma linha "Falta pagar"; Planejar é a casa do que vence; Dinheiro em 4 abas; Metas em tela própria; Relatórios sem repetir; Ajustes em 3 grupos. Mapa em `docs/MAPA-DO-APP.md`.
+
+**D38 · Três jeitos de usar para o app inteiro: Balança, Razão e Cofre e fluxo (A).** O visual antigo deixa de ser uma opção separada (a Balança o continua). Cada jeito muda o visual e a distribuição das telas; dados e regras são os mesmos. Entrega por etapas (J1 a J7 em `docs/JEITOS-DE-USAR.md`); J1 (base e Início), J2 (Planejar) e J3 (Dinheiro) e J4 (Anotar) e J5 (Mais, Anotações, Relatórios, Ajustes) e J6 (escolha nos Primeiros passos) e J7 (conferência final) feitas.

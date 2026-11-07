@@ -17,7 +17,10 @@ const dom=new JSDOM(html,{runScripts:"dangerously",url:"http://localhost/",virtu
 const w=dom.window,d=w.document,T=w.__T;
 let ok=true;function eq(n,a,b){const p=JSON.stringify(a)===JSON.stringify(b);if(!p)ok=false;console.log(p?"OK  ":"FAIL",n,p?"":JSON.stringify(a)+" != "+JSON.stringify(b))}
 const $=s=>d.querySelector(s);
-function click(sel){const el=typeof sel==="string"?$(sel):sel;if(!el)throw new Error("sem elemento "+sel);el.click()}
+function click(sel){let el=typeof sel==="string"?$(sel):sel;
+  /* a tela Dinheiro tem abas e Metas é uma tela própria: se o botão não está na tela, vai até a aba/tela dele, como uma pessoa faria */
+  if(!el&&typeof sel==="string"){for(const alvo of ['[data-a="dinAba"][data-v="bens"]','[data-a="dinAba"][data-v="pessoas"]','[data-a="dinAba"][data-v="dividas"]','[data-a="dinAba"][data-v="contas"]','[data-a="ir"][data-v="metas"]']){const b=$(alvo);if(b){b.click();el=$(sel);if(el)break}}}
+  if(!el)throw new Error("sem elemento "+sel);el.click()}
 function digita(sel,txt){const el=$(sel);el.value=txt;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
 const S=()=>T.S();
 d.documentElement.classList.add("calmo");
@@ -42,7 +45,7 @@ eq("tocar no cofre leva para as caixinhas",/Separe sem mexer no banco/.test(tela
 eq("na tela de caixinhas cada uma tem seu cofre animado",d.querySelectorAll("#tela .cartao .cofre").length,2);
 
 // =============== 2) setas de mês no cartão 'O que pagar' ===============
-click('nav [data-v="inicio"]');
+click('nav [data-v="planejar"]');
 eq("começa no mês atual: Falta pagar em ...",new RegExp("Falta pagar em "+MES[+ym.slice(5)-1]).test($("#cardPagar").textContent)&&/R\$ 200,00/.test($("#cardPagar").textContent),true);
 eq("tem as duas setas",[!!$('#cardPagar [data-a="pagMes"][data-n="-1"]'),!!$('#cardPagar [data-a="pagMes"][data-n="1"]')],[true,true]);
 click('#cardPagar [data-a="pagMes"][data-n="1"]');
@@ -56,27 +59,27 @@ for(let i=0;i<20;i++){const b=$('#cardPagar [data-a="pagMes"][data-n="1"]');if(b
 eq("a seta para frente trava no limite (11 meses)",$('#cardPagar [data-a="pagMes"][data-n="1"]').disabled,true);
 for(let i=0;i<30;i++){const b=$('#cardPagar [data-a="pagMes"][data-n="-1"]');if(b&&!b.disabled)b.click()}
 eq("a seta para trás trava em 2 meses atrás",$('#cardPagar [data-a="pagMes"][data-n="-1"]').disabled,true);
-click('nav [data-v="planejar"]');click('nav [data-v="inicio"]');
-eq("voltar ao Início reinicia no mês atual",new RegExp("Falta pagar em "+MES[+ym.slice(5)-1]).test($("#cardPagar").textContent),true);
+click('nav [data-v="inicio"]');click('nav [data-v="planejar"]');
+eq("voltar ao Planejar reinicia no mês atual",new RegExp("Falta pagar em "+MES[+ym.slice(5)-1]).test($("#cardPagar").textContent),true);
 click('nav [data-v="planejar"]');
-eq("Planejar mostra só o total, sem setas",!$('[data-a="pagMes"]'),true);
+eq("Planejar é a casa das setas de mês",!!$('[data-a="pagMes"]'),true);
 
 // =============== 3) escolher de qual conta o guardado sai ===============
 eq("dinheiro: Carteira 100 + Banco 900; guardado 500 já tirado do Banco",[T.guardadoConta("c2"),T.guardadoConta("c1")],[50000,0]);
 eq("livre por conta: Banco 400, Carteira 100",[T.livreConta(S().contas[1]),T.livreConta(S().contas[0])],[40000,10000]);
 irCx();click('[data-a="cxMov"][data-id="x2"][data-m="guardar"]');
-eq("a janela de guardar lista as contas com o livre de cada uma",/Carteira · livre R\$ 100,00/.test($("#modal").textContent)&&/Banco · livre R\$ 400,00/.test($("#modal").textContent),true);
+eq("a janela de guardar lista as contas com o livre de cada uma",/Carteira · para usar R\$ 100,00/.test($("#modal").textContent)&&/Banco · para usar R\$ 400,00/.test($("#modal").textContent),true);
 eq("por padrão sugere a conta com mais livre (Banco)",$('#mvContas .chip[aria-pressed="true"]').dataset.id,"c2");
 click('[data-a="mvConta"][data-id="c1"]');digita("#mvValor","20000");click('[data-a="mvSalvar"]');
-eq("não deixa guardar mais do que o livre da conta escolhida (Carteira só tem 100)",[T.saldoCaixa("x2"),/Em Carteira só tem R\$ 100,00 livres/.test($("#toast").textContent)],[0,true]);
+eq("não deixa guardar mais do que o livre da conta escolhida (Carteira só tem 100)",[T.saldoCaixa("x2"),/Em Carteira só tem R\$ 100,00 para usar/.test($("#toast").textContent)],[0,true]);
 click('[data-a="mFechar"]');
 guardar("x2","c1",7000);
 eq("guardou R$ 70 tirando da Carteira",[T.guardadoConta("c1"),T.livreConta(S().contas[0])],[7000,3000]);
 click('nav [data-v="contas"]');
-eq("a tela Dinheiro mostra por conta quanto está guardado e livre",/R\$ 500,00 guardado · livre R\$ 400,00/.test(tela())&&/R\$ 70,00 guardado · livre R\$ 30,00/.test(tela()),true);
+eq("a tela Dinheiro mostra por conta quanto está guardado e livre",/R\$ 500,00 guardado · para usar R\$ 400,00/.test(tela())&&/R\$ 70,00 guardado · para usar R\$ 30,00/.test(tela()),true);
 eq("os saldos das contas continuam os reais",/R\$ 900,00/.test(tela())&&/R\$ 100,00/.test(tela()),true);
 irCx();
-eq("a tela de caixinhas lista o dinheiro por conta",/Banco: R\$ 900,00 · guardado R\$ 500,00 · livre R\$ 400,00/.test(tela()),true);
+eq("a tela de caixinhas lista o dinheiro por conta",/Banco: R\$ 900,00 · guardado R\$ 500,00 · para usar R\$ 400,00/.test(tela()),true);
 eq("cada caixinha diz em que conta está guardada",/Guardado em: Banco R\$ 500,00/.test(tela())&&/Guardado em: Carteira R\$ 70,00/.test(tela()),true);
 // tirar com duas contas: pergunta de qual conta liberar
 guardar("x2","c2",10000);   // agora a Viagem tem 70 na Carteira e 100 no Banco
@@ -97,7 +100,7 @@ eq("pagou pela Carteira (sem guardado nela): o guardado liberado foi o do Banco"
 eq("dinheiro = livre + guardado continua valendo",T.dinheiroEmConta(),T.livreAgora()+T.totalReservado());
 
 // 'usar o dinheiro guardado' (atalho do Início) também escolhe a conta
-click('nav [data-v="inicio"]');click('[data-a="tirarCx"]');
+click('nav [data-v="planejar"]');click('#tela [data-a="ir"][data-v="caixinhas"]');click('[data-a="tirarCx"]');
 eq("o atalho mostra as caixinhas e a conta",/Reserva/.test($("#modal").textContent)&&/guardado em Banco/.test($("#modal").textContent),true);
 click('[data-a="mFechar"]');
 

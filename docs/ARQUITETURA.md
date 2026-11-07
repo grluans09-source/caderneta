@@ -88,7 +88,7 @@ Ativo cresce a débito; passivo cresce a crédito. **Patrimônio líquido (PL) =
 - Só conta o **dinheiro real nas contas**: `dinheiroEmConta()` = contas `ativo` que não são pessoa nem bem (dívidas, bens e o que devem a você **não** entram).
 - **Invariante**: `dinheiroEmConta() = livreAgora() + totalReservado()`.
 - **Por conta**: cada movimento pode ter `conta`. `bucketsCaixa(id)` calcula em qual conta está o guardado de cada caixinha (movimentos e gastos `caixaId` em ordem de data). Tirar libera primeiro o da conta escolhida; gasto pago com caixinha libera primeiro o da conta que pagou. `guardadoConta(c)`, `livreConta(c)`; guardar só vale até o livre da conta escolhida.
-- Na balança (modo comum) o guardado **sai** de "Dinheiro que eu tenho" e aparece como "Guardado nas caixinhas" (moedas roxas). No **Modo contador** as caixinhas são ignoradas.
+- Na balança (modo comum) o guardado **continua dentro do prato do dinheiro** (o total não muda), mas sai de "Dinheiro para usar agora" e aparece como "Guardado nas caixinhas" (moedas roxas), como na caixinha de um banco. Cada conta mostra "guardado · para usar". No **Modo contador** as caixinhas são ignoradas.
 
 ### 3.5 O que pagar no mês e agenda
 - `aPagar()`: itens em aberto de dívidas, agrupados por conta e data. Dívida com pessoa (`passivo`) usa `cobrar`.

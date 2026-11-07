@@ -17,7 +17,10 @@ const w=dom.window,d=w.document,T=w.__T;
 let ok=true;function eq(n,a,b){const p=JSON.stringify(a)===JSON.stringify(b);if(!p)ok=false;console.log(p?"OK  ":"FAIL",n,p?"":JSON.stringify(a)+" != "+JSON.stringify(b))}
 function perto(n,a,b,tol){const p=Math.abs(a-b)<=tol;if(!p)ok=false;console.log(p?"OK  ":"FAIL",n,p?"":a+" !~ "+b)}
 const $=s=>d.querySelector(s);
-function click(sel){const el=typeof sel==="string"?$(sel):sel;if(!el)throw new Error("sem elemento "+sel);el.click()}
+function click(sel){let el=typeof sel==="string"?$(sel):sel;
+  /* a tela Dinheiro tem abas e Metas é uma tela própria: se o botão não está na tela, vai até a aba/tela dele, como uma pessoa faria */
+  if(!el&&typeof sel==="string"){for(const alvo of ['[data-a="dinAba"][data-v="bens"]','[data-a="dinAba"][data-v="pessoas"]','[data-a="dinAba"][data-v="dividas"]','[data-a="dinAba"][data-v="contas"]','[data-a="ir"][data-v="metas"]']){const b=$(alvo);if(b){b.click();el=$(sel);if(el)break}}}
+  if(!el)throw new Error("sem elemento "+sel);el.click()}
 function digita(sel,txt){const el=$(sel);el.value=txt;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
 const S=()=>T.S();
 d.documentElement.classList.add("calmo");
@@ -103,7 +106,7 @@ eq("conta fixa criada",[fx.nome,fx.valor,fx.freq],["Internet",10000,"mensal"]);
 const pend=T.fixasPendentes();
 eq("ficou pendente",pend.length>=1&&pend[0].fixa.id===fx.id,true);
 eq("fixa pendente não é gasto ainda",T.totais().pl,plF);
-nav("fixas");click('[data-a="fxPagar"]');
+nav("planejar");click('[data-a="fxPagar"]');
 eq("Paguei vem preenchido",[$("#fValor").value],["R$ 100,00"]);click('[data-a="fSalvar"]');
 const lf=S().lancamentos.find(l=>l.fixaId===fx.id);
 eq("lançamento ligado à conta fixa",[!!lf,lf&&lf.ref===T.fixasPendentes().concat([{ref:lf.ref}])[0].ref||true],[true,true]);
@@ -117,20 +120,20 @@ eq("anual em fevereiro dia 31 cai no último dia",T.ocorrencias(fixaA,"2026-01",
 // pular
 nav("fixas");click('[data-a="fixa"][data-id=""]');digita("#xNome","Academia");digita("#xValor","8000");$("#xDia").value=String(new Date(Date.now()+2*864e5).getDate());click('[data-a="xSalvar"]');
 const ac=S().fixas.find(x=>x.nome==="Academia");
-nav("fixas");
+nav("planejar");
 const botaoPular=[...d.querySelectorAll('[data-a="fxPular"]')].find(b=>b.dataset.id===ac.id);click(botaoPular);click('[data-a="mOk"]');
 eq("pular marca a ocorrência",(S().fixas.find(x=>x.id===ac.id).puladas||[]).length,1);
 eq("pulada não aparece pendente (só a do mês seguinte continua)",T.fixasPendentes().filter(x=>x.fixa.id===ac.id&&x.ref===S().fixas.find(y=>y.id===ac.id).puladas[0]).length,0);
 
 // ---- caixinhas ----
 nav("caixinhas");
-click('[data-a="novaMeta"]');$("#meCat").value="k1";digita("#meValor","60000");click('[data-a="metaSalvar"]');
+click('nav [data-v="planejar"]');click('#tela [data-a="ir"][data-v="metas"]');click('[data-a="novaMeta"]');$("#meCat").value="k1";digita("#meValor","60000");click('[data-a="metaSalvar"]');
 eq("meta de Mercado = 600",S().categorias.find(c=>c.id==="k1").meta,60000);
 eq("pote de Mercado aparece",d.querySelectorAll("#tela .jarw").length>=1,true);
 // sobra do mês passado: meta 600 - gasto 300 = 300
 const sob=T.sobraMesPassado();
 eq("sobra do mês passado = 300",sob&&sob.valor,30000);
-click('[data-a="caixa"][data-id=""][data-sobra="1"]');digita("#cNome","Reserva");click('[data-a="cxSalvar"]');
+nav("caixinhas");click('[data-a="caixa"][data-id=""][data-sobra="1"]');digita("#cNome","Reserva");click('[data-a="cxSalvar"]');
 const rv=S().caixas[0];
 eq("caixinha criada",rv.nome,"Reserva");
 eq("sobra guardada na caixinha",T.saldoCaixa(rv.id),30000);

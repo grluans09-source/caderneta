@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Caderneta: 3 modelos de tela</title>
+<style>
+:root{--capa:#1F3D2F;--capa2:#16302A;--papel:#F4EBD8;--papel2:#EADFC4;--tinta:#2B2A26;--tinta2:#6B6556;--ouro:#B8860B;--ouro2:#E8C14F;--verde:#2C6B52;--verde2:#4F9A78;--roxo:#6B4E9B;--roxo2:#A98BD6;--verm:#8E1F18;--verm2:#D2584D;--azul:#2F5A99;--regua:#D8CBAA}
+*{box-sizing:border-box;margin:0}
+body{font-family:Georgia,"Times New Roman",serif;background:#0E1B15;color:var(--tinta);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:12px 0 24px}
+.escolha{display:flex;gap:6px;margin-bottom:10px;padding:0 10px;flex-wrap:wrap;justify-content:center}
+.escolha button{font:600 .85rem system-ui,sans-serif;border:2px solid #3C5A4B;background:#16302A;color:#E9DFC2;border-radius:.6rem;padding:.55rem .8rem;min-height:2.75rem;cursor:pointer}
+.escolha button[aria-pressed="true"]{background:var(--ouro);border-color:var(--ouro2);color:#1b1405}
+.dica{color:#B9C9BE;font:.8rem/1.35 system-ui,sans-serif;max-width:375px;text-align:center;margin:0 12px 10px}
+.celular{width:375px;max-width:100%;height:min(760px,calc(100vh - 128px));min-height:560px;background:var(--papel);border-radius:1.6rem;overflow:hidden;position:relative;border:6px solid #07120D;box-shadow:0 14px 40px #0008;display:flex;flex-direction:column}
+.tela{flex:1;overflow:hidden;position:relative;display:none;flex-direction:column}
+.tela.on{display:flex}
+.topo{background:var(--capa);color:#EFE3BF;padding:.9rem 1rem .8rem;display:flex;justify-content:space-between;align-items:baseline}
+.topo small{font:.75rem system-ui,sans-serif;opacity:.8}
+.topo h1{font-size:1.25rem;font-weight:700}
+.barra{display:flex;background:var(--capa);padding:.35rem .2rem .45rem;position:relative}
+.barra button{flex:1;background:none;border:0;color:#CFC49F;font:.68rem system-ui,sans-serif;padding:.35rem 0;min-height:2.75rem}
+.barra .atual{color:var(--ouro2);font-weight:700}
+.barra .mais{flex:0 0 3.4rem;position:relative}
+.barra .mais span{position:absolute;left:50%;top:-1.5rem;transform:translateX(-50%);width:3.4rem;height:3.4rem;border-radius:50%;background:var(--ouro);color:#1b1405;border:3px solid var(--papel);font:700 1.8rem/1 system-ui,sans-serif;display:flex;align-items:center;justify-content:center}
+.rot{font:600 .72rem system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--tinta2);text-align:center}
+.num{font-weight:700;font-variant-numeric:tabular-nums;text-align:center}
+.faint{font:.78rem/1.35 system-ui,sans-serif;color:var(--tinta2)}
+.btn{font:700 .95rem system-ui,sans-serif;min-height:2.9rem;border-radius:.7rem;border:2px solid var(--capa);background:var(--capa);color:#EFE3BF;padding:.6rem 1rem;cursor:pointer}
+.btn.sec{background:transparent;color:var(--capa)}
+.linha{display:flex;justify-content:space-between;align-items:center;background:#FBF5E6;border:1px solid var(--regua);border-left:5px solid var(--ouro);border-radius:.6rem;padding:.65rem .8rem;margin:.5rem 1rem 0;font:.85rem system-ui,sans-serif}
+.linha b{font-family:Georgia,serif}
+.aviso{font:.7rem system-ui,sans-serif;color:var(--tinta2);text-align:center;padding:.3rem}
+@keyframes pulo{0%{transform:scale(1)}40%{transform:scale(1.12)}100%{transform:scale(1)}}
+.pulo{animation:pulo .5s}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ====== A. BALANÇA ====== */
+#A .meio{flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 .6rem}
+#A .grande{font-size:2.6rem;color:var(--ouro);margin:.1rem 0 0}
+#A svg{width:100%;height:auto;max-height:320px}
+.beamA{transform-origin:160px 38px;transition:transform .8s cubic-bezier(.3,1.6,.5,1)}
+.pratoA{transition:transform .8s cubic-bezier(.3,1.6,.5,1)}
+.moeda{animation:cai .5s both}
+@keyframes cai{0%{transform:translateY(-40px);opacity:0}70%{transform:translateY(3px);opacity:1}100%{transform:translateY(0)}}
+#A .tres{display:flex;justify-content:center;gap:.9rem;font:.78rem system-ui,sans-serif;color:var(--tinta2);flex-wrap:wrap;margin:.2rem 0 .4rem}
+#A .tres i{display:inline-block;width:.7rem;height:.7rem;border-radius:50%;margin-right:.3rem;vertical-align:-1px}
+#A .acoes{display:flex;gap:.5rem;padding:.4rem 1rem .8rem;justify-content:center}
+
+/* ====== B. RAZÃO (livro aberto) ====== */
+#B .livro{flex:1;margin:.7rem .6rem .4rem;display:grid;grid-template-columns:1fr 1fr;background:#FBF5E6;border:2px solid #6B5A2A;border-radius:.4rem;box-shadow:0 6px 0 #00000014;position:relative;overflow:hidden}
+#B .livro::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:10px;transform:translateX(-50%);background:linear-gradient(90deg,#0000,#0002,#0000)}
+#B .pagina{padding:.7rem .6rem;background:repeating-linear-gradient(#0000,#0000 31px,var(--regua) 32px);display:flex;flex-direction:column}
+#B .pagina h2{font-size:.9rem;text-align:center;letter-spacing:.14em;text-transform:uppercase;line-height:32px;margin:0;color:var(--tinta2);font-weight:600}
+#B .item{line-height:32px;display:flex;justify-content:space-between;font-size:.82rem;gap:.3rem;animation:escreve .9s steps(14) both;white-space:nowrap;overflow:hidden}
+#B .item span:first-child{overflow:hidden;text-overflow:ellipsis;font-style:italic}
+#B .item b{font-variant-numeric:tabular-nums}
+@keyframes escreve{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+#B .ent b{color:var(--verde)}#B .sai b{color:var(--verm)}
+#B .soma{margin-top:auto;line-height:32px;border-top:2px double #6B5A2A;display:flex;justify-content:space-between;font-weight:700;font-size:.9rem}
+#B .saldo{margin:.1rem 1rem 0;text-align:center}
+#B .saldo .num{font-size:1.9rem;color:var(--ouro)}
+#B .carimbo{position:absolute;right:.7rem;top:3.8rem;border:3px solid var(--verm);color:var(--verm);font:800 1.05rem system-ui,sans-serif;letter-spacing:.14em;padding:.15rem .6rem;border-radius:.3rem;transform:rotate(-9deg) scale(2);opacity:0;pointer-events:none}
+#B .carimbo.bate{animation:bate 1.4s both}
+@keyframes bate{0%{opacity:0;transform:rotate(-9deg) scale(2.2)}18%{opacity:.95;transform:rotate(-9deg) scale(1)}80%{opacity:.9}100%{opacity:0;transform:rotate(-9deg) scale(1)}}
+#B .acoes{display:flex;gap:.5rem;padding:.3rem 1rem .8rem;justify-content:center}
+
+/* ====== C. COFRE E FLUXO ====== */
+#C .meio{flex:1;display:flex;flex-direction:column;padding:.5rem .4rem 0}
+#C .grande{font-size:2.1rem;color:var(--ouro)}
+#C svg{width:100%;height:auto}
+.liq{transition:y 1.2s ease,height 1.2s ease}
+.onda{animation:onda 3s linear infinite}
+@keyframes onda{from{transform:translateX(0)}to{transform:translateX(-40px)}}
+#C .acoes{display:flex;gap:.5rem;padding:.2rem 1rem .8rem;justify-content:center;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<div class="escolha" role="tablist" aria-label="Escolha o modelo">
+  <button role="tab" data-m="A" aria-pressed="true">A. Balança</button>
+  <button role="tab" data-m="B" aria-pressed="false">B. Razão</button>
+  <button role="tab" data-m="C" aria-pressed="false">C. Cofre e fluxo</button>
+</div>
+<p class="dica" id="dica"></p>
+
+<div class="celular">
+
+<!-- ================= A. BALANÇA ================= -->
+<section class="tela on" id="A" aria-label="Modelo A: Balança">
+  <div class="topo"><h1>Caderneta</h1><small>Folha de 6 de novembro</small></div>
+  <div class="meio">
+    <div class="rot">É meu de verdade</div>
+    <div class="num grande" id="aMeu">R$ 6.205,00</div>
+    <svg viewBox="0 0 320 214" role="img" aria-label="Balança: o que tenho pesa o mesmo que o que devo mais o que é meu">
+      <defs><linearGradient id="br" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F0CF73"/><stop offset=".5" stop-color="#C99A1E"/><stop offset="1" stop-color="#7C5D10"/></linearGradient></defs>
+      <ellipse cx="160" cy="205" rx="64" ry="7" fill="#1F3D2F" opacity=".25"/>
+      <path d="M104 202Q106 190 130 188H190Q214 190 216 202Z" fill="url(#br)" stroke="#6E5210"/>
+      <path d="M153 48H167L170 188H150Z" fill="url(#br)" stroke="#6E5210"/>
+      <g class="beamA" id="aViga">
+        <rect x="46" y="34" width="228" height="8" rx="4" fill="url(#br)" stroke="#6E5210"/>
+        <g class="pratoA" id="aPE" style="transform-origin:52px 38px"><path d="M52 38L10 146M52 38L94 146M52 38V150" stroke="#B88A1C" fill="none"/><path d="M2 146Q52 190 102 146Z" fill="url(#br)" stroke="#6E5210"/><ellipse cx="52" cy="146" rx="50" ry="8" fill="url(#br)" stroke="#6E5210"/><g id="aPilhaE"></g></g>
+        <g class="pratoA" id="aPD" style="transform-origin:268px 38px"><path d="M268 38L226 146M268 38L310 146M268 38V150" stroke="#B88A1C" fill="none"/><path d="M218 146Q268 190 318 146Z" fill="url(#br)" stroke="#6E5210"/><ellipse cx="268" cy="146" rx="50" ry="8" fill="url(#br)" stroke="#6E5210"/><g id="aPilhaD"></g></g>
+      </g>
+      <circle cx="160" cy="38" r="11" fill="url(#br)" stroke="#6E5210"/><circle cx="160" cy="38" r="4.5" fill="#1F3D2F"/>
+    </svg>
+    <div class="tres"><span><i style="background:var(--verde2)"></i>Tenho <b id="aTenho">R$ 6.405</b></span><span><i style="background:var(--verm2)"></i>Devo <b id="aDevo">R$ 200</b></span></div>
+  </div>
+  <div class="linha"><span>Falta pagar em novembro</span><b>R$ 200,00</b></div>
+  <div class="acoes"><button class="btn" id="aGasto">Gastei R$ 500</button><button class="btn sec" id="aGanho">Recebi R$ 500</button></div>
+  <div class="barra"><button class="atual">Início</button><button>Dinheiro</button><button class="mais"><span>+</span></button><button>Planejar</button><button>Mais</button></div>
+</section>
+
+<!-- ================= B. RAZÃO ================= -->
+<section class="tela" id="B" aria-label="Modelo B: Razão">
+  <div class="topo"><h1>Caderneta</h1><small>Livro de novembro</small></div>
+  <div class="livro" id="bLivro">
+    <div class="pagina ent"><h2>Entrou</h2><div id="bEnt"></div><div class="soma"><span>Total</span><b id="bTE">R$ 0</b></div></div>
+    <div class="pagina sai"><h2>Saiu</h2><div id="bSai"></div><div class="soma"><span>Total</span><b id="bTS">R$ 0</b></div></div>
+    <div class="carimbo" id="bCarimbo">ANOTADO</div>
+  </div>
+  <div class="saldo"><div class="rot">Sobrou no mês</div><div class="num" id="bSobra">R$ 0</div></div>
+  <div class="linha"><span>Falta pagar em novembro</span><b>R$ 200,00</b></div>
+  <div class="acoes"><button class="btn" id="bGasto">Anotar um gasto</button><button class="btn sec" id="bGanho">Anotar um ganho</button></div>
+  <div class="barra"><button class="atual">Início</button><button>Dinheiro</button><button class="mais"><span>+</span></button><button>Planejar</button><button>Mais</button></div>
+</section>
+
+<!-- ================= C. COFRE E FLUXO ================= -->
+<section class="tela" id="C" aria-label="Modelo C: Cofre e fluxo">
+  <div class="topo"><h1>Caderneta</h1><small>Folha de 6 de novembro</small></div>
+  <div class="meio">
+    <div class="rot">É meu de verdade</div>
+    <div class="num grande" id="cMeu">R$ 6.205,00</div>
+    <svg viewBox="0 0 340 330" role="img" aria-label="Contas como vasos ligados por canos">
+      <defs>
+        <clipPath id="vB"><path d="M30 80h90v160a14 14 0 0 1-14 14H44a14 14 0 0 1-14-14z"/></clipPath>
+        <clipPath id="vC"><path d="M30 255h0z"/></clipPath>
+        <clipPath id="vD"><path d="M220 80h90v160a14 14 0 0 1-14 14h-62a14 14 0 0 1-14-14z"/></clipPath>
+        <clipPath id="vG"><path d="M125 200h90v90a14 14 0 0 1-14 14h-62a14 14 0 0 1-14-14z"/></clipPath>
+      </defs>
+      <!-- canos -->
+      <path id="cano1" d="M120 150H220" stroke="#B88A1C" stroke-width="10" fill="none" opacity=".35" stroke-linecap="round"/>
+      <path id="cano2" d="M75 254V300H125" stroke="#B88A1C" stroke-width="10" fill="none" opacity=".35" stroke-linecap="round"/>
+      <!-- vaso Banco -->
+      <g clip-path="url(#vB)"><rect class="liq" id="lB" x="30" y="150" width="90" height="104" fill="#4F9A78"/></g>
+      <path d="M30 80h90v160a14 14 0 0 1-14 14H44a14 14 0 0 1-14-14z" fill="none" stroke="#6E5210" stroke-width="3"/>
+      <text x="75" y="68" text-anchor="middle" font-size="13" font-family="system-ui" fill="#2B2A26">Banco</text>
+      <text x="75" y="178" text-anchor="middle" font-size="14" font-weight="700" fill="#fff" id="tB">R$ 6.500</text>
+      <!-- vaso Cartão (dívida) -->
+      <g clip-path="url(#vD)"><rect class="liq" id="lD" x="220" y="236" width="90" height="18" fill="#D2584D"/></g>
+      <path d="M220 80h90v160a14 14 0 0 1-14 14h-62a14 14 0 0 1-14-14z" fill="none" stroke="#6E5210" stroke-width="3"/>
+      <text x="265" y="68" text-anchor="middle" font-size="13" font-family="system-ui" fill="#2B2A26">Cartão (devo)</text>
+      <text x="265" y="228" text-anchor="middle" font-size="14" font-weight="700" fill="#8E1F18" id="tD">R$ 200</text>
+      <!-- vaso Guardado -->
+      <g clip-path="url(#vG)"><rect class="liq" id="lG" x="125" y="262" width="90" height="42" fill="#A98BD6"/></g>
+      <path d="M125 200h90v90a14 14 0 0 1-14 14h-62a14 14 0 0 1-14-14z" fill="none" stroke="#6E5210" stroke-width="3"/>
+      <text x="170" y="192" text-anchor="middle" font-size="13" font-family="system-ui" fill="#2B2A26">Guardado</text>
+      <text x="170" y="270" text-anchor="middle" font-size="14" font-weight="700" fill="#3b2a66" id="tG">R$ 1.000</text>
+      <g id="gotas"></g>
+    </svg>
+  </div>
+  <div class="linha"><span>Falta pagar em novembro</span><b>R$ 200,00</b></div>
+  <div class="acoes"><button class="btn" id="cPagar">Pagar o cartão</button><button class="btn sec" id="cGuardar">Guardar R$ 500</button></div>
+  <div class="barra"><button class="atual">Início</button><button>Dinheiro</button><button class="mais"><span>+</span></button><button>Planejar</button><button>Mais</button></div>
+</section>
+
+</div>
+<p class="aviso" style="color:#7E9487">Prévia com dados de exemplo. Os botões simulam o que o app faria.</p>
+
+<script>
+(function(){
+var DICAS={
+ A:"A. Balança: uma tela só, o resto some. A balança é o app: o que você tem pesa o mesmo que o que deve mais o que é seu. Toque nos botões e veja os pratos reagirem.",
+ B:"B. Razão: um livro aberto, com Entrou de um lado e Saiu do outro, como um livro-caixa de verdade. Cada anotação se escreve sozinha e leva o carimbo.",
+ C:"C. Cofre e fluxo: suas contas são vasos ligados por canos. Cada anotação é dinheiro correndo de um vaso para outro: sai de um e entra no outro, sempre igual."
+};
+function brl(c){var n=Math.abs(Math.round(c)),s=String(Math.floor(n/100)).replace(/\B(?=(\d{3})+(?!\d))/g,".");var cs=n%100;return (c<0?"−":"")+"R$ "+s+(cs?","+String(cs).padStart(2,"0"):"")}
+function rolar(el,de,para,fmt){var t0=null,d=600;function p(t){if(!t0)t0=t;var k=Math.min(1,(t-t0)/d);el.textContent=fmt(de+(para-de)*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(p)}requestAnimationFrame(p)}
+function pulo(el){el.classList.remove("pulo");void el.offsetWidth;el.classList.add("pulo")}
+/* ---- escolher modelo ---- */
+var abas=document.querySelectorAll(".escolha button"),telas={A:document.getElementById("A"),B:document.getElementById("B"),C:document.getElementById("C")},dica=document.getElementById("dica");
+function escolher(m){abas.forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.m===m))});for(var k in telas)telas[k].classList.toggle("on",k===m);dica.textContent=DICAS[m];if(m==="A")montaA(false);if(m==="C")montaC()}
+abas.forEach(function(b){b.addEventListener("click",function(){escolher(b.dataset.m)})});
+
+/* ================= A ================= */
+var A={tenho:640500,devo:20000,guard:100000};
+var COR={g:["#2C6B52","#4F9A78"],q:["#6B4E9B","#A98BD6"],r:["#8E1F18","#D2584D"],o:["#9A7414","#E8C14F"]};
+function pilha(lista,cx,novoDe){var s="";lista.forEach(function(k,j){var col=j<6?0:1,n=j<6?j:j-6,x=cx+(lista.length>6?(col?18:-18):0),y=140-n*5.2,c=COR[k];var nova=(novoDe!=null&&j>=novoDe)?' class="moeda"':'';s+='<g'+nova+' style="animation-delay:'+((j-(novoDe||0))*60)+'ms"><ellipse cx="'+x+'" cy="'+y+'" rx="15" ry="4.6" fill="'+c[0]+'"/><ellipse cx="'+x+'" cy="'+(y-2.2)+'" rx="15" ry="4.6" fill="'+c[1]+'" stroke="'+c[0]+'" stroke-width=".8"/></g>'});return s}
+function montaA(animar){
+  var meu=A.tenho-A.devo,U=12,cA=U,cG=Math.round(U*A.guard/A.tenho),cP=Math.max(1,Math.round(U*A.devo/A.tenho));
+  var esq=[],dir=[],i;for(i=0;i<cA-cG;i++)esq.push("g");for(i=0;i<cG;i++)esq.push("q");
+  for(i=0;i<cP;i++)dir.push("r");for(i=0;i<cA-cP;i++)dir.push("o");
+  document.getElementById("aPilhaE").innerHTML=pilha(esq,52,animar?esq.length-1:null);
+  document.getElementById("aPilhaD").innerHTML=pilha(dir,268,animar?dir.length-1:null);
+  document.getElementById("aTenho").textContent=brl(A.tenho).replace(",00","");
+  document.getElementById("aDevo").textContent=brl(A.devo).replace(",00","");
+  var el=document.getElementById("aMeu");rolar(el,A.ant||meu,meu,brl);A.ant=meu;
+}
+function balancaMexe(dir){
+  var v=document.getElementById("aViga"),pe=document.getElementById("aPE"),pd=document.getElementById("aPD"),a=dir*3.5;
+  v.style.transform="rotate("+a+"deg)";pe.style.transform="rotate("+(-a)+"deg)";pd.style.transform="rotate("+(-a)+"deg)";
+  setTimeout(function(){v.style.transform="rotate(0)";pe.style.transform="rotate(0)";pd.style.transform="rotate(0)"},650);
+}
+document.getElementById("aGasto").addEventListener("click",function(){if(A.tenho<60000)return;A.tenho-=50000;balancaMexe(-1);montaA(true);pulo(document.getElementById("aMeu"))});
+document.getElementById("aGanho").addEventListener("click",function(){A.tenho+=50000;balancaMexe(1);montaA(true);pulo(document.getElementById("aMeu"))});
+A.ant=A.tenho-A.devo;montaA(false);dica.textContent=DICAS.A;
+
+/* ================= B ================= */
+var B={ent:[["Salário",400000]],sai:[["Mercado",8000],["Padaria",4500],["Farmácia",12000]],iG:0,iR:0};
+var GASTOS=[["Gasolina",15000],["Cinema",6000],["Almoço",3800],["Luz",21000],["Café",1200]],GANHOS=[["Venda de bolo",12000],["Reembolso",9500],["Freela",30000]];
+function pintaB(novo){
+  function lista(id,arr,cls){document.getElementById(id).innerHTML=arr.map(function(x,i){return '<div class="item" style="'+(novo&&i!==arr.length-1?'animation:none':'')+'"><span>'+x[0]+'</span><b>'+brl(x[1]).replace(",00","")+'</b></div>'}).join("")}
+  lista("bEnt",B.ent);lista("bSai",B.sai);
+  var te=B.ent.reduce(function(s,x){return s+x[1]},0),ts=B.sai.reduce(function(s,x){return s+x[1]},0);
+  document.getElementById("bTE").textContent=brl(te).replace(",00","");document.getElementById("bTS").textContent=brl(ts).replace(",00","");
+  var so=document.getElementById("bSobra");rolar(so,B.ant||0,te-ts,brl);B.ant=te-ts;
+}
+function carimbo(){var c=document.getElementById("bCarimbo");c.classList.remove("bate");void c.offsetWidth;c.classList.add("bate")}
+document.getElementById("bGasto").addEventListener("click",function(){var g=GASTOS[B.iG++%GASTOS.length];B.sai.push(g);if(B.sai.length>6)B.sai.shift();pintaB(true);carimbo();pulo(document.getElementById("bSobra"))});
+document.getElementById("bGanho").addEventListener("click",function(){var g=GANHOS[B.iR++%GANHOS.length];B.ent.push(g);if(B.ent.length>6)B.ent.shift();pintaB(true);carimbo();pulo(document.getElementById("bSobra"))});
+pintaB(false);
+
+/* ================= C ================= */
+var C={banco:540500,cartao:20000,guard:100000};
+var CAP=1000000;
+function montaC(){
+  var lb=document.getElementById("lB"),ld=document.getElementById("lD"),lg=document.getElementById("lG");
+  function nivel(el,val,topo,alt,esc){var h=Math.max(2,Math.min(alt,alt*val/CAP*(esc||1.4)));el.setAttribute("height",h);el.setAttribute("y",topo+alt-h)}
+  nivel(lb,C.banco,80,174);nivel(ld,C.cartao,80,174);nivel(lg,C.guard,200,104,5);
+  document.getElementById("tB").textContent=brl(C.banco).replace(",00","");document.getElementById("tD").textContent=brl(C.cartao).replace(",00","");document.getElementById("tG").textContent=brl(C.guard).replace(",00","");
+  var meu=C.banco+C.guard-C.cartao;var el=document.getElementById("cMeu");rolar(el,C.ant||meu,meu,brl);C.ant=meu;
+}
+function fluxo(caminho,cor,fim){
+  var g=document.getElementById("gotas"),n=6;
+  for(var i=0;i<n;i++){(function(i){
+    var c=document.createElementNS("http://www.w3.org/2000/svg","circle");c.setAttribute("r","6");c.setAttribute("fill",cor);c.setAttribute("opacity","0");
+    var a=document.createElementNS("http://www.w3.org/2000/svg","animateMotion");a.setAttribute("dur","1s");a.setAttribute("begin",(i*0.14)+"s");a.setAttribute("fill","freeze");a.setAttribute("path",caminho);
+    var o=document.createElementNS("http://www.w3.org/2000/svg","animate");o.setAttribute("attributeName","opacity");o.setAttribute("values","0;1;1;0");o.setAttribute("dur","1s");o.setAttribute("begin",(i*0.14)+"s");o.setAttribute("fill","freeze");
+    c.appendChild(a);c.appendChild(o);g.appendChild(c);
+    if(i===n-1)setTimeout(function(){g.innerHTML="";fim()},1000+i*140+80);
+  })(i)}
+}
+var ocupadoC=false;
+document.getElementById("cPagar").addEventListener("click",function(){
+  if(ocupadoC||C.cartao<=0)return;ocupadoC=true;var v=C.cartao;
+  fluxo("M120 150H220","#4F9A78",null);
+  setTimeout(function(){C.banco-=v;C.cartao=0;montaC();pulo(document.getElementById("cMeu"))},900);
+  setTimeout(function(){ocupadoC=false;document.getElementById("cano1").style.opacity=.35},2300);
+});
+document.getElementById("cGuardar").addEventListener("click",function(){
+  if(ocupadoC||C.banco<80000)return;ocupadoC=true;
+  fluxo("M75 254V300H125","#A98BD6",null);
+  setTimeout(function(){C.banco-=50000;C.guard+=50000;montaC();pulo(document.getElementById("cMeu"))},900);
+  setTimeout(function(){ocupadoC=false},2300);
+});
+})();
+</script>
+</body>
+</html>

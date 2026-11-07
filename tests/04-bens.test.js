@@ -12,7 +12,10 @@ const dom=new JSDOM(html,{runScripts:"dangerously",url:"http://localhost/",virtu
 const w=dom.window,d=w.document,T=w.__T;
 let ok=true;function eq(n,a,b){const p=JSON.stringify(a)===JSON.stringify(b);if(!p)ok=false;console.log(p?"OK  ":"FAIL",n,p?"":JSON.stringify(a)+" != "+JSON.stringify(b))}
 const $=s=>d.querySelector(s);
-function click(sel){const el=typeof sel==="string"?$(sel):sel;if(!el)throw new Error("sem elemento "+sel);el.click()}
+function click(sel){let el=typeof sel==="string"?$(sel):sel;
+  /* a tela Dinheiro tem abas e Metas é uma tela própria: se o botão não está na tela, vai até a aba/tela dele, como uma pessoa faria */
+  if(!el&&typeof sel==="string"){for(const alvo of ['[data-a="dinAba"][data-v="bens"]','[data-a="dinAba"][data-v="pessoas"]','[data-a="dinAba"][data-v="dividas"]','[data-a="dinAba"][data-v="contas"]','[data-a="ir"][data-v="metas"]']){const b=$(alvo);if(b){b.click();el=$(sel);if(el)break}}}
+  if(!el)throw new Error("sem elemento "+sel);el.click()}
 function digita(sel,txt){const el=$(sel);el.value=txt;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
 const S=()=>T.S();
 d.documentElement.classList.add("calmo");
@@ -38,9 +41,9 @@ const carro=S().contas.find(c=>c.nome==="Carro");
 eq("carro é bem, ativo, perde 12% ao ano",[carro.bem,carro.tipo,carro.taxa],[true,"ativo",-12]);
 eq("bens somam R$ 30.000",T.bensTotal(),3000000);
 eq("o é meu sobe com o bem",T.totais().pl,pl0+3000000);
-eq("tela Dinheiro lista o bem",/Meus bens/.test($("#tela").textContent)&&/Carro/.test($("#tela").textContent)&&/Perde 12% ao ano/.test($("#tela").textContent),true);
+click('[data-a="dinAba"][data-v="bens"]');eq("tela Dinheiro lista o bem",/Meus bens/.test($("#tela").textContent)&&/Carro/.test($("#tela").textContent)&&/Perde 12% ao ano/.test($("#tela").textContent),true);
 nav("inicio");
-eq("legenda mostra 'Meus bens'",/Meus bens/.test($("#tela").textContent),true);
+eq("a balança diz 'O que eu tenho', sem a linha de bens",/O que eu tenho/.test($("#tela").textContent)&&!/Meus bens/.test($("#tela").textContent),true);
 eq("balança tem moedas azuis dos bens",$("#bal").innerHTML.includes("#5A86C9"),true);
 eq("frase explica com bens",/vendendo os seus bens/.test($("#tela").textContent),true);
 tudoFecha("após bem");
@@ -81,7 +84,7 @@ eq("desvalorização reduz o é meu",T.totais().pl,plB-20000);
 eq("desvalorização não é 'Saiu' do mês",T.resumoMes(hojeYM).sai,saiA);
 eq("mas aparece como mudança de valor dos bens",T.resumoMes(hojeYM).aj,-20000);
 eq("partidas do ajuste: D desvalorização / C bem",T.partidas(aj).map(p=>p.lado+":"+p.id),["D:__desvaloriza","C:"+tv.id]);
-nav("inicio");eq("início avisa que os bens mudaram de valor",/bens mudaram de valor/.test($("#tela").textContent),true);
+click('nav [data-v="mais"]');click('[data-a="ir"][data-v="relatorios"]');eq("relatório avisa que o valor dos bens mudou",/Valor dos bens/.test($("#tela").textContent),true);
 tudoFecha("após ajuste");
 
 // ---- vender a TV por menos (perda) ----

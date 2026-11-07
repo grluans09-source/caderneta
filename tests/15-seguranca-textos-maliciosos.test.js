@@ -22,7 +22,10 @@ const dom=new JSDOM(html,{runScripts:"dangerously",url:"http://localhost/",virtu
 const w=dom.window,d=w.document;
 let ok=true;function eq(n,a,b){const p=JSON.stringify(a)===JSON.stringify(b);if(!p)ok=false;console.log(p?"OK  ":"FAIL",n,p?"":JSON.stringify(a)+" != "+JSON.stringify(b))}
 const $=s=>d.querySelector(s);
-function click(sel){const el=typeof sel==="string"?$(sel):sel;if(!el)throw new Error("sem elemento "+sel);el.click()}
+function click(sel){let el=typeof sel==="string"?$(sel):sel;
+  /* a tela Dinheiro tem abas e Metas é uma tela própria: se o botão não está na tela, vai até a aba/tela dele, como uma pessoa faria */
+  if(!el&&typeof sel==="string"){for(const alvo of ['[data-a="dinAba"][data-v="bens"]','[data-a="dinAba"][data-v="pessoas"]','[data-a="dinAba"][data-v="dividas"]','[data-a="dinAba"][data-v="contas"]','[data-a="ir"][data-v="metas"]']){const b=$(alvo);if(b){b.click();el=$(sel);if(el)break}}}
+  if(!el)throw new Error("sem elemento "+sel);el.click()}
 d.documentElement.classList.add("calmo");
 /* só as áreas onde texto de usuário aparece (o <script> legítimo do próprio app fica fora) */
 const PERIGOS=["#tela","#folha","#modal","#onb","#toast"].map(c=>["img","script","iframe","object","embed","[onerror]","[onload]","[onclick]","#injetado"].map(p=>c+" "+p).join(",")).join(",");
@@ -33,11 +36,12 @@ function varre(rot){
   if(el.length)achados.push(rot+" -> "+[...el].map(e=>e.tagName).join(","));
 }
 function nav(v){
-  if(["caixinhas","fixas","simulador"].includes(v))click('nav [data-v="planejar"]');
+  if(["caixinhas","metas","fixas","simulador"].includes(v))click('nav [data-v="planejar"]');
   if(["relatorios","ajustes","anotacoes"].includes(v))click('nav [data-v="mais"]');
-  if(["caixinhas","fixas","simulador","relatorios","ajustes","anotacoes"].includes(v))click('#tela [data-a="ir"][data-v="'+v+'"]');else click('nav [data-v="'+v+'"]');
+  if(["caixinhas","metas","fixas","simulador","relatorios","ajustes","anotacoes"].includes(v))click('#tela [data-a="ir"][data-v="'+v+'"]');else click('nav [data-v="'+v+'"]');
 }
-["inicio","contas","planejar","caixinhas","fixas","simulador","mais","anotacoes","relatorios","ajustes"].forEach(v=>{nav(v);varre("tela "+v)});
+["inicio","contas","planejar","caixinhas","metas","fixas","simulador","mais","anotacoes","relatorios","ajustes"].forEach(v=>{nav(v);varre("tela "+v)});
+["dividas","bens","pessoas","contas"].forEach(t=>{nav("contas");click('[data-a="dinAba"][data-v="'+t+'"]');varre("dinheiro aba "+t)});
 // modo contador (balancete) e letra grande
 nav("ajustes");click('[data-a="cfg"][data-g="contador"]');["inicio","relatorios"].forEach(v=>{nav(v);varre("contador "+v)});
 nav("ajustes");click('[data-a="cfg"][data-g="contador"]');
@@ -53,7 +57,7 @@ click('[data-a="gaveta"][data-id="c2"]');click('[data-a="gApagar"]');varre("apag
 nav("fixas");click('[data-a="fixa"][data-id="f1"]');varre("conta fixa");click('[data-a="mFechar"]');
 nav("caixinhas");click('[data-a="caixa"][data-id="x1"]');varre("caixinha");click('[data-a="mFechar"]');
 click('[data-a="cxMov"][data-id="x1"][data-m="tirar"]');varre("tirar da caixinha");click('[data-a="mFechar"]');
-nav("inicio");click('[data-a="tirarCx"]');varre("usar dinheiro guardado");click('[data-a="mFechar"]');
+nav("caixinhas");click('[data-a="tirarCx"]');varre("usar dinheiro guardado");click('[data-a="mFechar"]');
 // Anotar: todos os tipos
 click('[data-a="novo"]');["saida","entrada","transferencia","bem"].forEach(t=>{click('[data-a="fTipo"][data-t="'+t+'"]');varre("anotar "+t)});
 click('[data-a="fFechar"]');

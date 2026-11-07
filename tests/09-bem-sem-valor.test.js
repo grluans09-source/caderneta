@@ -11,7 +11,10 @@ const dom=new JSDOM(html,{runScripts:"dangerously",url:"http://localhost/",virtu
 const w=dom.window,d=w.document,T=w.__T;
 let ok=true;function eq(n,a,b){const p=JSON.stringify(a)===JSON.stringify(b);if(!p)ok=false;console.log(p?"OK  ":"FAIL",n,p?"":JSON.stringify(a)+" != "+JSON.stringify(b))}
 const $=s=>d.querySelector(s);
-function click(sel){const el=typeof sel==="string"?$(sel):sel;if(!el)throw new Error("sem elemento "+sel);el.click()}
+function click(sel){let el=typeof sel==="string"?$(sel):sel;
+  /* a tela Dinheiro tem abas e Metas é uma tela própria: se o botão não está na tela, vai até a aba/tela dele, como uma pessoa faria */
+  if(!el&&typeof sel==="string"){for(const alvo of ['[data-a="dinAba"][data-v="bens"]','[data-a="dinAba"][data-v="pessoas"]','[data-a="dinAba"][data-v="dividas"]','[data-a="dinAba"][data-v="contas"]','[data-a="ir"][data-v="metas"]']){const b=$(alvo);if(b){b.click();el=$(sel);if(el)break}}}
+  if(!el)throw new Error("sem elemento "+sel);el.click()}
 function digita(sel,txt){const el=$(sel);el.value=txt;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
 const S=()=>T.S();
 d.documentElement.classList.add("calmo");
@@ -28,7 +31,7 @@ click('[data-a="fApagar"]');click('[data-a="mOk"]');
 eq("a anotação da compra foi apagada",S().lancamentos.some(l=>l.tipo==="bem"),false);
 eq("o bem continua cadastrado, valendo zero",[!!S().contas.find(c=>c.id===tv.id),T.saldoConta(tv)],[true,0]);
 click('nav [data-v="contas"]');
-eq("e continua aparecendo na lista de bens",/TV/.test($("#tela").textContent),true);
+click('[data-a="dinAba"][data-v="bens"]');eq("e continua aparecendo na lista de bens",/TV/.test($("#tela").textContent),true);
 eq("avisa que está sem valor e que dá para ajustar ou apagar",/Sem valor anotado/.test($("#tela").textContent),true);
 // dá para dar valor de novo
 click('[data-a="bem"][data-id="'+tv.id+'"]');click('[data-a="bAjuste"]');digita("#ajValor","150000");click('[data-a="ajSalvar"]');

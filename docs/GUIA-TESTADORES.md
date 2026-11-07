@@ -23,9 +23,10 @@ Use este guia para **mandar o app a quem vai testar** e para **observar o que ac
 > **Importante no iPhone:** se o app não for instalado na tela inicial, o Safari pode apagar os dados depois de um tempo sem uso. Instalar e **guardar uma cópia** protege a pessoa.
 
 ### Primeiros passos
-1. Responder "Onde está seu dinheiro hoje?" (carteira, banco, poupança). Pode deixar vazio o que não tem.
-2. Dizer se usa cartão de crédito (dia que fecha e dia que vence).
-3. Tocar no botão **+ Anotar** para o primeiro gasto.
+1. **Escolher o jeito de usar** (Balança, Razão ou Cofre e fluxo). É o mesmo app com três organizações; dá para trocar depois em Ajustes > Aparência.
+2. Responder "Onde está seu dinheiro hoje?" (carteira, banco, poupança). Pode deixar vazio o que não tem.
+3. Dizer se usa cartão de crédito (dia que fecha e dia que vence).
+4. Tocar no botão **+ Anotar** para o primeiro gasto.
 
 ### Guardar e recuperar uma cópia dos dados
 - **Guardar:** Mais → Ajustes → **Guardar uma cópia**. Mandar o arquivo para o próprio e-mail ou WhatsApp.
@@ -44,7 +45,9 @@ Peça que a pessoa faça cada tarefa **sozinha, falando em voz alta o que pensa*
 | 5 | Cadastrar um bem (ex.: o carro) | Saber que bem não é gasto; informar o que ainda falta pagar |
 | 6 | Achar uma anotação antiga (pelo nome ou valor) | Achar "Anotações" no menu Mais |
 
-Depois, pergunte: **"Com suas palavras, o que é essa balança da tela inicial?"** (mostra se a explicação funcionou).
+Depois, pergunte: **"Com suas palavras, o que é essa balança (ou livro, ou cofres) da tela inicial?"** (mostra se a explicação funcionou).
+
+Peça também que a pessoa **teste os 3 jeitos** (Ajustes > Aparência > Jeito de usar) e diga **qual escolheria e por quê**.
 
 ## 4. Ficha de observação (uma por pessoa)
 
@@ -59,6 +62,7 @@ Depois, pergunte: **"Com suas palavras, o que é essa balança da tela inicial?"
 | O que **faltou** na opinião dela | |
 | O que ela mais gostou | |
 | **Pagaria por isso?** Quanto acharia justo? (pergunte só no fim) | |
+| **Qual jeito escolheu primeiro? Trocou? Qual preferiu e por quê?** | |
 | Travamentos, lentidão ou telas estranhas (anote o horário) | |
 
 ## 5. O que fazer com o que você descobrir
