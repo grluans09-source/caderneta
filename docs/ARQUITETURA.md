@@ -1,6 +1,6 @@
 # Arquitetura
 
-Como o app funciona por dentro. Estado descrito: **versão 1.15.0-beta.1** (a base de dados e o motor vêm da 1.0.0; as telas foram reorganizadas conforme `MAPA-DO-APP.md`).
+Como o app funciona por dentro. Estado descrito: **versão 1.16.0-beta.1** (a base de dados e o motor vêm da 1.0.0; as telas foram reorganizadas conforme `MAPA-DO-APP.md`).
 
 ## 1. Visão geral
 
@@ -16,7 +16,7 @@ app/
   sw.js                service worker (VERSAO = "caderneta-<versão>")
   manifest.webmanifest nome, cores, ícones
   icon.svg, icon-180/192/512.png, icon-maskable-512.png
-tests/                 preparar.js + rodar.js + 24 arquivos *.test.js (jsdom)
+tests/                 preparar.js + rodar.js + 25 arquivos *.test.js (jsdom)
 tools/                 servidor-local.js, brasao.js (desenho do logo), gerar-icones.js
 ```
 
@@ -167,7 +167,7 @@ Ativo cresce a débito; passivo cresce a crédito. **Patrimônio líquido (PL) =
 
 - `npm test` → `tests/rodar.js`: **prepara uma cópia** do app em `tests/.tmp/app-teste.html` (com um gancho `window.__T` que expõe funções internas listadas em `tests/preparar.js`), confere a sintaxe do JS e roda cada `tests/*.test.js` em **jsdom**, simulando a pessoa: cliques, digitação, navegação.
 - Os testes ligam a classe `calmo` (sem esperas de animação). Animação, layout e toque **só se conferem no navegador/celular**.
-- Cobertura (669 verificações, 24 arquivos; inclui planejar com acerto de contas, anotar em dois toques, conta Dinheiro, gráficos e relatórios e mapa do app): fluxo básico, dívida por vencimento, pessoas/fixas/caixinhas/simulador, bens, juros, bem financiado, apagar, vocabulário (varre todas as telas atrás de jargão), "o que pagar no mês", caixinhas com dinheiro real, guardado por conta, cofres/setas, filtros de anotações, **segurança contra textos maliciosos (XSS)**. Os testes também conferem **invariantes** (partidas dobradas, ativo − passivo = PL, dinheiro = livre + guardado).
+- Cobertura (687 verificações, 25 arquivos; inclui planejar com acerto de contas, anotar em dois toques, conta Dinheiro, gráficos e relatórios e mapa do app): fluxo básico, dívida por vencimento, pessoas/fixas/caixinhas/simulador, bens, juros, bem financiado, apagar, vocabulário (varre todas as telas atrás de jargão), "o que pagar no mês", caixinhas com dinheiro real, guardado por conta, cofres/setas, filtros de anotações, **segurança contra textos maliciosos (XSS)**. Os testes também conferem **invariantes** (partidas dobradas, ativo − passivo = PL, dinheiro = livre + guardado).
 - **Escrever um teste novo**: copie um arquivo parecido, mude o `seed` (dados iniciais no `localStorage`) e os passos; use `eq(nome, obtido, esperado)`; termine com `console.log(ok?"TUDO OK":"HÁ FALHAS")`. O corredor reconhece "OK", "FAIL" e "TUDO OK".
 
 ## 9. Publicação
@@ -185,6 +185,7 @@ GitHub Actions (`.github/workflows/publicar.yml`): a cada envio para `main`, rod
 - **Indicadores**: `indicadores()` calcula os 9 (cada um com `id`, `valor`, `st` = ok/atencao/critico/info/sem, `leitura`, `d` com os números e `graf` com o desenho em HTML/SVG); `relatorioTexto(i)` gera as 5 partes do relatório; `telaGraficos`, `telaRel` (panorama + lista) e `telaRelatorio` (detalhe, `REL_ID`, ações `relInd` e `relShare`). Faixas de referência: dívidas ≤30% / ≤50%; reserva ≥6 / ≥3 meses; poupança ≥20% / ≥10%; renda reservada ≤30% / ≤50%; folga ≥2x / ≥1x; dinheiro no patrimônio ≥30% / ≥10%.
 - **Planejar**: `cartaoPagar()` é o acerto de contas: no Planejar mostra a prévia de 3; `acToggle` chama `abrirAcerto()`, que abre o modal com a classe `acm` (preto e dourado) e `cartaoPagar(ym,{aberto:true})` dentro de `#acCorpo`, com todas as contas e **Pagar** (`pagar`) ou **Paguei** (`fxPagar`). Pagar fecha a janela e liga `AC_VOLTA`; `fecharFolha()` (e o botão voltar do celular) chama `voltaAcerto()`, que reabre a janela. `ir()` fecha a janela ao trocar de tela. `abrirModal(html,cls)` aceita uma classe e `fecharModal()` a limpa. Atrasada = vencimento antes de hoje (`hojeISO()`), igual a `quandoTxt()` da agenda.
 - **Identidade (D54)**: o desenho do Brasão mora em `tools/brasao.js` (`brasao({p,vivo,fundo,margem})`). Dele saem `app/icon.svg` e os PNGs (`npm run icones`, que usa o Chrome sem janela; `CHROME=caminho` se ele estiver em outro lugar) e as duas cópias dentro do `index.html`: o `<symbol id="brasaoSimb">` (sem olhos, usado no cabeçalho por `<use href="#brasaoSimb">`) e o SVG da abertura (com olhos). Se mudar o desenho, gere os ícones e recopie os dois SVGs no `index.html`. Por dentro o app continua "caderneta": a chave dos dados (`caderneta:v2`), o formato da cópia (`app:"caderneta"`), o nome do cache do service worker e o endereço `/caderneta/`; mudar isso faria as pessoas perderem os dados.
+- **Mordomo e momentos (D54)**: `balanca(t)` desenha o **Mordomo** (`#bal`, `data-a="mordomo"`): pedestal, coluna, gravata, travessão `.beam` com os pratos `.pA`/`.pB` (as pilhas de moedas de sempre, base em y=156) e o medalhão `.md-cab` com `.md-olho`/`.md-pup`. O humor (`data-h`) vem da situação: `preocupado` se o "é meu" é negativo, `atento` se é menor que 10% do que tem ou há conta atrasada (`pagarNoMes`), senão `feliz`; a balança nunca entorta (a equação sempre fecha). Um `pointermove` move as pupilas. Os gradientes de metal são compartilhados (`#mg-oV`, `#mg-oH`, `#mg-oR`, `#mg-esm`, `#mg-prato`, gerados por `defs("mg-")` de `tools/brasao.js`) no SVG escondido do topo do `body`. `momento(tipo)` mostra `.momento` com `svgMoedinha()` (`moeda`, em `salvarFolha` para Recebi novo), `svgLacre()` (`selo`, transferência para dívida ou saída de conta fixa) e `svgPeso(false)` (`peso`, em `salvarMov` ao guardar); nada aparece com `.calmo`. `checaPesao()` roda a cada `desenhar()`: só no Início, se há atrasada e se `KEY+":pesao:"+hoje` não está marcado; `pesaoIr` abre `abrirAcerto()`.
 - **Funções contábeis (D53)**:
   - **Conferir com o banco**: `modalConferir(id)` e `pintarConferir()` (estado em `CF`). `cfOk` grava `conta.conferido` (data); `cfAnotar` abre `novaFolha` com a diferença; `cfCorrigir` cria uma anotação `saida`/`entrada` comum (débito = crédito) na categoria do sistema devolvida por `catConferir(tipo)`. Essa categoria é reconhecida pela marca `sis:"conf"`, **não pelo nome**; `higienizar()` preserva `sis` e `conferido`.
   - **Contas do ano**: `contasDoAno()` usa `ocorrencias()` e `fixaPaga()` das fixas anuais. Uma caixinha com o mesmo nome (`norm`) conta como guardado. `porMes` = falta ÷ meses até o mês do vencimento, arredondado para cima em reais. `blocoContasDoAno()` fica no fim de `telaFixas()`; `cxAno` chama `modalCaixa(null,null,{nome,alvo,prazo})` (o 3º parâmetro preenche a caixinha nova).
@@ -193,5 +194,5 @@ GitHub Actions (`.github/workflows/publicar.yml`): a cada envio para `main`, rod
 - **Dica de instalar**: `dicaInstalar()` no Início, só se `matchMedia` existe e o app não está instalado (`display-mode: standalone` ou `navigator.standalone`); guardada por aparelho em `localStorage` (`KEY+":dicaInstalar"`), fora dos dados da pessoa; `beforeinstallprompt` vira o botão **Instalar agora** (`instalar`).
 - **Planejar (cont.)**: `pagarNoMes()` agora devolve `cid`/`fid`/`ref` de cada item.
 - **Removido**: os jeitos Razão e Cofre (D39) não existem mais; não há `config.jeito`.
-- **Testes**: 24 arquivos, 669 verificações; o teste 03 conta 6 botões na `nav` (o `.fab` fica fora dela, direto no `body`) e 4 bolinhas no `#fabMenu`; os testes antigos abrem a folha por `abreFolha(tipo)` (toque no + e na bolinha).
+- **Testes**: 25 arquivos, 687 verificações; o teste 03 conta 6 botões na `nav` (o `.fab` fica fora dela, direto no `body`) e 4 bolinhas no `#fabMenu`; os testes antigos abrem a folha por `abreFolha(tipo)` (toque no + e na bolinha).
 - **Versão**: 3 lugares sobem juntos (`package.json`, `VERSAO_APP`, `sw.js`).

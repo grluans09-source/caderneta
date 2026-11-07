@@ -28,7 +28,8 @@ Aplica as decisões Q1 a Q7 da [auditoria](AUDITORIA-FUNCOES.md), aceitas pelo d
 
 | Assunto | Casa (única) | Aparece como atalho em |
 |---|---|---|
-| Valor de verdade (balança) | Início | – |
+| Valor de verdade (balança: o **Mordomo**) | Início | – |
+| Mascotes dos momentos (Moedinha ao receber, Selo "PAGO" ao pagar, Pesinho ao guardar, Pesão quando há conta atrasada) | Aparecem por cima da tela, só nesses momentos | Pesão: só no Início, 1 vez por dia |
 | Custo fixo de vida | Gráficos (indicador) | Relatórios |
 | Resumo do mês (entrou, saiu, sobrou) | Início | – |
 | **Quanto falta pagar no mês** | **Planejar** | Início (uma linha) |

@@ -149,4 +149,4 @@ Ficaram para depois: rendimento como receita (com Investimentos, D50), fluxo de 
 - **Letra:** Times New Roman nos títulos e valores (Noto Serif no Android) e **algarismos tabulares** em todos os números.
 - **Não muda:** endereço, chave dos dados e formato da cópia (ninguém perde dados).
 
-Na 1.15.0 entraram o nome, o Brasão (ícones e cabeçalho), a abertura e a letra. O Mordomo no Início, os secundários e a pílula do chat entram nos próximos passos.
+Na 1.15.0 entraram o nome, o Brasão (ícones e cabeçalho), a abertura e a letra. Na **1.16.0** entraram o **Mordomo no Início** e os **secundários**. Ao implementar, ficou definido que o Mordomo **não entorta**: a balança do Início mostra a equação contábil (o que tenho = o que devo + o que é meu), que sempre fecha; a situação aparece na **cara** dele (confiante, atento, preocupado). A pílula do chat entra com o chat (passos 4 e 5).

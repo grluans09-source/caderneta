@@ -58,6 +58,8 @@ Peça também que a pessoa **anote um gasto e, no meio, troque para "Recebi" pel
 
 Peça também que a pessoa **confira o saldo de uma conta com o app do banco** (Dinheiro > tocar na conta > Conferir com o banco) e conte se entendeu o que fazer quando não bate.
 
+Observe também o **Mordomo** (a balança do Início): a pessoa entende que a cara dele mostra a situação? Os mascotes que aparecem ao receber, pagar e guardar agradam ou cansam?
+
 ## 4. Ficha de observação (uma por pessoa)
 
 | Campo | Anotação |

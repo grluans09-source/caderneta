@@ -5,6 +5,19 @@
 Formato: versão semântica (`MAIOR.MENOR.CORREÇÃO`). Cada versão diz **o que mudou para a pessoa que usa**.
 Antes da 1.0.0 as versões eram numeradas só pelo nome do cache do app (v1 a v16); estão aqui como marcos de desenvolvimento.
 
+## [1.16.0-beta.1]: 7 de novembro de 2026 · o Mordomo no Início e os mascotes dos momentos especiais
+- **O Mordomo é a balança do Início.** A balança virou o personagem: metal com volume, pratos fundos pendurados por correntes, pedestal art déco, gravata-borboleta e o rosto no medalhão de esmalte. As moedas coloridas continuam nos pratos, com o mesmo significado de antes.
+  - **Ele fica sempre em equilíbrio**, porque é a regra da contabilidade: o que você tem é igual ao que você deve mais o que é seu de verdade. Quem mostra a situação é **a cara dele**: **confiante** quando sobra bem, **atento** quando está apertado ou há conta atrasada, **preocupado** quando você deve mais do que tem.
+  - **Os olhos acompanham o seu dedo** e ele pisca de vez em quando. **Tocar nele** faz uma reverência e ele diz como você está, sempre num tom de ajuda.
+  - Quando você anota algo, ele balança e se reequilibra, como antes.
+- **Mascotes dos momentos especiais**, que só aparecem quando há motivo:
+  - **Moedinha**: cai girando quando entra dinheiro (Recebi), no lugar do carimbo "ANOTADO".
+  - **Selo de lacre bordô "PAGO"**: sela quando você paga uma dívida ou uma conta fixa.
+  - **Pesinho**: desce quando você guarda dinheiro numa caixinha.
+  - **Pesão de ferro**: aparece no Início, **uma vez por dia**, quando há conta atrasada, com "Resolver agora" (abre o acerto de contas) e "Agora não".
+- Com "Movimento: Parado", nenhum mascote se mexe nem aparece.
+- Testes: 687 verificações em 25 arquivos (novo: Mordomo e momentos).
+
 ## [1.15.0-beta.1]: 7 de novembro de 2026 · o app agora se chama Balancete
 - **Nome novo: Balancete** (antes Caderneta, que se confundia com a caderneta de poupança). Muda o nome na tela, no ícone instalado, na aba do navegador e nos textos. **Não mudam** o endereço do app nem o lugar onde os dados ficam guardados, então ninguém perde nada; cópias de dados antigas continuam servindo.
 - **Logo novo: o Brasão.** Uma moeda de ouro com serrilha, aro em relevo, o nome em cima, "suas contas em ordem" embaixo e a balança em alto-relevo no meio. É o novo ícone do app (iPhone, Android e navegador) e aparece pequeno ao lado do nome no Início.

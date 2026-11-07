@@ -69,9 +69,36 @@ h2{font-size:1.05rem;font-weight:700;margin:1.5rem 0 .55rem;font-family:var(--se
 .hero .grande{font-family:var(--serif);font-size:min(2.7rem,calc((100vw - 2rem)/8.5));font-weight:700;color:var(--ouro);line-height:1.1;margin:.1rem 0;white-space:nowrap}
 .hero .grande.neg{color:var(--out)}
 .hero .eq{font-size:.88rem;color:var(--ink2)}
-.bal{width:100%;max-width:21rem;height:auto;display:block;margin:.2rem auto 0}
+.bal{width:100%;max-width:21rem;height:auto;display:block;margin:.2rem auto 0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.bal .md-cab{transform-box:fill-box;transform-origin:50% 50%}
+.bal.rev .md-cab{animation:mdRev 1.4s cubic-bezier(.45,0,.25,1)}
+@keyframes mdRev{0%,100%{transform:none}35%,62%{transform:translateY(6px) scale(.965)}}
+.bal .md-olho{transform-box:fill-box;transform-origin:50% 50%;animation:mdPisca 5.5s infinite}
+@keyframes mdPisca{0%,94%,100%{transform:scaleY(1)}96%{transform:scaleY(.08)}}
+.bal .md-ref{animation:mdRef 7s ease-in-out infinite}
+@keyframes mdRef{0%,60%{transform:translateX(0)}100%{transform:translateX(150px)}}
+/* mascotes secundários: aparecem só em momentos especiais */
+.momento{position:fixed;left:50%;top:40%;z-index:91;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;pointer-events:none;animation:mSai .45s 1.9s ease forwards}
+.momento svg{width:6.2rem;height:6.8rem;overflow:visible;filter:drop-shadow(0 8px 8px rgba(0,0,0,.35))}
+.momento b{background:#0A0A0A;color:#F5EFDF;border:2px solid var(--latao);border-radius:999px;padding:.4rem 1rem;font-family:var(--serif);font-size:1rem;white-space:nowrap;opacity:0;animation:mTxt .4s .7s ease forwards}
+.momento.m-cai svg{animation:mCai .9s cubic-bezier(.3,1.25,.5,1) both}
+@keyframes mCai{0%{transform:translateY(-45vh) rotateY(0)}75%{transform:translateY(8px) rotateY(1080deg)}100%{transform:none}}
+.momento.m-desce svg{animation:mDesce .8s cubic-bezier(.3,1.3,.5,1) both}
+@keyframes mDesce{0%{transform:translateY(-40vh)}70%{transform:translateY(6px) scaleY(.94)}100%{transform:none}}
+.momento.m-sela svg{animation:mSela .7s cubic-bezier(.3,1.5,.5,1) both}
+@keyframes mSela{0%{opacity:0;transform:scale(2.2) rotate(-14deg)}60%{opacity:1;transform:scale(.9) rotate(-14deg)}100%{opacity:1;transform:scale(1) rotate(-14deg)}}
+@keyframes mTxt{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes mSai{to{opacity:0;visibility:hidden}}
+.pesao{position:fixed;left:.8rem;right:.8rem;bottom:calc(9.6rem + env(safe-area-inset-bottom));z-index:22;max-width:30rem;margin:0 auto;display:grid;grid-template-columns:3.4rem 1fr;gap:.6rem;align-items:center;background:#0A0A0A;color:#F5EFDF;border:2px solid var(--latao);border-radius:1.1rem;padding:.55rem .7rem;box-shadow:0 10px 24px rgba(0,0,0,.35);animation:pChega 1.4s cubic-bezier(.2,.8,.3,1) both}
+.pesao svg{width:3.4rem;height:3.7rem;overflow:visible}
+.pesao p{margin:0 0 .4rem;font-family:var(--serif);font-size:.98rem;line-height:1.25}
+.pesao .acoes{display:flex;gap:.4rem;flex-wrap:wrap}
+.pesao .btn{margin:0;min-height:2.75rem;width:auto;padding:.3rem .8rem;font-size:.88rem}
+.pesao .btn.sec{background:transparent;color:#E8CB6A;border-color:#E8CB6A}
+@keyframes pChega{from{transform:translateX(110%)}to{transform:none}}
+html[data-tam="gg"] .pesao{grid-template-columns:1fr}html[data-tam="gg"] .pesao svg{display:none}
 .bal .linha{stroke:var(--ink)}
-.beam{transform-origin:160px 38px}.pA{transform-origin:52px 38px}.pB{transform-origin:268px 38px}
+.beam{transform-origin:160px 62px}.pA{transform-origin:52px 68px}.pB{transform-origin:268px 68px}
 .bal:not(.wob) .beam{animation:sw 7s ease-in-out infinite alternate}
 .bal:not(.wob) .pA,.bal:not(.wob) .pB{animation:sw2 7s ease-in-out infinite alternate}
 @keyframes sw{from{transform:rotate(-.9deg)}to{transform:rotate(.9deg)}}
@@ -652,7 +679,7 @@ html[data-tam="g"] .fbl{max-width:4.8rem}
 </style>
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="brasaoSimb" viewBox="0 0 240 240"><defs><linearGradient id="bsoV" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBEAA6"/><stop offset=".38" stop-color="#E2BC4A"/><stop offset=".7" stop-color="#B98E1F"/><stop offset="1" stop-color="#7C5E0F"/></linearGradient><linearGradient id="bsoH" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7C5E0F"/><stop offset=".3" stop-color="#F3DC8C"/><stop offset=".55" stop-color="#D2AC37"/><stop offset="1" stop-color="#7C5E0F"/></linearGradient><radialGradient id="bsoR" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#FFF1BC"/><stop offset=".45" stop-color="#DDB547"/><stop offset="1" stop-color="#8A6A12"/></radialGradient><radialGradient id="bsesm" cx=".4" cy=".32" r=".75"><stop offset="0" stop-color="#2E2E2E"/><stop offset=".55" stop-color="#121212"/><stop offset="1" stop-color="#030303"/></radialGradient><linearGradient id="bsprato" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F6DE8E"/><stop offset=".5" stop-color="#C79E2C"/><stop offset="1" stop-color="#6E520C"/></linearGradient></defs><g class="br-moeda"><circle cx="120" cy="124" r="114" fill="#000" opacity=".35"/><circle cx="120" cy="120" r="114" fill="url(#bsoV)"/><circle cx="120" cy="120" r="111" fill="none" stroke="#7C5E0F" stroke-width="6" stroke-dasharray="1.4 2.1"/><circle cx="120" cy="120" r="104" fill="url(#bsoR)" stroke="#6E520C" stroke-width="1.2"/><circle cx="120" cy="120" r="101" fill="none" stroke="#FFF3C4" stroke-width="1.2" opacity=".6"/><circle cx="120" cy="120" r="93" fill="#6E520C"/><circle cx="120" cy="120" r="91.5" fill="url(#bsesm)"/><circle cx="120" cy="120" r="88" fill="none" stroke="#C9A227" stroke-width="1" opacity=".75"/><circle cx="120" cy="120" r="68" fill="none" stroke="#C9A227" stroke-width="1.2" opacity=".85"/><circle cx="120" cy="120" r="64" fill="none" stroke="#C9A227" stroke-width="1" stroke-dasharray=".1 3.6" stroke-linecap="round" opacity=".7"/><path id="bst" d="M46 120 A74 74 0 0 1 194 120" fill="none"/><text font-family="'Times New Roman',Times,'Noto Serif',serif" font-size="16" font-weight="700" letter-spacing="5" fill="url(#bsoV)"><textPath href="#bst" startOffset="50%" text-anchor="middle">BALANCETE</textPath></text><path id="bsb" d="M36 120 A84 84 0 0 0 204 120" fill="none"/><text font-family="'Times New Roman',Times,'Noto Serif',serif" font-size="8.6" letter-spacing="2.4" fill="#D9B23A"><textPath href="#bsb" startOffset="50%" text-anchor="middle">SUAS CONTAS EM ORDEM</textPath></text><path d="M42 120 l4 -4 4 4 -4 4z M190 120 l4 -4 4 4 -4 4z" fill="url(#bsoR)"/><path d="M98 158 L142 158 L146 166 L94 166 Z" fill="url(#bsoV)" stroke="#6E520C" stroke-width="1"/><path d="M106 150 L134 150 L138 158 L102 158 Z" fill="url(#bsoV)" stroke="#6E520C" stroke-width="1"/><path d="M116 150 L118 100 L122 100 L124 150 Z" fill="url(#bsoH)" stroke="#6E520C" stroke-width="1"/><g class="br-trav"><path d="M74 89.4 Q120 83 166 89.4 L166 94.6 Q120 101 74 94.6 Z" fill="url(#bsoV)" stroke="#6E520C" stroke-width="1.2"/><path d="M80 89.8 Q120 85 160 89.8" stroke="#FFF3C4" stroke-width="1.6" fill="none" opacity=".7"/><circle cx="74" cy="92" r="7" fill="url(#bsoR)" stroke="#6E520C" stroke-width="1.2"/><circle cx="166" cy="92" r="7" fill="url(#bsoR)" stroke="#6E520C" stroke-width="1.2"/><g transform="translate(74 96)"><g><circle r="3.2" fill="url(#bsoR)" stroke="#6E520C" stroke-width=".8"/><line x1="0" y1="2" x2="-14" y2="28" stroke="#9C7A16" stroke-width="2.4" stroke-dasharray="2.6 1.8" stroke-linecap="round"/><line x1="0" y1="2" x2="14" y2="28" stroke="#9C7A16" stroke-width="2.4" stroke-dasharray="2.6 1.8" stroke-linecap="round"/><path d="M-17 28 C-13.600000000000001 44.15 13.600000000000001 44.15 17 28 Z" fill="url(#bsprato)" stroke="#6E520C" stroke-width="1.2"/><ellipse cx="0" cy="28" rx="17" ry="3.4000000000000004" fill="#F7E3A0" stroke="#8A6A12" stroke-width="1.2"/><ellipse cx="0" cy="28.6" rx="13.94" ry="2.21" fill="#A9831B" opacity=".55"/></g></g><g transform="translate(166 96)"><g><circle r="3.2" fill="url(#bsoR)" stroke="#6E520C" stroke-width=".8"/><line x1="0" y1="2" x2="-14" y2="28" stroke="#9C7A16" stroke-width="2.4" stroke-dasharray="2.6 1.8" stroke-linecap="round"/><line x1="0" y1="2" x2="14" y2="28" stroke="#9C7A16" stroke-width="2.4" stroke-dasharray="2.6 1.8" stroke-linecap="round"/><path d="M-17 28 C-13.600000000000001 44.15 13.600000000000001 44.15 17 28 Z" fill="url(#bsprato)" stroke="#6E520C" stroke-width="1.2"/><ellipse cx="0" cy="28" rx="17" ry="3.4000000000000004" fill="#F7E3A0" stroke="#8A6A12" stroke-width="1.2"/><ellipse cx="0" cy="28.6" rx="13.94" ry="2.21" fill="#A9831B" opacity=".55"/></g></g></g><g transform="translate(120 92)"><g class="br-pino"><circle r="10.5" fill="url(#bsoR)" stroke="#6E520C" stroke-width="1"/><circle r="8" fill="url(#bsesm)"/></g></g></g></symbol></svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="mg-oV" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBEAA6"/><stop offset=".38" stop-color="#E2BC4A"/><stop offset=".7" stop-color="#B98E1F"/><stop offset="1" stop-color="#7C5E0F"/></linearGradient><linearGradient id="mg-oH" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7C5E0F"/><stop offset=".3" stop-color="#F3DC8C"/><stop offset=".55" stop-color="#D2AC37"/><stop offset="1" stop-color="#7C5E0F"/></linearGradient><radialGradient id="mg-oR" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#FFF1BC"/><stop offset=".45" stop-color="#DDB547"/><stop offset="1" stop-color="#8A6A12"/></radialGradient><radialGradient id="mg-esm" cx=".4" cy=".32" r=".75"><stop offset="0" stop-color="#2E2E2E"/><stop offset=".55" stop-color="#121212"/><stop offset="1" stop-color="#030303"/></radialGradient><linearGradient id="mg-prato" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F6DE8E"/><stop offset=".5" stop-color="#C79E2C"/><stop offset="1" stop-color="#6E520C"/></linearGradient></defs><symbol id="brasaoSimb" viewBox="0 0 240 240"><defs><linearGradient id="bsoV" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBEAA6"/><stop offset=".38" stop-color="#E2BC4A"/><stop offset=".7" stop-color="#B98E1F"/><stop offset="1" stop-color="#7C5E0F"/></linearGradient><linearGradient id="bsoH" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7C5E0F"/><stop offset=".3" stop-color="#F3DC8C"/><stop offset=".55" stop-color="#D2AC37"/><stop offset="1" stop-color="#7C5E0F"/></linearGradient><radialGradient id="bsoR" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#FFF1BC"/><stop offset=".45" stop-color="#DDB547"/><stop offset="1" stop-color="#8A6A12"/></radialGradient><radialGradient id="bsesm" cx=".4" cy=".32" r=".75"><stop offset="0" stop-color="#2E2E2E"/><stop offset=".55" stop-color="#121212"/><stop offset="1" stop-color="#030303"/></radialGradient><linearGradient id="bsprato" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F6DE8E"/><stop offset=".5" stop-color="#C79E2C"/><stop offset="1" stop-color="#6E520C"/></linearGradient></defs><g class="br-moeda"><circle cx="120" cy="124" r="114" fill="#000" opacity=".35"/><circle cx="120" cy="120" r="114" fill="url(#bsoV)"/><circle cx="120" cy="120" r="111" fill="none" stroke="#7C5E0F" stroke-width="6" stroke-dasharray="1.4 2.1"/><circle cx="120" cy="120" r="104" fill="url(#bsoR)" stroke="#6E520C" stroke-width="1.2"/><circle cx="120" cy="120" r="101" fill="none" stroke="#FFF3C4" stroke-width="1.2" opacity=".6"/><circle cx="120" cy="120" r="93" fill="#6E520C"/><circle cx="120" cy="120" r="91.5" fill="url(#bsesm)"/><circle cx="120" cy="120" r="88" fill="none" stroke="#C9A227" stroke-width="1" opacity=".75"/><circle cx="120" cy="120" r="68" fill="none" stroke="#C9A227" stroke-width="1.2" opacity=".85"/><circle cx="120" cy="120" r="64" fill="none" stroke="#C9A227" stroke-width="1" stroke-dasharray=".1 3.6" stroke-linecap="round" opacity=".7"/><path id="bst" d="M46 120 A74 74 0 0 1 194 120" fill="none"/><text font-family="'Times New Roman',Times,'Noto Serif',serif" font-size="16" font-weight="700" letter-spacing="5" fill="url(#bsoV)"><textPath href="#bst" startOffset="50%" text-anchor="middle">BALANCETE</textPath></text><path id="bsb" d="M36 120 A84 84 0 0 0 204 120" fill="none"/><text font-family="'Times New Roman',Times,'Noto Serif',serif" font-size="8.6" letter-spacing="2.4" fill="#D9B23A"><textPath href="#bsb" startOffset="50%" text-anchor="middle">SUAS CONTAS EM ORDEM</textPath></text><path d="M42 120 l4 -4 4 4 -4 4z M190 120 l4 -4 4 4 -4 4z" fill="url(#bsoR)"/><path d="M98 158 L142 158 L146 166 L94 166 Z" fill="url(#bsoV)" stroke="#6E520C" stroke-width="1"/><path d="M106 150 L134 150 L138 158 L102 158 Z" fill="url(#bsoV)" stroke="#6E520C" stroke-width="1"/><path d="M116 150 L118 100 L122 100 L124 150 Z" fill="url(#bsoH)" stroke="#6E520C" stroke-width="1"/><g class="br-trav"><path d="M74 89.4 Q120 83 166 89.4 L166 94.6 Q120 101 74 94.6 Z" fill="url(#bsoV)" stroke="#6E520C" stroke-width="1.2"/><path d="M80 89.8 Q120 85 160 89.8" stroke="#FFF3C4" stroke-width="1.6" fill="none" opacity=".7"/><circle cx="74" cy="92" r="7" fill="url(#bsoR)" stroke="#6E520C" stroke-width="1.2"/><circle cx="166" cy="92" r="7" fill="url(#bsoR)" stroke="#6E520C" stroke-width="1.2"/><g transform="translate(74 96)"><g><circle r="3.2" fill="url(#bsoR)" stroke="#6E520C" stroke-width=".8"/><line x1="0" y1="2" x2="-14" y2="28" stroke="#9C7A16" stroke-width="2.4" stroke-dasharray="2.6 1.8" stroke-linecap="round"/><line x1="0" y1="2" x2="14" y2="28" stroke="#9C7A16" stroke-width="2.4" stroke-dasharray="2.6 1.8" stroke-linecap="round"/><path d="M-17 28 C-13.600000000000001 44.15 13.600000000000001 44.15 17 28 Z" fill="url(#bsprato)" stroke="#6E520C" stroke-width="1.2"/><ellipse cx="0" cy="28" rx="17" ry="3.4000000000000004" fill="#F7E3A0" stroke="#8A6A12" stroke-width="1.2"/><ellipse cx="0" cy="28.6" rx="13.94" ry="2.21" fill="#A9831B" opacity=".55"/></g></g><g transform="translate(166 96)"><g><circle r="3.2" fill="url(#bsoR)" stroke="#6E520C" stroke-width=".8"/><line x1="0" y1="2" x2="-14" y2="28" stroke="#9C7A16" stroke-width="2.4" stroke-dasharray="2.6 1.8" stroke-linecap="round"/><line x1="0" y1="2" x2="14" y2="28" stroke="#9C7A16" stroke-width="2.4" stroke-dasharray="2.6 1.8" stroke-linecap="round"/><path d="M-17 28 C-13.600000000000001 44.15 13.600000000000001 44.15 17 28 Z" fill="url(#bsprato)" stroke="#6E520C" stroke-width="1.2"/><ellipse cx="0" cy="28" rx="17" ry="3.4000000000000004" fill="#F7E3A0" stroke="#8A6A12" stroke-width="1.2"/><ellipse cx="0" cy="28.6" rx="13.94" ry="2.21" fill="#A9831B" opacity=".55"/></g></g></g><g transform="translate(120 92)"><g class="br-pino"><circle r="10.5" fill="url(#bsoR)" stroke="#6E520C" stroke-width="1"/><circle r="8" fill="url(#bsesm)"/></g></g></g></symbol></svg>
 <div id="splash" aria-hidden="true"><div class="sp-moeda"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" aria-hidden="true"><defs><linearGradient id="spoV" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBEAA6"/><stop offset=".38" stop-color="#E2BC4A"/><stop offset=".7" stop-color="#B98E1F"/><stop offset="1" stop-color="#7C5E0F"/></linearGradient><linearGradient id="spoH" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7C5E0F"/><stop offset=".3" stop-color="#F3DC8C"/><stop offset=".55" stop-color="#D2AC37"/><stop offset="1" stop-color="#7C5E0F"/></linearGradient><radialGradient id="spoR" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#FFF1BC"/><stop offset=".45" stop-color="#DDB547"/><stop offset="1" stop-color="#8A6A12"/></radialGradient><radialGradient id="spesm" cx=".4" cy=".32" r=".75"><stop offset="0" stop-color="#2E2E2E"/><stop offset=".55" stop-color="#121212"/><stop offset="1" stop-color="#030303"/></radialGradient><linearGradient id="spprato" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F6DE8E"/><stop offset=".5" stop-color="#C79E2C"/><stop offset="1" stop-color="#6E520C"/></linearGradient></defs><g class="br-moeda"><circle cx="120" cy="124" r="114" fill="#000" opacity=".35"/><circle cx="120" cy="120" r="114" fill="url(#spoV)"/><circle cx="120" cy="120" r="111" fill="none" stroke="#7C5E0F" stroke-width="6" stroke-dasharray="1.4 2.1"/><circle cx="120" cy="120" r="104" fill="url(#spoR)" stroke="#6E520C" stroke-width="1.2"/><circle cx="120" cy="120" r="101" fill="none" stroke="#FFF3C4" stroke-width="1.2" opacity=".6"/><circle cx="120" cy="120" r="93" fill="#6E520C"/><circle cx="120" cy="120" r="91.5" fill="url(#spesm)"/><circle cx="120" cy="120" r="88" fill="none" stroke="#C9A227" stroke-width="1" opacity=".75"/><circle cx="120" cy="120" r="68" fill="none" stroke="#C9A227" stroke-width="1.2" opacity=".85"/><circle cx="120" cy="120" r="64" fill="none" stroke="#C9A227" stroke-width="1" stroke-dasharray=".1 3.6" stroke-linecap="round" opacity=".7"/><path id="spt" d="M46 120 A74 74 0 0 1 194 120" fill="none"/><text font-family="'Times New Roman',Times,'Noto Serif',serif" font-size="16" font-weight="700" letter-spacing="5" fill="url(#spoV)"><textPath href="#spt" startOffset="50%" text-anchor="middle">BALANCETE</textPath></text><path id="spb" d="M36 120 A84 84 0 0 0 204 120" fill="none"/><text font-family="'Times New Roman',Times,'Noto Serif',serif" font-size="8.6" letter-spacing="2.4" fill="#D9B23A"><textPath href="#spb" startOffset="50%" text-anchor="middle">SUAS CONTAS EM ORDEM</textPath></text><path d="M42 120 l4 -4 4 4 -4 4z M190 120 l4 -4 4 4 -4 4z" fill="url(#spoR)"/><path d="M98 158 L142 158 L146 166 L94 166 Z" fill="url(#spoV)" stroke="#6E520C" stroke-width="1"/><path d="M106 150 L134 150 L138 158 L102 158 Z" fill="url(#spoV)" stroke="#6E520C" stroke-width="1"/><path d="M116 150 L118 100 L122 100 L124 150 Z" fill="url(#spoH)" stroke="#6E520C" stroke-width="1"/><g class="br-trav"><path d="M74 89.4 Q120 83 166 89.4 L166 94.6 Q120 101 74 94.6 Z" fill="url(#spoV)" stroke="#6E520C" stroke-width="1.2"/><path d="M80 89.8 Q120 85 160 89.8" stroke="#FFF3C4" stroke-width="1.6" fill="none" opacity=".7"/><circle cx="74" cy="92" r="7" fill="url(#spoR)" stroke="#6E520C" stroke-width="1.2"/><circle cx="166" cy="92" r="7" fill="url(#spoR)" stroke="#6E520C" stroke-width="1.2"/><g transform="translate(74 96)"><g><circle r="3.2" fill="url(#spoR)" stroke="#6E520C" stroke-width=".8"/><line x1="0" y1="2" x2="-14" y2="28" stroke="#9C7A16" stroke-width="2.4" stroke-dasharray="2.6 1.8" stroke-linecap="round"/><line x1="0" y1="2" x2="14" y2="28" stroke="#9C7A16" stroke-width="2.4" stroke-dasharray="2.6 1.8" stroke-linecap="round"/><path d="M-17 28 C-13.600000000000001 44.15 13.600000000000001 44.15 17 28 Z" fill="url(#spprato)" stroke="#6E520C" stroke-width="1.2"/><ellipse cx="0" cy="28" rx="17" ry="3.4000000000000004" fill="#F7E3A0" stroke="#8A6A12" stroke-width="1.2"/><ellipse cx="0" cy="28.6" rx="13.94" ry="2.21" fill="#A9831B" opacity=".55"/></g></g><g transform="translate(166 96)"><g><circle r="3.2" fill="url(#spoR)" stroke="#6E520C" stroke-width=".8"/><line x1="0" y1="2" x2="-14" y2="28" stroke="#9C7A16" stroke-width="2.4" stroke-dasharray="2.6 1.8" stroke-linecap="round"/><line x1="0" y1="2" x2="14" y2="28" stroke="#9C7A16" stroke-width="2.4" stroke-dasharray="2.6 1.8" stroke-linecap="round"/><path d="M-17 28 C-13.600000000000001 44.15 13.600000000000001 44.15 17 28 Z" fill="url(#spprato)" stroke="#6E520C" stroke-width="1.2"/><ellipse cx="0" cy="28" rx="17" ry="3.4000000000000004" fill="#F7E3A0" stroke="#8A6A12" stroke-width="1.2"/><ellipse cx="0" cy="28.6" rx="13.94" ry="2.21" fill="#A9831B" opacity=".55"/></g></g></g><g transform="translate(120 92)"><g class="br-pino"><circle r="10.5" fill="url(#spoR)" stroke="#6E520C" stroke-width="1"/><circle r="8" fill="url(#spesm)"/><g class="br-olhos"><g transform="translate(-3.4 -.5)"><path d="M-2.6 0 Q0 -2.3 2.6 0 Q0 2.3 -2.6 0 Z" fill="#F5EBCB"/><circle r="1.15" fill="#0A0A0A"/></g><path transform="translate(-3.4 -3.3)" d="M-2.4 0 Q0 -1 2.4 0" fill="none" stroke="#EAD27A" stroke-width=".9" stroke-linecap="round"/><g transform="translate(3.4 -.5)"><path d="M-2.6 0 Q0 -2.3 2.6 0 Q0 2.3 -2.6 0 Z" fill="#F5EBCB"/><circle r="1.15" fill="#0A0A0A"/></g><path transform="translate(3.4 -3.3)" d="M-2.4 0 Q0 -1 2.4 0" fill="none" stroke="#EAD27A" stroke-width=".9" stroke-linecap="round"/><path transform="translate(0 3.4)" d="M-2.6 -.3 Q0 1.9 2.6 -.3" fill="none" stroke="#EAD27A" stroke-width=".9" stroke-linecap="round"/></g></g></g><clipPath id="spclip"><circle cx="120" cy="120" r="113"/></clipPath><g clip-path="url(#spclip)"><g transform="translate(120 120) rotate(25)"><rect class="br-reflexo" x="-250" y="-140" width="34" height="280" fill="#fff" opacity=".15"/></g></g></g></svg></div><div class="sp-t">Balancete</div><div class="sp-s">suas contas em ordem</div></div>
 <noscript><p style="padding:2rem">Este app precisa de JavaScript para funcionar.</p></noscript>
 <main id="tela" class="wrap" aria-live="polite"></main>
@@ -696,7 +723,7 @@ html[data-tam="g"] .fbl{max-width:4.8rem}
 /* ---------- utilidades ---------- */
 var KEY="caderneta:v2";
 /* versão do app (siga o CHANGELOG.md; subir junto com VERSAO em sw.js e "version" em package.json) */
-var VERSAO_APP="1.15.0-beta.1";
+var VERSAO_APP="1.16.0-beta.1";
 var RE_ID=/^[A-Za-z0-9_-]+$/, RE_DATA=/^\d{4}-\d{2}-\d{2}$/;
 var MES=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
 var MES3=["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
@@ -1248,6 +1275,7 @@ function desenhar(){
   t.innerHTML = tela();
   ULTIMO=null;
   if(VIEW==="inicio")animarInicio();
+  checaPesao();
   if(VIEW==="simulador")iniciarSim();
   if(VIEW==="anotacoes")iniciarAnot();
 }
@@ -1273,7 +1301,7 @@ function balanca(t){
   function pilha(lista,cx){
     var s="", col, n=lista.length, cols=n>6?2:1;
     lista.forEach(function(k,j){
-      col=j<6?0:1; var nivel=j<6?j:j-6, x=cols===1?cx:cx+(col?18:-18), y=140-nivel*5.2, c=cor[k];
+      col=j<6?0:1; var nivel=j<6?j:j-6, x=cols===1?cx:cx+(col?18:-18), y=156-nivel*5.2, c=cor[k];
       var atraso=(j*45)+"ms";
       if(!c)s+='<g class="moed" style="animation-delay:'+atraso+'"><ellipse cx="'+x+'" cy="'+(y-2)+'" rx="15" ry="4.5" fill="none" style="stroke:var(--out)" stroke-width="1.4" stroke-dasharray="3 2.5"/></g>';
       else s+='<g class="moed" style="animation-delay:'+atraso+'"><ellipse cx="'+x+'" cy="'+y+'" rx="15" ry="4.6" fill="'+c[0]+'"/><ellipse cx="'+x+'" cy="'+(y-2.2)+'" rx="15" ry="4.6" fill="'+c[1]+'" stroke="'+c[0]+'" stroke-width=".8"/></g>';
@@ -1282,24 +1310,48 @@ function balanca(t){
   }
   function prato(cls,cx,lista){
     return '<g class="'+cls+'">'+
-      '<path d="M'+cx+' 38L'+(cx-42)+' 146M'+cx+' 38L'+(cx+42)+' 146M'+cx+' 38L'+cx+' 150" stroke="#B88A1C" stroke-width="1.1" fill="none" opacity=".85"/>'+
-      '<path d="M'+(cx-50)+' 146Q'+cx+' 190 '+(cx+50)+' 146Z" fill="url(#bronze)" stroke="#6E5210" stroke-width="1.2"/>'+
-      '<ellipse cx="'+cx+'" cy="146" rx="50" ry="8" fill="url(#bronze)" stroke="#6E5210" stroke-width="1.2"/>'+
-      '<ellipse cx="'+cx+'" cy="146" rx="43" ry="5.6" style="fill:var(--card)" opacity=".55"/>'+
+      '<circle cx="'+cx+'" cy="68" r="3.6" fill="url(#mg-oR)" stroke="#6E520C" stroke-width=".8"/>'+
+      '<path d="M'+cx+' 70L'+(cx-43)+' 160M'+cx+' 70L'+(cx+43)+' 160" stroke="#9C7A16" stroke-width="2.4" stroke-dasharray="2.8 1.9" stroke-linecap="round" fill="none"/>'+
+      '<path d="M'+(cx-48)+' 160C'+(cx-38)+' 204 '+(cx+38)+' 204 '+(cx+48)+' 160Z" fill="url(#mg-prato)" stroke="#6E520C" stroke-width="1.2"/>'+
+      '<ellipse cx="'+cx+'" cy="160" rx="48" ry="9" fill="#F7E3A0" stroke="#8A6A12" stroke-width="1.2"/>'+
+      '<ellipse cx="'+cx+'" cy="160.6" rx="40" ry="6" fill="#A9831B" opacity=".5"/>'+
+      '<path d="M'+(cx-27)+' 177Q'+(cx-10)+' 186 '+(cx+7)+' 186" stroke="#FFF3C4" stroke-width="2" fill="none" opacity=".5" stroke-linecap="round"/>'+
       pilha(lista,cx)+'</g>';
   }
-  return '<svg class="bal" id="bal" viewBox="0 0 320 214" role="img" aria-label="Balança em equilíbrio: o dinheiro e os bens que você tem pesam o mesmo que as suas dívidas mais o que sobra e é seu">'+
-    '<defs><linearGradient id="bronze" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F0CF73"/><stop offset=".5" stop-color="#C99A1E"/><stop offset="1" stop-color="#7C5D10"/></linearGradient>'+
-    '<linearGradient id="coluna" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7C5D10"/><stop offset=".45" stop-color="#F0CF73"/><stop offset="1" stop-color="#8F6A10"/></linearGradient></defs>'+
-    '<ellipse cx="160" cy="205" rx="64" ry="7" fill="#0A0A0A" opacity=".25"/>'+
-    '<path d="M104 202Q106 190 130 188H190Q214 190 216 202Z" fill="url(#bronze)" stroke="#6E5210" stroke-width="1.2"/>'+
-    '<path d="M153 48H167L170 188H150Z" fill="url(#coluna)" stroke="#6E5210" stroke-width="1"/>'+
-    '<g class="beam"><rect x="46" y="34" width="228" height="8" rx="4" fill="url(#bronze)" stroke="#6E5210" stroke-width="1.2"/>'+
-    '<circle cx="52" cy="38" r="6" fill="url(#bronze)" stroke="#6E5210"/><circle cx="268" cy="38" r="6" fill="url(#bronze)" stroke="#6E5210"/>'+
-    prato("pA",52,esq)+prato("pB",268,dir)+'</g>'+
-    '<circle cx="160" cy="38" r="11" fill="url(#bronze)" stroke="#6E5210" stroke-width="1.4"/><circle cx="160" cy="38" r="4.5" fill="#0A0A0A"/>'+
-    '<path d="M160 27V16" stroke="#6E5210" stroke-width="3" stroke-linecap="round"/><circle cx="160" cy="13" r="4" fill="url(#bronze)" stroke="#6E5210"/>'+
-    '</svg>';
+  /* humor do Mordomo: a balança sempre fecha (o que tenho = o que devo + o que é meu); o rosto mostra a situação */
+  var atrasada=false; try{atrasada=!t.demo&&pagarNoMes(hojeISO().slice(0,7)).falta.some(function(x){return x.atrasada})}catch(e){}
+  var hum=t.pl<0?"preocupado":(t.ativo<=0||t.pl<t.ativo*.1||atrasada)?"atento":"feliz";
+  var BOC={feliz:"M-10 -1 Q0 8 10 -1",atento:"M-6 1 Q0 4 6 1",preocupado:"M-9 5 Q0 -2 9 5"}, ANG={feliz:0,atento:-5,preocupado:14}, DY={feliz:-1.5,atento:-3,preocupado:0};
+  function olhos(){
+    var s2='';
+    [-1,1].forEach(function(k){
+      s2+='<g transform="translate('+(k*10.5)+' -3)"><g class="md-olho"><path d="M-7.5 0 Q0 -6.6 7.5 0 Q0 6.6 -7.5 0 Z" fill="#F5EBCB"/><circle class="md-pup" r="3.3" fill="#0A0A0A"/><circle cx="1.3" cy="-1.7" r="1.1" fill="#fff"/></g></g>'+
+        '<g transform="translate('+(k*10.5)+' -11.7)"><path transform="translate(0 '+DY[hum]+') rotate('+(-k*ANG[hum])+')" d="M-6.9 0 Q0 -3 6.9 0" fill="none" stroke="#EAD27A" stroke-width="2.2" stroke-linecap="round"/></g>';
+    });
+    return s2;
+  }
+  return '<svg class="bal" id="bal" data-a="mordomo" data-h="'+hum+'" viewBox="0 0 320 256" role="img" aria-label="O Balancete, uma balança em equilíbrio: o dinheiro e os bens que você tem pesam o mesmo que as suas dívidas mais o que sobra e é seu">'+
+    '<ellipse cx="160" cy="248" rx="84" ry="7" fill="#0A0A0A" opacity=".25"/>'+
+    '<path d="M90 232H230L234 244H86Z" fill="url(#mg-oV)" stroke="#6E520C" stroke-width="1.2"/>'+
+    '<path d="M106 218H214L222 232H98Z" fill="url(#mg-oV)" stroke="#6E520C" stroke-width="1.2"/>'+
+    '<path d="M124 206H196L204 218H116Z" fill="url(#mg-oV)" stroke="#6E520C" stroke-width="1.2"/>'+
+    '<path d="M98 232H222M116 218H204" stroke="#FFF3C4" stroke-width="1" opacity=".55"/>'+
+    '<path d="M149 206L153 106H167L171 206Z" fill="url(#mg-oH)" stroke="#6E520C" stroke-width="1.2"/>'+
+    '<path d="M157 112L156 202M163 112L164 202" stroke="#7C5E0F" stroke-width="1" opacity=".55"/>'+
+    '<rect x="145" y="198" width="30" height="8" rx="2" fill="url(#mg-oV)" stroke="#6E520C" stroke-width="1.2"/>'+
+    '<rect x="146" y="98" width="28" height="9" rx="3" fill="url(#mg-oV)" stroke="#6E520C" stroke-width="1.2"/>'+
+    '<g transform="translate(160 116)"><path d="M-17 -9Q-6 -3 0 0Q-6 3 -17 9Q-20 0 -17 -9ZM17 -9Q6 -3 0 0Q6 3 17 9Q20 0 17 -9Z" fill="#111" stroke="#EAD27A" stroke-width="1.4" stroke-linejoin="round"/><rect x="-4" y="-4.5" width="8" height="9" rx="2.5" fill="url(#mg-oR)" stroke="#6E520C" stroke-width=".8"/></g>'+
+    '<g class="beam">'+
+      '<path d="M52 59.4Q160 53 268 59.4L268 64.6Q160 71 52 64.6Z" fill="url(#mg-oV)" stroke="#6E520C" stroke-width="1.2"/>'+
+      '<path d="M58 59.8Q160 55 262 59.8" stroke="#FFF3C4" stroke-width="1.6" fill="none" opacity=".7"/>'+
+      '<circle cx="52" cy="62" r="7.5" fill="url(#mg-oR)" stroke="#6E520C" stroke-width="1.2"/><circle cx="268" cy="62" r="7.5" fill="url(#mg-oR)" stroke="#6E520C" stroke-width="1.2"/>'+
+      prato("pA",52,esq)+prato("pB",268,dir)+'</g>'+
+    '<g class="md-cab"><g transform="translate(160 62)">'+
+      '<circle r="37" fill="url(#mg-oV)" stroke="#6E520C" stroke-width="1.2"/><circle r="35" fill="none" stroke="#FFF3C4" stroke-width="1.2" opacity=".55"/>'+
+      '<circle r="30.5" fill="#6E520C"/><circle r="29" fill="url(#mg-esm)"/><circle r="25.5" fill="none" stroke="#C9A227" stroke-width=".8" opacity=".55"/>'+
+      '<clipPath id="mdClip"><circle r="29"/></clipPath><g clip-path="url(#mdClip)"><g transform="rotate(25)"><rect class="md-ref" x="-110" y="-60" width="16" height="120" fill="#fff" opacity=".13"/></g></g>'+
+      olhos()+'<path transform="translate(0 13)" d="'+BOC[hum]+'" fill="none" stroke="#EAD27A" stroke-width="2.3" stroke-linecap="round"/>'+
+    '</g></g></svg>';
 }
 function legendaBalanca(t){
   var c=S.config.contador, B=Math.max(0,t.bens!=null?t.bens:bensTotal());
@@ -1361,6 +1413,71 @@ function animarInicio(){
     if(b&&!calmo()){b.classList.remove("wob");void b.getBoundingClientRect();b.classList.add("wob");setTimeout(function(){b.classList.remove("wob")},2500)}
   }
 }
+/* ---------- mascotes secundários (D54): só em momentos especiais ---------- */
+function olhinhos(cx,cy,e,r,cor,brow){
+  var h='';
+  [-1,1].forEach(function(k){
+    h+='<g transform="translate('+(cx+k*e)+' '+cy+')"><path d="M'+(-r*1.25)+' 0 Q0 '+(-r*1.1)+' '+(r*1.25)+' 0 Q0 '+(r*1.1)+' '+(-r*1.25)+' 0 Z" fill="#F5EBCB"/><circle r="'+(r*.55)+'" fill="#0A0A0A"/></g>'+
+      '<path transform="translate('+(cx+k*e)+' '+(cy-r*1.5)+') rotate('+(brow*-k)+')" d="M'+(-r*1.1)+' 0 Q0 '+(-r*.45)+' '+(r*1.1)+' 0" fill="none" stroke="'+cor+'" stroke-width="1.6" stroke-linecap="round"/>';
+  });
+  return h;
+}
+function svgPeso(ferro){
+  return '<svg viewBox="0 0 60 66" aria-hidden="true">'+(ferro?'<defs><linearGradient id="mgFe" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1A1A1A"/><stop offset=".35" stop-color="#5C5C5C"/><stop offset=".6" stop-color="#2E2E2E"/><stop offset="1" stop-color="#0F0F0F"/></linearGradient></defs>':'')+
+   '<path d="M22 12a8 8 0 1 1 16 0" fill="none" stroke="'+(ferro?"#3A3A3A":"#9C7A16")+'" stroke-width="4.5" stroke-linecap="round"/>'+
+   '<path d="M14 16H46Q50 16 50.5 20L55 58Q55.5 63 50 63H10Q4.5 63 5 58L9.5 20Q10 16 14 16Z" fill="url(#'+(ferro?"mgFe":"mg-oH")+')" stroke="'+(ferro?"#000":"#6E520C")+'" stroke-width="1.2"/>'+
+   '<path d="M12 22H48" stroke="'+(ferro?"#777":"#FFF3C4")+'" stroke-width="1" opacity=".6"/>'+olhinhos(30,36,8,3.6,ferro?"#BDBDBD":"#6E520C",ferro?14:0)+
+   '<path transform="translate(30 46)" d="'+(ferro?"M-6 3Q0 -2 6 3":"M-6 -1Q0 5 6 -1")+'" fill="none" stroke="'+(ferro?"#D0D0D0":"#4A3708")+'" stroke-width="1.8" stroke-linecap="round"/>'+
+   '<text x="30" y="59" text-anchor="middle" font-family="Times New Roman,serif" font-size="8" font-weight="700" fill="'+(ferro?"#9A9A9A":"#4A3708")+'">'+(ferro?"10 kg":"1 g")+'</text></svg>';
+}
+function svgMoedinha(){
+  return '<svg viewBox="0 0 60 66" aria-hidden="true"><g transform="translate(0 3)"><circle cx="30" cy="30" r="27" fill="url(#mg-oV)"/><circle cx="30" cy="30" r="25.5" fill="none" stroke="#7C5E0F" stroke-width="3" stroke-dasharray="1 1.6"/>'+
+   '<circle cx="30" cy="30" r="22" fill="url(#mg-oR)" stroke="#6E520C" stroke-width="1"/><circle cx="30" cy="30" r="18.5" fill="none" stroke="#FFF3C4" stroke-width="1" opacity=".55"/>'+
+   olhinhos(30,28,7,3.4,"#6E520C",0)+'<path transform="translate(30 37)" d="M-5 -1Q0 4 5 -1" fill="none" stroke="#4A3708" stroke-width="1.8" stroke-linecap="round"/></g></svg>';
+}
+function svgLacre(){
+  return '<svg viewBox="0 0 100 100" aria-hidden="true"><defs><radialGradient id="mgCera" cx=".38" cy=".32" r=".8"><stop offset="0" stop-color="#C2414F"/><stop offset=".55" stop-color="#8B1E2D"/><stop offset="1" stop-color="#4E0E17"/></radialGradient></defs>'+
+   '<path d="M50 4C62 3 68 10 78 12C88 15 92 26 95 36C98 47 92 55 94 65C96 77 86 86 76 90C66 94 60 97 50 96C39 97 31 92 22 89C11 85 6 75 6 64C5 53 2 45 6 35C10 24 17 15 27 11C35 7 41 4 50 4Z" fill="url(#mgCera)"/>'+
+   '<circle cx="50" cy="50" r="33" fill="none" stroke="#5E1420" stroke-width="3"/><circle cx="50" cy="50" r="29" fill="none" stroke="#D9707C" stroke-width="1" opacity=".5"/>'+
+   '<text x="50" y="57" text-anchor="middle" font-family="Times New Roman,serif" font-size="18" font-weight="700" letter-spacing="2" fill="#F2C9CE">PAGO</text>'+
+   '<path d="M30 38H70M40 38L36 46M60 38L64 46" stroke="#F2C9CE" stroke-width="1.6" stroke-linecap="round" opacity=".8"/></svg>';
+}
+var MOMENTOS={
+  peso:{svg:function(){return svgPeso(false)},anim:"m-desce",txt:"Guardado. Muito bem."},
+  moeda:{svg:svgMoedinha,anim:"m-cai",txt:"Entrou dinheiro!"},
+  selo:{svg:svgLacre,anim:"m-sela",txt:"Conta paga. Uma a menos."}
+};
+function momento(tipo){
+  var m=MOMENTOS[tipo]; if(!m||calmo())return false;
+  var v=document.querySelector(".momento"); if(v)v.remove();
+  var el=document.createElement("div"); el.className="momento "+m.anim; el.setAttribute("aria-hidden","true");
+  el.innerHTML=m.svg()+'<b>'+esc(m.txt)+'</b>'; document.body.appendChild(el);
+  setTimeout(function(){el.remove()},2500);
+  try{if(navigator.vibrate)navigator.vibrate(18)}catch(e){}
+  return true;
+}
+/* Pesão: no Início, uma vez por dia, quando há conta atrasada */
+function checaPesao(){
+  var v=$("#pesao"); if(v)v.remove();
+  if(VIEW!=="inicio")return;
+  var hoje=hojeISO(); if(lsGet(KEY+":pesao:"+hoje))return;
+  var atr=pagarNoMes(hoje.slice(0,7)).falta.filter(function(x){return x.atrasada});
+  if(!atr.length)return;
+  var el=document.createElement("div"); el.className="pesao"; el.id="pesao"; el.setAttribute("role","status");
+  el.innerHTML=svgPeso(true)+'<div><p>'+(atr.length===1?'Há uma conta atrasada.':'Há '+atr.length+' contas atrasadas.')+' Vamos resolver juntos?</p><div class="acoes"><button class="btn" data-a="pesaoIr">Resolver agora</button><button class="btn sec" data-a="pesaoFecha">Agora não</button></div></div>';
+  document.body.appendChild(el);
+}
+/* o olhar do Mordomo acompanha o dedo */
+var OLHAR=null;
+addEventListener("pointermove",function(e){
+  if(OLHAR||calmo())return;
+  OLHAR=requestAnimationFrame(function(){
+    OLHAR=null; var b=$("#bal"); if(!b)return;
+    var r=b.getBoundingClientRect(); if(!r.width)return;
+    var x=e.clientX-(r.left+r.width/2), y=e.clientY-(r.top+r.height*.24), d=Math.hypot(x,y)||1, f=Math.min(1,d/220);
+    b.querySelectorAll(".md-pup").forEach(function(p){p.setAttribute("cx",(x/d*f*2.6).toFixed(2));p.setAttribute("cy",(y/d*f*2.2).toFixed(2))});
+  });
+},{passive:true});
 function carimbo(txt){
   var c=$("#carimbo"); if(calmo())return;
   c.textContent=txt; c.classList.remove("on"); void c.offsetWidth; c.classList.add("on");
@@ -2415,7 +2532,9 @@ function salvarFolha(){
   salvar(); ULTIMO=l.id; WOB=true;
   var fim=function(){var u=ULTIMO; fecharFolha(); toast(i>=0?"Alterado!":"Pronto, anotado!"); ULTIMO=u; desenhar()};
   if(calmo()){fim();return}
-  carimbo(i>=0?"ALTERADO":"ANOTADO"); moedaFio();
+  var pagou=(l.tipo==="transferencia"&&dj&&dj.tipo==="passivo")||(l.tipo==="saida"&&!!l.fixaId);
+  if(i<0&&l.tipo==="entrada")momento("moeda"); else if(i<0&&pagou)momento("selo"); else carimbo(i>=0?"ALTERADO":"ANOTADO");
+  moedaFio();
   setTimeout(fim,800);
 }
 
@@ -2924,6 +3043,7 @@ function salvarMov(){
     guardarNaCaixa(MV.id,v2,MV.id,"livre",MV.conta);
   }
   salvar(); fecharModal(); desenhar(); toast(MV.modo==="guardar"?"Guardado! Continua seu, só saiu do que você pode usar":"Voltou para o que você pode usar");
+  if(MV.modo==="guardar")momento("peso");
 }
 function modalTirarRapido(){
   var cx=S.caixas.filter(function(x){return saldoCaixa(x.id)>0});
@@ -3066,7 +3186,7 @@ function iniciarOnb(){
 function desenharOnb(){
   var h="";
   if(O.passo===1){
-    h='<div class="fino"><div style="width:33%"></div></div><div style="margin:.5rem 0 1rem">'+balanca({ativo:100,passivo:40,pl:60,bens:0})+'</div><h1>Bem-vindo ao Balancete</h1>'+
+    h='<div class="fino"><div style="width:33%"></div></div><div style="margin:.5rem 0 1rem">'+balanca({ativo:100,passivo:40,pl:60,bens:0,demo:true})+'</div><h1>Bem-vindo ao Balancete</h1>'+
       '<p class="sub" style="font-size:1.05rem;margin-top:.5rem">É um caderno de contas que fica no seu celular. Você anota o que gasta e o que recebe, e ela mostra quanto <b>realmente é seu</b>.</p>'+
       '<div class="card" style="margin-top:1rem"><p>🔒 Seus dados ficam <b>só neste aparelho</b>. Não precisa de cadastro nem de senha.</p></div>'+
       '<button class="btn" data-a="oProx">Vamos começar</button>';
@@ -3186,6 +3306,14 @@ var ACOES={
   },
   acToggle:function(){if(AC_ABERTO)fecharAcerto(); else abrirAcerto()},
   acFechar:fecharAcerto,
+  mordomo:function(){
+    var b=$("#bal"); if(!b)return;
+    if(!calmo()){b.classList.remove("rev"); void b.getBoundingClientRect(); b.classList.add("rev"); setTimeout(function(){b.classList.remove("rev")},1500)}
+    var h=b.dataset.h, t=totais();
+    toast(h==="preocupado"?"Você deve mais do que tem. Vamos virar esse jogo juntos.":h==="atento"?"Está equilibrado, mas apertado. Atenção aos gastos.":"Suas contas estão em ordem. É seu de verdade: "+brl(t.pl)+".");
+  },
+  pesaoIr:function(){lsSet(KEY+":pesao:"+hojeISO(),"1"); var p=$("#pesao"); if(p)p.remove(); ir("planejar"); abrirAcerto()},
+  pesaoFecha:function(){lsSet(KEY+":pesao:"+hojeISO(),"1"); var p=$("#pesao"); if(p)p.remove()},
   conferir:function(d){modalConferir(d.id)},
   cfOk:function(){var c=CF&&conta(CF.id); if(!c)return; c.conferido=hojeISO(); salvar(); fecharModal(); desenhar(); toast("Conferido: tudo certo")},
   cfAnotar:function(){

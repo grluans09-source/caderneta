@@ -71,4 +71,4 @@ function brasao(o){
   if(o.vivo)s+='<clipPath id="'+p+'clip"><circle cx="120" cy="120" r="113"/></clipPath><g clip-path="url(#'+p+'clip)"><g transform="translate(120 120) rotate(25)"><rect class="br-reflexo" x="-250" y="-140" width="34" height="280" fill="#fff" opacity=".15"/></g></g>';
   return s+'</g></svg>';
 }
-module.exports={brasao:brasao};
+module.exports={brasao:brasao,defs:defs};
