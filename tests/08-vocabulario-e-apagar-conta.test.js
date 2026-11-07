@@ -26,6 +26,8 @@ function click(sel){let el=typeof sel==="string"?$(sel):sel;
   /* a tela Dinheiro tem abas e Metas é uma tela própria: se o botão não está na tela, vai até a aba/tela dele, como uma pessoa faria */
   if(!el&&typeof sel==="string"){for(const alvo of ['[data-a="dinAba"][data-v="bens"]','[data-a="dinAba"][data-v="pessoas"]','[data-a="dinAba"][data-v="dividas"]','[data-a="dinAba"][data-v="contas"]','[data-a="ir"][data-v="metas"]']){const b=$(alvo);if(b){b.click();el=$(sel);if(el)break}}}
   if(!el)throw new Error("sem elemento "+sel);el.click()}
+function abreFolha(t){abreFolha();click('#fabMenu [data-a="novoT"][data-t="'+(t||"saida")+'"]')}
+function abreFolha(t){click('[data-a="novo"]');click('#fabMenu [data-a="novoT"][data-t="'+(t||"saida")+'"]')}
 function digita(sel,txt){const el=$(sel);el.value=txt;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
 const S=()=>T.S();
 d.documentElement.classList.add("calmo");
@@ -41,7 +43,7 @@ function nav(v){
 nav("simulador");digita("#sValor","100000");click('[data-a="sConta"][data-id="c3"]');colhe("simulador com valor");
 click('[data-a="sTipo"][data-b="1"]');colhe("simulador bem");
 nav("inicio");click('[data-a="como"]');colhe("como ler");click('[data-a="mFechar"]');
-click('[data-a="novo"]');["saida","entrada","transferencia","bem"].forEach(t=>{click('[data-a="fTipo"][data-t="'+t+'"]');colhe("anotar "+t)});
+["saida","entrada","transferencia","bem"].forEach(t=>{abreFolha(t);colhe("anotar "+t);click('[data-a="fFechar"]')});abreFolha();
 click('[data-a="fTipo"][data-t="transferencia"]');click('[data-a="fConta"][data-id="c2"]');click('[data-a="fDestino"][data-id="c3"]');colhe("transferir para dívida");
 click('[data-a="fFechar"]');
 nav("contas");
@@ -60,7 +62,7 @@ const proibidas=[/gaveta/i,/Mudei de lugar/,/Mudança de lugar/,/projeção/i,/s
 let achou=[];
 textos.forEach(([rot,t])=>proibidas.forEach(p=>{if(p.test(t))achou.push(rot+" -> "+p)}));
 eq("nenhuma tela usa palavras de jargão (gaveta, mudei de lugar, projeção, saldo devedor...)",achou,[]);
-eq("o botão de transferir tem nome comum",/Transferi entre contas/.test(textos.find(x=>x[0]==="anotar saida")[1]),true);
+eq("o botão de transferir tem nome comum (no menu das bolinhas)",/Transferi entre contas/.test($("#fabMenu").textContent),true);
 eq("Dinheiro fala em 'conta'",/Cada conta é um lugar/.test(textos.find(x=>x[0]==="contas")[1])&&/Nova conta/.test(textos.find(x=>x[0]==="contas")[1]),true);
 
 // ---- apagar uma conta com anotações e contas fixas ----

@@ -4,7 +4,7 @@
 App de celular (instalável, funciona sem internet), em português, pensado para qualquer pessoa: do idoso ao jovem e ao adulto na correria.
 
 - **App no ar:** https://grluans09-source.github.io/caderneta/
-- **Versão atual:** 1.8.0-beta.1 (beta para testadores) (veja o [CHANGELOG](CHANGELOG.md))
+- **Versão atual:** 1.10.0-beta.1 (beta para testadores) (veja o [CHANGELOG](CHANGELOG.md))
 - **Seus dados ficam só no celular de cada pessoa.** Não existe servidor, conta nem banco de dados.
 
 > Em uma frase: a pessoa anota o que gasta e recebe, e o app mostra **quanto é dela de verdade**, para onde o dinheiro está indo e o que vem pela frente. A partida dobrada fica escondida no "motor"; a tela fala como a gente fala.
@@ -14,7 +14,7 @@ App de celular (instalável, funciona sem internet), em português, pensado para
 | Parte | Para que serve |
 |---|---|
 | **Início** | Balança que mostra "o que eu tenho = o que eu devo + o que é meu", resumo do mês, uma linha "Falta pagar" (leva ao Planejar), avisos urgentes, caixinhas e metas (se existirem) e as 3 últimas anotações |
-| **Anotar** | Botão **+** do meio e, ao lado dele, as bolinhas de **anotação rápida**: **Gastei** (bordô) e **Recebi** (azul), em todas as telas. A folha tem Gastei, Recebi, Transferi entre contas e Comprei um bem, em duas colunas (de onde saiu / para onde foi) |
+| **Anotar** | O botão **+** do meio **gera 4 bolinhas com animação** (Gastei, Recebi, Transferi entre contas, Comprei um bem): um toque gera, outro escolhe. A folha tem listas curtas (a conta Dinheiro + 3 favoritas, 5 categorias) com busca. A conta **Dinheiro** é a carteira (não se apaga) e conta cédulas |
 | **Dinheiro** | Quatro abas: Contas (com o guardado e o "para usar"), Dívidas (cartões e empréstimos), Bens e Pessoas (emprestei / devo) |
 | **Planejar** | Ferramentas no topo (Metas do mês, Caixinhas, Contas fixas, Simulador), "Falta pagar" do mês com setas e a agenda do que vence (com cores por tipo) |
 | **Mais** | Anotações (buscar e ordenar por data, valor ou nome), Relatórios (para onde foi, de onde veio, evolução) e Ajustes (letra, cores, movimento, categorias, cópia dos dados, ajuda) |
@@ -39,7 +39,7 @@ caderneta/
 │   ├── index.html    O app inteiro: HTML + CSS + JavaScript, sem dependências
 │   ├── sw.js         Faz o app abrir sem internet (cache)
 │   ├── manifest.webmanifest, icon-*.png, icon.svg   Instalação na tela inicial
-├── tests/          Testes automáticos: 490 verificações que simulam uma pessoa usando o app
+├── tests/          Testes automáticos: 548 verificações que simulam uma pessoa usando o app
 ├── tools/          Ferramentas: servidor local e gerador de ícones
 ├── docs/           Documentação (leia a partir de docs/README.md)
 ├── .github/workflows/publicar.yml   Testa e publica sozinho a cada envio para o GitHub

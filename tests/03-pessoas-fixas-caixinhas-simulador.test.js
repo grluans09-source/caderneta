@@ -21,6 +21,8 @@ function click(sel){let el=typeof sel==="string"?$(sel):sel;
   /* a tela Dinheiro tem abas e Metas é uma tela própria: se o botão não está na tela, vai até a aba/tela dele, como uma pessoa faria */
   if(!el&&typeof sel==="string"){for(const alvo of ['[data-a="dinAba"][data-v="bens"]','[data-a="dinAba"][data-v="pessoas"]','[data-a="dinAba"][data-v="dividas"]','[data-a="dinAba"][data-v="contas"]','[data-a="ir"][data-v="metas"]']){const b=$(alvo);if(b){b.click();el=$(sel);if(el)break}}}
   if(!el)throw new Error("sem elemento "+sel);el.click()}
+function abreFolha(t){abreFolha();click('#fabMenu [data-a="novoT"][data-t="'+(t||"saida")+'"]')}
+function abreFolha(t){click('[data-a="novo"]');click('#fabMenu [data-a="novoT"][data-t="'+(t||"saida")+'"]')}
 function digita(sel,txt){const el=$(sel);el.value=txt;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
 const S=()=>T.S();
 d.documentElement.classList.add("calmo");
@@ -35,12 +37,12 @@ function invariante(n){
 }
 
 // ---- menu e R$ ----
-eq("5 botões de navegação no menu (mais as 2 bolinhas de anotação rápida)",[d.querySelectorAll("nav button:not(.bolinha)").length,d.querySelectorAll("nav .bolinha").length],[5,2]);
+eq("5 botões de navegação no menu, e o + abre as 4 bolinhas de tipo",[d.querySelectorAll("nav button").length,d.querySelectorAll("#fabMenu .fb").length],[5,4]);
 eq("menu: início, dinheiro, planejar, mais",[...d.querySelectorAll("nav button[data-v]")].map(b=>b.dataset.v),["inicio","contas","planejar","mais"]);
 nav("caixinhas");eq("caixinhas marca Planejar",$("nav [aria-current]").dataset.v,"planejar");
 nav("relatorios");eq("relatórios marca Mais",$("nav [aria-current]").dataset.v,"mais");
 nav("inicio");
-click('[data-a="novo"]');digita("#fValor","4500");eq("campo de valor mostra R$",$("#fValor").value,"R$ 45,00");
+abreFolha();digita("#fValor","4500");eq("campo de valor mostra R$",$("#fValor").value,"R$ 45,00");
 eq("Salvar não é fixo (sem .acoes sticky)",w.getComputedStyle($(".acoes")).position!=="sticky"&&w.getComputedStyle($(".acoes")).position!=="fixed",true);
 eq("ordem: Salvar vem depois da prévia",($("#fPrev").compareDocumentPosition($(".acoes"))&4)>0,true);
 click('[data-a="fFechar"]');
@@ -153,7 +155,7 @@ eq("não deixa tirar mais do que tem",T.saldoCaixa(rv.id),37000);
 invariante("após mover");
 // gasto pago com a caixinha
 const livreB=T.livreAgora(), plD=T.totais().pl;
-click('[data-a="novo"]');digita("#fValor","7000");click('[data-a="fCaixa"]'.replace('"]',`"][data-id="${rv.id}"]`));
+abreFolha();digita("#fValor","7000");click('[data-a="fCaixa"]'.replace('"]',`"][data-id="${rv.id}"]`));
 click('[data-a="fSalvar"]');
 const lc=S().lancamentos.find(l=>l.caixaId===rv.id);
 eq("gasto ligado à caixinha",!!lc,true);

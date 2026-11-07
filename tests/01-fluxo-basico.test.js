@@ -9,6 +9,8 @@ function click(sel){let el=typeof sel==="string"?$(sel):sel;
   /* a tela Dinheiro tem abas e Metas é uma tela própria: se o botão não está na tela, vai até a aba/tela dele, como uma pessoa faria */
   if(!el&&typeof sel==="string"){for(const alvo of ['[data-a="dinAba"][data-v="bens"]','[data-a="dinAba"][data-v="pessoas"]','[data-a="dinAba"][data-v="dividas"]','[data-a="dinAba"][data-v="contas"]','[data-a="ir"][data-v="metas"]']){const b=$(alvo);if(b){b.click();el=$(sel);if(el)break}}}
   if(!el)throw new Error("sem elemento "+sel);el.click()}
+function abreFolha(t){abreFolha();click('#fabMenu [data-a="novoT"][data-t="'+(t||"saida")+'"]')}
+function abreFolha(t){click('[data-a="novo"]');click('#fabMenu [data-a="novoT"][data-t="'+(t||"saida")+'"]')}
 function digita(sel,txt){const el=$(sel);el.value=txt;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
 function muda(sel,txt){const el=$(sel);el.value=txt;el.dispatchEvent(new w.Event("change",{bubbles:true}))}
 const S=()=>T.S();
@@ -36,7 +38,7 @@ click('[data-a="oProx"]');
 click('[data-a="oCartao"][data-s="1"]');
 digita("#oNome","Nubank");$("#oFecha").value="25";$("#oVence").value="5";digita("#oLimite","300000");
 click('[data-a="oFim"]');
-eq("gavetas criadas",S().contas.map(c=>c.nome),["Carteira","Conta no banco","Nubank"]);
+eq("gavetas criadas",S().contas.map(c=>c.nome),["Dinheiro","Conta no banco","Nubank"]);
 eq("onboarding fechou",$("#onb").classList.contains("on"),false);
 eq("categorias padrão",S().categorias.length,10);
 const [cart,banco,nub]=S().contas;
@@ -44,7 +46,7 @@ eq("PL inicial",T.totais().pl,510000);
 eq("tela início mostra PL",/5\.100/.test($("#tela").textContent),true);
 
 // gasto à vista
-click('[data-a="novo"]');
+abreFolha();
 eq("folha abriu",$("#folha").classList.contains("on"),true);
 digita("#fValor","2500");
 click('[data-a="fSalvar"]');
@@ -53,7 +55,7 @@ eq("saldo carteira",T.saldoConta(cart),10000-2500);
 eq("folha fechou",$("#folha").classList.contains("on"),false);
 
 // compra parcelada no cartão: 300,00 em 3x, 20/set -> 05/out, 05/nov, 05/dez
-click('[data-a="novo"]');
+abreFolha();
 digita("#fValor","30000");
 click(`[data-a="fConta"][data-id="${nub.id}"]`);
 click('[data-a="fN"][data-n="1"]');click('[data-a="fN"][data-n="1"]');
@@ -66,7 +68,7 @@ eq("dívida no cartão",T.saldoConta(nub),30000);
 eq("PL após compra",T.totais().pl,510000-2500-30000);
 
 // compra à vista no cartão também vira conta a pagar
-click('[data-a="novo"]');digita("#fValor","5000");click(`[data-a="fConta"][data-id="${nub.id}"]`);muda("#fData","2026-09-20");click('[data-a="fSalvar"]');
+abreFolha();digita("#fValor","5000");click(`[data-a="fConta"][data-id="${nub.id}"]`);muda("#fData","2026-09-20");click('[data-a="fSalvar"]');
 let ap=T.aPagar();
 eq("grupos a pagar",ap.map(g=>[g.data,g.valor]),[["2026-10-05",15000],["2026-11-05",10000],["2026-12-05",10000]]);
 
@@ -74,7 +76,7 @@ eq("grupos a pagar",ap.map(g=>[g.data,g.valor]),[["2026-10-05",15000],["2026-11-
 const antesSai=T.resumoMes("2026-10").sai;
 click('[data-a="ir"][data-v="contas"]');
 click('[data-a="pagar"]');
-eq("pagamento pré-preenchido",[$("#fValor").value, d.querySelector(".seg3 .t").getAttribute("aria-pressed")],["R$ 150,00","true"]);
+eq("pagamento pré-preenchido",[$("#fValor").value, $("#folhaCorpo .capa h1").textContent],["R$ 150,00","Transferi entre contas"]);
 muda("#fData","2026-10-04");
 click('[data-a="fSalvar"]');
 ap=T.aPagar();
@@ -84,12 +86,12 @@ eq("dívida caiu",T.saldoConta(nub),35000-15000);
 eq("PL não mudou ao pagar",T.totais().pl,510000-2500-35000);
 
 // pagamento parcial
-click('[data-a="novo"]');click('[data-a="fTipo"][data-t="transferencia"]');
+abreFolha();click('[data-a="fTipo"][data-t="transferencia"]');
 click(`[data-a="fDestino"][data-id="${nub.id}"]`);digita("#fValor","4000");muda("#fData","2026-10-10");click('[data-a="fSalvar"]');
 eq("parcial",T.aPagar().map(g=>[g.data,g.valor]),[["2026-11-05",6000],["2026-12-05",10000]]);
 
 // identidade contábil
-click('[data-a="novo"]');click('[data-a="fTipo"][data-t="entrada"]');digita("#fValor","700000");click('[data-a="fSalvar"]');
+abreFolha();click('[data-a="fTipo"][data-t="entrada"]');digita("#fValor","700000");click('[data-a="fSalvar"]');
 let ent=0,sai=0;S().lancamentos.forEach(l=>{if(l.tipo==="entrada")ent+=l.valor;if(l.tipo==="saida")sai+=l.valor});
 eq("PL = inicial + receitas - despesas",T.totais().pl,510000+ent-sai);
 eq("débito=crédito",S().lancamentos.every(l=>{const p=T.partidas(l);return p.length===2&&p[0].lado==="D"&&p[1].lado==="C"}),true);
@@ -97,7 +99,7 @@ eq("débito=crédito",S().lancamentos.every(l=>{const p=T.partidas(l);return p.l
 // editar e apagar
 click('[data-a="ir"][data-v="inicio"]');
 click('[data-a="editar"]');
-eq("modo edição",/Editar anotação/.test($("#folhaCorpo").textContent),true);
+eq("modo edição",/Editar: /.test($("#folhaCorpo .capa h1").textContent),true);
 digita("#fValor","1000");click('[data-a="fSalvar"]');
 eq("editou sem duplicar",S().lancamentos.length,6);
 click('[data-a="editar"]');click('[data-a="fApagar"]');click('[data-a="mOk"]');
@@ -105,16 +107,16 @@ eq("apagou",S().lancamentos.length,5);
 
 // gaveta
 click('[data-a="ir"][data-v="contas"]');
-click(`[data-a="gaveta"][data-id="${cart.id}"]`);
+click(`[data-a="gaveta"][data-id="${S().contas[2].id}"]`);
 eq("tipo travado em uso",$("#gTipos button").disabled,true);
-digita("#gNome","Conta no banco");click('[data-a="gSalvar"]');
-eq("nome repetido barrado",S().contas[0].nome,"Carteira");
+digita("#gNome","Dinheiro");click('[data-a="gSalvar"]');
+eq("nome repetido barrado",S().contas[2].nome,"Nubank");
 click('[data-a="mFechar"]');
 click('[data-a="gaveta"][data-id=""]');digita("#gNome","Poupança 2");click('[data-a="gSalvar"]');
 eq("nova gaveta",S().contas.length,4);
 
 // categoria nova pela folha
-click('[data-a="novo"]');click('[data-a="categoria"][data-tipo="despesa"]');digita("#kNome","Pets");click('[data-a="kSalvar"]');
+abreFolha();click('[data-a="categoria"][data-tipo="despesa"]');digita("#kNome","Pets");click('[data-a="kSalvar"]');
 const pets=S().categorias.find(c=>c.nome==="Pets");
 eq("categoria nova selecionada",(d.querySelector('.opt[aria-pressed="true"][data-a="fCat"]')||{dataset:{}}).dataset.id,pets.id);
 click('[data-a="fFechar"]');

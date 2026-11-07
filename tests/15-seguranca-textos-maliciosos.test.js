@@ -26,6 +26,7 @@ function click(sel){let el=typeof sel==="string"?$(sel):sel;
   /* a tela Dinheiro tem abas e Metas é uma tela própria: se o botão não está na tela, vai até a aba/tela dele, como uma pessoa faria */
   if(!el&&typeof sel==="string"){for(const alvo of ['[data-a="dinAba"][data-v="bens"]','[data-a="dinAba"][data-v="pessoas"]','[data-a="dinAba"][data-v="dividas"]','[data-a="dinAba"][data-v="contas"]','[data-a="ir"][data-v="metas"]']){const b=$(alvo);if(b){b.click();el=$(sel);if(el)break}}}
   if(!el)throw new Error("sem elemento "+sel);el.click()}
+function abreFolha(t){click('[data-a="novo"]');click('#fabMenu [data-a="novoT"][data-t="'+(t||"saida")+'"]')}
 d.documentElement.classList.add("calmo");
 /* só as áreas onde texto de usuário aparece (o <script> legítimo do próprio app fica fora) */
 const PERIGOS=["#tela","#folha","#modal","#onb","#toast"].map(c=>["img","script","iframe","object","embed","[onerror]","[onload]","[onclick]","#injetado"].map(p=>c+" "+p).join(",")).join(",");
@@ -59,7 +60,7 @@ nav("caixinhas");click('[data-a="caixa"][data-id="x1"]');varre("caixinha");click
 click('[data-a="cxMov"][data-id="x1"][data-m="tirar"]');varre("tirar da caixinha");click('[data-a="mFechar"]');
 nav("caixinhas");click('[data-a="tirarCx"]');varre("usar dinheiro guardado");click('[data-a="mFechar"]');
 // Anotar: todos os tipos
-click('[data-a="novo"]');["saida","entrada","transferencia","bem"].forEach(t=>{click('[data-a="fTipo"][data-t="'+t+'"]');varre("anotar "+t)});
+["saida","entrada","transferencia","bem"].forEach(t=>{abreFolha(t);varre("anotar "+t);click('[data-a="fFechar"]')});abreFolha();
 click('[data-a="fFechar"]');
 // editar anotações com texto malicioso
 nav("inicio");[...d.querySelectorAll('[data-a="editar"]')].slice(0,3).forEach(b=>{click(b);varre("editar anotação");click('[data-a="fFechar"]')});

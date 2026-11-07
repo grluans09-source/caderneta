@@ -127,15 +127,6 @@ nav .fab{align-items:center;opacity:1}
 nav .fab span.b{display:grid;place-items:center;width:3.6rem;height:3.6rem;border-radius:50%;background:var(--latao);color:#111B34;margin-top:-1.5rem;border:3px solid var(--capa);box-shadow:0 4px 12px rgba(0,0,0,.35);font-size:2rem;line-height:1;font-weight:400;transition:transform .15s}
 nav .fab:active span.b{transform:scale(.92)}
 nav .in{position:relative}
-/* anotação rápida: duas bolinhas sobre o botão Anotar (vermelha = gastei, azul = recebi) */
-nav .bolinha{position:absolute;top:-2.7rem;display:grid;place-items:center;width:3.3rem;height:3.3rem;min-height:0;padding:0;border-radius:50%;border:3px solid var(--capa);opacity:1;color:#fff;box-shadow:0 4px 10px rgba(0,0,0,.35);z-index:2}
-nav .bolinha span{font-size:.64rem;font-weight:800;letter-spacing:.01em;line-height:1}
-nav .b-gasto{left:calc(50% - 5.1rem);background:var(--gasto-bg)}
-nav .b-ganho{left:calc(50% + 1.8rem);background:var(--ganho-bg)}
-html[data-tam="gg"] nav .bolinha{width:3rem;height:3rem;top:-2.4rem}
-html[data-tam="gg"] nav .bolinha span{font-size:.56rem}
-nav .bolinha:active{transform:scale(.92)}
-nav .bolinha:focus-visible{outline:3px solid var(--latao);outline-offset:2px}
 nav .fab em{font-style:normal;font-weight:700;color:var(--capa-ink)}
 
 /* folha (anotar) */
@@ -181,6 +172,53 @@ nav .fab em{font-style:normal;font-weight:700;color:var(--capa-ink)}
 .legenda-ag .k-divida:before{background:var(--out)}
 .legenda-ag .k-fixa:before{background:var(--tr)}
 .legenda-ag .k-receber:before{background:var(--in)}
+/* Anotar em dois toques: o botão + abre 4 bolinhas, uma por tipo de anotação */
+.fabmenu{--k:1;position:fixed;inset:0;z-index:19;pointer-events:none}
+html[data-tam="g"] .fabmenu{--k:.8}
+html[data-tam="gg"] .fabmenu{--k:.6}
+html[data-tam="gg"] .fb{width:5rem;margin-left:-2.5rem}
+html[data-tam="gg"] .fbc{width:2.9rem;height:2.9rem}
+.fabmenu.on{pointer-events:auto}
+.fabfundo{position:absolute;inset:0;background:rgba(7,11,24,.6);opacity:0;transition:opacity .25s}
+.fabmenu.on .fabfundo{opacity:1}
+.fabarco{position:absolute;left:50%;bottom:calc(5rem + env(safe-area-inset-bottom));width:0;height:0}
+.fb{position:absolute;left:0;bottom:0;width:6rem;margin-left:-3rem;display:flex;flex-direction:column;align-items:center;gap:.3rem;padding:0;background:none;border:0;color:#fff;transform:translate(0,0) scale(.2);opacity:0;pointer-events:none;transition:transform .45s cubic-bezier(.3,1.5,.5,1) var(--d),opacity .2s var(--d)}
+.fabmenu.on .fb{transform:translate(calc(var(--x) * var(--k)),calc(var(--y) * -1)) scale(1);opacity:1;pointer-events:auto}
+.fbc{display:grid;place-items:center;width:3.5rem;height:3.5rem;border-radius:50%;border:3px solid #fff;font-size:1.7rem;font-weight:700;line-height:1;box-shadow:0 4px 12px rgba(0,0,0,.4)}
+.fbl{max-width:4.8rem;text-align:center;font-size:.76rem;font-weight:700;line-height:1.1;text-shadow:0 1px 4px rgba(0,0,0,.7)}
+.fabmenu.on .fb-ganho,.fabmenu.on .fb-transf{transform:translate(var(--x),calc(var(--y) * -1)) scale(1)}
+html[data-tam="gg"] .fabmenu.on .fb-ganho,html[data-tam="gg"] .fabmenu.on .fb-transf{transform:translate(var(--x),calc(var(--y) * -1.3)) scale(1)}
+.fb-gasto .fbc{background:var(--gasto-bg)}
+.fb-ganho .fbc{background:var(--ganho-bg)}
+.fb-transf .fbc{background:var(--tr)}
+.fb-bem .fbc{background:var(--cobre)}
+.fb:active .fbc{transform:scale(.92)}
+.fb:focus-visible .fbc{outline:3px solid var(--latao);outline-offset:3px}
+nav .fab span.b{transition:transform .3s ease}
+nav .fab.aberto span.b{transform:rotate(45deg)}
+/* folha: 3 bolinhas para trocar de tipo */
+.capa.f h1{font-size:1.2rem}
+.trocar{display:flex;gap:.5rem}
+html[data-tam="g"] .capa.f,html[data-tam="gg"] .capa.f{flex-wrap:wrap}
+html[data-tam="g"] .capa.f .trocar,html[data-tam="gg"] .capa.f .trocar{flex-basis:100%;justify-content:space-around;margin-top:.4rem}
+.tb{display:flex;flex-direction:column;align-items:center;gap:.1rem;min-width:2.9rem;padding:0;color:var(--capa-ink);text-align:center}
+.tbc{display:grid;place-items:center;width:2.3rem;height:2.3rem;border-radius:50%;border:2px solid #fff;font-size:1.15rem;font-weight:700;line-height:1;color:#fff}
+.tbl{font-size:.58rem;font-weight:700;line-height:1;opacity:.9}
+.tb-gasto .tbc{background:var(--gasto-bg)}.tb-ganho .tbc{background:var(--ganho-bg)}.tb-transf .tbc{background:var(--tr)}.tb-bem .tbc{background:var(--cobre)}
+.tb:focus-visible .tbc{outline:3px solid var(--latao);outline-offset:2px}
+/* folha: listas curtas e busca */
+.bcol{width:100%;min-height:2.4rem;padding:.35rem .6rem;border:2px solid var(--rule2);border-radius:.6rem;background:var(--card);color:var(--ink);font-size:.85rem}
+.lc{display:flex;flex-direction:column;gap:.5rem}
+.tc>div .link{align-self:flex-start;font-size:.82rem;margin-top:.1rem}
+html[data-tam="gg"] .tc>div .bcol{font-size:.8rem}
+/* conta Dinheiro: contagem de cédulas */
+.ceds{display:grid;grid-template-columns:1fr 1fr;gap:.5rem .8rem;margin-top:.7rem}
+.ced{display:flex;flex-direction:column;gap:.15rem}
+.ced-v{font-family:Georgia,serif;font-weight:700}
+.ced .passo{gap:.35rem}
+.ced .passo button{width:2.7rem;height:2.7rem;font-size:1.3rem}
+.ced .passo b{min-width:2.2rem}
+html[data-tam="g"] .ceds,html[data-tam="gg"] .ceds{grid-template-columns:1fr}
 .ferrs{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin:.8rem 0 .2rem}
 .ferr{display:flex;flex-direction:column;gap:.15rem;min-height:4.2rem;padding:.65rem .8rem;border-radius:.8rem;background:var(--card);border:1px solid var(--rule);border-left:4px solid var(--latao);box-shadow:var(--shadow);text-align:left;color:var(--ink)}
 .ferr b{font-family:Georgia,serif;font-size:1rem}
@@ -381,12 +419,20 @@ html.calmo *,html.calmo *:before{animation:none!important;transition:none!import
 <nav aria-label="Menu principal"><div class="in">
   <button data-a="ir" data-v="inicio"><svg viewBox="0 0 24 24"><path d="M3 10.5 12 4l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/></svg><span class="lb">Início</span></button>
   <button data-a="ir" data-v="contas"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h4"/></svg><span class="lb">Dinheiro</span></button>
-  <button class="fab" data-a="novo" aria-label="Anotar um gasto ou ganho"><span class="b" aria-hidden="true">+</span><em>Anotar</em></button>
-  <button class="bolinha b-gasto" data-a="novoT" data-t="saida" aria-label="Anotar um gasto: gastei"><span>Gastei</span></button>
-  <button class="bolinha b-ganho" data-a="novoT" data-t="entrada" aria-label="Anotar um ganho: recebi"><span>Recebi</span></button>
+  <button class="fab" data-a="novo" aria-label="Anotar: escolher o tipo" aria-haspopup="true" aria-expanded="false"><span class="b" aria-hidden="true">+</span><em>Anotar</em></button>
   <button data-a="ir" data-v="planejar"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M8 15h3"/></svg><span class="lb">Planejar</span></button>
   <button data-a="ir" data-v="mais"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg><span class="lb">Mais</span></button>
 </div></nav>
+
+<div class="fabmenu" id="fabMenu" aria-hidden="true">
+  <div class="fabfundo" data-a="fabFecha"></div>
+  <div class="fabarco" role="group" aria-label="O que aconteceu?">
+    <button class="fb fb-gasto" style="--x:-6.5rem;--y:2.2rem;--d:0ms" data-a="novoT" data-t="saida" tabindex="-1"><span class="fbc">−</span><span class="fbl">Gastei</span></button>
+    <button class="fb fb-ganho" style="--x:-2.4rem;--y:6.4rem;--d:50ms" data-a="novoT" data-t="entrada" tabindex="-1"><span class="fbc">+</span><span class="fbl">Recebi</span></button>
+    <button class="fb fb-transf" style="--x:2.4rem;--y:6.4rem;--d:100ms" data-a="novoT" data-t="transferencia" tabindex="-1"><span class="fbc">⇄</span><span class="fbl">Transferi entre contas</span></button>
+    <button class="fb fb-bem" style="--x:6.5rem;--y:2.2rem;--d:150ms" data-a="novoT" data-t="bem" tabindex="-1"><span class="fbc">⌂</span><span class="fbl">Comprei um bem</span></button>
+  </div>
+</div>
 
 <section class="folha" id="folha" aria-label="Anotar"><div class="wrap" id="folhaCorpo"></div></section>
 <section class="onb" id="onb" aria-label="Primeiros passos"><div class="wrap" id="onbCorpo"></div></section>
@@ -406,7 +452,7 @@ html.calmo *,html.calmo *:before{animation:none!important;transition:none!import
 /* ---------- utilidades ---------- */
 var KEY="caderneta:v2";
 /* versão do app (siga o CHANGELOG.md; subir junto com VERSAO em sw.js e "version" em package.json) */
-var VERSAO_APP="1.9.0-beta.1";
+var VERSAO_APP="1.10.0-beta.1";
 var RE_ID=/^[A-Za-z0-9_-]+$/, RE_DATA=/^\d{4}-\d{2}-\d{2}$/;
 var MES=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
 var MES3=["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
@@ -463,7 +509,7 @@ function primeiroVencimento(compra,fecha,vence){
 
 /* ---------- dados ---------- */
 var S={contas:[],categorias:[],lancamentos:[],fixas:[],caixas:[],reservas:[],
-  config:{tamanho:"m",tema:"auto",contador:false,ultimoBackup:null,pronto:false,movimento:"vivo",renda:0,sobraRef:null}};
+  config:{tamanho:"m",tema:"auto",contador:false,ultimoBackup:null,pronto:false,movimento:"vivo",renda:0,sobraRef:null,favoritas:[]}};
 
 /* valida qualquer dado vindo do armazenamento ou de um backup */
 function higienizar(p){
@@ -476,6 +522,11 @@ function higienizar(p){
     ["fecha","vence"].forEach(function(k){var d=parseInt(c[k],10);if(d>=1&&d<=31)n[k]=d});
     if(cent(c.limite)>0)n.limite=cent(c.limite);
     if(c.pessoa===true)n.pessoa=true;
+    if(c.carteira===true&&c.tipo==="ativo"&&c.pessoa!==true&&c.bem!==true){
+      n.carteira=true;
+      if(ehObj(c.cedulas)){var ce={};[200,100,50,20,10,5,2].forEach(function(v){var q=parseInt(c.cedulas[v],10);if(q>0&&q<=9999)ce[v]=q});if(Object.keys(ce).length)n.cedulas=ce}
+      if(typeof c.contagem==="string"&&RE_DATA.test(c.contagem))n.contagem=c.contagem;
+    }
     if(c.bem===true&&c.tipo==="ativo"){
       n.bem=true; var tx=Number(c.taxa); if(isFinite(tx)&&tx!==0)n.taxa=Math.max(-100,Math.min(100,Math.round(tx*10)/10));
       ["desde","ajustadoAte"].forEach(function(k){if(typeof c[k]==="string"&&/^\d{4}-\d{2}$/.test(c[k]))n[k]=c[k]});
@@ -488,6 +539,7 @@ function higienizar(p){
     }
     out.contas.push(n);
   });
+  marcarCarteira(out.contas);
   (Array.isArray(p.categorias)?p.categorias:[]).forEach(function(c){
     if(!ehObj(c)||!id(c.id)||typeof c.nome!=="string"||(c.tipo!=="despesa"&&c.tipo!=="receita")){out.perdidos++;return}
     var kn={id:c.id,nome:c.nome,tipo:c.tipo};
@@ -546,7 +598,8 @@ function higienizarConfig(c){
     pronto:c.pronto===true,
     movimento:c.movimento==="parado"?"parado":"vivo",
     renda:Math.max(0,Math.round(Number(c.renda))||0),
-    sobraRef:typeof c.sobraRef==="string"&&/^\d{4}-\d{2}$/.test(c.sobraRef)?c.sobraRef:null
+    sobraRef:typeof c.sobraRef==="string"&&/^\d{4}-\d{2}$/.test(c.sobraRef)?c.sobraRef:null,
+    favoritas:Array.isArray(c.favoritas)?c.favoritas.filter(function(x){return typeof x==="string"&&/^[A-Za-z0-9_-]{1,40}$/.test(x)}).slice(0,3):[]
   };
 }
 
@@ -1232,6 +1285,143 @@ function telaInicio(){
     '</div>'+(ult.length?'<button class="link" data-a="ir" data-v="anotacoes">Ver todas as anotações, procurar e ordenar</button>':'');
 }
 
+/* =====================================================================
+   ANOTAR EM DOIS TOQUES: o botão + abre 4 bolinhas (os 4 tipos); a folha traz
+   listas curtas (3 contas, 5 categorias) com busca; a conta Dinheiro é a carteira
+   ===================================================================== */
+var TIPOS=[["saida","Gastei","−","gasto"],["entrada","Recebi","+","ganho"],["transferencia","Transferi","⇄","transf"],["bem","Comprei um bem","⌂","bem"]];
+var NOME_TIPO={saida:"Gastei",entrada:"Recebi",transferencia:"Transferi entre contas",bem:"Comprei um bem"};
+function fabMenu(abrir){
+  var m=$("#fabMenu"); if(!m)return;
+  var on=abrir===undefined?!m.classList.contains("on"):abrir;
+  m.classList.toggle("on",on); m.setAttribute("aria-hidden",String(!on));
+  var f=document.querySelector("nav .fab"); if(f){f.setAttribute("aria-expanded",String(on));f.classList.toggle("aberto",on)}
+  document.querySelectorAll("#fabMenu .fb").forEach(function(b){b.tabIndex=on?0:-1});
+}
+document.addEventListener("keydown",function(e){if(e.key==="Escape")fabMenu(false)});
+
+function norm(s){return String(s==null?"":s).normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase()}
+function carteiraConta(){return S.contas.filter(function(c){return c.carteira})[0]||null}
+function marcarCarteira(arr){
+  var ja=arr.filter(function(c){return c.carteira});
+  ja.slice(1).forEach(function(c){delete c.carteira});
+  if(ja.length)return;
+  var nomes=["dinheiro","carteira","dinheiro vivo","dinheiro em especie"];
+  var c=arr.filter(function(x){return x.tipo==="ativo"&&!x.pessoa&&!x.bem&&nomes.indexOf(norm(x.nome))>=0})[0];
+  if(c)c.carteira=true;
+}
+
+/* ---------- listas curtas na folha ---------- */
+function usoContas(){var u={};S.lancamentos.forEach(function(l){[l.contaId,l.destinoId].forEach(function(id){if(id)u[id]=(u[id]||0)+1})});return u}
+function favoritasValidas(){
+  var cand=S.contas.filter(function(x){return !x.bem&&!x.carteira}).map(function(x){return x.id});
+  return (S.config.favoritas||[]).filter(function(id){return cand.indexOf(id)>=0}).slice(0,3);
+}
+function contasRapidas(excl){
+  var cw=carteiraConta(), u=usoContas();
+  var todas=S.contas.filter(function(x){return !x.bem&&!x.carteira&&x.id!==excl});
+  var fav=favoritasValidas().filter(function(id){return id!==excl});
+  var outras=todas.filter(function(x){return fav.indexOf(x.id)<0&&!x.pessoa}).sort(function(a,b){return (u[b.id]||0)-(u[a.id]||0)});
+  var ids=fav.concat(outras.slice(0,Math.max(0,3-fav.length)).map(function(x){return x.id}));
+  var lista=[]; if(cw&&cw.id!==excl)lista.push(cw);
+  ids.forEach(function(id){lista.push(conta(id))});
+  return lista;
+}
+function catsRapidas(want){
+  var u={}; S.lancamentos.forEach(function(l){if(l.catId)u[l.catId]=(u[l.catId]||0)+1});
+  return S.categorias.filter(function(k){return k.tipo===want}).map(function(k,i){return {k:k,i:i}})
+    .sort(function(a,b){return (u[b.k.id]||0)-(u[a.k.id]||0)||a.i-b.i}).slice(0,5).map(function(x){return x.k});
+}
+function listaColuna(cfg,q){
+  var todos=cfg.k==="contas"?S.contas.filter(function(x){return !x.bem&&x.id!==cfg.ex})
+    :cfg.k==="cats"?S.categorias.filter(function(k){return k.tipo===cfg.want}):bensLista();
+  if(q){var nq=norm(q); return todos.filter(function(x){return norm(x.nome).indexOf(nq)>=0}).slice(0,8)}
+  var curtos=cfg.k==="contas"?contasRapidas(cfg.ex):cfg.k==="cats"?catsRapidas(cfg.want):bensLista().slice(0,5);
+  if(cfg.sel&&!curtos.some(function(x){return x.id===cfg.sel})){var s=todos.filter(function(x){return x.id===cfg.sel})[0]; if(s)curtos.push(s)}
+  return curtos;
+}
+function itemColuna(cfg,x){
+  var on=cfg.sel===x.id;
+  if(cfg.k==="cats")return '<button class="opt" data-a="'+cfg.a+'" data-id="'+x.id+'" aria-pressed="'+on+'">'+esc(x.nome)+'</button>';
+  if(cfg.k==="bens")return '<button class="opt" data-a="'+cfg.a+'" data-id="'+x.id+'" aria-pressed="'+on+'">'+esc(x.nome)+'<small>vale '+esc(brl(saldoConta(x)))+'</small></button>';
+  return '<button class="opt" data-a="'+cfg.a+'" data-id="'+x.id+'" aria-pressed="'+on+'">'+esc(x.nome)+
+    '<small>'+(x.pessoa?(x.tipo==="ativo"?"te deve ":"você deve ")+brl(saldoConta(x)):x.tipo==="passivo"?"dívida · devo "+brl(saldoConta(x)):brl(saldoConta(x)))+'</small></button>';
+}
+function pintarColuna(lado){
+  var cfg=F&&F.cols&&F.cols[lado], el=$("#lc"+lado); if(!cfg||!el)return;
+  var q=(F["q"+lado]||"").trim(), itens=listaColuna(cfg,q), h=itens.map(function(x){return itemColuna(cfg,x)}).join("");
+  if(q&&!itens.length)h='<p class="faint" style="padding:.4rem .2rem">Nada com esse nome.</p>';
+  if(!q){
+    if(cfg.k==="cats")h+='<button class="opt novo" data-a="categoria" data-id="" data-tipo="'+cfg.want+'">+ Nova categoria</button>';
+    if(cfg.k==="bens")h+='<button class="opt novo" data-a="fBemNovo">+ Novo bem</button>';
+    if(cfg.k==="contas")h+='<button class="link" data-a="favoritas">★ Escolher minhas 3 favoritas</button>';
+  }
+  el.innerHTML=h;
+}
+function iniciarColunas(){
+  ["E","D"].forEach(function(l){pintarColuna(l)});
+  document.querySelectorAll("#folhaCorpo .bcol").forEach(function(i){
+    i.addEventListener("input",function(){F["q"+this.dataset.l]=this.value; pintarColuna(this.dataset.l); ligarFio()});
+  });
+}
+function modalFavoritas(){
+  var cand=S.contas.filter(function(x){return !x.bem&&!x.carteira}), fav=favoritasValidas();
+  abrirModal('<p class="q">Minhas contas favoritas</p><p class="sub">Escolha até <b>3</b> contas para aparecerem primeiro quando você anota. A conta <b>Dinheiro</b> aparece sempre.</p>'+
+    '<div class="chips" id="favChips" style="margin:.7rem 0">'+(cand.length?cand.map(function(c){return '<button class="chip" data-a="favToggle" data-id="'+c.id+'" aria-pressed="'+(fav.indexOf(c.id)>=0)+'">'+esc(c.nome)+'</button>'}).join(""):'<p class="faint">Você ainda não tem outras contas.</p>')+'</div>'+
+    '<p class="faint" id="favMsg">'+fav.length+' de 3 escolhidas</p><button class="btn" data-a="mFechar">Pronto</button>');
+}
+
+/* ---------- conta Dinheiro: a carteira, com contagem de cédulas ---------- */
+var CED=[200,100,50,20,10,5,2];
+function totalCed(g){return CED.reduce(function(s,v){return s+(g[v]||0)*v},0)*100}
+function textoCarteira(c){
+  if(!c.cedulas)return "Toque para contar suas cédulas";
+  var t=CED.filter(function(v){return c.cedulas[v]>0}).map(function(v){return c.cedulas[v]+"×R$"+v}).join(" · ");
+  return "Cédulas: "+t+(c.contagem?" (contado em "+dataBR(c.contagem)+")":"");
+}
+function modalCarteira(id){
+  var c=conta(id); G={id:id,carteira:true,ced:{}};
+  CED.forEach(function(v){G.ced[v]=(c.cedulas&&c.cedulas[v])||0});
+  abrirModal('<p class="q">Conta Dinheiro (sua carteira)</p>'+
+    '<p class="sub">É o dinheiro vivo que você carrega. Conte quantas cédulas tem de cada valor. Esta conta <b>não pode ser apagada</b>, só alterada.</p>'+
+    '<div class="campo"><label for="gNome">Nome</label><input id="gNome" maxlength="30" value="'+esc(c.nome)+'"></div>'+
+    '<div class="ceds">'+CED.map(function(v){
+      return '<div class="ced"><span class="ced-v">R$ '+v+'</span><div class="passo"><button data-a="cedM" data-v="'+v+'" data-n="-1" aria-label="Menos uma cédula de '+v+' reais">−</button><b id="ced'+v+'">'+G.ced[v]+'</b><button data-a="cedM" data-v="'+v+'" data-n="1" aria-label="Mais uma cédula de '+v+' reais">+</button></div></div>'}).join("")+'</div>'+
+    '<p class="faint" style="margin-top:.6rem">Total contado: <b id="cedTotal" style="color:var(--ink)">'+esc(brl(totalCed(G.ced)))+'</b> · saldo hoje: <b style="color:var(--ink)">'+esc(brl(saldoConta(c)))+'</b></p>'+
+    '<p class="faint" style="margin-top:.5rem"><b>Dica:</b> não conte moedas aqui. No dinheiro vivo o app trabalha com <b>reais inteiros</b>: se você paga R$ 3,25 com uma cédula de R$ 4 (ou R$ 3,50 com R$ 3 em cédulas), as moedas de troco ficam de fora e o saldo continua batendo com o que você realmente usa. Ao anotar, o app sugere o arredondamento.</p>'+
+    '<button class="btn" data-a="cedSalvar">Salvar</button><button class="btn sec" data-a="mFechar">Cancelar</button>');
+}
+function salvarCarteira(){
+  var c=conta(G.id); if(!c)return;
+  var nome=$("#gNome").value.trim();
+  if(!nome){toast("Dê um nome para a conta");return}
+  if(repetido(nome,S.contas,G.id)){toast("Já existe uma conta com esse nome");return}
+  var contou=CED.some(function(v){return G.ced[v]>0})||!!c.cedulas;
+  function aplicar(){
+    c.nome=nome;
+    if(contou){
+      var total=totalCed(G.ced); c.inicial+=total-saldoConta(c);
+      var ce={}; CED.forEach(function(v){if(G.ced[v]>0)ce[v]=G.ced[v]});
+      if(Object.keys(ce).length){c.cedulas=ce;c.contagem=hojeISO()} else {delete c.cedulas;delete c.contagem}
+    }
+    salvar(); fecharModal(); desenhar(); toast("Conta Dinheiro salva");
+  }
+  var novo=totalCed(G.ced), atual=saldoConta(c);
+  if(contou&&novo!==atual)confirmar("O saldo da conta "+c.nome+" vai de "+brl(atual)+" para "+brl(novo)+" (o que você contou). Continuar?","Sim, ajustar",aplicar);
+  else aplicar();
+}
+function pintarArred(){
+  var el=$("#fArred"); if(!el||!F)return;
+  var cw=carteiraConta(), v=F.cent;
+  var envolve=!!cw&&(F.contaId===cw.id||(F.tipo==="transferencia"&&F.destinoId===cw.id));
+  if(!envolve||!v||v%100===0){el.innerHTML="";return}
+  var baixo=Math.floor(v/100)*100, alto=baixo+100;
+  el.innerHTML='<p class="faint" style="margin-top:.5rem">Dinheiro vivo trabalha em <b>reais inteiros</b> (as moedas ficam de fora). Quer arredondar?</p><div class="chips">'+
+    '<button class="chip" data-a="fArred" data-v="'+alto+'">Para '+esc(brl(alto))+'</button>'+
+    (baixo>0?'<button class="chip" data-a="fArred" data-v="'+baixo+'">Para '+esc(brl(baixo))+'</button>':'')+
+    '<button class="chip" data-a="fArred" data-v="'+v+'" aria-pressed="true">Manter '+esc(brl(v))+'</button></div>';
+}
+
 /* ---------- TELA: GAVETAS ---------- */
 var DIN_ABA="contas";
 function telaContas(){
@@ -1244,7 +1434,7 @@ function telaContas(){
   if(DIN_ABA==="contas"){
   h+='<h2>'+esc(v("ativo"))+'</h2><div class="card" style="padding:.2rem 1rem">'+
     (ativos.length?ativos.map(function(c){
-      return '<button class="gaveta" data-a="gaveta" data-id="'+c.id+'"><span class="marca"></span><span class="txt"><b>'+esc(c.nome)+'</b><i>'+(guardadoConta(c.id)>0?esc(brl(guardadoConta(c.id)))+' guardado · para usar '+esc(brl(saldoConta(c)-guardadoConta(c.id))):'Toque para editar')+'</i></span><span class="pont"></span><span class="vl">'+esc(brl(saldoConta(c)))+'</span></button>';
+      return '<button class="gaveta" data-a="gaveta" data-id="'+c.id+'"><span class="marca"></span><span class="txt"><b>'+esc(c.nome)+'</b><i>'+(guardadoConta(c.id)>0?esc(brl(guardadoConta(c.id)))+' guardado · para usar '+esc(brl(saldoConta(c)-guardadoConta(c.id))):(c.carteira?textoCarteira(c):'Toque para editar'))+'</i></span><span class="pont"></span><span class="vl">'+esc(brl(saldoConta(c)))+'</span></button>';
     }).join(""):'<div class="vazio"><b>Nenhuma ainda</b>Crie uma carteira ou conta de banco.</div>')+
     (totalReservado()>0?'<p class="faint" style="padding:.5rem 0">Os saldos acima são os reais, iguais aos do banco. Desse dinheiro, <b style="color:var(--ink)">'+esc(brl(totalReservado()))+'</b> está guardado nas caixinhas. Para usar agora: <b style="color:var(--ink)">'+esc(brl(livreAgora()))+'</b>.</p>':'')+'</div>';
   return h+'<button class="btn" data-a="gaveta" data-id="">+ Nova conta</button>';
@@ -1406,7 +1596,7 @@ window.addEventListener("popstate",function(){
 
 function novaFolha(o){
   if(!S.contas.length){toast("Crie uma conta primeiro");ir("contas");return}
-  F=Object.assign({id:null,tipo:"saida",cent:0,contaId:null,destinoId:null,catId:null,desc:"",data:hojeISO(),n:1},o||{});
+  F=Object.assign({id:null,tipo:"saida",cent:0,contaId:null,destinoId:null,catId:null,desc:"",data:hojeISO(),n:1,qE:"",qD:""},o||{});
   ajustarFolha(); abrirFolha(); desenharFolha();
 }
 function ajustarFolha(){
@@ -1441,34 +1631,21 @@ function chip(acao,id,rot,sel,extra){return '<button class="chip" data-a="'+acao
 
 function desenharFolha(){
   var tr=F.tipo==="transferencia", cl=F.tipo==="saida"?"s":F.tipo==="entrada"?"e":"t", c=conta(F.contaId);
-  var h='<header class="capa f"><button class="volta" data-a="fFechar" aria-label="Voltar">←</button><h1>'+(F.id?"Editar anotação":"Anotar")+'</h1></header>';
-  h+='<div class="seg3" role="group" aria-label="O que aconteceu">'+
-    '<button class="s" data-a="fTipo" data-t="saida" aria-pressed="'+(F.tipo==="saida")+'">Gastei</button>'+
-    '<button class="e" data-a="fTipo" data-t="entrada" aria-pressed="'+(F.tipo==="entrada")+'">Recebi</button>'+
-    '<button class="t" data-a="fTipo" data-t="transferencia" aria-pressed="'+(F.tipo==="transferencia")+'">Transferi entre contas</button>'+
-    '<button class="b" data-a="fTipo" data-t="bem" aria-pressed="'+(F.tipo==="bem")+'">Comprei um bem</button></div>';
+  var troca=TIPOS.filter(function(t){return t[0]!==F.tipo}).map(function(t){return '<button class="tb tb-'+t[3]+'" data-a="fTipo" data-t="'+t[0]+'" aria-label="Mudar para: '+t[1]+'"><span class="tbc" aria-hidden="true">'+t[2]+'</span><span class="tbl">'+(t[0]==="transferencia"?"Transferi":t[0]==="bem"?"Bem":t[1])+'</span></button>'}).join("");
+  var h='<header class="capa f"><button class="volta" data-a="fFechar" aria-label="Voltar">←</button><h1>'+(F.id?"Editar: ":"")+NOME_TIPO[F.tipo]+'</h1><div class="trocar" role="group" aria-label="Mudar o tipo de anotação">'+troca+'</div></header>';
   h+='<label class="rot" for="fValor">Quanto?</label><input id="fValor" class="dinheiro '+cl+'" inputmode="numeric" autocomplete="off" placeholder="R$ 0,00">';
+  h+='<div id="fArred"></div>';
 
-  function gav(acao,sel,excl){
-    return S.contas.filter(function(x){return x.id!==excl&&!x.bem}).map(function(x){
-      return '<button class="opt" data-a="'+acao+'" data-id="'+x.id+'" aria-pressed="'+(sel===x.id)+'">'+esc(x.nome)+
-        '<small>'+(x.pessoa?(x.tipo==="ativo"?"te deve ":"você deve ")+brl(saldoConta(x)):x.tipo==="passivo"?"dívida · devo "+brl(saldoConta(x)):brl(saldoConta(x)))+'</small></button>';
-    }).join("");
-  }
   var want=F.tipo==="saida"?"despesa":"receita";
-  var cats=S.categorias.filter(function(k){return k.tipo===want}).map(function(k){
-    return '<button class="opt" data-a="fCat" data-id="'+k.id+'" aria-pressed="'+(F.catId===k.id)+'">'+esc(k.nome)+'</button>';
-  }).join("")+'<button class="opt novo" data-a="categoria" data-id="" data-tipo="'+want+'">+ Nova categoria</button>';
-  var tE, tD, cE, cD;
-  if(F.tipo==="saida"){tE="De onde saiu";tD="Para onde foi";cE=gav("fConta",F.contaId);cD=cats}
-  else if(F.tipo==="entrada"){tE="De onde veio";tD="Onde entrou";cE=cats;cD=gav("fConta",F.contaId)}
-  else if(F.tipo==="bem"){
-    tE="Paguei com";tD="Qual bem?";cE=gav("fConta",F.contaId);
-    cD=bensLista().map(function(b){return '<button class="opt" data-a="fDestino" data-id="'+b.id+'" aria-pressed="'+(F.destinoId===b.id)+'">'+esc(b.nome)+'<small>vale '+esc(brl(saldoConta(b)))+'</small></button>'}).join("")+'<button class="opt novo" data-a="fBemNovo">+ Novo bem</button>';
-  }
-  else{tE="De onde sai";tD="Para onde vai";cE=gav("fConta",F.contaId);cD=gav("fDestino",F.destinoId,F.contaId)}
+  var tE,tD,kE,kD,aE,aD,sE,sD;
+  if(F.tipo==="saida"){tE="De onde saiu";tD="Para onde foi";kE="contas";kD="cats";aE="fConta";aD="fCat";sE=F.contaId;sD=F.catId}
+  else if(F.tipo==="entrada"){tE="De onde veio";tD="Onde entrou";kE="cats";kD="contas";aE="fCat";aD="fConta";sE=F.catId;sD=F.contaId}
+  else if(F.tipo==="bem"){tE="Paguei com";tD="Qual bem?";kE="contas";kD="bens";aE="fConta";aD="fDestino";sE=F.contaId;sD=F.destinoId}
+  else{tE="De onde sai";tD="Para onde vai";kE="contas";kD="contas";aE="fConta";aD="fDestino";sE=F.contaId;sD=F.destinoId}
+  F.cols={E:{k:kE,a:aE,sel:sE,tit:tE,ex:null,want:want},D:{k:kD,a:aD,sel:sD,tit:tD,ex:(F.tipo==="transferencia"?F.contaId:null),want:want}};
+  function colHTML(l,c){return '<div><p class="colrot">'+c.tit+'</p><input type="search" class="bcol" data-l="'+l+'" placeholder="'+(c.k==="contas"?"Buscar conta":c.k==="cats"?"Buscar categoria":"Buscar bem")+'" aria-label="'+(c.k==="contas"?"Buscar conta":c.k==="cats"?"Buscar categoria":"Buscar bem")+'" autocomplete="off" value="'+esc(F["q"+l]||"")+'"><div class="lc" id="lc'+l+'"></div></div>'}
   h+='<div class="tt" id="tt"><div class="th"><span>'+tE+'</span><span>'+tD+'</span></div>'+
-    '<div class="tc"><div><p class="colrot">'+tE+'</p>'+cE+'</div><div><p class="colrot">'+tD+'</p>'+cD+'</div></div>'+
+    '<div class="tc">'+colHTML("E",F.cols.E)+colHTML("D",F.cols.D)+'</div>'+
     '<svg class="lnk" id="lnk" aria-hidden="true"><path id="lp" d=""/></svg></div>';
   var hoje=hojeISO(), ontem=addDias(hoje,-1);
   h+='<span class="rot">Quando?</span><div class="chips">'+
@@ -1496,6 +1673,7 @@ function desenharFolha(){
   if($("#fJuros"))ligarDinheiro($("#fJuros"),F.juros||0,function(c){F.juros=c;previa()});
   $("#fDesc").addEventListener("input",function(){F.desc=this.value});
   $("#fData").addEventListener("change",function(){if(RE_DATA.test(this.value)){F.data=this.value;previa()}});
+  iniciarColunas();
   previa();
   ligarFio();
 }
@@ -1512,6 +1690,7 @@ function ligarFio(){
 }
 window.addEventListener("resize",function(){if(F)ligarFio()});
 function previa(){
+  pintarArred();
   var el=$("#fPrev"); if(!el||!F)return;
   var c=conta(F.contaId), d=conta(F.destinoId), k=cat(F.catId), h="", valor=F.cent;
   var nt=$("#fNtxt"); if(nt)nt.textContent=F.n===1?"À vista":F.n+" vezes";
@@ -1575,6 +1754,7 @@ function salvarFolha(){
    ===================================================================== */
 var G=null;
 function modalGaveta(id){
+  if(id&&conta(id)&&conta(id).carteira){modalCarteira(id);return}
   var c=id?conta(id):null, uso=c&&S.lancamentos.some(function(l){return l.contaId===id||l.destinoId===id});
   G={id:id||null,tipo:c?c.tipo:"ativo",bloqueado:!!uso};
   var h='<p class="q">'+(c?"Editar conta":"Nova conta")+'</p>'+
@@ -2190,7 +2370,7 @@ function desenharOnb(){
   }else if(O.passo===2){
     h='<div class="fino"><div style="width:66%"></div></div><h1>Onde está seu dinheiro hoje?</h1>'+
             '<p class="sub">Diga quanto você tem em cada lugar. Se não tiver, deixe vazio.</p>'+
-      [["oCarteira","Carteira (dinheiro vivo)"],["oBanco","Conta no banco"],["oPoup","Poupança ou reserva"]].map(function(x){
+      [["oCarteira","Dinheiro vivo (só cédulas, sem moedas)"],["oBanco","Conta no banco"],["oPoup","Poupança ou reserva"]].map(function(x){
         return '<div class="campo"><label for="'+x[0]+'">'+x[1]+'</label><input id="'+x[0]+'" inputmode="numeric" placeholder="R$ 0,00"></div>'}).join("")+
       '<button class="btn" data-a="oProx">Continuar</button>';
   }else{
@@ -2214,8 +2394,8 @@ function desenharOnb(){
 function finalizarOnb(){
   var contas=[];
   /* os valores do passo 2 foram guardados em O.guardados ao avançar */
-  (O.guardados||[]).forEach(function(g){contas.push({id:uid(),nome:g.nome,tipo:"ativo",inicial:g.c})});
-  if(!contas.length)contas.push({id:uid(),nome:"Carteira",tipo:"ativo",inicial:0});
+  (O.guardados||[]).forEach(function(g){var o={id:uid(),nome:g.nome,tipo:"ativo",inicial:g.c}; if(g.carteira)o.carteira=true; contas.push(o)});
+  if(!contas.some(function(c){return c.carteira}))contas.unshift({id:uid(),nome:"Dinheiro",tipo:"ativo",inicial:0,carteira:true});
   if(O.cartao){
     var nome=($("#oNome").value||"").trim()||"Cartão", f=parseInt($("#oFecha").value,10), vc=parseInt($("#oVence").value,10);
     var ab=lerFaturas("#oFaturas");
@@ -2245,8 +2425,21 @@ function aplicarConfig(){
 
 var ACOES={
   ir:function(d){ir(d.v)},
-  novo:function(){novaFolha()},
-  novoT:function(d){novaFolha({tipo:d.t})},
+  novo:function(){fabMenu()},
+  fabFecha:function(){fabMenu(false)},
+  novoT:function(d){fabMenu(false); novaFolha({tipo:d.t})},
+  favoritas:modalFavoritas,
+  favToggle:function(d){
+    var f=(S.config.favoritas||[]).slice(), i=f.indexOf(d.id);
+    if(i>=0)f.splice(i,1); else{ if(favoritasValidas().length>=3){toast("Só 3 favoritas. Tire uma para escolher outra.");return} f.push(d.id) }
+    S.config.favoritas=f; salvar();
+    document.querySelectorAll("#favChips .chip").forEach(function(b){b.setAttribute("aria-pressed",String(favoritasValidas().indexOf(b.dataset.id)>=0))});
+    var m=$("#favMsg"); if(m)m.textContent=favoritasValidas().length+" de 3 escolhidas";
+    if(F&&FOLHA_ABERTA){pintarColuna("E");pintarColuna("D");ligarFio()}
+  },
+  cedM:function(d){var v=+d.v; G.ced[v]=Math.max(0,Math.min(999,(G.ced[v]||0)+(+d.n))); var b=$("#ced"+v); if(b)b.textContent=G.ced[v]; var t=$("#cedTotal"); if(t)t.textContent=brl(totalCed(G.ced))},
+  cedSalvar:salvarCarteira,
+  fArred:function(d){F.cent=+d.v; var i=$("#fValor"); if(i){i.dataset.cent=F.cent; i.value=brl(F.cent)} previa()},
   editar:function(d){
     var l=null; S.lancamentos.forEach(function(x){if(x.id===d.id)l=x}); if(!l)return;
     if(l.tipo==="ajuste"){
@@ -2405,6 +2598,7 @@ var ACOES={
   gSalvar:salvarGaveta,
   gApagar:function(){
     var id=G.id, c=conta(id); if(!c)return;
+    if(c.carteira){toast("A conta Dinheiro não pode ser apagada, só alterada");return}
     var ls=S.lancamentos.filter(function(l){return l.contaId===id||l.destinoId===id});
     var fx=S.fixas.filter(function(x){return x.contaId===id});
     var rs=S.reservas.filter(function(x){return x.conta===id});
@@ -2453,10 +2647,10 @@ var ACOES={
   },
   /* folha */
   fFechar:fecharFolha,
-  fTipo:function(d){F.tipo=d.t;ajustarFolha();desenharFolha()},
-  fConta:function(d){F.contaId=d.id;ajustarFolha();desenharFolha()},
-  fDestino:function(d){F.destinoId=d.id;desenharFolha()},
-  fCat:function(d){F.catId=d.id;desenharFolha()},
+  fTipo:function(d){F.tipo=d.t;F.qE="";F.qD="";ajustarFolha();desenharFolha()},
+  fConta:function(d){F.contaId=d.id;F.qE="";F.qD="";ajustarFolha();desenharFolha()},
+  fDestino:function(d){F.destinoId=d.id;F.qE="";F.qD="";desenharFolha()},
+  fCat:function(d){F.catId=d.id;F.qE="";F.qD="";desenharFolha()},
   fData:function(d){F.data=d.d;desenharFolha()},
   fOutraData:function(){var w=$("#wData");w.hidden=false;document.querySelectorAll('[data-a="fData"],[data-a="fOutraData"]').forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.a==="fOutraData"))});$("#fData").focus()},
   fN:function(d){F.n=Math.max(1,Math.min(24,F.n+(+d.n)));previa()},
@@ -2469,7 +2663,7 @@ var ACOES={
   oProx:function(){
     if(O.passo===2){
       O.guardados=[];
-      [["oCarteira","Carteira"],["oBanco","Conta no banco"],["oPoup","Poupança"]].forEach(function(x){var c=cent(document.getElementById(x[0]));if(c>0)O.guardados.push({nome:x[1],c:c})});
+      [["oCarteira","Dinheiro"],["oBanco","Conta no banco"],["oPoup","Poupança"]].forEach(function(x,i){var c=cent(document.getElementById(x[0]));if(c>0||i===0)O.guardados.push({nome:x[1],c:c,carteira:i===0})});
     }
     O.passo++; desenharOnb();
   },

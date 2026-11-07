@@ -16,6 +16,8 @@ function click(sel){let el=typeof sel==="string"?$(sel):sel;
   /* a tela Dinheiro tem abas e Metas é uma tela própria: se o botão não está na tela, vai até a aba/tela dele, como uma pessoa faria */
   if(!el&&typeof sel==="string"){for(const alvo of ['[data-a="dinAba"][data-v="bens"]','[data-a="dinAba"][data-v="pessoas"]','[data-a="dinAba"][data-v="dividas"]','[data-a="dinAba"][data-v="contas"]','[data-a="ir"][data-v="metas"]']){const b=$(alvo);if(b){b.click();el=$(sel);if(el)break}}}
   if(!el)throw new Error("sem elemento "+sel);el.click()}
+function abreFolha(t){abreFolha();click('#fabMenu [data-a="novoT"][data-t="'+(t||"saida")+'"]')}
+function abreFolha(t){click('[data-a="novo"]');click('#fabMenu [data-a="novoT"][data-t="'+(t||"saida")+'"]')}
 function digita(sel,txt){const el=$(sel);el.value=txt;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
 const S=()=>T.S();
 d.documentElement.classList.add("calmo");
@@ -29,7 +31,7 @@ function invariantes(n){
 
 const pl0=T.totais().pl, banco0=T.saldoConta(S().contas[1]);
 // pagar uma prestação de 2.050 com 50 de juros
-click('[data-a="novo"]');click('[data-a="fTipo"][data-t="transferencia"]');
+abreFolha();click('[data-a="fTipo"][data-t="transferencia"]');
 eq("sem destino de dívida não há campo de juros",!$("#fJuros"),false?true:!$("#fJuros")===true);
 click('[data-a="fConta"][data-id="c2"]');click('[data-a="fDestino"][data-id="c3"]');
 eq("destino é dívida: aparece o campo de juros",!!$("#fJuros"),true);
@@ -53,14 +55,14 @@ invariantes("após pagar com juros");
 
 // sem juros continua igual
 const antes=S().lancamentos.length;
-click('[data-a="novo"]');click('[data-a="fTipo"][data-t="transferencia"]');click('[data-a="fConta"][data-id="c2"]');click('[data-a="fDestino"][data-id="c3"]');
+abreFolha();click('[data-a="fTipo"][data-t="transferencia"]');click('[data-a="fConta"][data-id="c2"]');click('[data-a="fDestino"][data-id="c3"]');
 digita("#fValor","200000");click('[data-a="fSalvar"]');
 eq("sem juros cria um lançamento só",S().lancamentos.length,antes+1);
 eq("dívida quitada",T.saldoConta(S().contas[2]),0);
 invariantes("após quitar");
 
 // trocar o destino para gaveta normal some com o campo
-click('[data-a="novo"]');click('[data-a="fTipo"][data-t="transferencia"]');click('[data-a="fConta"][data-id="c2"]');click('[data-a="fDestino"][data-id="c1"]');
+abreFolha();click('[data-a="fTipo"][data-t="transferencia"]');click('[data-a="fConta"][data-id="c2"]');click('[data-a="fDestino"][data-id="c1"]');
 eq("destino gaveta normal: sem campo de juros",!$("#fJuros"),true);
 click('[data-a="fFechar"]');
 eq("erros de script",errs,[]);

@@ -20,6 +20,8 @@ function click(sel){let el=typeof sel==="string"?$(sel):sel;
   /* a tela Dinheiro tem abas e Metas é uma tela própria: se o botão não está na tela, vai até a aba/tela dele, como uma pessoa faria */
   if(!el&&typeof sel==="string"){for(const alvo of ['[data-a="dinAba"][data-v="bens"]','[data-a="dinAba"][data-v="pessoas"]','[data-a="dinAba"][data-v="dividas"]','[data-a="dinAba"][data-v="contas"]','[data-a="ir"][data-v="metas"]']){const b=$(alvo);if(b){b.click();el=$(sel);if(el)break}}}
   if(!el)throw new Error("sem elemento "+sel);el.click()}
+function abreFolha(t){abreFolha();click('#fabMenu [data-a="novoT"][data-t="'+(t||"saida")+'"]')}
+function abreFolha(t){click('[data-a="novo"]');click('#fabMenu [data-a="novoT"][data-t="'+(t||"saida")+'"]')}
 function digita(sel,txt){const el=$(sel);el.value=txt;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
 const S=()=>T.S();
 d.documentElement.classList.add("calmo");
@@ -51,12 +53,12 @@ click('[data-a="mFechar"]');
 
 // comprar no cartão ou bem não muda o livre (não saiu dinheiro da conta)
 const livre0=T.livreAgora();
-click('[data-a="novo"]');click('[data-a="fConta"][data-id="c3"]');digita("#fValor","30000");click('[data-a="fCat"][data-id="k1"]');click('[data-a="fSalvar"]');
+abreFolha();click('[data-a="fConta"][data-id="c3"]');digita("#fValor","30000");click('[data-a="fCat"][data-id="k1"]');click('[data-a="fSalvar"]');
 eq("gasto no cartão não reduz o livre (o dinheiro continua lá)",T.livreAgora(),livre0);
 eq("mas reduz o é meu",T.totais().pl,pl0-30000);
 
 // tirar dinheiro das contas além do livre deixa o livre negativo e avisa
-click('[data-a="novo"]');click('[data-a="fTipo"][data-t="transferencia"]');click('[data-a="fConta"][data-id="c2"]');click('[data-a="fDestino"][data-id="p1"]');digita("#fValor","50000");click('[data-a="fSalvar"]');
+abreFolha();click('[data-a="fTipo"][data-t="transferencia"]');click('[data-a="fConta"][data-id="c2"]');digita('.bcol[data-l="D"]',"João");click('[data-a="fDestino"][data-id="p1"]');digita("#fValor","50000");click('[data-a="fSalvar"]');
 eq("emprestar tirou 500 da conta",T.dinheiroEmConta(),50000);
 eq("livre ficou negativo (separou mais do que tem)",T.livreAgora(),-50000);
 nav("caixinhas");

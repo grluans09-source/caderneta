@@ -16,7 +16,7 @@ Aplica as decisões Q1 a Q7 da [auditoria](AUDITORIA-FUNCOES.md), aceitas pelo d
 | **Início** | Como estou hoje? |
 | **Dinheiro** | Onde está meu dinheiro e o que eu devo? |
 | **+ Anotar** (botão do meio) | O que aconteceu agora? |
-| **Bolinhas Gastei (bordô) e Recebi (azul)**, sobre o + Anotar | Anotação rápida: abre a folha já em Gastei ou em Recebi. Aparecem em todas as telas |
+| **Menu de bolinhas**: o toque no + gera 4 bolinhas (Gastei bordô, Recebi azul, Transferi ardósia, Comprei um bem cobre) | Anotar em dois toques: o 2º toque abre a folha já no tipo escolhido. Vale em todas as telas |
 | **Planejar** | O que vem pela frente? |
 | **Mais** | Ver o histórico, os relatórios e ajustar o app |
 
@@ -32,7 +32,7 @@ Aplica as decisões Q1 a Q7 da [auditoria](AUDITORIA-FUNCOES.md), aceitas pelo d
 | Metas do mês (limite por categoria) | Planejar > Metas | Início (se existirem) |
 | Caixinhas (guardar) | Planejar > Caixinhas | Início (vitrine), Dinheiro (quanto está guardado em cada conta) |
 | Simulador "e se eu comprar" | Planejar > Simulador | – |
-| Contas (carteira, banco, poupança) | Dinheiro > Contas | – |
+| Contas (**Dinheiro**, banco, poupança) | Dinheiro > Contas. A conta **Dinheiro** é a carteira: não se apaga e conta cédulas | – |
 | Cartões e empréstimos | Dinheiro > Dívidas | Planejar (quando vence) |
 | Bens (carro, casa...) | Dinheiro > Bens | – |
 | Pessoas (emprestei, devo) | Dinheiro > Pessoas | Agenda (cobranças) |
@@ -65,7 +65,7 @@ Quatro abas curtas: **Contas · Dívidas · Bens · Pessoas**
 
 ### + Anotar: "O que aconteceu"
 > *"Escolha o que aconteceu e preencha: de onde saiu, para onde foi."*
-Gastei · Recebi · Transferi entre contas · Comprei um bem (duas colunas, como hoje)
+O tipo vem do **menu de bolinhas** do botão + (2 toques). A folha mostra o tipo no título e **3 bolinhas** no canto para trocar. Duas colunas curtas: **"De onde saiu"** = conta Dinheiro + as **3 favoritas** (ou as 3 mais usadas); **"Para onde foi"** = as **5 categorias mais usadas**. Cada coluna tem uma **busca** que olha todas as contas ou categorias, e "★ Escolher minhas 3 favoritas". No dinheiro vivo, valores com centavos ganham a sugestão de **arredondar para reais inteiros**.
 
 ### Planejar: "O que vem pela frente"
 > *"O que você precisa pagar e como se organizar."*

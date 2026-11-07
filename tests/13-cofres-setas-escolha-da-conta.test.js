@@ -21,6 +21,8 @@ function click(sel){let el=typeof sel==="string"?$(sel):sel;
   /* a tela Dinheiro tem abas e Metas é uma tela própria: se o botão não está na tela, vai até a aba/tela dele, como uma pessoa faria */
   if(!el&&typeof sel==="string"){for(const alvo of ['[data-a="dinAba"][data-v="bens"]','[data-a="dinAba"][data-v="pessoas"]','[data-a="dinAba"][data-v="dividas"]','[data-a="dinAba"][data-v="contas"]','[data-a="ir"][data-v="metas"]']){const b=$(alvo);if(b){b.click();el=$(sel);if(el)break}}}
   if(!el)throw new Error("sem elemento "+sel);el.click()}
+function abreFolha(t){abreFolha();click('#fabMenu [data-a="novoT"][data-t="'+(t||"saida")+'"]')}
+function abreFolha(t){click('[data-a="novo"]');click('#fabMenu [data-a="novoT"][data-t="'+(t||"saida")+'"]')}
 function digita(sel,txt){const el=$(sel);el.value=txt;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
 const S=()=>T.S();
 d.documentElement.classList.add("calmo");
@@ -94,7 +96,7 @@ eq("com uma conta só, só informa onde está guardado",!$("#mvContas")&&/guarda
 
 // gasto pago com a caixinha libera o guardado da conta que pagou (ou o que houver)
 const antesBanco=T.guardadoConta("c2");
-click('nav [data-v="inicio"]');click('[data-a="novo"]');click('[data-a="fConta"][data-id="c1"]');digita("#fValor","2000");click('[data-a="fCat"][data-id="k1"]');click('[data-a="fCaixa"][data-id="x2"]');click('[data-a="fSalvar"]');
+click('nav [data-v="inicio"]');abreFolha();click('[data-a="fConta"][data-id="c1"]');digita("#fValor","2000");click('[data-a="fCat"][data-id="k1"]');click('[data-a="fCaixa"][data-id="x2"]');click('[data-a="fSalvar"]');
 eq("a Viagem diminuiu 20",T.saldoCaixa("x2"),8000);
 eq("pagou pela Carteira (sem guardado nela): o guardado liberado foi o do Banco",[T.guardadoConta("c2"),T.guardadoConta("c1")],[antesBanco-2000,0]);
 eq("dinheiro = livre + guardado continua valendo",T.dinheiroEmConta(),T.livreAgora()+T.totalReservado());

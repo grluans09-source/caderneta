@@ -16,6 +16,8 @@ function click(sel){let el=typeof sel==="string"?$(sel):sel;
   /* a tela Dinheiro tem abas e Metas é uma tela própria: se o botão não está na tela, vai até a aba/tela dele, como uma pessoa faria */
   if(!el&&typeof sel==="string"){for(const alvo of ['[data-a="dinAba"][data-v="bens"]','[data-a="dinAba"][data-v="pessoas"]','[data-a="dinAba"][data-v="dividas"]','[data-a="dinAba"][data-v="contas"]','[data-a="ir"][data-v="metas"]']){const b=$(alvo);if(b){b.click();el=$(sel);if(el)break}}}
   if(!el)throw new Error("sem elemento "+sel);el.click()}
+function abreFolha(t){abreFolha();click('#fabMenu [data-a="novoT"][data-t="'+(t||"saida")+'"]')}
+function abreFolha(t){click('[data-a="novo"]');click('#fabMenu [data-a="novoT"][data-t="'+(t||"saida")+'"]')}
 function digita(sel,txt){const el=$(sel);el.value=txt;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
 const S=()=>T.S();
 d.documentElement.classList.add("calmo");
@@ -49,13 +51,13 @@ eq("frase explica com bens",/vendendo os seus bens/.test($("#tela").textContent)
 tudoFecha("após bem");
 
 // ---- bens não aparecem como forma de pagar um gasto ----
-click('[data-a="novo"]');
+abreFolha();
 eq("gasto não oferece o carro como forma de pagamento",[...d.querySelectorAll(".tc>div:first-child .opt")].some(b=>/Carro/.test(b.textContent)),false);
 click('[data-a="fFechar"]');
 
 // ---- comprei um bem no cartão em 4x (TV) ----
 const plA=T.totais().pl, saiA=T.resumoMes(hojeYM).sai;
-click('[data-a="novo"]');click('[data-a="fTipo"][data-t="bem"]');
+abreFolha();click('[data-a="fTipo"][data-t="bem"]');
 eq("coluna da direita é 'Qual bem?'",/Qual bem\?/.test($(".th").textContent),true);
 click('[data-a="fBemNovo"]');digita("#bNome","TV");click('[data-a="bVar"][data-s="-1"]');$("#bTaxa").value="30";click('[data-a="bSalvar"]');
 const tv=S().contas.find(c=>c.nome==="TV");
@@ -72,7 +74,7 @@ eq("TV vale 2.000 e o cartão deve 2.000",[T.saldoConta(tv),T.saldoConta(S().con
 eq("parcelas da TV entram em contas a pagar",T.aPagar().filter(g=>g.conta.id==="c3").length,4);
 tudoFecha("após comprar bem");
 nav("inicio");const botao=[...d.querySelectorAll('[data-a="editar"]')].find(b=>b.dataset.id===lt.id);click(botao);
-eq("edição reabre como 'Comprei um bem' com 4 vezes",[$(".seg3 .b").getAttribute("aria-pressed"),$("#fNtxt").textContent],["true","4 vezes"]);
+eq("edição reabre como 'Comprei um bem' com 4 vezes",[/Comprei um bem/.test($("#folhaCorpo .capa h1").textContent),$("#fNtxt").textContent],[true,"4 vezes"]);
 click('[data-a="fFechar"]');
 
 // ---- atualizar o valor (TV vale menos) ----
@@ -140,7 +142,7 @@ eq("padrão é gasto",/O que é seu cai/.test($("#sRes").textContent),true);
 click('[data-a="sTipo"][data-b="1"]');
 eq("como bem, o é meu não cai",/não cai hoje/.test($("#sRes").textContent),true);
 click('[data-a="sComprar"]');
-eq("Vou comprar abre como 'Comprei um bem'",$(".seg3 .b").getAttribute("aria-pressed"),"true");
+eq("Vou comprar abre como 'Comprei um bem'",/Comprei um bem/.test($("#folhaCorpo .capa h1").textContent),true);
 click('[data-a="fFechar"]');
 
 // ---- backup e dados ruins ----

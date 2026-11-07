@@ -1,6 +1,6 @@
 # Arquitetura
 
-Como o app funciona por dentro. Estado descrito: **versão 1.9.0-beta.1** (a base de dados e o motor vêm da 1.0.0; as telas foram reorganizadas conforme `MAPA-DO-APP.md`).
+Como o app funciona por dentro. Estado descrito: **versão 1.10.0-beta.1** (a base de dados e o motor vêm da 1.0.0; as telas foram reorganizadas conforme `MAPA-DO-APP.md`).
 
 ## 1. Visão geral
 
@@ -16,7 +16,7 @@ app/
   sw.js                service worker (VERSAO = "caderneta-<versão>")
   manifest.webmanifest nome, cores, ícones
   icon.svg, icon-180/192/512.png, icon-maskable-512.png
-tests/                 preparar.js + rodar.js + 17 arquivos *.test.js (jsdom)
+tests/                 preparar.js + rodar.js + 19 arquivos *.test.js (jsdom)
 tools/                 servidor-local.js, gerar-icones.js
 ```
 
@@ -167,7 +167,7 @@ Ativo cresce a débito; passivo cresce a crédito. **Patrimônio líquido (PL) =
 
 - `npm test` → `tests/rodar.js`: **prepara uma cópia** do app em `tests/.tmp/app-teste.html` (com um gancho `window.__T` que expõe funções internas listadas em `tests/preparar.js`), confere a sintaxe do JS e roda cada `tests/*.test.js` em **jsdom**, simulando a pessoa: cliques, digitação, navegação.
 - Os testes ligam a classe `calmo` (sem esperas de animação). Animação, layout e toque **só se conferem no navegador/celular**.
-- Cobertura (490 verificações, 17 arquivos): fluxo básico, dívida por vencimento, pessoas/fixas/caixinhas/simulador, bens, juros, bem financiado, apagar, vocabulário (varre todas as telas atrás de jargão), "o que pagar no mês", caixinhas com dinheiro real, guardado por conta, cofres/setas, filtros de anotações, **segurança contra textos maliciosos (XSS)**. Os testes também conferem **invariantes** (partidas dobradas, ativo − passivo = PL, dinheiro = livre + guardado).
+- Cobertura (548 verificações, 19 arquivos; inclui planejar, anotar em dois toques, conta Dinheiro e mapa do app): fluxo básico, dívida por vencimento, pessoas/fixas/caixinhas/simulador, bens, juros, bem financiado, apagar, vocabulário (varre todas as telas atrás de jargão), "o que pagar no mês", caixinhas com dinheiro real, guardado por conta, cofres/setas, filtros de anotações, **segurança contra textos maliciosos (XSS)**. Os testes também conferem **invariantes** (partidas dobradas, ativo − passivo = PL, dinheiro = livre + guardado).
 - **Escrever um teste novo**: copie um arquivo parecido, mude o `seed` (dados iniciais no `localStorage`) e os passos; use `eq(nome, obtido, esperado)`; termine com `console.log(ok?"TUDO OK":"HÁ FALHAS")`. O corredor reconhece "OK", "FAIL" e "TUDO OK".
 
 ## 9. Publicação
@@ -176,9 +176,10 @@ GitHub Actions (`.github/workflows/publicar.yml`): a cada envio para `main`, rod
 
 ## O que mudou no código da 1.2 à 1.9 (resumo para quem lê)
 - **Telas**: `telaInicio` enxuta e `linhaFalta()` (uma linha que leva ao Planejar); `telaPlanejar` com `ferr()` (4 ferramentas no topo), `cartaoPagarInicio()` (cartão do mês com setas, `PAG_OFF`) e agenda recolhida (`AG_TODAS`, ação `agMais`); nova `telaMetas`; `telaContas` em 4 abas (`DIN_ABA`, ação `dinAba`); `telaRel` sem repetições; `telaAjustes` em 3 grupos (Aparência, Dados, Ajuda).
-- **Anotação rápida**: duas bolinhas `.bolinha` dentro de `nav .in` (ação `novoT`, que chama `novaFolha({tipo})`). O botão `.fab` (`novo`) continua.
+- **Anotar em dois toques**: o `.fab` (`novo`) alterna `fabMenu()`, que mostra `#fabMenu` com 4 bolinhas `.fb` (ação `novoT` abre `novaFolha({tipo})`). As bolinhas saem em leque por `transition` de `transform` com atraso (`--d`); `.calmo` desliga a animação. Na folha, `desenharFolha` mostra o título do tipo e 3 bolinhas `.tb` (ação `fTipo`); as colunas são montadas por `pintarColuna()` com `listaColuna()` (3 contas via `contasRapidas()` e favoritas em `S.config.favoritas`; 5 categorias via `catsRapidas()`; busca em `F.qE`/`F.qD`).
+- **Conta Dinheiro**: conta com `carteira:true` (uma só; `marcarCarteira()` marca uma conta chamada Dinheiro/Carteira em dados antigos e `finalizarOnb` cria a conta nova). Não se apaga (`gApagar` barra). `modalCarteira()` conta cédulas (`CED`), guarda `cedulas` e `contagem` e ajusta `inicial` para o saldo bater. `pintarArred()` sugere reais inteiros ao anotar com a carteira.
 - **Desfazer ao apagar**: `foto()` guarda uma cópia dos dados; `toastDesfazer()` mostra o botão por 8 s; ação `desfazer` restaura.
 - **Cores**: variáveis em `:root` (e nos 2 blocos do tema escuro). Cada cor tem um só significado (D40/D41): `--in` safira = entrou, `--out` bordô = saiu/dívida, `--tr` ardósia = compromisso fixo, `--am` ametista = guardado, `--cobre` = bens, `--latao`/`--sel` ouro = **selecionado**, `--capa` azul-noite = capa e botões. O verde **não** é usado. Cores de moedas e cofre estão nos desenhos da balança (`balanca()`).
 - **Removido**: os jeitos Razão e Cofre (D39) não existem mais; não há `config.jeito`.
-- **Testes**: 19 arquivos, 517 verificações; o teste 03 conta 5 botões de navegação + 2 bolinhas.
+- **Testes**: 19 arquivos, 548 verificações; o teste 03 conta 5 botões de navegação e 4 bolinhas no `#fabMenu`; os testes antigos abrem a folha por `abreFolha(tipo)` (toque no + e na bolinha).
 - **Versão**: 3 lugares sobem juntos (`package.json`, `VERSAO_APP`, `sw.js`).

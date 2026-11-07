@@ -1,6 +1,6 @@
 # Roteiro
 
-Onde estamos: **versão 1.9.0-beta.1**, publicada para testadores. App reorganizado (`MAPA-DO-APP.md`), com anotação rápida e paleta nova. **Ainda sem uso real por outras pessoas**: o que falta é pôr o app na mão de 3 a 5 pessoas (`GUIA-TESTADORES.md`).
+Onde estamos: **versão 1.10.0-beta.1** (a 1.9.0 está publicada para testadores). App reorganizado (`MAPA-DO-APP.md`), com anotar em dois toques, conta Dinheiro com cédulas e paleta nova. **Ainda sem uso real por outras pessoas**: o que falta é pôr o app na mão de 3 a 5 pessoas (`GUIA-TESTADORES.md`).
 Este documento diz **o que fazer a seguir, em que ordem e por quê**. Atualize-o a cada versão.
 
 ## Como priorizar
@@ -27,7 +27,7 @@ Este documento diz **o que fazer a seguir, em que ordem e por quê**. Atualize-o
 | Parcial | **Backup mais fácil**: lembrete a cada 7 dias (feito); falta botão "Guardar cópia" no Início quando fizer tempo; compartilhar direto por WhatsApp/e-mail | Perda de dados é o maior risco | Médio |
 | Alta | **Migração de hospedagem** para o **Cloudflare Pages** (D33), com domínio próprio (D34), **aviso de mudança de endereço** e botão de cópia no endereço antigo. Só antes de vender | Plano em `PUBLICACAO.md` | Médio |
 | ✅ 1.2.0 | **Início enxuto** (balança, resumo, uma linha "Falta pagar", avisos, 3 últimas anotações) | Feito; falta só confirmar com testadores se basta | Feito |
-| ✅ 1.9.0 | **Anotação rápida**: bolinhas Gastei e Recebi na barra de baixo | Feito; testar se as pessoas percebem que são botões | Feito |
+| ✅ 1.10.0 | **Anotar em dois toques**: o + gera 4 bolinhas; folha curta (Dinheiro + 3 favoritas, 5 categorias, busca); conta Dinheiro com cédulas e sugestão de reais inteiros | Feito; testar se as pessoas percebem as bolinhas e usam as favoritas | Feito |
 | Média | **Tour curto e dicas na primeira visita** de cada área (caixinhas, bens, pessoas) | Muitos conceitos para iniciantes | Médio |
 | Média | **Lembretes no calendário**: exportar vencimentos (arquivo `.ics`) para o calendário do celular | Resolve "sem notificação" sem servidor | Pequeno |
 | Média | **Receitas que se repetem** (salário fixo) | Hoje só gastos fixos | Médio |

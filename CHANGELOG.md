@@ -3,7 +3,16 @@
 Formato: versão semântica (`MAIOR.MENOR.CORREÇÃO`). Cada versão diz **o que mudou para a pessoa que usa**.
 Antes da 1.0.0 as versões eram numeradas só pelo nome do cache do app (v1 a v16); estão aqui como marcos de desenvolvimento.
 
+## [1.10.0-beta.1]: 7 de novembro de 2026 · anotar em dois toques, listas curtas e conta Dinheiro com cédulas
+- **Anotar em dois toques.** O botão **+** agora **gera 4 bolinhas com animação** (saem do botão em leque): **Gastei** (bordô), **Recebi** (azul), **Transferi entre contas** (ardósia) e **Comprei um bem** (cobre). O 1º toque gera as bolinhas, o 2º escolhe o tipo e abre a folha já nesse tipo. Tocar fora, no × ou em Esc fecha. (Substitui as 2 bolinhas fixas da 1.9.0.)
+- **Folha de anotar mais curta.** Saíram os 4 botões de tipo do topo. No lugar, **3 bolinhas** (os outros 3 tipos) no canto do cabeçalho, para trocar de tipo; o título mostra o tipo atual.
+- **Listas curtas com busca.** "De onde saiu" mostra a **Dinheiro + 3 contas** e "Para onde foi" mostra **5 categorias** (as mais usadas), cada uma com um campo de **busca** que olha todas. As 3 contas são as **favoritas** que a pessoa escolhe ("★ Escolher minhas 3 favoritas"); sem escolha, valem as mais usadas.
+- **Conta Dinheiro (a carteira).** Todo app novo já nasce com a conta **Dinheiro**; ela **não pode ser apagada**, só alterada. Dá para **contar as cédulas** de R$ 2, 5, 10, 20, 50, 100 e 200 (o saldo passa a valer o que foi contado, com confirmação). Contas antigas chamadas "Carteira" ou "Dinheiro" viram a carteira sozinhas.
+- **Sugestão de reais inteiros.** Ao anotar um valor com centavos na conta Dinheiro (ex.: R$ 3,25), o app **sugere arredondar**: "Para R$ 4,00", "Para R$ 3,00" ou "Manter R$ 3,25", para o saldo do dinheiro vivo não carregar moedas perdidas.
+- Novo teste de 44 verificações; testes antigos ajustados (548 verificações em 19 arquivos).
+
 ## [1.9.0-beta.1]: 7 de novembro de 2026 · anotação rápida: bolinhas Gastei e Recebi
+> *Histórico: as 2 bolinhas fixas foram substituídas na 1.10.0 pelo menu de 4 bolinhas que o botão + gera (D43).*
 - **Problema:** os botões "Gastei" e "Recebi" do Início pareciam texto, não botão, e só existiam nessa tela.
 - **Solução:** viraram **duas bolinhas na barra de baixo, sobre o botão + Anotar**: uma **bordô (Gastei)** e uma **azul (Recebi)**, com o nome escrito dentro. Aparecem em **todas as telas**, então dá para anotar logo ao abrir o app, sem procurar. Tocar numa bolinha abre a folha de anotar **já escolhida** em Gastei ou Recebi.
 - O botão **+ Anotar** do meio continua igual. Os botões saíram do Início (um só lugar).
