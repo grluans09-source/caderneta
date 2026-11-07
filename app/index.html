@@ -19,21 +19,21 @@
   --in:#1E3A8A; --in-bg:#E1E7F6; --out:#9B1C2E; --out-bg:#F4DDE0; --tr:#4B5675; --tr-bg:#E3E6EF;
   --ouro:#8A6410; --ouro-bg:#F3E8C6; --latao:#C79A2B; --capa:#111B34; --capa-ink:#F5F0E3;
   --btn:#111B34; --btn-ink:#F5F0E3; --sel:#F6EBC6; --margem:#B5495A; --shadow:0 2px 8px rgba(17,27,52,.12);
-  --am:#6B4E9B; --cobre:#B26A3C;
+  --am:#6B4E9B; --cobre:#B26A3C; --gasto-bg:#9B1C2E; --ganho-bg:#1E3A8A;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-tema="claro"]){
     --bg:#0B1020; --card:#141B32; --ink:#EDE6D3; --ink2:#B9BFD2; --ink3:#9098B2; --rule:#242C48; --rule2:#3A4463;
     --in:#93ABF5; --in-bg:#1E2A4A; --out:#F08A98; --out-bg:#3A1C25; --tr:#AEB8D6; --tr-bg:#222C45;
     --ouro:#E2B945; --ouro-bg:#3A3118; --latao:#E2B945; --capa:#070B18; --capa-ink:#EDE6D3;
-    --btn:#E2B945; --btn-ink:#0B1020; --sel:#33290E; --margem:#6B3A44; --shadow:none; --am:#A98BD6; --cobre:#CC8A56;
+    --btn:#E2B945; --btn-ink:#0B1020; --sel:#33290E; --margem:#6B3A44; --shadow:none; --am:#A98BD6; --cobre:#CC8A56; --gasto-bg:#C8465A; --ganho-bg:#4D7BC4;
   }
 }
 :root[data-tema="escuro"]{
   --bg:#0B1020; --card:#141B32; --ink:#EDE6D3; --ink2:#B9BFD2; --ink3:#9098B2; --rule:#242C48; --rule2:#3A4463;
   --in:#93ABF5; --in-bg:#1E2A4A; --out:#F08A98; --out-bg:#3A1C25; --tr:#AEB8D6; --tr-bg:#222C45;
   --ouro:#E2B945; --ouro-bg:#3A3118; --latao:#E2B945; --capa:#070B18; --capa-ink:#EDE6D3;
-  --btn:#E2B945; --btn-ink:#0B1020; --sel:#33290E; --margem:#6B3A44; --shadow:none; --am:#A98BD6; --cobre:#CC8A56;
+  --btn:#E2B945; --btn-ink:#0B1020; --sel:#33290E; --margem:#6B3A44; --shadow:none; --am:#A98BD6; --cobre:#CC8A56; --gasto-bg:#C8465A; --ganho-bg:#4D7BC4;
 }
 html{font-size:16px;-webkit-text-size-adjust:100%}
 html[data-tam="g"]{font-size:19px}
@@ -126,6 +126,16 @@ nav svg{width:1.6rem;height:1.6rem;fill:none;stroke:currentColor;stroke-width:1.
 nav .fab{align-items:center;opacity:1}
 nav .fab span.b{display:grid;place-items:center;width:3.6rem;height:3.6rem;border-radius:50%;background:var(--latao);color:#111B34;margin-top:-1.5rem;border:3px solid var(--capa);box-shadow:0 4px 12px rgba(0,0,0,.35);font-size:2rem;line-height:1;font-weight:400;transition:transform .15s}
 nav .fab:active span.b{transform:scale(.92)}
+nav .in{position:relative}
+/* anotação rápida: duas bolinhas sobre o botão Anotar (vermelha = gastei, azul = recebi) */
+nav .bolinha{position:absolute;top:-2.7rem;display:grid;place-items:center;width:3.3rem;height:3.3rem;min-height:0;padding:0;border-radius:50%;border:3px solid var(--capa);opacity:1;color:#fff;box-shadow:0 4px 10px rgba(0,0,0,.35);z-index:2}
+nav .bolinha span{font-size:.64rem;font-weight:800;letter-spacing:.01em;line-height:1}
+nav .b-gasto{left:calc(50% - 5.1rem);background:var(--gasto-bg)}
+nav .b-ganho{left:calc(50% + 1.8rem);background:var(--ganho-bg)}
+html[data-tam="gg"] nav .bolinha{width:3rem;height:3rem;top:-2.4rem}
+html[data-tam="gg"] nav .bolinha span{font-size:.56rem}
+nav .bolinha:active{transform:scale(.92)}
+nav .bolinha:focus-visible{outline:3px solid var(--latao);outline-offset:2px}
 nav .fab em{font-style:normal;font-weight:700;color:var(--capa-ink)}
 
 /* folha (anotar) */
@@ -361,8 +371,6 @@ svg.grafico{width:100%;height:auto;display:block}
 @media (prefers-reduced-motion:reduce){*,*:before{animation:none!important;transition:none!important}}
 html.calmo *,html.calmo *:before{animation:none!important;transition:none!important}
 /* ===== Jeitos de usar ===== */
-.rapidos{display:flex;gap:.6rem;margin:.9rem 0 0}
-.rapidos .btn{flex:1;margin:0}
 
 </style>
 </head>
@@ -374,6 +382,8 @@ html.calmo *,html.calmo *:before{animation:none!important;transition:none!import
   <button data-a="ir" data-v="inicio"><svg viewBox="0 0 24 24"><path d="M3 10.5 12 4l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/></svg><span class="lb">Início</span></button>
   <button data-a="ir" data-v="contas"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h4"/></svg><span class="lb">Dinheiro</span></button>
   <button class="fab" data-a="novo" aria-label="Anotar um gasto ou ganho"><span class="b" aria-hidden="true">+</span><em>Anotar</em></button>
+  <button class="bolinha b-gasto" data-a="novoT" data-t="saida" aria-label="Anotar um gasto: gastei"><span>Gastei</span></button>
+  <button class="bolinha b-ganho" data-a="novoT" data-t="entrada" aria-label="Anotar um ganho: recebi"><span>Recebi</span></button>
   <button data-a="ir" data-v="planejar"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M8 15h3"/></svg><span class="lb">Planejar</span></button>
   <button data-a="ir" data-v="mais"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg><span class="lb">Mais</span></button>
 </div></nav>
@@ -396,7 +406,7 @@ html.calmo *,html.calmo *:before{animation:none!important;transition:none!import
 /* ---------- utilidades ---------- */
 var KEY="caderneta:v2";
 /* versão do app (siga o CHANGELOG.md; subir junto com VERSAO em sw.js e "version" em package.json) */
-var VERSAO_APP="1.8.2-beta.1";
+var VERSAO_APP="1.9.0-beta.1";
 var RE_ID=/^[A-Za-z0-9_-]+$/, RE_DATA=/^\d{4}-\d{2}-\d{2}$/;
 var MES=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
 var MES3=["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
@@ -1207,7 +1217,6 @@ function telaInicio(){
     '<div class="grande'+(t.pl<0?" neg":"")+'" data-roll="'+t.pl+'" data-k="pl">'+esc(brl(t.pl))+'</div>'+
     balanca(t)+legendaBalanca(t)+'<button class="como" data-a="como">Como ler a balança?</button>'+
     '</div>'+
-    '<div class="rapidos"><button class="btn" data-a="novoT" data-t="saida">Gastei</button><button class="btn sec" data-a="novoT" data-t="entrada">Recebi</button></div>'+
     '<div class="tri" aria-label="Resumo de '+MES[d.getMonth()]+'">'+
       '<div class="e"><span>'+esc(v("entrou"))+'</span><b data-roll="'+r.ent+'" data-k="ent">+'+num(r.ent)+'</b></div>'+
       '<div class="s"><span>'+esc(v("saiu"))+'</span><b data-roll="'+r.sai+'" data-k="sai">−'+num(r.sai)+'</b></div>'+

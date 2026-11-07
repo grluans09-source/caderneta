@@ -16,6 +16,7 @@ Aplica as decisões Q1 a Q7 da [auditoria](AUDITORIA-FUNCOES.md), aceitas pelo d
 | **Início** | Como estou hoje? |
 | **Dinheiro** | Onde está meu dinheiro e o que eu devo? |
 | **+ Anotar** (botão do meio) | O que aconteceu agora? |
+| **Bolinhas Gastei (bordô) e Recebi (azul)**, sobre o + Anotar | Anotação rápida: abre a folha já em Gastei ou em Recebi. Aparecem em todas as telas |
 | **Planejar** | O que vem pela frente? |
 | **Mais** | Ver o histórico, os relatórios e ajustar o app |
 

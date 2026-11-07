@@ -3,6 +3,13 @@
 Formato: versão semântica (`MAIOR.MENOR.CORREÇÃO`). Cada versão diz **o que mudou para a pessoa que usa**.
 Antes da 1.0.0 as versões eram numeradas só pelo nome do cache do app (v1 a v16); estão aqui como marcos de desenvolvimento.
 
+## [1.9.0-beta.1]: 7 de novembro de 2026 · anotação rápida: bolinhas Gastei e Recebi
+- **Problema:** os botões "Gastei" e "Recebi" do Início pareciam texto, não botão, e só existiam nessa tela.
+- **Solução:** viraram **duas bolinhas na barra de baixo, sobre o botão + Anotar**: uma **bordô (Gastei)** e uma **azul (Recebi)**, com o nome escrito dentro. Aparecem em **todas as telas**, então dá para anotar logo ao abrir o app, sem procurar. Tocar numa bolinha abre a folha de anotar **já escolhida** em Gastei ou Recebi.
+- O botão **+ Anotar** do meio continua igual. Os botões saíram do Início (um só lugar).
+- As cores seguem a regra da D40: saiu = bordô, entrou = azul. Com letra Enorme as bolinhas ficam um pouco menores.
+- Novo teste (517 verificações em 19 arquivos).
+
 ## [1.8.2-beta.1]: 7 de novembro de 2026 · mapa de cores da aba Planejar
 A aba Planejar ganhou uma organização por cor, seguindo a regra "uma cor, um significado":
 - **As 4 ferramentas** têm uma faixa na cor do assunto: Metas do mês = bordô (limite do que sai), Caixinhas = ametista (guardado), Contas fixas = ardósia (compromisso fixo), Simulador = cobre (compra de bem).

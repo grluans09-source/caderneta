@@ -35,7 +35,7 @@ function invariante(n){
 }
 
 // ---- menu e R$ ----
-eq("5 botões no menu",d.querySelectorAll("nav button").length,5);
+eq("5 botões de navegação no menu (mais as 2 bolinhas de anotação rápida)",[d.querySelectorAll("nav button:not(.bolinha)").length,d.querySelectorAll("nav .bolinha").length],[5,2]);
 eq("menu: início, dinheiro, planejar, mais",[...d.querySelectorAll("nav button[data-v]")].map(b=>b.dataset.v),["inicio","contas","planejar","mais"]);
 nav("caixinhas");eq("caixinhas marca Planejar",$("nav [aria-current]").dataset.v,"planejar");
 nav("relatorios");eq("relatórios marca Mais",$("nav [aria-current]").dataset.v,"mais");
