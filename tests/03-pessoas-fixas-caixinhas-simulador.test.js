@@ -28,8 +28,8 @@ const S=()=>T.S();
 d.documentElement.classList.add("calmo");
 function nav(v){
   if(["caixinhas","fixas","simulador"].includes(v))click('nav [data-v="planejar"]');
-  if(["relatorios","ajustes"].includes(v))click('nav [data-v="mais"]');
-  if(["caixinhas","fixas","simulador","relatorios","ajustes"].includes(v))click(`#tela [data-a="ir"][data-v="${v}"]`);else click(`nav [data-v="${v}"]`);
+  if(["ajustes"].includes(v))click('nav [data-v="mais"]');
+  if(["caixinhas","fixas","simulador","ajustes"].includes(v))click(`#tela [data-a="ir"][data-v="${v}"]`);else click(`nav [data-v="${v}"]`);
 }
 function invariante(n){
   const t=T.totais();eq("invariante dinheiro nas contas = livre + guardado "+n,T.dinheiroEmConta(),T.livreAgora()+T.totalReservado());
@@ -37,7 +37,7 @@ function invariante(n){
 }
 
 // ---- menu e R$ ----
-eq("7 botões no menu (6 abas e o +), e o + abre as 4 bolinhas de tipo",[d.querySelectorAll("nav button").length,d.querySelectorAll("#fabMenu .fb").length],[7,4]);
+eq("6 abas na barra de baixo, o + fica solto no canto e abre as 4 bolinhas de tipo",[d.querySelectorAll("nav button").length,!!d.querySelector("body > .fab"),!d.querySelector("nav .fab"),d.querySelectorAll("#fabMenu .fb").length],[6,true,true,4]);
 eq("menu: início, dinheiro, planejar, gráficos, relatórios, mais",[...d.querySelectorAll("nav button[data-v]")].map(b=>b.dataset.v),["inicio","contas","planejar","graficos","relatorios","mais"]);
 nav("caixinhas");eq("caixinhas marca Planejar",$("nav [aria-current]").dataset.v,"planejar");
 nav("relatorios");eq("relatórios tem a sua própria aba",$("nav [aria-current]").dataset.v,"relatorios");

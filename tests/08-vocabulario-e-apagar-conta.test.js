@@ -35,8 +35,8 @@ const textos=[];
 function colhe(rot){textos.push([rot,($("#tela").textContent+" "+$("#folha").textContent+" "+$("#modal").textContent+" "+$("#onb").textContent+" "+$("#toast").textContent)])}
 function nav(v){
   if(["caixinhas","fixas","simulador"].includes(v))click('nav [data-v="planejar"]');
-  if(["relatorios","ajustes"].includes(v))click('nav [data-v="mais"]');
-  if(["caixinhas","fixas","simulador","relatorios","ajustes"].includes(v))click('#tela [data-a="ir"][data-v="'+v+'"]');else click('nav [data-v="'+v+'"]');
+  if(["ajustes"].includes(v))click('nav [data-v="mais"]');
+  if(["caixinhas","fixas","simulador","ajustes"].includes(v))click('#tela [data-a="ir"][data-v="'+v+'"]');else click('nav [data-v="'+v+'"]');
 }
 // ---- varredura de vocabulário em todas as telas e janelas ----
 ["inicio","contas","planejar","caixinhas","fixas","simulador","mais","relatorios","ajustes"].forEach(v=>{nav(v);colhe(v)});

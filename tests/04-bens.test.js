@@ -23,8 +23,8 @@ const S=()=>T.S();
 d.documentElement.classList.add("calmo");
 function nav(v){
   if(["caixinhas","fixas","simulador"].includes(v))click('nav [data-v="planejar"]');
-  if(["relatorios","ajustes"].includes(v))click('nav [data-v="mais"]');
-  if(["caixinhas","fixas","simulador","relatorios","ajustes"].includes(v))click('#tela [data-a="ir"][data-v="'+v+'"]');else click('nav [data-v="'+v+'"]');
+  if(["ajustes"].includes(v))click('nav [data-v="mais"]');
+  if(["caixinhas","fixas","simulador","ajustes"].includes(v))click('#tela [data-a="ir"][data-v="'+v+'"]');else click('nav [data-v="'+v+'"]');
 }
 function tudoFecha(n){
   const t=T.totais();

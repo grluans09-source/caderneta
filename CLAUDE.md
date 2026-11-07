@@ -4,9 +4,9 @@
 > aqui estão **as regras e o jeito de trabalhar**. O resto está em `docs/` (veja a tabela no fim).
 
 ## Em que pé estamos
-- **Versão 1.12.0-beta.1** (7 nov 2026): app reorganizado (`docs/MAPA-DO-APP.md`), só com a interface Balança (D39), paleta **preto, dourado e branco** (D44), anotar em dois toques (D43), conta Dinheiro com cédulas, **abas Gráficos e Relatórios com 9 indicadores** (D45) acerto de contas no Planejar (D46), busca com lista completa e categorias favoritas (D47), bolinhas em círculo e seletor de tipo na folha (D48) e visual "vivo" com animações (D49). **Próximo (desenho decidido, ainda sem código):** investimentos, caixinhas que rendem e nova aba (D50). **Ainda sem teste com pessoas reais em celular.**
+- **Versão 1.13.0-beta.1** (7 nov 2026): app reorganizado (`docs/MAPA-DO-APP.md`), só com a interface Balança (D39), paleta **preto, dourado e branco** (D44), anotar em dois toques (D43), conta Dinheiro com cédulas, **abas Gráficos e Relatórios com 9 indicadores** (D45) acerto de contas no Planejar (D46), busca com lista completa e categorias favoritas (D47), seletor de tipo na folha (D48) visual "vivo" com animações (D49) e botão + solto no canto direito, com novidades que chegam a quem já usa o app (D51). **Próximo (desenho decidido, ainda sem código):** investimentos, caixinhas que rendem e nova aba (D50). **Ainda sem teste com pessoas reais em celular.**
 - App no ar em https://grluans09-source.github.io/caderneta/ (GitHub Pages, publicado por GitHub Actions a partir da pasta `app/`).
-- 1 arquivo de app (`app/index.html`, ~2.400 linhas), 20 arquivos de teste (606 verificações) que rodam com `npm test`.
+- 1 arquivo de app (`app/index.html`, ~2.400 linhas), 21 arquivos de teste (620 verificações) que rodam com `npm test`.
 - Próximos passos em `docs/ROTEIRO.md`. Estado, riscos e dívidas em `docs/AVALIACAO.md`.
 
 ## Quem é o dono e como falar com ele

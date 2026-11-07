@@ -122,7 +122,7 @@ click('nav [data-v="mais"]');
 eq("o menu Mais tem o atalho Anotações",!!$('#tela [data-a="ir"][data-v="anotacoes"]'),true);
 click('#tela [data-a="ir"][data-v="anotacoes"]');
 eq("voltando de Mais, o botão volta para Mais",$(".capa .volta2").dataset.v,"mais");
-click('nav [data-v="mais"]');click('#tela [data-a="ir"][data-v="relatorios"]');
+click('nav [data-v="relatorios"]');
 eq("Relatórios NÃO repete a lista de anotações (ela mora em Mais > Anotações)",[!!$("#fBusca"),!!$('[data-a="anOrdem"]'),$("#anotLista")===null],[false,false,true]);
 // vocabulário
 eq("a tela nova não usa jargão",/gaveta|lançamento|projeção/i.test($("#tela").textContent),false);

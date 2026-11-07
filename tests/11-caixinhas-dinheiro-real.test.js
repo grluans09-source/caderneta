@@ -27,8 +27,8 @@ const S=()=>T.S();
 d.documentElement.classList.add("calmo");
 function nav(v){
   if(["caixinhas"].includes(v))click('nav [data-v="planejar"]');
-  if(["relatorios","ajustes"].includes(v))click('nav [data-v="mais"]');
-  if(["caixinhas","relatorios","ajustes"].includes(v))click('#tela [data-a="ir"][data-v="'+v+'"]');else click('nav [data-v="'+v+'"]');
+  if(["ajustes"].includes(v))click('nav [data-v="mais"]');
+  if(["caixinhas","ajustes"].includes(v))click('#tela [data-a="ir"][data-v="'+v+'"]');else click('nav [data-v="'+v+'"]');
 }
 
 // ---- só conta o dinheiro que existe nas contas ----

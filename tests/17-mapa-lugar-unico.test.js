@@ -47,7 +47,7 @@ click('nav [data-v="planejar"]');click('#tela [data-a="ir"][data-v="fixas"]');
 eq("Contas fixas é só cadastro (sem 'Para pagar agora')",!/Para pagar agora/.test($("#tela").textContent),true);
 
 // ---- Relatórios sem repetição ----
-click('nav [data-v="mais"]');click('#tela [data-a="ir"][data-v="relatorios"]');
+click('nav [data-v="relatorios"]');
 const rel=$("#tela").textContent;
 eq("Relatórios tem o panorama e um relatório para cada um dos 9 indicadores, sem repetir o que já mora em outras telas",/Seu panorama/.test(rel)&&d.querySelectorAll("#tela .rel-item").length===9&&!/O que pagar em/.test(rel)&&!/Contas a pagar/.test(rel)&&!/Anotações do mês/.test(rel),true);
 

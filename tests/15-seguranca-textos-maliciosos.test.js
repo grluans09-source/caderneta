@@ -38,8 +38,8 @@ function varre(rot){
 }
 function nav(v){
   if(["caixinhas","metas","fixas","simulador"].includes(v))click('nav [data-v="planejar"]');
-  if(["relatorios","ajustes","anotacoes"].includes(v))click('nav [data-v="mais"]');
-  if(["caixinhas","metas","fixas","simulador","relatorios","ajustes","anotacoes"].includes(v))click('#tela [data-a="ir"][data-v="'+v+'"]');else click('nav [data-v="'+v+'"]');
+  if(["ajustes","anotacoes"].includes(v))click('nav [data-v="mais"]');
+  if(["caixinhas","metas","fixas","simulador","ajustes","anotacoes"].includes(v))click('#tela [data-a="ir"][data-v="'+v+'"]');else click('nav [data-v="'+v+'"]');
 }
 ["inicio","contas","planejar","caixinhas","metas","fixas","simulador","mais","anotacoes","relatorios","ajustes"].forEach(v=>{nav(v);varre("tela "+v)});
 ["dividas","bens","pessoas","contas"].forEach(t=>{nav("contas");click('[data-a="dinAba"][data-v="'+t+'"]');varre("dinheiro aba "+t)});
@@ -73,7 +73,7 @@ inp.dispatchEvent(new w.Event("change",{bubbles:true}));
 setTimeout(()=>{
   click('[data-a="mOk"]');
   const S=w.__T.S();
-  eq("backup adulterado: conta com id malicioso foi descartada",S.contas.map(c=>c.id),["ok1"]);
+  eq("backup adulterado: conta com id malicioso foi descartada",S.contas.filter(c=>!c.carteira).map(c=>c.id),["ok1"]);
   nav("contas");varre("depois do backup adulterado");
   /* controle: o texto malicioso aparece na tela COMO TEXTO (prova que o teste enxerga o conteúdo) */
 nav("contas");eq("o texto malicioso é mostrado como texto comum (não como HTML)",$("#tela").textContent.includes("<img src=x onerror"),true);

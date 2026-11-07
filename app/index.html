@@ -42,7 +42,7 @@ html[data-tam="g"]{font-size:19px}
 html[data-tam="gg"]{font-size:22px}
 *{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
 body{background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.4;
-  padding-bottom:calc(6.5rem + env(safe-area-inset-bottom));min-height:100vh}
+  padding-bottom:calc(9.5rem + env(safe-area-inset-bottom));min-height:100vh}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-align:inherit}
 input,select{font:inherit;color:var(--ink)}
 :focus-visible{outline:3px solid var(--in);outline-offset:2px}
@@ -125,11 +125,11 @@ nav .in{max-width:32rem;margin:0 auto;display:grid;grid-template-columns:1fr 1fr
 nav button{display:flex;flex-direction:column;align-items:center;gap:.15rem;padding:.55rem 0 .5rem;font-size:.66rem;color:var(--capa-ink);opacity:.78;min-height:3.6rem;text-align:center}
 nav button[aria-current="page"]{opacity:1;font-weight:700;color:var(--latao)}
 nav svg{width:1.6rem;height:1.6rem;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-nav .fab{align-items:center;opacity:1}
-nav .fab span.b{display:grid;place-items:center;width:3.6rem;height:3.6rem;border-radius:50%;background:var(--latao);color:#0A0A0A;margin-top:-1.5rem;border:3px solid var(--capa);box-shadow:0 4px 12px rgba(0,0,0,.35);font-size:2rem;line-height:1;font-weight:400;transition:transform .15s}
-nav .fab:active span.b{transform:scale(.92)}
+.fab{align-items:center;opacity:1}
+.fab span.b{display:grid;place-items:center;width:3.6rem;height:3.6rem;border-radius:50%;background:var(--latao);color:#0A0A0A;margin-top:-1.5rem;border:3px solid var(--capa);box-shadow:0 4px 12px rgba(0,0,0,.35);font-size:2rem;line-height:1;font-weight:400;transition:transform .15s}
+.fab:active span.b{transform:scale(.92)}
 nav .in{position:relative}
-nav .fab em{font-style:normal;font-weight:700;color:var(--capa-ink)}
+.fab em{font-style:normal;font-weight:700;color:var(--capa-ink)}
 
 /* folha (anotar) */
 .folha{position:fixed;inset:0;background:var(--bg);z-index:40;overflow-y:auto;display:none;padding-bottom:3rem}
@@ -175,8 +175,8 @@ nav .fab em{font-style:normal;font-weight:700;color:var(--capa-ink)}
 .legenda-ag .k-fixa:before{background:var(--tr)}
 .legenda-ag .k-receber:before{background:var(--in)}
 /* Anotar em dois toques: o botão + abre 4 bolinhas, uma por tipo de anotação */
-nav .fab span.b{transition:transform .3s ease}
-nav .fab.aberto span.b{transform:rotate(45deg)}
+.fab span.b{transition:transform .3s ease}
+.fab.aberto span.b{transform:rotate(45deg)}
 /* folha: 3 bolinhas para trocar de tipo */
 .capa.f h1{font-size:1.2rem}
 /* folha: listas curtas e busca */
@@ -398,7 +398,7 @@ html.calmo *,html.calmo *:before{animation:none!important;transition:none!import
 .ag .lanc:after{content:none}
 h2{border-bottom:1px solid var(--latao)}
 :focus-visible{outline:3px solid var(--latao)}
-nav .fab span.b{background:linear-gradient(#EAD27A,#C9A227);color:#0A0A0A;border-color:var(--capa)}
+.fab span.b{background:linear-gradient(#EAD27A,#C9A227);color:#0A0A0A;border-color:var(--capa)}
 .capa{border-bottom:3px solid var(--latao)}
 /* Planejar: ferramentas e acerto de contas */
 .ferrs{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin:.6rem 0 .2rem}
@@ -443,7 +443,7 @@ html[data-tam="g"] .ac-v,html[data-tam="gg"] .ac-v,html[data-tam="g"] .ac-b,html
 .ac-pagas .ac-row{opacity:.8}
 .ac-pagas .ac-v{color:var(--ink2)}
 /* ===== Gráficos e Relatórios ===== */
-html[data-tam="g"] nav button:not(.fab):not([aria-current="page"]) .lb,html[data-tam="gg"] nav button:not(.fab):not([aria-current="page"]) .lb{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+html[data-tam="g"] nav button:not([aria-current="page"]) .lb,html[data-tam="gg"] nav button:not([aria-current="page"]) .lb{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 nav button{position:relative}
 .selo{display:inline-flex;align-items:center;gap:.3rem;padding:.2rem .55rem;border-radius:.3rem;font-size:.74rem;font-weight:800;letter-spacing:.02em;white-space:nowrap;flex:none}
 .selo i{font-style:normal}
@@ -495,7 +495,7 @@ nav button{position:relative}
 .rel-ul{padding-left:1.2rem;line-height:1.5}
 .rel-ul li{margin-bottom:.4rem}
 /* ===== Visual vivo: formas gordinhas e redondas, ícones cheios e movimento com propósito ===== */
-/* --- bolinhas do + : um círculo exato, simétrico (4 pontos a 22,5°, 67,5°, 112,5° e 157,5°) --- */
+/* --- bolinhas do + : as regras de baixo (quarto de círculo a partir do canto direito) valem no lugar destas --- */
 .fabmenu{--R:7.2rem;position:fixed;inset:0;z-index:19;pointer-events:none}
 html[data-tam="g"] .fabmenu{--R:6.4rem}
 html[data-tam="gg"] .fabmenu{--R:5.5rem}
@@ -515,8 +515,8 @@ html[data-tam="gg"] .fb{width:3.1rem;height:3.1rem;margin:-1.55rem 0 0 -1.55rem}
 .fb:focus-visible .fbc{outline:3px solid var(--latao);outline-offset:3px}
 .fb.atual{pointer-events:none!important;opacity:.4!important;filter:grayscale(.7)}
 .fb.atual .fbl:after{content:" (você está aqui)";font-weight:600;display:block}
-nav .fab span.b{transition:transform .3s ease}
-nav .fab.aberto span.b{transform:rotate(45deg);animation:none}
+.fab span.b{transition:transform .3s ease}
+.fab.aberto span.b{transform:rotate(45deg);animation:none}
 /* --- seletor de tipo dentro da folha: botão fixo embaixo, no centro --- */
 .dock{position:fixed;left:50%;bottom:calc(1rem + env(safe-area-inset-bottom));margin-left:-1.9rem;width:3.8rem;height:3.8rem;z-index:96;display:grid;place-items:center;border-radius:50%;border:4px solid #fff;color:#fff;font-size:2rem;font-weight:800;line-height:1;box-shadow:0 6px 0 rgba(0,0,0,.3),0 12px 22px rgba(0,0,0,.35);transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
 .dock.dk-gasto{background:var(--gasto-bg)}.dock.dk-ganho{background:var(--ganho-bg)}.dock.dk-transf{background:var(--tr)}.dock.dk-bem{background:var(--cobre)}
@@ -531,7 +531,7 @@ nav button[aria-current="page"] .ic{background:rgba(201,162,39,.26);transform:tr
 html[data-tam="g"] nav svg,html[data-tam="gg"] nav svg{width:1.35rem;height:1.35rem}
 nav button.pop .ic svg{animation:pop .55s cubic-bezier(.3,1.6,.5,1)}
 @keyframes pop{0%{transform:scale(.55) rotate(-16deg)}55%{transform:scale(1.28) rotate(7deg)}100%{transform:none}}
-nav .fab span.b{animation:respira 3.8s ease-in-out infinite;border-width:4px;box-shadow:0 5px 0 rgba(0,0,0,.35),0 8px 16px rgba(0,0,0,.35)}
+.fab span.b{animation:respira 3.8s ease-in-out infinite;border-width:4px;box-shadow:0 5px 0 rgba(0,0,0,.35),0 8px 16px rgba(0,0,0,.35)}
 @keyframes respira{0%,70%,100%{box-shadow:0 5px 0 rgba(0,0,0,.35),0 0 0 0 rgba(201,162,39,.0)}82%{box-shadow:0 5px 0 rgba(0,0,0,.35),0 0 0 .8rem rgba(201,162,39,.28)}}
 /* --- formas mais grossas e redondas --- */
 .wrap:before{display:none}
@@ -583,6 +583,22 @@ h2:after{content:"";position:absolute;left:0;bottom:0;width:2.8rem;height:.32rem
 @keyframes spT{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @keyframes spSai{to{opacity:0;visibility:hidden}}
 html.calmo #splash{display:none}
+/* ===== botão + no canto direito de baixo, logo acima da barra; bolinhas em quarto de círculo (esquerda e para cima) ===== */
+nav .in{grid-template-columns:repeat(6,1fr)}
+.fab{position:fixed;right:1rem;bottom:calc(4.7rem + env(safe-area-inset-bottom));z-index:21;display:flex;flex-direction:row-reverse;align-items:center;gap:.5rem;padding:0;opacity:1}
+.fab span.b{margin-top:0}
+.fab em{font-style:normal;font-weight:800;font-size:.8rem;background:var(--capa);color:var(--capa-ink);border:2px solid var(--latao);border-radius:999px;padding:.2rem .7rem;box-shadow:0 3px 8px rgba(0,0,0,.3)}
+.fab.aberto em{display:none}
+.fabmenu{--R:8.5rem}
+html[data-tam="g"] .fabmenu{--R:8rem}
+html[data-tam="gg"] .fabmenu{--R:7.2rem}
+.fabarco{left:auto;right:calc(1rem + 1.8rem);bottom:calc(4.7rem + 1.8rem + env(safe-area-inset-bottom))}
+.fabmenu.emfolha .fabarco{right:calc(1rem + 1.9rem);bottom:calc(1rem + 1.9rem + env(safe-area-inset-bottom))}
+.fbl{top:50%;left:auto;right:100%;transform:translateY(-50%);margin:0 .55rem 0 0;text-align:right}
+.fb-bem .fbl{top:auto;bottom:100%;right:0;transform:none;margin:0 0 .45rem 0}
+.dock{left:auto;right:1rem;margin-left:0}
+html[data-tam="gg"] .fbl{font-size:.68rem;max-width:4.4rem}
+html[data-tam="g"] .fbl{max-width:4.8rem}
 </style>
 </head>
 <body>
@@ -594,19 +610,19 @@ html.calmo #splash{display:none}
   <button data-a="ir" data-v="inicio"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 2.6 2.5 11.1a1.25 1.25 0 0 0 .8 2.2H4V19a2.4 2.4 0 0 0 2.4 2.4h3.2v-5a2.4 2.4 0 0 1 4.8 0v5h3.2A2.4 2.4 0 0 0 20 19v-5.7h.7a1.25 1.25 0 0 0 .8-2.2z"/></svg></span><span class="lb">Início</span></button>
   <button data-a="ir" data-v="contas"><span class="ic"><svg viewBox="0 0 24 24"><rect x="2.4" y="5" width="19.2" height="15" rx="4.6"/><circle class="cut" cx="16.6" cy="12.5" r="2.7"/><rect class="acc cut" x="5.4" y="8.4" width="7" height="2.2" rx="1.1"/></svg></span><span class="lb">Dinheiro</span></button>
   <button data-a="ir" data-v="planejar"><span class="ic"><svg viewBox="0 0 24 24"><rect x="2.8" y="4.6" width="18.4" height="16.8" rx="4.6"/><path class="acc cut" d="M2.8 9.2h18.4V9a4.4 4.4 0 0 0-4.4-4.4H7.2A4.4 4.4 0 0 0 2.8 9z"/><rect x="7" y="2.2" width="2.8" height="5.2" rx="1.4"/><rect x="14.2" y="2.2" width="2.8" height="5.2" rx="1.4"/><circle class="cut" cx="8" cy="14.8" r="1.55"/><circle class="cut" cx="12" cy="14.8" r="1.55"/><circle class="cut" cx="16" cy="14.8" r="1.55"/></svg></span><span class="lb">Planejar</span></button>
-  <button class="fab" data-a="novo" aria-label="Anotar: escolher o tipo" aria-haspopup="true" aria-expanded="false"><span class="b" aria-hidden="true">+</span><em>Anotar</em></button>
   <button data-a="ir" data-v="graficos"><span class="ic"><svg viewBox="0 0 24 24"><rect x="3.2" y="11" width="5.2" height="10" rx="2.6"/><rect class="acc" x="9.4" y="3.2" width="5.2" height="17.8" rx="2.6"/><rect x="15.6" y="8" width="5.2" height="13" rx="2.6"/></svg></span><span class="lb">Gráficos</span></button>
   <button data-a="ir" data-v="relatorios"><span class="ic"><svg viewBox="0 0 24 24"><path d="M7 2.4h6.7l6 6V18.4a3.2 3.2 0 0 1-3.2 3.2H7a3.2 3.2 0 0 1-3.2-3.2V5.6A3.2 3.2 0 0 1 7 2.4z"/><path class="acc cut" d="M13.7 2.4V6a2.4 2.4 0 0 0 2.4 2.4h3.6z"/><rect class="cut" x="7.2" y="12" width="9.6" height="2.3" rx="1.15"/><rect class="cut" x="7.2" y="16.2" width="6.2" height="2.3" rx="1.15"/></svg></span><span class="lb">Relatórios</span></button>
   <button data-a="ir" data-v="mais"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="2.6"/><circle cx="12" cy="12" r="2.6"/><circle cx="19" cy="12" r="2.6"/></svg></span><span class="lb">Mais</span></button>
 </div></nav>
+<button class="fab" data-a="novo" aria-label="Anotar: escolher o tipo" aria-haspopup="true" aria-expanded="false"><em>Anotar</em><span class="b" aria-hidden="true">+</span></button>
 
 <div class="fabmenu" id="fabMenu" aria-hidden="true">
   <div class="fabfundo" data-a="fabFecha"></div>
   <div class="fabarco" role="group" aria-label="O que aconteceu?">
-    <button class="fb fb-gasto" style="--cx:-0.9239;--cy:0.3827;--d:0ms" data-a="novoT" data-t="saida" tabindex="-1"><span class="fbc">−</span><span class="fbl">Gastei</span></button>
-    <button class="fb fb-ganho" style="--cx:-0.3827;--cy:0.9239;--d:55ms" data-a="novoT" data-t="entrada" tabindex="-1"><span class="fbc">+</span><span class="fbl">Recebi</span></button>
-    <button class="fb fb-transf" style="--cx:0.3827;--cy:0.9239;--d:110ms" data-a="novoT" data-t="transferencia" tabindex="-1"><span class="fbc">⇄</span><span class="fbl">Transferi entre contas</span></button>
-    <button class="fb fb-bem" style="--cx:0.9239;--cy:0.3827;--d:165ms" data-a="novoT" data-t="bem" tabindex="-1"><span class="fbc">⌂</span><span class="fbl">Comprei um bem</span></button>
+    <button class="fb fb-gasto" style="--cx:-1;--cy:0;--d:0ms" data-a="novoT" data-t="saida" tabindex="-1"><span class="fbc">−</span><span class="fbl">Gastei</span></button>
+    <button class="fb fb-ganho" style="--cx:-0.866;--cy:0.5;--d:55ms" data-a="novoT" data-t="entrada" tabindex="-1"><span class="fbc">+</span><span class="fbl">Recebi</span></button>
+    <button class="fb fb-transf" style="--cx:-0.5;--cy:0.866;--d:110ms" data-a="novoT" data-t="transferencia" tabindex="-1"><span class="fbc">⇄</span><span class="fbl">Transferi entre contas</span></button>
+    <button class="fb fb-bem" style="--cx:0;--cy:1;--d:165ms" data-a="novoT" data-t="bem" tabindex="-1"><span class="fbc">⌂</span><span class="fbl">Comprei um bem</span></button>
   </div>
 </div>
 
@@ -629,7 +645,7 @@ html.calmo #splash{display:none}
 /* ---------- utilidades ---------- */
 var KEY="caderneta:v2";
 /* versão do app (siga o CHANGELOG.md; subir junto com VERSAO em sw.js e "version" em package.json) */
-var VERSAO_APP="1.12.0-beta.1";
+var VERSAO_APP="1.13.0-beta.1";
 var RE_ID=/^[A-Za-z0-9_-]+$/, RE_DATA=/^\d{4}-\d{2}-\d{2}$/;
 var MES=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
 var MES3=["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
@@ -689,6 +705,7 @@ var S={contas:[],categorias:[],lancamentos:[],fixas:[],caixas:[],reservas:[],
   config:{tamanho:"m",tema:"auto",contador:false,ultimoBackup:null,pronto:false,movimento:"vivo",renda:0,sobraRef:null,favoritas:[],favCats:[]}};
 
 /* valida qualquer dado vindo do armazenamento ou de um backup */
+var CARTEIRA_NOVA=false;
 function higienizar(p){
   var out={contas:[],categorias:[],lancamentos:[],fixas:[],caixas:[],reservas:[],perdidos:0};
   function id(x){return typeof x==="string"&&RE_ID.test(x)}
@@ -787,9 +804,14 @@ function carregar(){
   try{
     var p=JSON.parse(raw);
     if(!ehObj(p))throw new Error("formato");
+    CARTEIRA_NOVA=false;
     var h=higienizar(p);
     S.contas=h.contas;S.categorias=h.categorias;S.lancamentos=h.lancamentos;S.fixas=h.fixas;S.caixas=h.caixas;S.reservas=h.reservas;
     S.config=higienizarConfig(p.config);
+    if(CARTEIRA_NOVA){
+      CARTEIRA_NOVA=false; if(S.config.pronto)salvar();
+      setTimeout(function(){toast("Novidade: criei a conta Dinheiro, para o dinheiro que você leva na carteira.")},900);
+    }
     if(h.perdidos){
       lsSet(KEY+":corrompido",raw);
       setTimeout(function(){toast(h.perdidos+" item(ns) com problema foram ignorados. Guardei uma cópia do original.")},400);
@@ -1485,7 +1507,7 @@ function fabMenu(abrir){
   var m=$("#fabMenu"); if(!m)return;
   var on=abrir===undefined?!m.classList.contains("on"):abrir, dock=!!(FOLHA_ABERTA&&F);
   m.classList.toggle("on",on); m.classList.toggle("emfolha",dock); m.setAttribute("aria-hidden",String(!on));
-  var f=document.querySelector("nav .fab"); if(f){f.setAttribute("aria-expanded",String(on&&!dock));f.classList.toggle("aberto",on&&!dock)}
+  var f=document.querySelector(".fab"); if(f){f.setAttribute("aria-expanded",String(on&&!dock));f.classList.toggle("aberto",on&&!dock)}
   var dk=$("#dockTipo"); if(dk){dk.setAttribute("aria-expanded",String(on&&dock));dk.classList.toggle("aberto",on&&dock)}
   atualizarDock();
   document.querySelectorAll("#fabMenu .fb").forEach(function(b){var at=on&&dock&&F.tipo===b.dataset.t; b.classList.toggle("atual",at); b.setAttribute("aria-disabled",String(at)); b.tabIndex=on&&!at?0:-1});
@@ -1500,7 +1522,13 @@ function marcarCarteira(arr){
   if(ja.length)return;
   var nomes=["dinheiro","carteira","dinheiro vivo","dinheiro em especie"];
   var c=arr.filter(function(x){return x.tipo==="ativo"&&!x.pessoa&&!x.bem&&nomes.indexOf(norm(x.nome))>=0})[0];
-  if(c)c.carteira=true;
+  if(c){c.carteira=true;return}
+  /* quem já tinha o app antes da conta Dinheiro existir também ganha a carteira (sem tocar no que já tem) */
+  if(!arr.length)return;
+  var usados=arr.map(function(x){return norm(x.nome)});
+  var nome=["Dinheiro","Dinheiro vivo","Carteira"].filter(function(n){return usados.indexOf(norm(n))<0})[0]||"Dinheiro na mão";
+  arr.unshift({id:uid(),nome:nome,tipo:"ativo",inicial:0,carteira:true});
+  CARTEIRA_NOVA=true;
 }
 
 /* ---------- listas curtas na folha ---------- */
@@ -2556,7 +2584,6 @@ function atalho(v,t,s){return '<button class="atalho" data-a="ir" data-v="'+v+'"
 function telaMais(){
   return capa("Tudo o resto","Mais")+'<p class="sub lead">Ver o que você anotou, entender o mês e ajustar o app.</p><div>'+
     atalho("anotacoes","Anotações","Procure e ordene por data, valor ou nome")+
-    atalho("relatorios","Relatórios","Um relatório para cada indicador, explicado como um consultor")+
     atalho("ajustes","Ajustes","Letra, cores, movimento, categorias e cópia dos dados")+'</div>';
 }
 var AG_TODAS=false;

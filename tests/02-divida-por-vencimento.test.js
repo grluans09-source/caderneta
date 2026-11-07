@@ -11,7 +11,7 @@ function click(sel){let el=typeof sel==="string"?$(sel):sel;
   if(!el)throw new Error("sem elemento "+sel);el.click()}
 function digita(el,txt){el.value=txt;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
 const S=()=>T.S();
-function irV(v){if(v==='caixinhas'||v==='fixas'||v==='simulador')click('[data-a="ir"][data-v="planejar"]');if(v==='relatorios'||v==='ajustes')click('[data-a="ir"][data-v="mais"]');click('[data-a="ir"][data-v="'+v+'"]')}
+function irV(v){if(v==='caixinhas'||v==='fixas'||v==='simulador')click('[data-a="ir"][data-v="planejar"]');if(v==='ajustes')click('[data-a="ir"][data-v="mais"]');click('[data-a="ir"][data-v="'+v+'"]')}
 d.documentElement.classList.add("calmo");
 
 // primeiro uso: cartão devendo 190 (vence 05/11) + 15 (vence 05/12)
@@ -67,6 +67,6 @@ eq("planejar mostra 'sem data'",/sem data/.test($("#tela").textContent),true);
 const h=T.higienizar(JSON.parse(JSON.stringify(S())));
 eq("higienizar mantém abertas",h.contas.find(c=>c.nome==="Nubank").abertas,[{data:"2026-12-05",valor:1500}]);
 const adulterado=T.higienizar({contas:[{id:"x",nome:"X",tipo:"passivo",inicial:99999,abertas:[{data:"2026-01-01",valor:100},{data:"lixo",valor:5}]}]});
-eq("inicial acompanha a soma das abertas",adulterado.contas[0].inicial,100);
+eq("inicial acompanha a soma das abertas",adulterado.contas.find(c=>c.id==="x").inicial,100);
 eq("erros de script",errs,[]);
 console.log(ok?"TUDO OK":"HÁ FALHAS");process.exit(ok?0:1);

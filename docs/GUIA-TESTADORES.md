@@ -25,7 +25,7 @@ Use este guia para **mandar o app a quem vai testar** e para **observar o que ac
 ### Primeiros passos
 1. Responder "Onde está seu dinheiro hoje?" (carteira, banco, poupança). Pode deixar vazio o que não tem.
 2. Dizer se usa cartão de crédito (dia que fecha e dia que vence).
-3. Tocar no botão **+ Anotar** para o primeiro gasto.
+3. Tocar no botão **+ Anotar** (redondo, dourado, no canto direito de baixo) para o primeiro gasto.
 
 ### Guardar e recuperar uma cópia dos dados
 - **Guardar:** Mais → Ajustes → **Guardar uma cópia**. Mandar o arquivo para o próprio e-mail ou WhatsApp.

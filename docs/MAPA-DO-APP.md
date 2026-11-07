@@ -9,14 +9,14 @@ Aplica as decisões Q1 a Q7 da [auditoria](AUDITORIA-FUNCOES.md), aceitas pelo d
 4. **Cada botão diz o que faz** (verbo + coisa: "Guardar na caixinha", "Pagar a fatura").
 5. **No máximo 5 blocos por tela.** O resto fica atrás de "Ver mais".
 
-## 1. A barra de baixo (sempre igual: Início · Dinheiro · Planejar · + · Gráficos · Relatórios · Mais)
+## 1. A barra de baixo (sempre igual: Início · Dinheiro · Planejar · Gráficos · Relatórios · Mais) e o botão + solto no canto direito, logo acima dela
 
 | Botão | Pergunta que responde |
 |---|---|
 | **Início** | Como estou hoje? |
 | **Dinheiro** | Onde está meu dinheiro e o que eu devo? |
-| **+ Anotar** (botão do meio) | O que aconteceu agora? |
-| **Menu de bolinhas**: o toque no + gera 4 bolinhas (Gastei bordô, Recebi azul, Transferi ardósia, Comprei um bem cobre) | Anotar em dois toques: o 2º toque abre a folha já no tipo escolhido. Vale em todas as telas |
+| **+ Anotar** (botão redondo no canto direito de baixo, fora da barra) | O que aconteceu agora? |
+| **Menu de bolinhas**: o toque no + gera 4 bolinhas em quarto de círculo, para a esquerda e para cima (Gastei bordô, Recebi azul, Transferi ardósia, Comprei um bem cobre) | Anotar em dois toques: o 2º toque abre a folha já no tipo escolhido. Vale em todas as telas |
 | **Planejar** | O que vem pela frente? |
 | **Gráficos** | Como estão minhas finanças, em imagem? (9 indicadores) |
 | **Relatórios** | O que cada indicador quer dizer sobre mim? (um relatório por indicador) |
@@ -42,7 +42,7 @@ Aplica as decisões Q1 a Q7 da [auditoria](AUDITORIA-FUNCOES.md), aceitas pelo d
 | Pessoas (emprestei, devo) | Dinheiro > Pessoas | Agenda (cobranças) |
 | **Lista de anotações** (buscar, ordenar) | **Mais > Anotações** | Início (3 últimas + "Ver todas") |
 | Indicadores (números e gráficos) | **Gráficos** | Relatórios (cada indicador explicado) |
-| Relatórios (texto de consultor, um por indicador) | **Relatórios** | Gráficos (botão "Ler o relatório"); Mais (atalho) |
+| Relatórios (texto de consultor, um por indicador) | **Relatórios** | Gráficos (botão "Ler o relatório") |
 | Cópia dos dados, recuperar, apagar tudo | Mais > Ajustes > Dados | Início (aviso de cópia) |
 | Feedback, "Como ler a balança" | Mais > Ajustes > Ajuda | Início ("Como ler a balança?") |
 
@@ -70,7 +70,7 @@ Quatro abas curtas: **Contas · Dívidas · Bens · Pessoas**
 
 ### + Anotar: "O que aconteceu"
 > *"Escolha o que aconteceu e preencha: de onde saiu, para onde foi."*
-O tipo vem do **menu de bolinhas** do botão + (2 toques). A folha mostra o tipo no título e, **embaixo no centro, um botão redondo fixo** (com a cor e o símbolo do tipo atual); tocar nele gera as 4 bolinhas de novo, com a do tipo atual **apagada** ("você está aqui") e as outras 3 trocando o tipo sem perder o que foi digitado. Duas colunas curtas: **"De onde saiu"** = conta Dinheiro + as **3 favoritas** (ou as 3 mais usadas); **"Para onde foi"** = as **5 categorias favoritas** (ou as mais usadas). Cada coluna tem uma **busca**: **tocar no campo abre a lista com tudo** (em ordem alfabética, rolando dentro da coluna), digitar filtra todas, e "↑ Mostrar só as favoritas" volta à lista curta. Há "★ Escolher minhas 3 favoritas" (contas) e "★ Escolher minhas 5 favoritas" (categorias). No dinheiro vivo, valores com centavos ganham a sugestão de **arredondar para reais inteiros**.
+O tipo vem do **menu de bolinhas** do botão + (2 toques). A folha mostra o tipo no título e, **embaixo no canto direito, um botão redondo fixo** (com a cor e o símbolo do tipo atual); tocar nele gera as 4 bolinhas de novo, com a do tipo atual **apagada** ("você está aqui") e as outras 3 trocando o tipo sem perder o que foi digitado. Duas colunas curtas: **"De onde saiu"** = conta Dinheiro + as **3 favoritas** (ou as 3 mais usadas); **"Para onde foi"** = as **5 categorias favoritas** (ou as mais usadas). Cada coluna tem uma **busca**: **tocar no campo abre a lista com tudo** (em ordem alfabética, rolando dentro da coluna), digitar filtra todas, e "↑ Mostrar só as favoritas" volta à lista curta. Há "★ Escolher minhas 3 favoritas" (contas) e "★ Escolher minhas 5 favoritas" (categorias). No dinheiro vivo, valores com centavos ganham a sugestão de **arredondar para reais inteiros**.
 
 ### Planejar: "O que vem pela frente"
 > *"O que você precisa pagar e como se organizar."*

@@ -3,10 +3,18 @@
 Formato: versão semântica (`MAIOR.MENOR.CORREÇÃO`). Cada versão diz **o que mudou para a pessoa que usa**.
 Antes da 1.0.0 as versões eram numeradas só pelo nome do cache do app (v1 a v16); estão aqui como marcos de desenvolvimento.
 
+## [1.13.0-beta.1]: 7 de novembro de 2026 · botão + no canto, conta Dinheiro para todo mundo
+- **Botão + no canto direito de baixo**, logo acima da barra, com a palavrinha "Anotar" ao lado. Ele saiu do meio da barra, que agora tem **6 abas iguais** e deixa um espaço livre para a aba de Investimentos que vem a seguir.
+- **Bolinhas em quarto de círculo.** Ao tocar no +, as 4 bolinhas abrem **para a esquerda e para cima**, a partir do canto, igualmente espaçadas (0°, 30°, 60° e 90°) e com o nome ao lado de cada uma. O botão redondo de tipo dentro da folha também foi para o canto direito, no mesmo lugar, e abre as bolinhas do mesmo jeito. Cabe com letra Enorme.
+- **Relatórios saiu da tela Mais**, porque já tem aba própria na barra de baixo (continua também no botão "Ler o relatório" dos Gráficos).
+- **Novidades chegam para quem já usava o app.** Quem tinha dados antes da conta Dinheiro existir agora **ganha a conta Dinheiro** (a carteira, fixa, que não se apaga) ao abrir o app, sem mexer em nada do que já tinha, com um aviso na tela. Vale também ao restaurar uma cópia antiga. Se já existir outra conta chamada Dinheiro, a carteira entra como "Dinheiro vivo"; uma conta que já se chama Carteira é reconhecida e não duplica.
+- A página tem mais folga embaixo para o botão + não tapar o fim das listas.
+- Testes: 620 verificações em 21 arquivos (novo: conta Dinheiro para quem já usa).
+
 ## [1.12.0-beta.1]: 7 de novembro de 2026 · visual vivo, bolinhas em círculo, busca com lista completa e categorias favoritas
 - **Busca com lista completa.** Tocar em "Buscar conta" ou "Buscar categoria" **abre a lista com tudo** (em ordem alfabética, rolando dentro da coluna), para quem lembra que a categoria existe mas não lembra o nome. Digitar filtra todas (sem limite) e mostra quantas achou. "↑ Mostrar só as favoritas" volta à lista curta.
 - **5 categorias favoritas.** Como as 3 contas favoritas: "★ Escolher minhas 5 favoritas" (separadas para gastos e para ganhos). Sem escolha, valem as mais usadas.
-- **Bolinhas do + em círculo exato e simétricas**: as 4 ficam em pontos de um mesmo círculo (22,5°, 67,5°, 112,5° e 157,5°) com o centro no botão +, espelhadas à esquerda e à direita; entram girando e quicando, uma depois da outra.
+- *(Posição substituída na 1.13.0: as bolinhas agora abrem em quarto de círculo a partir do canto direito.)* **Bolinhas do + em círculo exato e simétricas**: as 4 ficam em pontos de um mesmo círculo (22,5°, 67,5°, 112,5° e 157,5°) com o centro no botão +, espelhadas à esquerda e à direita; entram girando e quicando, uma depois da outra.
 - **Seletor de tipo dentro da folha de anotar.** Saíram as 3 bolinhas escondidas no topo. Agora há um **botão redondo fixo embaixo, no centro**, com a cor e o símbolo do tipo atual. Tocar nele gera as 4 bolinhas com a mesma animação; a do **tipo atual fica apagada** ("você está aqui") e as outras 3 trocam o tipo **sem perder o que já foi digitado**.
 - **Visual vivo.** Formas mais grossas, redondas e cheias no lugar das linhas finas: ícones da barra de baixo e das ferramentas viraram desenhos **cheios e arredondados**; botões e opções em formato de pílula com sombra, cartões mais arredondados, títulos com uma barrinha dourada grossa, curva do patrimônio com traço mais grosso e pontilhado em bolinhas; some a linha fina da margem.
 - **Movimento (só com Movimento: Vivo):** **abertura do app** com moedas douradas caindo e o nome aparecendo; **troca de aba** com o ícone quicando, bolha dourada sob a aba aberta e a tela entrando com os blocos subindo em sequência; **gráficos** que crescem (barras, réguas e composição); botão + que "respira" com um anel dourado; selo de alerta que pulsa; botões que afundam ao tocar.

@@ -35,23 +35,24 @@ const h1=()=>$("#folhaCorpo .capa h1").textContent;
 const ids=lado=>[...d.querySelectorAll("#lc"+lado+" .opt:not(.novo)")].map(b=>b.dataset.id);
 
 // ======== 1) O + abre 4 bolinhas (dois toques) ========
-eq("o menu das bolinhas começa fechado",[aberto(),$("nav .fab").getAttribute("aria-expanded")],[false,"false"]);
-click('nav .fab');
+eq("o menu das bolinhas começa fechado",[aberto(),$(".fab").getAttribute("aria-expanded")],[false,"false"]);
+click('.fab');
 // as 4 bolinhas ficam em pontos de um mesmo círculo, espelhadas à esquerda e à direita
 const pontos=[...d.querySelectorAll("#fabMenu .fb")].map(b=>{const st=b.getAttribute("style");return [+st.match(/--cx:(-?[\d.]+)/)[1],+st.match(/--cy:(-?[\d.]+)/)[1]]});
-eq("as 4 bolinhas ficam num círculo exato (raio 1) e simétricas à esquerda e à direita",[pontos.every(([x,y])=>Math.abs(Math.hypot(x,y)-1)<0.001),Math.abs(pontos[0][0]+pontos[3][0])<0.001&&Math.abs(pontos[1][0]+pontos[2][0])<0.001&&pontos[0][1]===pontos[3][1]&&pontos[1][1]===pontos[2][1]],[true,true]);
-eq("tocar no + abre o menu e gera as 4 bolinhas",[aberto(),$("nav .fab").getAttribute("aria-expanded"),[...d.querySelectorAll("#fabMenu .fb")].map(b=>b.dataset.t)],[true,"true",["saida","entrada","transferencia","bem"]]);
+eq("as 4 bolinhas ficam num quarto de círculo (raio 1) que abre para a esquerda e para cima, do canto direito",[pontos.every(([x,y])=>Math.abs(Math.hypot(x,y)-1)<0.001&&x<=0.0001&&y>=-0.0001),pontos.every(([x,y],i)=>Math.abs(Math.atan2(y,-x)*180/Math.PI-30*i)<0.1)],[true,true]);
+eq("e são simétricas em relação à diagonal do canto (uma espelha a outra)",pontos.every(([x,y],i)=>Math.abs(-x-pontos[3-i][1])<0.001),true);
+eq("tocar no + abre o menu e gera as 4 bolinhas",[aberto(),$(".fab").getAttribute("aria-expanded"),[...d.querySelectorAll("#fabMenu .fb")].map(b=>b.dataset.t)],[true,"true",["saida","entrada","transferencia","bem"]]);
 eq("as bolinhas têm o nome do tipo",[...d.querySelectorAll("#fabMenu .fbl")].map(b=>b.textContent),["Gastei","Recebi","Transferi entre contas","Comprei um bem"]);
 eq("cada bolinha tem um atraso próprio (entra em sequência, com animação)",[...d.querySelectorAll("#fabMenu .fb")].map(b=>b.getAttribute("style").match(/--d:(\d+)ms/)[1]),["0","55","110","165"]);
 click('#fabMenu .fabfundo');
 eq("tocar fora fecha o menu",aberto(),false);
-click('nav .fab');click('nav .fab');
+click('.fab');click('.fab');
 eq("tocar no + de novo também fecha",aberto(),false);
 w.document.dispatchEvent(new w.KeyboardEvent("keydown",{key:"Escape"}));
-click('nav .fab');w.document.dispatchEvent(new w.KeyboardEvent("keydown",{key:"Escape"}));
+click('.fab');w.document.dispatchEvent(new w.KeyboardEvent("keydown",{key:"Escape"}));
 eq("a tecla Esc fecha o menu",aberto(),false);
 for(const [t,nome] of [["saida","Gastei"],["entrada","Recebi"],["transferencia","Transferi entre contas"],["bem","Comprei um bem"]]){
-  click('nav .fab');click('#fabMenu [data-t="'+t+'"]');
+  click('.fab');click('#fabMenu [data-t="'+t+'"]');
   eq("segundo toque em '"+nome+"': abre a folha nesse tipo e fecha o menu",[$("#folha").classList.contains("on"),h1(),aberto()],[true,nome,false]);
   click('[data-a="fFechar"]');
 }
