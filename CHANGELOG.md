@@ -5,6 +5,18 @@
 Formato: versão semântica (`MAIOR.MENOR.CORREÇÃO`). Cada versão diz **o que mudou para a pessoa que usa**.
 Antes da 1.0.0 as versões eram numeradas só pelo nome do cache do app (v1 a v16); estão aqui como marcos de desenvolvimento.
 
+## [1.18.0-beta.1]: 7 de novembro de 2026 · o chat do Balancete
+- **Pílula "Perguntar"** no canto esquerdo de baixo, com o rostinho do Mordomo (simétrica à pena, à direita).
+  - A cada troca de aba ela **fala uma frase curta** e **reage**: acena no Início, olha para baixo no Dinheiro ("cada centavo no seu lugar"), olha para cima no Planejar, lê nos Gráficos e Relatórios.
+  - Com letra Enorme, aparece só o rostinho.
+- **Chat do Balancete**: ao tocar na pílula, sobe uma janela preta e dourada com o Mordomo. São **50 perguntas prontas** em 5 grupos (*Meu dinheiro*, *Contas e dívidas*, *Planejar*, *Como usar o app*, *Aprender*), aprovadas pelo dono (`docs/CHAT-PERGUNTAS.md`).
+  - Muitas respostas são **calculadas na hora com os dados da pessoa**. Exemplos: "Quanto posso gastar por dia até o fim do mês?" (para usar agora, menos o que falta pagar, dividido pelos dias que faltam), "Tenho conta atrasada?", "Quanto do limite do cartão eu já usei?", "Quem me deve dinheiro?", "Minhas finanças estão saudáveis?".
+  - Campo **"Escreva sua dúvida"**: procura a pergunta mais parecida pelas palavras e mostra até 3. Não inventa resposta.
+  - O grupo da **aba onde a pessoa está** já vem aberto.
+  - Respostas com o botão **"Ver no app"** levam à tela certa (acerto de contas, Pessoas, Contas fixas...).
+  - **Funciona sem internet e sem inteligência artificial**; nada sai do celular. O chat não recomenda investimento específico.
+- Testes: 709 verificações em 26 arquivos (novo: chat do Balancete).
+
 ## [1.17.0-beta.1]: 7 de novembro de 2026 · o botão de anotar é uma pena
 - **O botão de anotar virou uma pena de escrever** num medalhão de ouro com serrilha, como o Brasão. Saiu a palavrinha "Anotar" do lado: a pena já diz o que o botão faz, como a pena de tinteiro dos livros contábeis antigos. O nome continua para quem usa leitor de tela. O anel dourado que pulsa de vez em quando continua.
 - Aberto, a pena dá lugar a um **×** para fechar, e as 4 bolinhas saem do mesmo jeito.

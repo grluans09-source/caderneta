@@ -60,6 +60,8 @@ Peça também que a pessoa **confira o saldo de uma conta com o app do banco** (
 
 Observe também o **Mordomo** (a balança do Início): a pessoa entende que a cara dele mostra a situação? Os mascotes que aparecem ao receber, pagar e guardar agradam ou cansam?
 
+Peça também que a pessoa **toque em "Perguntar"** e faça 2 ou 3 perguntas, inclusive **escrevendo uma dúvida com as próprias palavras**. Anote o que ela quis perguntar e **não achou**: é assim que a lista cresce.
+
 ## 4. Ficha de observação (uma por pessoa)
 
 | Campo | Anotação |

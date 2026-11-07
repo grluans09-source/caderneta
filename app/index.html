@@ -77,6 +77,42 @@ h2{font-size:1.05rem;font-weight:700;margin:1.5rem 0 .55rem;font-family:var(--se
 @keyframes mdPisca{0%,94%,100%{transform:scaleY(1)}96%{transform:scaleY(.08)}}
 .bal .md-ref{animation:mdRef 7s ease-in-out infinite}
 @keyframes mdRef{0%,60%{transform:translateX(0)}100%{transform:translateX(150px)}}
+/* pílula "Perguntar" (D55/D56): canto esquerdo, simétrica à pena */
+.perg{position:fixed;left:1rem;bottom:calc(4.95rem + env(safe-area-inset-bottom));z-index:21;display:flex;align-items:center;gap:.35rem;min-height:3.3rem;background:#0A0A0A;border:2px solid var(--latao);border-radius:999px;padding:.2rem 1rem .2rem .25rem;color:#E8CB6A;font-family:var(--serif);font-weight:700;font-size:1.02rem;box-shadow:0 5px 0 rgba(0,0,0,.35),0 8px 16px rgba(0,0,0,.3)}
+.perg:active{transform:scale(.95)}
+.perg-r svg{display:block;width:2.75rem;height:2.75rem;overflow:visible}
+.perg .pp-cab{transform-box:fill-box;transform-origin:50% 50%}
+.perg .pp-pup{transform-box:fill-box;transform-origin:50% 50%;transition:transform .4s}
+.perg.r-nod .pp-cab{animation:mdRev 1.4s cubic-bezier(.45,0,.25,1)}
+.perg.r-baixo .pp-pup{transform:translate(-2px,2.6px)}
+.perg.r-cima .pp-pup{transform:translate(2px,-2.8px)}
+.perg.r-le .pp-pup{animation:ppLe 1.6s ease-in-out}
+@keyframes ppLe{0%,100%{transform:none}25%,65%{transform:translateX(-2.6px)}45%,85%{transform:translateX(2.6px)}}
+.perg-bal{position:fixed;left:1rem;bottom:calc(8.9rem + env(safe-area-inset-bottom));z-index:21;max-width:min(15rem,70vw);background:#0A0A0A;color:#F5EFDF;border:2px solid var(--latao);border-radius:1rem 1rem 1rem .3rem;padding:.45rem .8rem;font-family:var(--serif);font-size:.95rem;font-weight:700;opacity:0;transform:translateY(6px) scale(.9);transform-origin:0 100%;transition:opacity .25s,transform .35s cubic-bezier(.3,1.4,.5,1);pointer-events:none}
+.perg-bal.on{opacity:1;transform:none}
+html[data-tam="gg"] .perg .perg-t{display:none}html[data-tam="gg"] .perg{padding:.2rem}
+/* janela do chat (preta e dourada, como o acerto de contas) */
+.ch-cab{display:flex;align-items:center;gap:.55rem}
+.ch-cab svg{width:2.9rem;height:2.9rem;flex:none;overflow:visible}
+.ch-cab b{display:block;font-family:var(--serif);color:#E8CB6A;font-size:1.15rem}
+.ch-cab span{font-size:.78rem;color:#CFC6AD}
+.ch-msgs{max-height:38vh;overflow-y:auto;display:flex;flex-direction:column;gap:.45rem;padding:.5rem 0;margin-bottom:.4rem}
+.ch-m{max-width:88%;padding:.55rem .8rem;border-radius:1rem;font-size:.95rem;line-height:1.4}
+.ch-m.ele{background:#1E1C17;border:1px solid #3A3426;align-self:flex-start;border-bottom-left-radius:.3rem;color:#F5EFDF}
+.ch-m.eu{background:#C9A227;color:#0A0A0A;align-self:flex-end;font-weight:700;border-bottom-right-radius:.3rem}
+.ch-m b{color:#E8CB6A}.ch-m.eu b{color:#0A0A0A}
+.ch-m i{color:#B9B09A}
+.ch-ul{margin:.35rem 0;padding-left:1.1rem}.ch-ul li{margin:.15rem 0}
+.ch-ir{display:block;margin-top:.45rem;min-height:2.6rem;padding:.3rem .9rem;border:2px solid #E8CB6A;border-radius:999px;color:#E8CB6A;font-weight:800;font-family:var(--serif)}
+.chatm .ch-busca input{width:100%;min-height:3rem;border-radius:999px;border:2px solid #5A4A1E;background:#141310;color:#F5EFDF;padding:.4rem 1rem;font-size:1rem}
+.chatm .ch-busca input:focus{border-color:#E8CB6A;outline:none}
+.chatm .ch-grupos{margin:.5rem 0}
+.chatm .chip{background:transparent;color:#F5EFDF;border-color:#E8CB6A;box-shadow:none}
+.chatm .chip[aria-pressed="true"]{background:#E8CB6A;color:#0A0A0A}
+.ch-tit{font-size:.82rem;color:#CFC6AD;margin:.3rem 0}
+.ch-q{display:block;width:100%;text-align:left;min-height:2.9rem;padding:.55rem .8rem;margin:.3rem 0;border:1px solid #3A3426;border-left:4px solid #C9A227;border-radius:.8rem;background:#141310;color:#F5EFDF;font-size:.95rem}
+.ch-q:active{background:#1E1C17}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 /* mascotes secundários: aparecem só em momentos especiais */
 .momento{position:fixed;left:50%;top:40%;z-index:91;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;pointer-events:none;animation:mSai .45s 1.9s ease forwards}
 .momento svg{width:6.2rem;height:6.8rem;overflow:visible;filter:drop-shadow(0 8px 8px rgba(0,0,0,.35))}
@@ -699,6 +735,7 @@ html[data-tam="g"] .fbl{max-width:4.8rem}
   <button data-a="ir" data-v="relatorios"><span class="ic"><svg viewBox="0 0 24 24"><path d="M7 2.4h6.7l6 6V18.4a3.2 3.2 0 0 1-3.2 3.2H7a3.2 3.2 0 0 1-3.2-3.2V5.6A3.2 3.2 0 0 1 7 2.4z"/><path class="acc cut" d="M13.7 2.4V6a2.4 2.4 0 0 0 2.4 2.4h3.6z"/><rect class="cut" x="7.2" y="12" width="9.6" height="2.3" rx="1.15"/><rect class="cut" x="7.2" y="16.2" width="6.2" height="2.3" rx="1.15"/></svg></span><span class="lb">Relatórios</span></button>
   <button data-a="ir" data-v="mais"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="2.6"/><circle cx="12" cy="12" r="2.6"/><circle cx="19" cy="12" r="2.6"/></svg></span><span class="lb">Mais</span></button>
 </div></nav>
+<button class="perg" data-a="chat" aria-label="Perguntar ao Balancete" aria-haspopup="dialog" aria-expanded="false"><span class="perg-r" id="pergRosto"></span><span class="perg-t">Perguntar</span></button><div class="perg-bal" id="pergBal" aria-hidden="true"></div>
 <button class="fab" data-a="novo" aria-label="Anotar: escolher o tipo" aria-haspopup="true" aria-expanded="false"><span class="b" aria-hidden="true"><svg class="pena" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="48" fill="url(#mg-oV)" stroke="#6E520C" stroke-width="1.5"/><circle cx="50" cy="50" r="44.5" fill="none" stroke="#7C5E0F" stroke-width="3" stroke-dasharray="1 1.7"/><circle cx="50" cy="50" r="40" fill="url(#mg-oR)" stroke="#6E520C" stroke-width="1.2"/><circle cx="50" cy="50" r="37.5" fill="none" stroke="#FFF3C4" stroke-width="1" opacity=".6"/><g class="pena-i"><path d="M66 22C52 26 40 40 33 58L30 70L40 62C56 54 66 40 70 26Z" fill="#141007"/><path d="M68 24C56 32 46 44 37 60" stroke="#E8C14F" stroke-width="1.6" fill="none"/><path d="M33 58L30 70" stroke="#141007" stroke-width="3" stroke-linecap="round"/><path class="pena-t" d="M24 76Q34 70 44 76T64 76" stroke="#141007" stroke-width="3" fill="none" stroke-linecap="round"/></g><path class="pena-x" d="M37 37L63 63M63 37L37 63" stroke="#141007" stroke-width="7" stroke-linecap="round"/></svg></span></button>
 
 <div class="fabmenu" id="fabMenu" aria-hidden="true">
@@ -730,7 +767,7 @@ html[data-tam="g"] .fbl{max-width:4.8rem}
 /* ---------- utilidades ---------- */
 var KEY="caderneta:v2";
 /* versão do app (siga o CHANGELOG.md; subir junto com VERSAO em sw.js e "version" em package.json) */
-var VERSAO_APP="1.17.0-beta.1";
+var VERSAO_APP="1.18.0-beta.1";
 var RE_ID=/^[A-Za-z0-9_-]+$/, RE_DATA=/^\d{4}-\d{2}-\d{2}$/;
 var MES=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
 var MES3=["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
@@ -1263,6 +1300,7 @@ var VIEW="inicio", REF=new Date(); REF.setDate(1);
 var ABA={anotacoes:"mais",relatorio:"relatorios",ajustes:"mais",caixinhas:"planejar",metas:"planejar",fixas:"planejar",simulador:"planejar"};
 
 function ir(vw){
+  setTimeout(function(){pergReage(vw)},0);
   if(vw==="anotacoes"&&VIEW!=="anotacoes"){AN_VOLTA=(VIEW==="mais"||VIEW==="relatorios")?VIEW:"inicio";AN.q="";AN.n=15}
   VIEW=vw;
   if(AC_ABERTO)fecharAcerto();
@@ -1420,6 +1458,223 @@ function animarInicio(){
     if(b&&!calmo()){b.classList.remove("wob");void b.getBoundingClientRect();b.classList.add("wob");setTimeout(function(){b.classList.remove("wob")},2500)}
   }
 }
+/* =====================================================================
+   CHAT DO BALANCETE (D56): o Mordomo responde 50 perguntas prontas.
+   Sem internet e sem inteligência artificial: respostas calculadas com os
+   dados da própria pessoa (tipo "dados"), ensinando o app ("app") ou
+   educação financeira simples ("aprender"). Lista aprovada: docs/CHAT-PERGUNTAS.md
+   ===================================================================== */
+function rostoPerg(){
+  var s='<svg viewBox="-40 -40 80 80" aria-hidden="true"><g class="pp-cab">'+
+    '<circle r="37" fill="url(#mg-oV)" stroke="#6E520C" stroke-width="1.2"/><circle r="35" fill="none" stroke="#FFF3C4" stroke-width="1.2" opacity=".55"/>'+
+    '<circle r="30.5" fill="#6E520C"/><circle r="29" fill="url(#mg-esm)"/>';
+  [-1,1].forEach(function(k){
+    s+='<g transform="translate('+(k*10.5)+' -3)"><path d="M-7.5 0Q0 -6.6 7.5 0Q0 6.6 -7.5 0Z" fill="#F5EBCB"/><circle class="pp-pup" r="3.3" fill="#0A0A0A"/></g>'+
+      '<path transform="translate('+(k*10.5)+' -11.7)" d="M-6.9 0Q0 -3 6.9 0" fill="none" stroke="#EAD27A" stroke-width="2.2" stroke-linecap="round"/>';
+  });
+  return s+'<path transform="translate(0 13)" d="M-10 -1Q0 8 10 -1" fill="none" stroke="#EAD27A" stroke-width="2.3" stroke-linecap="round"/></g></svg>';
+}
+function B(v){return '<b>'+esc(brl(v))+'</b>'}
+function saudacao(){var h=new Date().getHours(); return h<12?"Bom dia":h<18?"Boa tarde":"Boa noite"}
+function nomeMes(ym){return MES[+ym.slice(5)-1]}
+function listaHTML(itens){return itens.length?'<ul class="ch-ul">'+itens.map(function(i){return '<li>'+i+'</li>'}).join("")+'</ul>':''}
+function cartoes(){return S.contas.filter(function(c){return c.tipo==="passivo"&&!c.pessoa&&(c.limite||c.vence||c.fecha)})}
+
+var GRUPOS=[["dinheiro","Meu dinheiro"],["dividas","Contas e dívidas"],["planejar","Planejar"],["app","Como usar o app"],["aprender","Aprender"]];
+var PERGS=[
+ /* ---------- Meu dinheiro ---------- */
+ {g:"dinheiro",q:"Quanto dinheiro eu tenho agora?",kw:"saldo dinheiro tenho agora contas total",ir:"contas",r:function(){
+   var din=dinheiroEmConta(), gd=totalReservado();
+   return 'Você tem '+B(din)+' nas suas contas: '+B(din-gd)+' para usar agora'+(gd>0?' e '+B(gd)+' guardado nas caixinhas, que continua seu.':'.');}},
+ {g:"dinheiro",q:"Quanto é meu de verdade?",kw:"patrimonio meu verdade sobra liquido",ir:"inicio",r:function(){
+   var t=totais();
+   return 'É seu de verdade: '+B(t.pl)+'. É tudo o que você tem ('+B(t.ativo)+') menos tudo o que deve ('+B(t.passivo)+'). '+(t.pl>=0?'Se pagasse todas as dívidas hoje, isso sobraria.':'Hoje as dívidas são maiores que o que você tem. Vamos virar esse jogo com calma.');}},
+ {g:"dinheiro",q:"Quanto posso gastar por dia até o fim do mês?",kw:"posso gastar dia diario ate fim mes limite",ir:"planejar",r:function(){
+   var h=hojeISO(), y=+h.slice(0,4), m=+h.slice(5,7), d=+h.slice(8), dias=ultimoDia(y,m-1)-d+1;
+   var u=livreAgora(), falta=pagarNoMes(h.slice(0,7)).tf, sobra=u-falta;
+   if(sobra<=0)return 'Este mês o dinheiro para usar agora ('+B(u)+') não cobre o que ainda falta pagar ('+B(falta)+'). O melhor é segurar os gastos que podem esperar e olhar o acerto de contas.';
+   return 'Cerca de '+B(Math.floor(sobra/dias/100)*100)+' por dia até o fim do mês. A conta: para usar agora '+B(u)+', menos o que falta pagar no mês '+B(falta)+', dividido pelos '+dias+' dia'+(dias>1?'s':'')+' que faltam.';}},
+ {g:"dinheiro",q:"Quanto eu gastei este mês?",kw:"gastei gasto gastos mes este saiu",ir:"graficos",r:function(){
+   var r=resumoMes(hojeISO().slice(0,7)), ks=Object.keys(r.porSai).sort(function(a,b){return r.porSai[b]-r.porSai[a]});
+   if(!r.sai)return 'Você ainda não anotou gastos este mês.';
+   return 'Este mês você gastou '+B(r.sai)+'. A maior parte foi em <b>'+esc(nomeCat(ks[0]))+'</b> ('+B(r.porSai[ks[0]])+').';}},
+ {g:"dinheiro",q:"Com o que eu mais gasto?",kw:"mais gasto categoria categorias onde vai dinheiro",ir:"graficos",r:function(){
+   var r=resumoMes(hojeISO().slice(0,7)), ks=Object.keys(r.porSai).sort(function(a,b){return r.porSai[b]-r.porSai[a]}).slice(0,3);
+   if(!r.sai)return 'Ainda não há gastos anotados este mês para mostrar.';
+   return 'Neste mês, o que mais pesa:'+listaHTML(ks.map(function(k){return '<b>'+esc(nomeCat(k))+'</b>: '+esc(brl(r.porSai[k]))+' ('+Math.round(r.porSai[k]/r.sai*100)+'%)'}));}},
+ {g:"dinheiro",q:"Gastei mais ou menos que no mês passado?",kw:"comparar mes passado anterior mais menos gastei",ir:"graficos",r:function(){
+   var ym=hojeISO().slice(0,7), c=compMes(ym);
+   if(!c.temA)return 'Ainda não há '+esc(nomeMes(ymMais(ym,-1)))+' anotado para comparar.';
+   var gs=c.sai-c.saiA;
+   return 'Comparado com '+esc(nomeMes(ymMais(ym,-1)))+', até agora você '+(gs===0?'gastou o mesmo':gs<0?'gastou '+B(-gs)+' a menos':'gastou '+B(gs)+' a mais')+'.'+
+     (c.mud.length?' O que mais mudou:'+listaHTML(c.mud.map(function(m){return esc(m.nome)+': '+esc(difTxt(m.dif))}))  :'');}},
+ {g:"dinheiro",q:"Quanto entrou de dinheiro este mês?",kw:"entrou recebi ganhei renda salario mes",ir:"graficos",r:function(){
+   var r=resumoMes(hojeISO().slice(0,7)), ks=Object.keys(r.porEnt).sort(function(a,b){return r.porEnt[b]-r.porEnt[a]});
+   if(!r.ent)return 'Ainda não entrou dinheiro anotado este mês.';
+   return 'Este mês entraram '+B(r.ent)+'.'+listaHTML(ks.slice(0,3).map(function(k){return esc(nomeCat(k))+': '+esc(brl(r.porEnt[k]))}));}},
+ {g:"dinheiro",q:"Quanto sobrou no mês passado?",kw:"sobrou mes passado anterior resultado",ir:"graficos",r:function(){
+   var ym=ymMais(hojeISO().slice(0,7),-1), c=compMes(ym);
+   if(!c.tem)return 'Não há nada anotado em '+esc(nomeMes(ym))+'.';
+   return 'Em '+esc(nomeMes(ym))+' entraram '+B(c.ent)+', saíram '+B(c.sai)+' e '+(c.sob>=0?'sobraram '+B(c.sob):'faltaram '+B(-c.sob))+'.';}},
+ {g:"dinheiro",q:"Quanto tenho guardado nas caixinhas?",kw:"caixinha caixinhas guardado reserva poupanca",ir:"caixinhas",r:function(){
+   if(!S.caixas.length)return 'Você ainda não tem caixinhas. Elas separam dinheiro para um objetivo sem tirar da conta.';
+   return 'Guardado ao todo: '+B(totalReservado())+'.'+listaHTML(S.caixas.map(function(x){return esc(x.nome)+': '+esc(brl(saldoCaixa(x.id)))+(x.alvo?' de '+esc(brl(x.alvo)):'')}));}},
+ {g:"dinheiro",q:"Quanto tenho em cada conta?",kw:"cada conta banco contas saldo carteira",ir:"contas",r:function(){
+   var cs=contasDinheiro(); if(!cs.length)return 'Você ainda não tem contas cadastradas.';
+   return listaHTML(cs.map(function(c){return '<b>'+esc(c.nome)+'</b>: '+esc(brl(saldoConta(c)))+(c.conferido?' <i>(conferido em '+esc(dataBR(c.conferido))+')</i>':'')}));}},
+ /* ---------- Contas e dívidas ---------- */
+ {g:"dividas",q:"Quanto eu devo ao todo?",kw:"devo divida dividas total cartao emprestimo",ir:"contas",aba:"dividas",r:function(){
+   var ds=S.contas.filter(function(c){return c.tipo==="passivo"&&saldoConta(c)>0});
+   if(!ds.length)return 'Você não deve nada. Muito bem.';
+   return 'Você deve '+B(totais().passivo)+' ao todo.'+listaHTML(ds.map(function(c){return esc(c.nome)+': '+esc(brl(saldoConta(c)))}));}},
+ {g:"dividas",q:"O que vence esta semana?",kw:"vence semana proximos dias vencimento agenda",ir:"planejar",r:function(){
+   var a=agenda().filter(function(x){return x.data&&diasAte(x.data)>=0&&diasAte(x.data)<=7});
+   if(!a.length)return 'Nada vence nos próximos 7 dias.';
+   return 'Nos próximos 7 dias:'+listaHTML(a.map(function(x){return esc(dataBR(x.data).slice(0,5))+' · '+esc(x.titulo)+': '+esc(brl(x.valor))+(x.k==="receber"?' (a receber)':'')}));}},
+ {g:"dividas",q:"Tenho alguma conta atrasada?",kw:"atrasada atrasado atraso vencida venceu",ir:"acerto",r:function(){
+   var at=pagarNoMes(hojeISO().slice(0,7)).falta.filter(function(x){return x.atrasada});
+   if(!at.length)return 'Nenhuma conta atrasada. Tudo em dia.';
+   return 'Sim, '+(at.length===1?'uma conta':at.length+' contas')+':'+listaHTML(at.map(function(x){return esc(x.titulo)+': '+esc(brl(x.valor))+' ('+esc(quandoTxt(x.data))+')'}))+'Vamos resolver no acerto de contas?';}},
+ {g:"dividas",q:"Quanto falta pagar este mês?",kw:"falta pagar mes contas pagar",ir:"acerto",r:function(){
+   var p=pagarNoMes(hojeISO().slice(0,7));
+   if(!p.tf&&!p.tp)return 'Não há contas para pagar este mês.';
+   return 'Falta pagar '+B(p.tf)+' este mês'+(p.tp?'. Você já pagou '+B(p.tp)+'.':'.');}},
+ {g:"dividas",q:"Qual dívida eu pago primeiro?",kw:"qual divida primeiro prioridade pagar ordem quitar",ir:"acerto",r:function(){
+   var ds=S.contas.filter(function(c){return c.tipo==="passivo"&&saldoConta(c)>0}).sort(function(a,b){return saldoConta(a)-saldoConta(b)});
+   var at=pagarNoMes(hojeISO().slice(0,7)).falta.filter(function(x){return x.atrasada});
+   return 'Uma ordem que costuma funcionar:'+listaHTML(['<b>Primeiro, as atrasadas</b>: multa e juros correm todo dia'+(at.length?' (você tem '+at.length+')':'')+'.','<b>Depois, a de juros mais caros</b>: cartão e cheque especial costumam ser os piores.','Se os juros forem parecidos, <b>quite a menor primeiro</b>: ver uma dívida sumir dá ânimo.'])+
+     (ds.length?'Suas dívidas, da menor para a maior:'+listaHTML(ds.map(function(c){return esc(c.nome)+': '+esc(brl(saldoConta(c)))})):'');}},
+ {g:"dividas",q:"Quando vence a fatura do cartão?",kw:"fatura cartao vence fecha vencimento",ir:"contas",aba:"dividas",r:function(){
+   var cs=cartoes(); if(!cs.length)return 'Você não tem cartão com datas cadastradas. Cadastre em Dinheiro, na aba Dívidas.';
+   return listaHTML(cs.map(function(c){var it=itensDevidos(c).filter(function(i){return i.data}).sort(cmpData)[0];
+     return '<b>'+esc(c.nome)+'</b>: '+(c.fecha?'fecha dia '+c.fecha+', ':'')+(c.vence?'vence dia '+c.vence:'sem dia de vencimento')+(it?'. Próximo a pagar: '+esc(brl(it.valor))+' em '+esc(dataBR(it.data).slice(0,5)):'')}));}},
+ {g:"dividas",q:"Quanto do limite do cartão eu já usei?",kw:"limite cartao usei disponivel",ir:"contas",aba:"dividas",r:function(){
+   var cs=S.contas.filter(function(c){return c.tipo==="passivo"&&c.limite});
+   if(!cs.length)return 'Nenhum cartão tem limite cadastrado. Dá para informar em Dinheiro, na aba Dívidas, tocando no cartão.';
+   return listaHTML(cs.map(function(c){var u=Math.max(0,saldoConta(c));return '<b>'+esc(c.nome)+'</b>: usou '+esc(brl(u))+' de '+esc(brl(c.limite))+' ('+Math.round(u/c.limite*100)+'%). Disponível: '+esc(brl(Math.max(0,c.limite-u)))}));}},
+ {g:"dividas",q:"Quanto paguei de juros e multas?",kw:"juros multa multas paguei custo",ir:"relatorios",r:function(){
+   var i=indicadores().filter(function(x){return x.id==="juros"})[0], d=i&&i.d||{};
+   if(!d.total)return 'Você não anotou juros nem multas nos últimos 6 meses. Excelente.';
+   return 'Nos últimos 6 meses você pagou '+B(d.total)+' de juros e multas'+(d.pct!=null?', cerca de '+esc(n1(d.pct))+'% do que recebeu no período':'')+'. É dinheiro que não comprou nada.';}},
+ {g:"dividas",q:"Quem me deve dinheiro?",kw:"quem deve emprestei receber pessoas cobrar",ir:"contas",aba:"pessoas",r:function(){
+   var a=aReceber(); if(!a.length)return 'Ninguém te deve dinheiro no momento.';
+   return listaHTML(a.map(function(x){return '<b>'+esc(x.conta.nome)+'</b>: '+esc(brl(x.valor))+(x.data?' (combinado para '+esc(dataBR(x.data))+')':'')}));}},
+ /* ---------- Planejar ---------- */
+ {g:"planejar",q:"Quanto custa minha vida básica por mês?",kw:"custo fixo vida basica basico mes",ir:"graficos",r:function(){
+   var i=indicadores().filter(function(x){return x.id==="custo"})[0], d=i.d;
+   if(!d.custo)return 'Para calcular, cadastre suas contas fixas (aluguel, luz, internet) em Planejar.';
+   return 'O seu básico custa '+B(d.custo)+' por mês:'+listaHTML(['Contas fixas: '+esc(brl(d.fixM)),'Contas do ano, por mês: '+esc(brl(d.anoM)),'Parcelas e dívidas: '+esc(brl(d.divM))])+(d.pct!=null?'Isso é '+Math.round(d.pct)+'% da sua renda.':'');}},
+ {g:"planejar",q:"Quanto preciso guardar para o IPVA, IPTU e outras contas do ano?",kw:"ipva iptu ano anual guardar contas do ano matricula seguro",ir:"fixas",r:function(){
+   var l=contasDoAno(); if(!l.length)return 'Você não tem contas que repetem todo ano. Cadastre IPVA, IPTU e outras em Planejar > Contas fixas, escolhendo "todo ano".';
+   var tot=l.reduce(function(s,x){return s+(x.meses>0?x.porMes:0)},0);
+   return listaHTML(l.map(function(x){return '<b>'+esc(x.f.nome)+'</b> ('+esc(dataBR(x.data))+'): '+(x.falta===0?'já guardado':x.meses>0?esc(brl(x.porMes))+' por mês':esc(brl(x.falta))+' este mês')}))+(tot?'Separando '+B(tot)+' por mês, elas chegam pagas.':'');}},
+ {g:"planejar",q:"Minha reserva de emergência é suficiente?",kw:"reserva emergencia suficiente meses aguento imprevisto",ir:"relatorios",r:function(){
+   var i=indicadores().filter(function(x){return x.id==="reserva"})[0], d=i.d;
+   if(d.meses===null)return 'Anote seus gastos por algumas semanas para eu calcular. O ideal é ter de 3 a 6 meses do seu custo guardados.';
+   return 'Hoje você aguentaria cerca de <b>'+esc(n1(d.meses))+' meses</b> sem renda. '+(d.meses>=6?'Está ótimo.':d.meses>=3?'Está no caminho; o ideal é chegar a 6 meses.':'Ainda é pouco: o ideal é de 3 a 6 meses. Uma caixinha "Reserva" ajuda.');}},
+ {g:"planejar",q:"Estou dentro das metas do mês?",kw:"metas meta limite categoria dentro passei",ir:"metas",r:function(){
+   var ms=metasMes(); if(!ms.length)return 'Você ainda não tem metas. Em Planejar > Metas do mês, dá para pôr um limite por categoria.';
+   var r=resumoMes(hojeISO().slice(0,7));
+   return listaHTML(ms.map(function(k){var g=r.porSai[k.id]||0; return '<b>'+esc(k.nome)+'</b>: '+esc(brl(g))+' de '+esc(brl(k.meta))+(g>k.meta?' (passou '+esc(brl(g-k.meta))+')':' (cabem mais '+esc(brl(k.meta-g))+')')}));}},
+ {g:"planejar",q:"Quanto da minha renda já tem destino?",kw:"renda destino salario dono contas chegar",ir:"relatorios",r:function(){
+   var i=indicadores().filter(function(x){return x.id==="renda"})[0], d=i.d;
+   if(d.pct===null)return 'Informe sua renda em Ajustes (ou anote seus ganhos) para eu calcular.';
+   return 'Cerca de <b>'+Math.round(d.pct)+'%</b> da sua renda já tem destino: contas e parcelas que vão chegar ('+B(d.compr)+' por mês, de uma renda de '+B(d.renda)+'). Até 30% é confortável.';}},
+ {g:"planejar",q:"Se eu comprar algo parcelado, cabe no meu bolso?",kw:"comprar parcelado parcela cabe simulador posso comprar",ir:"simulador",r:function(){
+   return 'Use o <b>Simulador</b>: informe o valor e o número de parcelas e ele mostra mês a mês se cabe, contando as contas que você já tem.';}},
+ {g:"planejar",q:"Quanto falta para completar minha caixinha?",kw:"falta completar caixinha objetivo alvo meta guardar",ir:"caixinhas",r:function(){
+   var cx=S.caixas.filter(function(x){return x.alvo>0}); if(!cx.length)return 'Nenhuma caixinha tem alvo. Ao criar ou editar, informe quanto quer juntar e até quando.';
+   var ym=hojeISO().slice(0,7);
+   return listaHTML(cx.map(function(x){var f=Math.max(0,x.alvo-saldoCaixa(x.id)), m=x.prazo?Math.max(1,mesesAte(ym,x.prazo.slice(0,7))):0;
+     return '<b>'+esc(x.nome)+'</b>: '+(f===0?'completa!':'faltam '+esc(brl(f))+(m?' (cerca de '+esc(brl(Math.ceil(f/m/100)*100))+' por mês até '+esc(dataBR(x.prazo))+')':''))}));}},
+ {g:"planejar",q:"Minhas finanças estão saudáveis?",kw:"saudavel saude financas bem indicadores situacao",ir:"graficos",r:function(){
+   var is=indicadores(), n={ok:0,atencao:0,critico:0}; is.forEach(function(i){if(n[i.st]!=null)n[i.st]++});
+   var u=is.filter(function(i){return i.st==="critico"})[0]||is.filter(function(i){return i.st==="atencao"})[0];
+   return 'Dos '+is.length+' sinais que eu acompanho: <b>'+n.ok+' saudáveis</b>, '+n.atencao+' em atenção e '+n.critico+' em alerta.'+(u?' O que mais pede cuidado agora: <b>'+esc(u.nome)+'</b>. '+esc(u.leitura):' Tudo em ordem.');}},
+ /* ---------- Como usar o app ---------- */
+ {g:"app",q:"Como eu anoto um gasto?",kw:"anotar anoto gasto gastei registrar como",ir:"inicio",r:function(){return 'Toque na <b>pena dourada</b>, embaixo à direita, e depois em <b>Gastei</b>. Digite o valor, escolha <b>de onde saiu</b> e <b>para onde foi</b> e toque em Salvar.'}},
+ {g:"app",q:"Como anoto uma compra parcelada?",kw:"parcelada parcelado parcelas cartao compra",ir:"inicio",r:function(){return 'Anote como um gasto (pena > Gastei), escolha o <b>cartão</b> em "de onde saiu" e informe o <b>número de parcelas</b>. O app distribui as parcelas nas faturas certas.'}},
+ {g:"app",q:"Como pago uma conta ou a fatura?",kw:"pagar paguei fatura conta pagamento quitar",ir:"acerto",r:function(){return 'Vá em <b>Planejar > Acerto de contas</b> e toque em <b>Pagar</b> (dívidas e faturas) ou <b>Paguei</b> (contas fixas). O app já preenche o valor; é só confirmar de qual conta saiu.'}},
+ {g:"app",q:"Como passo dinheiro de uma conta para outra?",kw:"transferir transferencia passar dinheiro conta outra pix",ir:"inicio",r:function(){return 'Toque na pena e escolha <b>Transferi entre contas</b>. Escolha de onde saiu e para onde foi. Isso não é gasto: o dinheiro só mudou de lugar.'}},
+ {g:"app",q:"Anotei errado. Como corrijo ou apago?",kw:"errado corrigir apagar excluir editar desfazer erro",ir:"anotacoes",r:function(){return 'Toque na anotação (no Início ou em Mais > Anotações) para <b>alterar</b> ou <b>apagar</b>. Logo depois de apagar, aparece o botão <b>Desfazer</b>, caso tenha sido sem querer.'}},
+ {g:"app",q:"Como guardo dinheiro numa caixinha?",kw:"guardar caixinha separar juntar objetivo",ir:"caixinhas",r:function(){return 'Em <b>Planejar > Caixinhas</b>, escolha a caixinha e toque em <b>Guardar</b>. O dinheiro <b>continua na sua conta e continua seu</b>: ele só sai do que você pode usar agora.'}},
+ {g:"app",q:"Como cadastro uma conta fixa (aluguel, internet)?",kw:"conta fixa aluguel internet assinatura luz agua cadastrar",ir:"fixas",r:function(){return 'Em <b>Planejar > Contas fixas</b>, toque em <b>Nova conta fixa</b>. Escolha se repete <b>todo mês</b> ou <b>todo ano</b> (IPVA, IPTU). O app avisa quando vencer.'}},
+ {g:"app",q:"Como confiro o saldo com o banco?",kw:"conferir banco saldo bater conciliar diferenca",ir:"contas",r:function(){return 'Em <b>Dinheiro</b>, toque na conta e em <b>Conferir com o banco</b>. Digite o saldo que aparece no app do banco: se não bater, eu ajudo a anotar o que faltou ou a corrigir.'}},
+ {g:"app",q:"Como cadastro meu carro ou minha casa?",kw:"bem bens carro casa moto imovel cadastrar comprei",ir:"contas",aba:"bens",r:function(){return 'Em <b>Dinheiro > Bens</b>, ou na pena > <b>Comprei um bem</b> se a compra for agora. O bem entra no que você tem e pode perder ou ganhar valor com o tempo.'}},
+ {g:"app",q:"Como anoto dinheiro que emprestei ou que devo a alguém?",kw:"emprestei emprestimo pessoa amigo devo alguem parente",ir:"contas",aba:"pessoas",r:function(){return 'Em <b>Dinheiro > Pessoas</b>. Cadastre a pessoa e anote se você emprestou ou se pegou emprestado. Dá até para marcar a data combinada.'}},
+ {g:"app",q:"Como faço uma cópia dos meus dados?",kw:"copia backup salvar dados guardar seguranca",ir:"ajustes",r:function(){return 'Em <b>Mais > Ajustes > Guardar uma cópia</b>. Faça <b>toda semana</b>: seus dados ficam só neste celular, e a cópia é o que salva tudo se ele quebrar ou for perdido.'}},
+ {g:"app",q:"Troquei de celular. Como levo meus dados?",kw:"trocar celular novo levar dados passar recuperar",ir:"ajustes",r:function(){return 'No celular <b>antigo</b>, guarde uma cópia (Mais > Ajustes) e mande para você mesmo. No <b>novo</b>, abra o app e use <b>Recuperar de uma cópia</b> com esse arquivo.'}},
+ {g:"app",q:"Como deixo a letra maior ou a tela escura?",kw:"letra maior grande tamanho tela escura tema cores",ir:"ajustes",r:function(){return 'Em <b>Mais > Ajustes</b>: escolha o <b>tamanho da letra</b> (até Enorme) e as <b>cores</b> (claro ou escuro). Lá também dá para deixar o app parado, sem animações.'}},
+ /* ---------- Aprender ---------- */
+ {g:"aprender",q:"O que é reserva de emergência e quanto devo ter?",kw:"reserva emergencia o que e quanto ter",r:function(){return 'É um dinheiro guardado só para imprevistos: perder o emprego, uma doença, um conserto. O ideal é ter de <b>3 a 6 meses</b> do seu custo básico, num lugar fácil de tirar. Comece com pouco: o importante é começar.'}},
+ {g:"aprender",q:"Por que \"sobrou\" no mês é diferente do que tenho no banco?",kw:"sobrou diferente banco caiu por que cartao fatura",r:function(){return 'Porque o gasto no cartão conta no <b>dia da compra</b>, e não no dia em que a fatura é paga. Então pode sobrar R$ 500 no mês e o banco cair, se você pagou a fatura de compras do mês anterior. As duas coisas estão certas.'}},
+ {g:"aprender",q:"O que é \"é meu de verdade\"?",kw:"meu de verdade patrimonio o que significa",ir:"inicio",r:function(){return 'É o seu <b>patrimônio</b>: tudo o que você tem (dinheiro, bens, o que te devem) menos tudo o que você deve. É o que sobraria se você pagasse todas as dívidas hoje. É esse número que mostra se você está ficando mais rico ou mais pobre.'}},
+ {g:"aprender",q:"O gasto no cartão conta na compra ou no pagamento?",kw:"cartao conta compra pagamento quando competencia",r:function(){return 'Na <b>compra</b>. Assim cada mês mostra o que você realmente consumiu nele. O pagamento da fatura é só o dinheiro saindo da conta para quitar a dívida do cartão.'}},
+ {g:"aprender",q:"Comprar um carro é gasto?",kw:"carro bem gasto comprar casa imovel",r:function(){return 'Não. É trocar dinheiro (ou uma dívida) por um <b>bem</b>, que continua seu. Por isso use <b>Comprei um bem</b>. O que vira gasto, com o tempo, é a perda de valor do carro, além de combustível, seguro e manutenção.'}},
+ {g:"aprender",q:"Como eu saio das dívidas?",kw:"sair dividas endividado quitar como livrar",ir:"acerto",r:function(){return 'Um passo de cada vez:'+listaHTML(['<b>Pare de aumentar</b>: nada de novas parcelas por um tempo.','<b>Liste tudo</b> o que deve (o app já faz isso).','<b>Negocie</b>: credores costumam dar desconto à vista ou juros menores.','<b>Ataque uma dívida por vez</b>: a de juros mais caros ou a menor.','<b>Guarde um pouquinho</b> mesmo assim, para um imprevisto não virar dívida nova.'])}},
+ {g:"aprender",q:"Vale a pena pagar só o mínimo da fatura?",kw:"minimo fatura rotativo pagar so",r:function(){return 'Não. O que fica sem pagar entra nos <b>juros do rotativo</b>, dos mais caros que existem. Se não der para pagar tudo, costuma sair mais barato <b>parcelar a fatura</b> ou trocar por um empréstimo de juros menores.'}},
+ {g:"aprender",q:"O que são juros compostos?",kw:"juros compostos sobre juros o que sao",r:function(){return 'São <b>juros sobre juros</b>: a cada mês, os juros entram na conta e o próximo mês cobra juros também sobre eles. Contra você (numa dívida), a conta cresce rápido. A seu favor (guardando), o dinheiro cresce sozinho com o tempo.'}},
+ {g:"aprender",q:"Como começo a guardar ganhando pouco?",kw:"guardar pouco comecar economizar poupar ganhando",ir:"caixinhas",r:function(){return 'Guarde <b>primeiro</b>, assim que receber, e não o que sobrar no fim do mês. Comece pequeno (até 5% já vale) e dê um <b>objetivo</b> ao dinheiro numa caixinha. O hábito vale mais que o valor.'}},
+ {g:"aprender",q:"Meus dados ficam seguros? Alguém vê?",kw:"dados seguros seguranca privacidade alguem ve",ir:"ajustes",r:function(){return 'Seus dados ficam <b>só neste celular</b>. Não vão para internet nenhuma, e ninguém vê, nem quem fez o Balancete. Por isso a <b>cópia</b> é importante: sem ela, se o celular se perder, os dados vão junto.'}}
+];
+var ABA_GRUPO={inicio:"dinheiro",contas:"dividas",planejar:"planejar",graficos:"planejar",relatorios:"planejar",mais:"app"};
+var CH={g:"dinheiro"};
+function buscaPerg(txt){
+  var pal=norm(txt).replace(/[^a-z0-9 ]/g," ").split(/\s+/).filter(function(w){return w.length>=3&&["que","para","com","uma","como","meu","minha","meus","minhas","tem","tenho","isso","esta","este","nos","das","dos"].indexOf(w)<0});
+  if(!pal.length)return [];
+  return PERGS.map(function(p,i){
+    var alvo=" "+norm(p.q+" "+p.kw).replace(/[^a-z0-9 ]/g," ")+" ", pts=0;
+    pal.forEach(function(w){if(alvo.indexOf(" "+w+" ")>=0)pts+=2; else if(alvo.indexOf(" "+w.slice(0,4))>=0)pts+=1});
+    return {i:i,pts:pts};
+  }).filter(function(x){return x.pts>0}).sort(function(a,b){return b.pts-a.pts||a.i-b.i}).slice(0,3).map(function(x){return x.i});
+}
+function listaPergs(idx,titulo){
+  return (titulo?'<p class="ch-tit">'+esc(titulo)+'</p>':'')+idx.map(function(i){return '<button class="ch-q" data-a="chPerg" data-i="'+i+'">'+esc(PERGS[i].q)+'</button>'}).join("");
+}
+function grupoIdx(g){var o=[];PERGS.forEach(function(p,i){if(p.g===g)o.push(i)});return o}
+function pintarGrupos(){
+  $("#chGrupos").innerHTML=GRUPOS.map(function(x){return '<button class="chip" data-a="chGrupo" data-g="'+x[0]+'" aria-pressed="'+(CH.g===x[0])+'">'+esc(x[1])+'</button>'}).join("");
+  $("#chLista").innerHTML=listaPergs(grupoIdx(CH.g));
+}
+function addMsg(html,quem){
+  var m=$("#chMsgs"); if(!m)return;
+  var d=document.createElement("div"); d.className="ch-m "+quem; d.innerHTML=html; m.appendChild(d);
+  m.scrollTop=m.scrollHeight;
+}
+function abrirChat(){
+  CH.g=ABA_GRUPO[ABA[VIEW]||VIEW]||"dinheiro";
+  abrirModal('<div class="acm-topo"><div class="ch-cab">'+rostoPerg()+'<div><b>Balancete</b><span>Perguntas prontas, sem internet</span></div></div><button class="acm-x" data-a="mFechar">Fechar</button></div>'+
+    '<div class="ch-msgs" id="chMsgs" aria-live="polite"></div>'+
+    '<div class="campo ch-busca"><label for="chBusca" class="sr">Escreva sua dúvida</label><input id="chBusca" maxlength="80" placeholder="Escreva sua dúvida" autocomplete="off"></div>'+
+    '<div class="chips ch-grupos" id="chGrupos"></div><div class="ch-lista" id="chLista"></div>',"acm chatm");
+  addMsg(esc(saudacao())+'. Em que posso ajudar? Escolha uma pergunta ou escreva sua dúvida.',"ele");
+  pintarGrupos();
+  $("#chBusca").addEventListener("input",function(){
+    var v=this.value.trim();
+    if(!v){$("#chLista").innerHTML=listaPergs(grupoIdx(CH.g));return}
+    var r=buscaPerg(v);
+    $("#chLista").innerHTML=r.length?listaPergs(r,"Parecidas com o que você escreveu:"):'<p class="ch-tit">Não achei uma pergunta parecida. Veja os grupos acima.</p>';
+  });
+  var p=$(".perg"); if(p)p.setAttribute("aria-expanded","true");
+  lsSet(KEY+":chatDica","1");
+}
+function responder(i){
+  var p=PERGS[i]; if(!p)return;
+  addMsg(esc(p.q),"eu");
+  var r; try{r=p.r()}catch(e){r='Desculpe, não consegui calcular isso agora.'}
+  addMsg(r+(p.ir?'<button class="ch-ir" data-a="chIr" data-v="'+p.ir+'"'+(p.aba?' data-aba="'+p.aba+'"':'')+'>Ver no app ›</button>':''),"ele");
+}
+/* a pílula reage à aba e fala uma frase curta */
+var PERG_ABA=null;
+var FRASES_ABA={inicio:function(){return saudacao()+". Toque em mim para perguntar."},contas:function(){return "Conferi: cada centavo no seu lugar."},planejar:function(){return "Vamos ver o que vem pela frente?"},graficos:function(){return "Seus números, com clareza."},relatorios:function(){return "Preparei uma leitura para você."},mais:function(){return "Às suas ordens."}};
+var REACAO_ABA={inicio:"r-nod",contas:"r-baixo",planejar:"r-cima",graficos:"r-le",relatorios:"r-le",mais:"r-nod"};
+function pergReage(vw){
+  var aba=ABA[vw]||vw, p=$(".perg"), b=$("#pergBal"); if(!p||!b||!FRASES_ABA[aba])return;
+  if(aba===PERG_ABA)return; PERG_ABA=aba;
+  if(!calmo()){var c=REACAO_ABA[aba]; p.classList.remove("r-nod","r-baixo","r-cima","r-le"); void p.offsetWidth; p.classList.add(c); setTimeout(function(){p.classList.remove(c)},1800)}
+  b.textContent=FRASES_ABA[aba](); b.classList.add("on"); clearTimeout(b._t); b._t=setTimeout(function(){b.classList.remove("on")},2600);
+}
+
 /* ---------- mascotes secundários (D54): só em momentos especiais ---------- */
 function olhinhos(cx,cy,e,r,cor,brow){
   var h='';
@@ -3313,6 +3568,10 @@ var ACOES={
   },
   acToggle:function(){if(AC_ABERTO)fecharAcerto(); else abrirAcerto()},
   acFechar:fecharAcerto,
+  chat:abrirChat,
+  chGrupo:function(d){CH.g=d.g; var b=$("#chBusca"); if(b)b.value=""; pintarGrupos()},
+  chPerg:function(d){responder(+d.i)},
+  chIr:function(d){fecharModal(); var p=$(".perg"); if(p)p.setAttribute("aria-expanded","false"); if(d.v==="acerto"){ir("planejar");abrirAcerto();return} if(d.aba)DIN_ABA=d.aba; ir(d.v)},
   mordomo:function(){
     var b=$("#bal"); if(!b)return;
     if(!calmo()){b.classList.remove("rev"); void b.getBoundingClientRect(); b.classList.add("rev"); setTimeout(function(){b.classList.remove("rev")},1500)}
@@ -3579,6 +3838,7 @@ if("serviceWorker" in navigator && /^https?:$/.test(location.protocol)){
 }
 try{ if(navigator.storage&&navigator.storage.persist)navigator.storage.persist(); }catch(e){}
 if(S.config.pronto&&S.contas.length)ir("inicio"); else iniciarOnb();
+var pr=$("#pergRosto"); if(pr)pr.innerHTML=rostoPerg();
 var spTira=function(){var sp=$("#splash"); if(sp)sp.remove()};
 setTimeout(spTira,calmo()?1200:4100);
 if($("#splash"))$("#splash").addEventListener("click",spTira);   /* tocar pula a abertura */

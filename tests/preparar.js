@@ -15,7 +15,7 @@ const EXPOSTAS = [
   "resumoMes", "conta", "saldoConta", "ocorrencias", "fixasPendentes", "agenda", "saldoCaixa", "totalReservado",
   "livreAgora", "rendaMedia", "comprometidoMeses", "taxaMensal", "sobraMesPassado", "aReceber", "ymMais",
   "atualizarBens", "bensTotal", "bensLista", "pagarNoMes", "dinheiroEmConta", "guardadoConta", "livreConta",
-  "bucketsCaixa", "contasDinheiro", "melhorConta", "higienizarConfig", "indicadores", "relatorioTexto", "contasDoAno", "compMes"
+  "bucketsCaixa", "contasDinheiro", "melhorConta", "higienizarConfig", "indicadores", "relatorioTexto", "contasDoAno", "compMes", "PERGS", "buscaPerg"
 ];
 
 function preparar() {
