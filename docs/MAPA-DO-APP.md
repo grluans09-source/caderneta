@@ -18,7 +18,7 @@ Aplica as decisões Q1 a Q7 da [auditoria](AUDITORIA-FUNCOES.md), aceitas pelo d
 | **+ Anotar** (botão redondo no canto direito de baixo, fora da barra) | O que aconteceu agora? |
 | **Menu de bolinhas**: o toque no + gera 4 bolinhas em quarto de círculo, para a esquerda e para cima (Gastei bordô, Recebi azul, Transferi ardósia, Comprei um bem cobre) | Anotar em dois toques: o 2º toque abre a folha já no tipo escolhido. Vale em todas as telas |
 | **Planejar** | O que vem pela frente? |
-| **Gráficos** | Como estão minhas finanças, em imagem? (9 indicadores) |
+| **Gráficos** | Como estão minhas finanças, em imagem? (Mês a mês e 10 indicadores) |
 | **Relatórios** | O que cada indicador quer dizer sobre mim? (um relatório por indicador) |
 | **Mais** | Ver o histórico e ajustar o app |
 
@@ -29,10 +29,14 @@ Aplica as decisões Q1 a Q7 da [auditoria](AUDITORIA-FUNCOES.md), aceitas pelo d
 | Assunto | Casa (única) | Aparece como atalho em |
 |---|---|---|
 | Valor de verdade (balança) | Início | – |
+| Custo fixo de vida | Gráficos (indicador) | Relatórios |
 | Resumo do mês (entrou, saiu, sobrou) | Início | – |
 | **Quanto falta pagar no mês** | **Planejar** | Início (uma linha) |
 | **O que vence (agenda)** | **Planejar** | Início (só avisos urgentes) |
 | Contas fixas (cadastro) | Planejar > Contas fixas | Agenda |
+| **Contas do ano** (quanto separar por mês para IPVA, IPTU...) | Planejar > Contas fixas (embaixo) | Caixinhas (criar uma já preenchida) |
+| **Conferir com o banco** | Dinheiro > tocar na conta | Lista de contas ("Conferido em…") |
+| **Mês a mês** (comparar com o mês anterior) | **Gráficos** (primeiro cartão) | Início ("Outubro fechou", nos 10 primeiros dias) |
 | Metas do mês (limite por categoria) | Planejar > Metas | Início (se existirem) |
 | Caixinhas (guardar) | Planejar > Caixinhas | Início (vitrine), Dinheiro (quanto está guardado em cada conta) |
 | Simulador "e se eu comprar" | Planejar > Simulador | – |

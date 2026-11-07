@@ -1,6 +1,6 @@
 # Roteiro
 
-Onde estamos: **versão 1.13.1-beta.1** (a 1.13.0 está publicada para testadores). App reorganizado (`MAPA-DO-APP.md`), com anotar em dois toques, conta Dinheiro com cédulas e paleta nova. **Ainda sem uso real por outras pessoas**: o que falta é pôr o app na mão de 3 a 5 pessoas (`GUIA-TESTADORES.md`).
+Onde estamos: **versão 1.14.0-beta.1** (a 1.13.1 está publicada para testadores). App reorganizado (`MAPA-DO-APP.md`), com anotar em dois toques, conta Dinheiro com cédulas e paleta nova. **Ainda sem uso real por outras pessoas**: o que falta é pôr o app na mão de 3 a 5 pessoas (`GUIA-TESTADORES.md`).
 Este documento diz **o que fazer a seguir, em que ordem e por quê**. Atualize-o a cada versão.
 
 ## Como priorizar
@@ -27,8 +27,10 @@ Este documento diz **o que fazer a seguir, em que ordem e por quê**. Atualize-o
 | Parcial | **Backup mais fácil**: lembrete a cada 7 dias (feito); falta botão "Guardar cópia" no Início quando fizer tempo; compartilhar direto por WhatsApp/e-mail | Perda de dados é o maior risco | Médio |
 | Alta | **Migração de hospedagem** para o **Cloudflare Pages** (D33), com domínio próprio (D34), **aviso de mudança de endereço** e botão de cópia no endereço antigo. Só antes de vender | Plano em `PUBLICACAO.md` | Médio |
 | ✅ 1.2.0 | **Início enxuto** (balança, resumo, uma linha "Falta pagar", avisos, 3 últimas anotações) | Feito; falta só confirmar com testadores se basta | Feito |
+| ✅ 1.14.0 | **Passo 2 do plano**: análise contábil (`ANALISE-CONTABIL.md`) e as 4 funções escolhidas: conferir com o banco, contas do ano, mês a mês e custo fixo de vida | Feito; ver com testadores se "Conferir com o banco" é achado e entendido | Feito |
+| **Depois (D53)** | Fluxo de caixa do mês ("sobrou 500 mas o banco caiu"), relatório para o Imposto de Renda (perto da declaração), etiquetas por projeto | Escolhidas para depois na análise contábil | Média |
 | ✅ 1.13.1 | **Passo 1 do plano novo**: acerto de contas em janela preta e dourada, atrasada igual na agenda e no acerto, dica de instalar, + exatamente no canto | Feito; ver em celular real se a janela abre e fecha bem com o botão voltar | Feito |
-| **Plano combinado (7 nov 2026)** | 2) análise contábil e sugestões; 3) nome, logo, mascote e venda sem custo; 4) novo botão de anotar e lugar do mascote; 5) chat do mascote com ~50 perguntas; 6) Investimentos (D50); 7) notícias de fontes oficiais; 8) auditoria completa | Cada passo é examinado e decidido com o dono antes de fazer | Em andamento |
+| **Plano combinado (7 nov 2026)** | ~~2) análise contábil e sugestões~~ (feito na 1.14.0); 3) nome, logo, mascote e venda sem custo; 4) novo botão de anotar e lugar do mascote; 5) chat do mascote com ~50 perguntas; 6) Investimentos (D50); 7) notícias de fontes oficiais; 8) auditoria completa | Cada passo é examinado e decidido com o dono antes de fazer | Em andamento |
 | ✅ 1.13.0 | **Botão + no canto direito**, bolinhas em quarto de círculo, Relatórios fora do Mais, **conta Dinheiro criada para quem já usava o app** | Feito; conferir em celular real se o botão não atrapalha o polegar nem tapa conteúdo | Feito |
 | ✅ 1.12.0 | **Visual vivo** (ícones cheios, formas redondas, abertura e animações), bolinhas em círculo, seletor de tipo na folha, busca com lista completa, 5 categorias favoritas | Feito; ver se as pessoas gostam do visual e se o Movimento Parado basta para quem prefere calma | Feito |
 | **Próximo (desenho decidido, D50)** | **Investimentos**: caixinha presa a uma conta e rendendo (taxa anual, cálculo por dia útil, ajuste manual); **nova aba Investimentos** (poupança, CDB, Tesouro, fundos); pergunta dos Primeiros passos trocada por "Você tem dinheiro guardado ou investido?" | Hoje caixinha não rende e poupança é uma conta comum. O espaço na barra já foi liberado (D51); falta o resto do desenho | Alta |

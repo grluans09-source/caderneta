@@ -3,6 +3,21 @@
 Formato: versão semântica (`MAIOR.MENOR.CORREÇÃO`). Cada versão diz **o que mudou para a pessoa que usa**.
 Antes da 1.0.0 as versões eram numeradas só pelo nome do cache do app (v1 a v16); estão aqui como marcos de desenvolvimento.
 
+## [1.14.0-beta.1]: 7 de novembro de 2026 · quatro funções contábeis: conferir com o banco, contas do ano, mês a mês e custo fixo de vida
+Escolhidas pelo dono a partir da análise contábil (`docs/ANALISE-CONTABIL.md`).
+- **Conferir com o banco.** Na conta de banco (Dinheiro > tocar na conta > **Conferir com o banco**), a pessoa digita o saldo que vê no app do banco.
+  - Se bater, o app guarda a data ("Conferido com o banco em 07/11").
+  - Se faltar dinheiro no banco, oferece **anotar o gasto que faltou** (abre a folha já com a conta e o valor) ou **só corrigir o saldo**, que cria uma anotação de verdade na categoria "Diferença ao conferir", com a data de hoje. O que já estava anotado não muda e a conta continua fechando.
+  - Se sobrar dinheiro no banco, faz o mesmo com um ganho.
+- **Contas do ano** (Planejar > Contas fixas). Para cada conta que repete todo ano (IPVA, IPTU, matrícula), o app mostra quando vence e **quanto separar por mês** até lá, arredondado para cima em reais, com o total por mês.
+  - Um toque cria uma **caixinha já preenchida** com nome, alvo e data.
+  - Com a caixinha criada, a linha mostra quanto já foi guardado, e a conta por mês passa a considerar só o que falta.
+- **Mês a mês.** No topo dos Gráficos, um cartão compara um mês com o anterior: entrou, saiu, sobrou, uma frase ("você gastou R$ 100 a menos (−8%) e sobrou R$ 100 a mais") e as 3 categorias que mais mudaram. Setas para ver até 12 meses para trás.
+  - Nos 10 primeiros dias do mês, o **Início** mostra "**Outubro fechou**" com o mesmo resumo. O cartão some ao tocar em "Entendi".
+- **Custo fixo de vida** (novo indicador, agora são **10**): quanto custa o básico por mês = contas fixas do mês + contas do ano divididas por 12 + parcelas e dívidas (média dos próximos 3 meses), comparado com a renda. Até 50%: saudável; até 70%: atenção; acima: alerta. Tem relatório de consultor próprio, que explica a diferença para "Quanto da renda já tem dono".
+- A conta de banco na lista diz "Toque para editar ou conferir com o banco" ou a data da última conferência.
+- Testes: 657 verificações em 23 arquivos (novo: as quatro funções contábeis).
+
 ## [1.13.1-beta.1]: 7 de novembro de 2026 · acerto de contas em janela, atrasada certa e dica de instalar
 - **Acerto de contas em janela por cima da tela.** "Abrir o acerto de contas" agora sobe uma janela **preta e dourada**, igual ao cartão (antes a lista abria **branca** dentro do cartão preto e esticava a tela). Tem botão **Fechar** grande e as setas de mês. Cada conta diz o prazo em palavras: **"vence em 13 dias"** ou **"atrasada há 4 dias"**, com as atrasadas primeiro. Ao tocar em **Pagar**, a janela dá lugar à folha de anotar já preenchida; ao salvar ou fechar a folha, **a janela volta** com o total atualizado, para pagar a próxima.
 - **Correção: conta vencida neste mês agora conta como atrasada.** Uma conta que venceu no dia 3, vista no dia 7, aparecia sem aviso no acerto de contas, enquanto a agenda dizia "atrasada há 4 dias". Agora os dois dizem a mesma coisa.

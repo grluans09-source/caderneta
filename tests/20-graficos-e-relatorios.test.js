@@ -31,8 +31,8 @@ d.documentElement.classList.add("calmo");
 const ind=()=>{const o={};T.indicadores().forEach(i=>o[i.id]=i);return o};
 const c3=()=>S().contas.find(c=>c.id==="c3");
 
-// ======== 1) os 9 indicadores ========
-eq("são 9 indicadores, nesta ordem",T.indicadores().map(i=>i.id),["patrimonio","liquidez","reserva","poupanca","endividamento","renda","destino","composicao","juros"]);
+// ======== 1) os 10 indicadores ========
+eq("são 10 indicadores, nesta ordem",T.indicadores().map(i=>i.id),["patrimonio","liquidez","reserva","poupanca","endividamento","renda","custo","destino","composicao","juros"]);
 let I=ind();
 eq("o dinheiro é R$ 8.000 e as dívidas R$ 4.500: patrimônio R$ 3.500",[T.dinheiroEmConta(),T.totais().pl],[800000,350000]);
 eq("peso das dívidas = 4.500 / 8.000 = 56% → alerta",[I.endividamento.valor,I.endividamento.st],["56%","critico"]);
@@ -58,15 +58,15 @@ S().contas.find(c=>c.id==="c1").inicial=100000;
 
 // ======== 2) aba Gráficos ========
 click('nav [data-v="graficos"]');
-eq("a aba Gráficos mostra os 9 cartões, cada um com selo, valor, gráfico e botão do relatório",
-  [d.querySelectorAll("#tela .ind-card").length,[...d.querySelectorAll("#tela .ind-card")].every(c=>c.querySelector(".selo")&&c.querySelector(".ind-val")&&c.querySelector(".ind-graf")&&c.querySelector('[data-a="relInd"]'))],[9,true]);
+eq("a aba Gráficos mostra os 10 cartões, cada um com selo, valor, gráfico e botão do relatório",
+  [d.querySelectorAll("#tela .ind-card").length,[...d.querySelectorAll("#tela .ind-card")].every(c=>c.querySelector(".selo")&&c.querySelector(".ind-val")&&c.querySelector(".ind-graf")&&c.querySelector('[data-a="relInd"]'))],[10,true]);
 eq("a barra marca a aba Gráficos",$("nav [aria-current]").dataset.v,"graficos");
 eq("gráficos de tipos diferentes: curva, barras, régua, comparação e composição",
   [!!$("#tela svg.grafico"),!!$("#tela .gauge"),!!$("#tela .duas"),!!$("#tela .emp")],[true,true,true,true]);
 
 // ======== 3) aba Relatórios ========
 click('nav [data-v="relatorios"]');
-eq("Relatórios abre com o panorama e uma lista de relatórios",[/Seu panorama/.test($("#tela").textContent),d.querySelectorAll("#tela .rel-item").length],[true,9]);
+eq("Relatórios abre com o panorama e uma lista de relatórios",[/Seu panorama/.test($("#tela").textContent),d.querySelectorAll("#tela .rel-item").length],[true,10]);
 eq("o panorama conta quantos estão saudáveis, em atenção e em alerta",/estão saudáveis/.test($("#tela .preto").textContent)&&/pedem atenção/.test($("#tela .preto").textContent),true);
 const ordem=[...d.querySelectorAll("#tela .rel-item .selo")].map(s=>s.className.match(/st-(\w+)/)[1]);
 const rank={critico:0,atencao:1,info:2,ok:3,sem:4};
@@ -79,11 +79,11 @@ eq("o relatório traz a faixa de comparação e o aviso de que não substitui um
 eq("o relatório tem de 3 a 5 passos práticos, o botão de compartilhar e o de voltar",[d.querySelectorAll("#tela .rel-ul li").length>=3,!!$('#tela [data-a="relShare"]'),!!$('#tela [data-a="ir"][data-v="relatorios"]')],[true,true,true]);
 eq("a barra continua marcando Relatórios dentro do relatório",$("nav [aria-current]").dataset.v,"relatorios");
 click('#tela [data-a="ir"][data-v="relatorios"]');
-eq("voltar leva à lista",d.querySelectorAll("#tela .rel-item").length,9);
+eq("voltar leva à lista",d.querySelectorAll("#tela .rel-item").length,10);
 // cada relatório abre
 const ids=T.indicadores().map(i=>i.id);
 let abriu=0;ids.forEach(id=>{click('#tela [data-a="relInd"][data-id="'+id+'"]');if(d.querySelectorAll("#tela h2").length===5)abriu++;click('#tela [data-a="ir"][data-v="relatorios"]')});
-eq("os 9 relatórios abrem completos",abriu,9);
+eq("os 10 relatórios abrem completos",abriu,10);
 // vocabulário comum nos textos
 const proibidas=[/gaveta/i,/comprometid/i,/lançamento/i,/projeção/i,/partida/i,/saldo devedor/i];
 const textos=T.indicadores().map(i=>{const t=T.relatorioTexto(i);return [i.nome,i.pergunta,i.leitura,t.o,t.c,t.r,t.p,...t.b].join(" ")}).join(" ");
@@ -94,7 +94,7 @@ S().lancamentos=[];S().contas.forEach(c=>{if(c.tipo==="passivo")c.inicial=0,dele
 I=ind();
 eq("sem lançamentos: reserva, poupança e destino ficam 'sem dados' e não quebram",[I.reserva.st,I.poupanca.st,I.destino.st],["sem","sem","sem"]);
 click('nav [data-v="graficos"]');
-eq("a aba Gráficos abre mesmo sem dados",d.querySelectorAll("#tela .ind-card").length,9);
+eq("a aba Gráficos abre mesmo sem dados",d.querySelectorAll("#tela .ind-card").length,10);
 click('nav [data-v="relatorios"]');
 eq("o panorama sem dados convida a anotar ou mostra os que têm",/Seu panorama/.test($("#tela").textContent),true);
 eq("erros de script",errs,[]);

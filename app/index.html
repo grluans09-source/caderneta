@@ -583,6 +583,33 @@ h2:after{content:"";position:absolute;left:0;bottom:0;width:2.8rem;height:.32rem
 @keyframes spT{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @keyframes spSai{to{opacity:0;visibility:hidden}}
 html.calmo #splash{display:none}
+/* conferir com o banco, contas do ano, mês a mês */
+.cf-res{border-radius:.9rem;padding:.7rem .9rem;margin:.6rem 0 .2rem;background:var(--card);border:2px solid var(--latao)}
+.cf-res p{margin:.25rem 0 0;color:var(--ink2);font-size:.92rem}
+.cf-res.cf-ok{background:var(--selbg);color:var(--selink);border-color:var(--selbg)}
+.ano-lista{padding:.2rem 1rem}
+.ano-row{display:grid;grid-template-columns:1fr auto;gap:.6rem;align-items:center;padding:.7rem 0;border-bottom:1px solid var(--rule)}
+.ano-row:last-child{border-bottom:0}
+.ano-t b{display:block}.ano-t span{display:block;font-size:.84rem;color:var(--ink2)}
+.ano-t .link{min-height:2.75rem;padding:.3rem 0;font-size:.9rem}
+.ano-v{text-align:right}.ano-v b{display:block;font-family:Georgia,serif;font-size:1.1rem}.ano-v i{font-style:normal;font-size:.78rem;color:var(--ink2)}
+.ano-ok{color:var(--ink2)}
+html[data-tam="gg"] .ano-row{grid-template-columns:1fr}html[data-tam="gg"] .ano-v{text-align:left}
+.mm-tri{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.4rem;margin:.5rem 0}
+.mm-tri div{background:var(--bg);border-radius:.7rem;padding:.45rem .5rem;text-align:center}
+.mm-tri span{display:block;font-size:.75rem;color:var(--ink2)}
+.mm-tri:after{content:"valores em reais";grid-column:1/-1;text-align:center;font-size:.72rem;color:var(--ink2)}.mm-tri b{font-family:Georgia,serif;font-size:.98rem}
+.mm-tri b.neg{color:var(--out)}
+html[data-tam="gg"] .mm-tri{grid-template-columns:1fr}
+.mm-frase{margin:.4rem 0}
+.mm-mud{list-style:none;padding:0;margin:.3rem 0 0}
+.mm-mud li{display:flex;justify-content:space-between;gap:.6rem;padding:.35rem 0;border-top:1px solid var(--rule);font-size:.92rem}
+.mm-mud b.mais{color:var(--out)}.mm-mud b.menos{color:var(--in)}
+.mm-card{background:var(--card);border:1px solid var(--rule2);border-top:5px solid var(--latao);border-radius:1.25rem;padding:.9rem;margin-top:.9rem;box-shadow:var(--shadow)}
+.mm-card h3{font-family:Georgia,serif;font-size:1.1rem;margin:.2rem 0 0}
+.mm-card .mesnav{margin-bottom:.4rem}
+.fechou{border-left:5px solid var(--latao)}
+.fechou-t{display:block;font-family:Georgia,serif;font-size:1.1rem}
 /* dica de instalar */
 .dica-inst{border-left:5px solid var(--latao)}
 .dica-inst p{margin:.35rem 0}
@@ -662,7 +689,7 @@ html[data-tam="g"] .fbl{max-width:4.8rem}
 /* ---------- utilidades ---------- */
 var KEY="caderneta:v2";
 /* versão do app (siga o CHANGELOG.md; subir junto com VERSAO em sw.js e "version" em package.json) */
-var VERSAO_APP="1.13.1-beta.1";
+var VERSAO_APP="1.14.0-beta.1";
 var RE_ID=/^[A-Za-z0-9_-]+$/, RE_DATA=/^\d{4}-\d{2}-\d{2}$/;
 var MES=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
 var MES3=["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
@@ -743,6 +770,7 @@ function higienizar(p){
       ["desde","ajustadoAte"].forEach(function(k){if(typeof c[k]==="string"&&/^\d{4}-\d{2}$/.test(c[k]))n[k]=c[k]});
     }
     if(typeof c.cobrar==="string"&&RE_DATA.test(c.cobrar))n.cobrar=c.cobrar;
+    if(typeof c.conferido==="string"&&RE_DATA.test(c.conferido))n.conferido=c.conferido;
     if(c.tipo==="passivo"&&Array.isArray(c.abertas)){
       var ab=c.abertas.filter(function(a){return ehObj(a)&&cent(a.valor)>0&&(a.data==null||(typeof a.data==="string"&&RE_DATA.test(a.data)))})
         .map(function(a){return {data:a.data||null,valor:cent(a.valor)}});
@@ -754,6 +782,7 @@ function higienizar(p){
   (Array.isArray(p.categorias)?p.categorias:[]).forEach(function(c){
     if(!ehObj(c)||!id(c.id)||typeof c.nome!=="string"||(c.tipo!=="despesa"&&c.tipo!=="receita")){out.perdidos++;return}
     var kn={id:c.id,nome:c.nome,tipo:c.tipo};
+    if(c.sis==="conf")kn.sis="conf";
     if(c.tipo==="despesa"&&cent(c.meta)>0)kn.meta=cent(c.meta);
     out.categorias.push(kn);
   });
@@ -1527,7 +1556,7 @@ function telaInicio(){
       '<div class="e"><span>'+esc(v("entrou"))+'</span><b data-roll="'+r.ent+'" data-k="ent">+'+num(r.ent)+'</b></div>'+
       '<div class="s"><span>'+esc(v("saiu"))+'</span><b data-roll="'+r.sai+'" data-k="sai">−'+num(r.sai)+'</b></div>'+
       '<div><span>'+esc(v("sobrou"))+'</span><b data-roll="'+sob+'" data-k="sob" style="color:'+(sob<0?"var(--out)":"var(--ink)")+'">'+(sob<0?"−":"")+num(sob)+'</b></div></div>'+
-    '<p class="faint" style="text-align:center;margin-top:.4rem">Valores de '+MES[d.getMonth()]+'</p>'+
+    '<p class="faint" style="text-align:center;margin-top:.4rem">Valores de '+MES[d.getMonth()]+'</p>'+cardFechou()+
         linhaFalta()+
     avisos()+
     (S.caixas.length?'<h2>Minhas caixinhas</h2><div class="card"><div class="jarras">'+S.caixas.slice(0,4).map(function(x,i){return cofre(x,i)}).join("")+'</div><button class="link" data-a="ir" data-v="caixinhas">Ver e mexer nas caixinhas</button></div>':'')+
@@ -1661,6 +1690,39 @@ function modalFavoritas(){
   abrirModal('<p class="q">Minhas contas favoritas</p><p class="sub">Escolha até <b>3</b> contas para aparecerem primeiro quando você anota. A conta <b>Dinheiro</b> aparece sempre.</p>'+
     '<div class="chips" id="favChips" style="margin:.7rem 0">'+(cand.length?cand.map(function(c){return '<button class="chip" data-a="favToggle" data-id="'+c.id+'" aria-pressed="'+(fav.indexOf(c.id)>=0)+'">'+esc(c.nome)+'</button>'}).join(""):'<p class="faint">Você ainda não tem outras contas.</p>')+'</div>'+
     '<p class="faint" id="favMsg">'+fav.length+' de 3 escolhidas</p><button class="btn" data-a="mFechar">Pronto</button>');
+}
+
+/* ---------- conferir o saldo com o banco (conciliação) ----------
+   A pessoa digita o saldo que vê no app do banco. Se bater, marca a data.
+   Se não bater: ou anota o que faltou (folha já preenchida), ou corrige com uma
+   anotação de verdade na categoria "Diferença ao conferir" (o passado não muda). */
+var CF=null;
+function modalConferir(id){
+  var c=conta(id); if(!c)return; CF={id:id};
+  abrirModal('<p class="q">Conferir com o banco</p>'+
+    '<p class="sub">Abra o app do banco e veja o saldo de <b>'+esc(c.nome)+'</b> agora. Digite aqui o mesmo valor.</p>'+
+    '<p class="faint">No Caderneta: <b style="color:var(--ink)">'+esc(brl(saldoConta(c)))+'</b>'+(c.conferido?' · última conferência em '+esc(dataBR(c.conferido)):'')+'</p>'+
+    '<div class="campo"><label for="cfSaldo">Saldo no banco agora</label><input id="cfSaldo" inputmode="numeric" placeholder="R$ 0,00"></div>'+
+    '<div id="cfRes" aria-live="polite"></div>'+
+    '<button class="btn sec" data-a="mFechar">Fechar</button>');
+  ligarDinheiro($("#cfSaldo"),0);
+  $("#cfSaldo").addEventListener("input",pintarConferir);
+}
+function pintarConferir(){
+  var el=$("#cfRes"), c=CF&&conta(CF.id); if(!el||!c)return;
+  if(!/\d/.test($("#cfSaldo").value)){el.innerHTML="";return}
+  var banco=cent($("#cfSaldo")), dif=banco-saldoConta(c); CF.banco=banco; CF.dif=dif;
+  if(dif===0){el.innerHTML='<div class="cf-res cf-ok"><b>Bateu!</b> O Caderneta e o banco mostram o mesmo valor.</div><button class="btn" data-a="cfOk">Marcar como conferido</button>';return}
+  var falta=dif<0, d=Math.abs(dif);
+  el.innerHTML='<div class="cf-res"><b>'+(falta?'Faltam '+esc(brl(d))+' no banco':'Tem '+esc(brl(d))+' a mais no banco')+'</b>'+
+    '<p>'+(falta?'Pode ser um gasto, uma tarifa ou um pagamento que não foi anotado.':'Pode ser um dinheiro que entrou e não foi anotado, ou um rendimento.')+'</p></div>'+
+    '<button class="btn" data-a="cfAnotar">'+(falta?'Anotar o gasto que faltou':'Anotar o que entrou')+'</button>'+
+    '<button class="btn sec" data-a="cfCorrigir">Não sei: só corrigir o saldo</button>';
+}
+function catConferir(tipoCat){
+  var k=S.categorias.filter(function(x){return x.sis==="conf"&&x.tipo===tipoCat})[0];
+  if(!k){k={id:uid(),nome:"Diferença ao conferir",tipo:tipoCat,sis:"conf"}; S.categorias.push(k)}
+  return k;
 }
 
 /* ---------- conta Dinheiro: a carteira, com contagem de cédulas ---------- */
@@ -1823,7 +1885,21 @@ function indicadores(){
     d:{renda:renda,compr:compr,pct:pCom},
     graf:pCom===null?'<p class="faint">Informe sua renda mensal (ou anote seus ganhos) para ver este gráfico.</p>':empHTML([{n:"Contas que já vão chegar",v:compr,cor:C.cr},{n:"Sobra da renda",v:Math.max(0,renda-compr),cor:C.ok}])});
 
-  /* 7. para onde vai o dinheiro */
+  /* 7. custo fixo de vida: o básico que chega todo mês */
+  var ymH=hojeISO().slice(0,7), fixM=0, anoM=0;
+  S.fixas.forEach(function(f){
+    if(f.freq==="anual"){if(ocorrencias(f,ymH,ymMais(ymH,11)).length)anoM+=Math.round(f.valor/12)}
+    else if(ocorrencias(f,ymH,ymMais(ymH,2)).length)fixM+=f.valor;
+  });
+  var divM=Math.round(cm.reduce(function(s,m){return s+m.div},0)/cm.length), custo=fixM+anoM+divM, pCu=renda>0&&custo>0?custo/renda*100:null;
+  out.push({id:"custo",nome:"Custo fixo de vida",pergunta:"Quanto custa o meu básico por mês?",
+    valor:custo>0?brl(custo):"—",
+    st:custo===0?"sem":pCu===null?"sem":pCu<=50?"ok":pCu<=70?"atencao":"critico",
+    leitura:custo===0?"Cadastre suas contas fixas para calcular.":"O seu básico custa "+brl(custo)+" por mês"+(pCu!==null?", "+Math.round(pCu)+"% da renda.":"."),
+    d:{custo:custo,fixM:fixM,anoM:anoM,divM:divM,renda:renda,pct:pCu},
+    graf:custo===0?'<p class="faint">Cadastre contas fixas (aluguel, luz, internet) e dívidas para ver este gráfico.</p>':empHTML([{n:"Contas fixas do mês",v:fixM,cor:C.cr},{n:"Contas do ano (por mês)",v:anoM,cor:C.at},{n:"Parcelas e dívidas (média)",v:divM,cor:"var(--tr)"}])});
+
+  /* 8. para onde vai o dinheiro */
   var rm=resumoMes(ym), ks=Object.keys(rm.porSai).sort(function(a,b){return rm.porSai[b]-rm.porSai[a]}), top=ks[0], pTop=top&&rm.sai?rm.porSai[top]/rm.sai*100:0, pTop3=rm.sai?ks.slice(0,3).reduce(function(s,k){return s+rm.porSai[k]},0)/rm.sai*100:0;
   out.push({id:"destino",nome:"Para onde vai o dinheiro",pergunta:"Em que eu mais gasto?",
     valor:rm.sai?brl(rm.sai):"—",
@@ -1832,7 +1908,7 @@ function indicadores(){
     d:{sai:rm.sai,ent:rm.ent,top:top?nomeCat(top):"",topV:top?rm.porSai[top]:0,pTop:pTop,pTop3:pTop3,porSai:rm.porSai,porEnt:rm.porEnt},
     graf:'<div class="rot2" style="margin-bottom:.3rem">Gastos de '+MES[+ym.slice(5)-1]+'</div>'+barras(rm.porSai,rm.sai,"s")});
 
-  /* 8. de que é feito o patrimônio */
+  /* 9. de que é feito o patrimônio */
   var usar=Math.max(0,caixa-guard), recPes=Math.max(0,t.ativo-caixa-B), liqP=t.ativo>0?caixa/t.ativo*100:null;
   out.push({id:"composicao",nome:"De que é feito o que você tem",pergunta:"O que tenho vira dinheiro rápido?",
     valor:liqP===null?"—":Math.round(liqP)+"% em dinheiro",
@@ -1841,7 +1917,7 @@ function indicadores(){
     d:{ativo:t.ativo,usar:usar,guard:guard,bens:B,rec:recPes,liq:liqP},
     graf:empHTML([{n:"Dinheiro para usar",v:usar,cor:"var(--selbg)"},{n:"Guardado nas caixinhas",v:guard,cor:"var(--am)"},{n:"Bens",v:B,cor:"var(--cobre)"},{n:"A receber",v:recPes,cor:"var(--in)"}])});
 
-  /* 9. custo dos juros */
+  /* 10. custo dos juros */
   var kj=S.categorias.filter(function(k){return k.nome==="Juros e multas"})[0], jTot=0, eTot=0;
   var jSerie=serie.map(function(m){var v=0; if(kj)S.lancamentos.forEach(function(l){if(l.tipo==="saida"&&l.catId===kj.id&&l.data.slice(0,7)===m.ym)v+=l.valor}); jTot+=v; eTot+=m.ent; return {l:m.l,j:v}});
   var pJ=eTot>0?jTot/eTot*100:0;
@@ -1900,6 +1976,13 @@ function relatorioTexto(i){
     T.r="Até 30%: confortável. De 30% a 50%: apertado. Acima de 50%: a maior parte da renda já tem destino antes de o mês começar, e sobra pouco para viver e guardar.";
     T.p=st==="critico"?"A renda está muito amarrada. Evite novas parcelas e veja se alguma conta fixa pode ser reduzida ou renegociada.":st==="atencao"?"Está apertado. Um imprevisto pode forçar atraso; segure novos compromissos.":st==="ok"?"Sua renda tem folga. Dá para assumir objetivos com calma, sem se amarrar demais.":"Informe sua renda em Ajustes ou anote ganhos para ver este indicador.";
     T.b=["Antes de parcelar, some a nova parcela a este percentual: ela cabe abaixo de 30%?","Reveja assinaturas e planos: cada um é um pedaço fixo da renda.","Prefira prazos curtos: parcelas longas amarram a renda por muito tempo."];
+  }else if(i.id==="custo"){
+    T.o="É quanto custa manter a sua vida básica por mês: contas fixas (aluguel, luz, internet, assinaturas), a parte de cada mês das contas do ano (IPVA, IPTU) e as parcelas das dívidas. É o valor mínimo que precisa entrar todo mês, antes de comida e lazer.";
+    T.c=d.custo===0?"Ainda não há contas fixas nem dívidas cadastradas para calcular.":
+      "O seu básico custa <b>"+RB(d.custo)+"</b> por mês: <b>"+RB(d.fixM)+"</b> de contas fixas, <b>"+RB(d.anoM)+"</b> das contas do ano divididas por 12 e <b>"+RB(d.divM)+"</b> de parcelas e dívidas (média dos próximos 3 meses)."+(d.pct!==null?" Isso é <b>"+Math.round(d.pct)+"%</b> da sua renda de cerca de "+RB(d.renda)+".":"");
+    T.r="Até 50% da renda: o básico cabe com folga para comida, imprevistos e guardar. De 50% a 70%: apertado. Acima de 70%: qualquer imprevisto vira dívida. Diferente de \"Quanto da renda já tem dono\", que olha só as contas que já vão chegar, aqui entra também a parte de cada mês das contas do ano.";
+    T.p=st==="critico"?"O básico come quase toda a renda. Comece pelas contas fixas maiores: dá para trocar de plano, renegociar ou cortar?":st==="atencao"?"O básico está pesado. Antes de assumir uma nova conta fixa, veja se outra pode sair.":st==="ok"?"O seu básico cabe bem na renda. Use a folga para guardar e para as contas do ano.":"Informe a sua renda (ou anote seus ganhos) e cadastre as contas fixas para ver a comparação.";
+    T.b=["Separe todo mês a parte das contas do ano (Planejar > Contas fixas > Contas do ano).","Reveja as assinaturas: some as pequenas, elas viram uma conta grande.","Quando uma dívida acabar, mande o valor da parcela para a reserva."];
   }else if(i.id==="destino"){
     T.o="Mostra para onde o seu dinheiro foi neste mês. Quase todo mundo se surpreende: gastos pequenos e frequentes costumam pesar mais que a grande compra.";
     T.c=d.sai===0?"Você ainda não anotou gastos neste mês.":
@@ -1931,10 +2014,44 @@ function cardIndicador(i){
     '<div class="ind-val">'+esc(i.valor)+'</div><div class="ind-graf">'+i.graf+'</div><p class="ind-leit">'+esc(i.leitura)+'</p>'+
     '<button class="btn sec peq" data-a="relInd" data-id="'+i.id+'">Ler o relatório ›</button></article>';
 }
+/* um mês comparado com o anterior: totais e as categorias que mais mudaram */
+function compMes(ym){
+  var a=resumoMes(ym), b=resumoMes(ymMais(ym,-1)), ks={}, mud=[];
+  Object.keys(a.porSai).concat(Object.keys(b.porSai)).forEach(function(k){ks[k]=1});
+  Object.keys(ks).forEach(function(k){var va=a.porSai[k]||0, vb=b.porSai[k]||0; if(va!==vb)mud.push({nome:nomeCat(k),agora:va,antes:vb,dif:va-vb})});
+  mud.sort(function(x,y){return Math.abs(y.dif)-Math.abs(x.dif)});
+  return {ym:ym,ent:a.ent,sai:a.sai,sob:a.ent-a.sai,entA:b.ent,saiA:b.sai,sobA:b.ent-b.sai,tem:a.lanc.length>0,temA:b.lanc.length>0,mud:mud.slice(0,3)};
+}
+function pctTxt(agora,antes){if(!antes)return "";var p=Math.round((agora-antes)/antes*100); return p===0?"igual":(p>0?"+":"−")+Math.abs(p)+"%"}
+function difTxt(v){return (v>0?"+":v<0?"−":"")+brl(Math.abs(v))}
+function blocoMes(c,curto){
+  var mes=MES[+c.ym.slice(5)-1], ant=MES[+ymMais(c.ym,-1).slice(5)-1];
+  if(!c.tem)return '<p class="faint">Nada anotado em '+esc(mes)+'.</p>';
+  var h='<div class="mm-tri"><div><span>'+esc(v("entrou"))+'</span><b>'+num(c.ent)+'</b></div><div><span>'+esc(v("saiu"))+'</span><b>'+num(c.sai)+'</b></div><div><span>'+esc(v("sobrou"))+'</span><b'+(c.sob<0?' class="neg"':'')+'>'+(c.sob<0?"−":"")+num(Math.abs(c.sob))+'</b></div></div>';
+  if(!c.temA)return h+'<p class="faint">Ainda não há '+esc(ant)+' anotado para comparar.</p>';
+  var gs=c.sai-c.saiA;
+  h+='<p class="mm-frase">Comparado com '+esc(ant)+', você <b>'+(gs===0?'gastou o mesmo':gs<0?'gastou '+esc(brl(-gs))+' a menos':'gastou '+esc(brl(gs))+' a mais')+'</b>'+(c.saiA&&gs!==0?' ('+esc(pctTxt(c.sai,c.saiA))+')':'')+' e '+(c.sob>=c.sobA?'sobrou '+esc(brl(c.sob-c.sobA))+' a mais':'sobrou '+esc(brl(c.sobA-c.sob))+' a menos')+'.</p>';
+  if(c.mud.length&&!curto)h+='<ul class="mm-mud">'+c.mud.map(function(m){return '<li><span>'+esc(m.nome)+'</span><b class="'+(m.dif>0?"mais":"menos")+'">'+esc(difTxt(m.dif))+(m.antes?' ('+esc(pctTxt(m.agora,m.antes))+')':' (novo)')+'</b></li>'}).join("")+'</ul>';
+  return h;
+}
+var MM_OFF=-1;
+function cardMesAMes(){
+  var ym=ymMais(hojeISO().slice(0,7),MM_OFF), mes=MES[+ym.slice(5)-1];
+  return '<article class="mm-card" id="cardMM"><div class="mesnav"><button data-a="mmMes" data-n="-1" aria-label="Mês anterior"'+(MM_OFF<=-12?" disabled":"")+'>‹</button><b>'+esc(mes)+(ym.slice(0,4)!==hojeISO().slice(0,4)?" de "+ym.slice(0,4):"")+'</b><button data-a="mmMes" data-n="1" aria-label="Próximo mês"'+(MM_OFF>=0?" disabled":"")+'>›</button></div>'+
+    '<h3>Mês a mês</h3><p class="ind-sub">Como foi o mês comparado com o anterior?</p>'+blocoMes(compMes(ym))+'</article>';
+}
+/* no Início, nos 10 primeiros dias do mês: "outubro fechou" (some ao tocar em Entendi) */
+function cardFechou(){
+  var hoje=hojeISO(), ym=ymMais(hoje.slice(0,7),-1);
+  if(+hoje.slice(8)>10||lsGet(KEY+":fechou:"+ym))return "";
+  var c=compMes(ym); if(!c.tem)return "";
+  return '<div class="card fechou" id="cardFechou"><b class="fechou-t">'+esc(MES[+ym.slice(5)-1].replace(/^./,function(x){return x.toUpperCase()}))+' fechou</b>'+blocoMes(c,false)+
+    '<button class="btn peq sec" data-a="fechouOk" data-ym="'+ym+'">Entendi</button> <button class="btn peq sec" data-a="ir" data-v="graficos">Ver mês a mês</button></div>';
+}
 function telaGraficos(){
   return capa("Seus números em imagens","Gráficos")+
     '<p class="sub lead">Indicadores que mostram a saúde das suas finanças. Em cada um, toque em "Ler o relatório" para entender o que ele quer dizer.</p>'+
-    indicadores().map(cardIndicador).join("");
+    cardMesAMes()+indicadores().map(cardIndicador).join("");
 }
 function panoramaTexto(L,c){
   var com=L.filter(function(i){return i.st!=="sem"}).length;
@@ -1990,7 +2107,7 @@ function telaContas(){
   if(DIN_ABA==="contas"){
   h+='<h2>'+esc(v("ativo"))+'</h2><div class="card" style="padding:.2rem 1rem">'+
     (ativos.length?ativos.map(function(c){
-      return '<button class="gaveta" data-a="gaveta" data-id="'+c.id+'"><span class="marca"></span><span class="txt"><b>'+esc(c.nome)+'</b><i>'+(guardadoConta(c.id)>0?esc(brl(guardadoConta(c.id)))+' guardado · para usar '+esc(brl(saldoConta(c)-guardadoConta(c.id))):(c.carteira?textoCarteira(c):'Toque para editar'))+'</i></span><span class="pont"></span><span class="vl">'+esc(brl(saldoConta(c)))+'</span></button>';
+      return '<button class="gaveta" data-a="gaveta" data-id="'+c.id+'"><span class="marca"></span><span class="txt"><b>'+esc(c.nome)+'</b><i>'+(guardadoConta(c.id)>0?esc(brl(guardadoConta(c.id)))+' guardado · para usar '+esc(brl(saldoConta(c)-guardadoConta(c.id))):(c.carteira?textoCarteira(c):c.conferido?'Conferido com o banco em '+esc(dataBR(c.conferido)):'Toque para editar ou conferir com o banco'))+'</i></span><span class="pont"></span><span class="vl">'+esc(brl(saldoConta(c)))+'</span></button>';
     }).join(""):'<div class="vazio"><b>Nenhuma ainda</b>Crie uma carteira ou conta de banco.</div>')+
     (totalReservado()>0?'<p class="faint" style="padding:.5rem 0">Os saldos acima são os reais, iguais aos do banco. Desse dinheiro, <b style="color:var(--ink)">'+esc(brl(totalReservado()))+'</b> está guardado nas caixinhas. Para usar agora: <b style="color:var(--ink)">'+esc(brl(livreAgora()))+'</b>.</p>':'')+'</div>';
   return h+'<button class="btn" data-a="gaveta" data-id="">+ Nova conta</button>';
@@ -2316,6 +2433,7 @@ function modalGaveta(id){
     '<div id="gCartao"><div class="campo"><label for="gFecha">Dia que a fatura fecha (opcional)</label><input id="gFecha" type="number" min="1" max="31" inputmode="numeric" value="'+(c&&c.fecha||"")+'"></div>'+
     '<div class="campo"><label for="gVence">Dia que a fatura vence (opcional)</label><input id="gVence" type="number" min="1" max="31" inputmode="numeric" value="'+(c&&c.vence||"")+'"></div>'+
     '<div class="campo"><label for="gLimite">Limite (opcional)</label><input id="gLimite" inputmode="numeric" placeholder="R$ 0,00"></div></div>'+
+    (c&&c.tipo==="ativo"&&!c.pessoa&&!c.bem?'<button class="btn sec" data-a="conferir" data-id="'+c.id+'">Conferir com o banco</button>':"")+
     '<button class="btn" data-a="gSalvar">Salvar</button>'+
     (c?'<button class="btn perigo" data-a="gApagar">Apagar conta</button>':"")+
     '<button class="btn sec" data-a="mFechar">Cancelar</button>';
@@ -2652,6 +2770,34 @@ function telaPlanejar(){
     (ag.length>4?'<button class="link" data-a="agMais">'+(AG_TODAS?"Mostrar menos":"Ver todas ("+ag.length+")")+'</button>':'');
 
 }
+/* contas que vencem uma vez por ano: quanto separar por mês até cada uma vencer */
+function mesesAte(de,ate){var a=de.split("-").map(Number), b=ate.split("-").map(Number); return (b[0]*12+b[1])-(a[0]*12+a[1])}
+function contasDoAno(){
+  var ym=hojeISO().slice(0,7);
+  return S.fixas.filter(function(f){return f.freq==="anual"}).map(function(f){
+    var oc=ocorrencias(f,ym,ymMais(ym,12)).filter(function(o){return !fixaPaga(f,o.ref)})[0];
+    if(!oc)return null;
+    var cx=S.caixas.filter(function(x){return norm(x.nome)===norm(f.nome)})[0], tem=cx?saldoCaixa(cx.id):0;
+    var falta=Math.max(0,f.valor-tem), meses=mesesAte(ym,oc.ref);
+    var porMes=falta===0?0:meses>0?Math.ceil(falta/meses/100)*100:falta;
+    return {f:f,data:oc.data,meses:meses,cx:cx||null,tem:tem,falta:falta,porMes:porMes};
+  }).filter(Boolean).sort(function(a,b){return a.data<b.data?-1:a.data>b.data?1:0});
+}
+function blocoContasDoAno(){
+  var l=contasDoAno();
+  var h='<h2>Contas do ano</h2>';
+  if(!l.length)return h+'<p class="faint">IPVA, IPTU, matrícula, seguro do carro: cadastre como conta fixa que <b>repete todo ano</b> e o app mostra quanto separar por mês para pagar sem aperto.</p>';
+  var tot=l.reduce(function(s,x){return s+(x.meses>0?x.porMes:0)},0);
+  h+='<p class="sub">Para não ser pego de surpresa: quanto separar por mês até cada uma vencer.</p><div class="card ano-lista">'+l.map(function(x){
+    var quando=x.meses<=0?'vence este mês, '+dataBR(x.data).slice(0,5):'vence em '+dataBR(x.data)+' · faltam '+x.meses+(x.meses===1?' mês':' meses');
+    var dir=x.falta===0?'<b class="ano-ok">Já guardado</b>':x.meses<=0?'<b>'+esc(brl(x.falta))+'</b><i>este mês</i>':'<b>'+esc(brl(x.porMes))+'</b><i>por mês</i>';
+    var cx=x.cx?'<span class="faint">Na caixinha '+esc(x.cx.nome)+': '+esc(brl(x.tem))+' de '+esc(brl(x.f.valor))+'</span>':
+      '<button class="link" data-a="cxAno" data-id="'+x.f.id+'">Criar uma caixinha para ela</button>';
+    return '<div class="ano-row"><div class="ano-t"><b>'+esc(x.f.nome)+' · '+esc(brl(x.f.valor))+'</b><span>'+esc(quando)+'</span>'+cx+'</div><div class="ano-v">'+dir+'</div></div>';
+  }).join("")+'</div>'+
+  (tot>0?'<p class="faint" style="text-align:center;margin-top:.5rem">Separando <b style="color:var(--ink)">'+esc(brl(tot))+' por mês</b>, as contas do ano chegam pagas.</p>':'');
+  return h;
+}
 function telaFixas(){
   var mensal=S.fixas.filter(function(f){return f.freq!=="anual"}).reduce(function(s,f){return s+f.valor},0);
   var h=capa("Todo mês, no mesmo dia","Contas fixas","planejar")+'<p class="sub lead">Assinaturas, plano de celular, seguro, plano de saúde. Cadastre uma vez e o app avisa quando vencer, na agenda do Planejar.</p>';
@@ -2659,7 +2805,7 @@ function telaFixas(){
     return '<button class="gaveta" data-a="fixa" data-id="'+f.id+'"><span class="dia"><b>'+pad(f.dia)+'</b><i>'+(f.freq==="anual"?MES3[f.mes]:"todo mês")+'</i></span><span class="txt"><b>'+esc(f.nome)+'</b><i>'+esc(nomeConta(f.contaId)+" · "+nomeCat(f.catId))+'</i></span><span class="pont"></span><span class="vl out">'+esc(brl(f.valor))+'</span></button>';
   }).join(""):'<div class="vazio"><b>Nenhuma ainda</b>Comece pela que pesa mais.</div>')+'</div>';
   if(S.fixas.length)h+='<p class="faint" style="text-align:center;margin-top:.5rem">Total por mês: <b style="color:var(--ink)">'+esc(brl(mensal))+'</b></p>';
-  return h+'<button class="btn" data-a="fixa" data-id="">+ Nova conta fixa</button>';
+  return h+'<button class="btn" data-a="fixa" data-id="">+ Nova conta fixa</button>'+blocoContasDoAno();
 }
 
 /* ---------- CAIXINHAS ---------- */
@@ -2702,16 +2848,16 @@ function telaMetas(){
     :'<div class="vazio"><b>Nenhuma meta ainda</b>Toque em + Nova meta para começar.</div>')+'</div>';
   return h+'<button class="btn" data-a="novaMeta">+ Nova meta</button>';
 }
-function modalCaixa(id,sobra){
-  var x=id?caixa(id):null;
+function modalCaixa(id,sobra,pre){
+  var x=id?caixa(id):null; pre=pre||{};
   CX={id:id||null,sobra:sobra||null};
   abrirModal('<p class="q">'+(x?"Editar caixinha":"Nova caixinha")+'</p>'+
-    '<div class="campo"><label for="cNome">Nome</label><input id="cNome" maxlength="30" placeholder="Ex.: Reserva, Viagem, IPVA" value="'+esc(x?x.nome:"")+'"></div>'+
+    '<div class="campo"><label for="cNome">Nome</label><input id="cNome" maxlength="30" placeholder="Ex.: Reserva, Viagem, IPVA" value="'+esc(x?x.nome:(pre.nome||""))+'"></div>'+
     '<div class="campo"><label for="cAlvo">Alvo (opcional)</label><input id="cAlvo" inputmode="numeric" placeholder="R$ 0,00"></div>'+
-    '<div class="campo"><label for="cPrazo">Até quando? (opcional)</label><input id="cPrazo" type="date" value="'+esc(x&&x.prazo||"")+'"></div>'+
+    '<div class="campo"><label for="cPrazo">Até quando? (opcional)</label><input id="cPrazo" type="date" value="'+esc(x&&x.prazo||pre.prazo||"")+'"></div>'+
     '<button class="btn" data-a="cxSalvar">Salvar</button>'+(x&&saldoCaixa(x.id)===0?'<button class="btn perigo" data-a="cxApagar">Apagar caixinha</button>':'')+
     '<button class="btn sec" data-a="mFechar">Cancelar</button>');
-  ligarDinheiro($("#cAlvo"),x&&x.alvo||0);
+  ligarDinheiro($("#cAlvo"),x&&x.alvo||pre.alvo||0);
 }
 function guardarNaCaixa(id,valor,de,para,conta){
   var r={id:uid(),data:hojeISO(),de:de,para:para,valor:valor}; if(conta)r.conta=conta;
@@ -3033,6 +3179,23 @@ var ACOES={
   },
   acToggle:function(){if(AC_ABERTO)fecharAcerto(); else abrirAcerto()},
   acFechar:fecharAcerto,
+  conferir:function(d){modalConferir(d.id)},
+  cfOk:function(){var c=CF&&conta(CF.id); if(!c)return; c.conferido=hojeISO(); salvar(); fecharModal(); desenhar(); toast("Conferido: tudo certo")},
+  cfAnotar:function(){
+    var c=CF&&conta(CF.id); if(!c||!CF.dif)return; var dif=CF.dif;
+    fecharModal(); novaFolha({tipo:dif<0?"saida":"entrada",contaId:c.id,cent:Math.abs(dif)});
+  },
+  cfCorrigir:function(){
+    var c=CF&&conta(CF.id); if(!c||!CF.dif)return; var dif=CF.dif, d=Math.abs(dif), banco=CF.banco;
+    confirmar("Vou anotar "+brl(d)+(dif<0?" como gasto":" como ganho")+" na categoria \"Diferença ao conferir\", com a data de hoje. O saldo de "+c.nome+" passa a ser "+brl(banco)+", igual ao do banco. O que já estava anotado não muda.","Sim, corrigir",function(){
+      var k=catConferir(dif<0?"despesa":"receita");
+      S.lancamentos.push({id:uid(),tipo:dif<0?"saida":"entrada",valor:d,desc:"Diferença ao conferir com o banco",contaId:c.id,destinoId:null,catId:k.id,data:hojeISO()});
+      c.conferido=hojeISO(); salvar(); desenhar(); toast("Saldo corrigido: agora bate com o banco");
+    });
+  },
+  cxAno:function(d){var f=S.fixas.filter(function(x){return x.id===d.id})[0]; if(!f)return; var x=contasDoAno().filter(function(y){return y.f.id===f.id})[0]; modalCaixa(null,null,{nome:f.nome,alvo:f.valor,prazo:x?x.data:""})},
+  mmMes:function(d){MM_OFF=Math.max(-12,Math.min(0,MM_OFF+(+d.n))); var c=$("#cardMM"); if(c)c.outerHTML=cardMesAMes()},
+  fechouOk:function(d){lsSet(KEY+":fechou:"+d.ym,"1"); var c=$("#cardFechou"); if(c)c.remove()},
   dicaOk:function(){lsSet(KEY+":dicaInstalar","1"); var c=$("#dicaInst"); if(c)c.remove()},
   instalar:function(){var p=PEDIDO_INSTALAR; if(!p)return; PEDIDO_INSTALAR=null; p.prompt(); p.userChoice.then(function(r){if(r&&r.outcome==="accepted"){lsSet(KEY+":dicaInstalar","1")} desenhar()}).catch(function(){})},
   dinAba:function(d){DIN_ABA=d.v; desenhar()},

@@ -4,9 +4,9 @@
 > aqui estão **as regras e o jeito de trabalhar**. O resto está em `docs/` (veja a tabela no fim).
 
 ## Em que pé estamos
-- **Versão 1.13.1-beta.1** (7 nov 2026): app reorganizado (`docs/MAPA-DO-APP.md`), só com a interface Balança (D39), paleta **preto, dourado e branco** (D44), anotar em dois toques (D43), conta Dinheiro com cédulas, **abas Gráficos e Relatórios com 9 indicadores** (D45) acerto de contas no Planejar (D46), busca com lista completa e categorias favoritas (D47), seletor de tipo na folha (D48) visual "vivo" com animações (D49) e botão + solto no canto direito, com novidades que chegam a quem já usa o app (D51), e acerto de contas em janela por cima da tela, com dica de instalar (D52). **Plano em andamento** (passos 2 a 8 no `docs/ROTEIRO.md`): cada passo é examinado, melhorado e decidido com o dono antes de fazer. **Próximo (desenho decidido, ainda sem código):** investimentos, caixinhas que rendem e nova aba (D50). **Ainda sem teste com pessoas reais em celular.**
+- **Versão 1.14.0-beta.1** (7 nov 2026): app reorganizado (`docs/MAPA-DO-APP.md`), só com a interface Balança (D39), paleta **preto, dourado e branco** (D44), anotar em dois toques (D43), conta Dinheiro com cédulas, **abas Gráficos e Relatórios com 10 indicadores** (D45, D53), acerto de contas no Planejar (D46), busca com lista completa e categorias favoritas (D47), seletor de tipo na folha (D48), visual "vivo" com animações (D49) e botão + solto no canto direito, com novidades que chegam a quem já usa o app (D51), e acerto de contas em janela por cima da tela, com dica de instalar (D52), e as funções contábeis conferir com o banco, contas do ano, mês a mês e custo fixo de vida (D53; análise em `docs/ANALISE-CONTABIL.md`). **Plano em andamento** (passos 3 a 8 no `docs/ROTEIRO.md`): cada passo é examinado, melhorado e decidido com o dono antes de fazer. **Próximo (desenho decidido, ainda sem código):** investimentos, caixinhas que rendem e nova aba (D50). **Ainda sem teste com pessoas reais em celular.**
 - App no ar em https://grluans09-source.github.io/caderneta/ (GitHub Pages, publicado por GitHub Actions a partir da pasta `app/`).
-- 1 arquivo de app (`app/index.html`, ~3.300 linhas), 22 arquivos de teste (633 verificações) que rodam com `npm test`.
+- 1 arquivo de app (`app/index.html`, ~3.300 linhas), 23 arquivos de teste (657 verificações) que rodam com `npm test`.
 - Próximos passos em `docs/ROTEIRO.md`. Estado, riscos e dívidas em `docs/AVALIACAO.md`.
 
 ## Quem é o dono e como falar com ele
@@ -92,6 +92,7 @@ npm run icones  # regenera os ícones PNG a partir do desenho em tools/gerar-ico
 | `docs/ROTEIRO.md` | Próximos passos por prioridade |
 | `docs/DECISOES.md` | Decisões e motivos |
 | `docs/PUBLICACAO.md` | Publicar, backup, recuperar o projeto, migrar de hospedagem |
+| `docs/ANALISE-CONTABIL.md` | O que é contabilidade de verdade, o que é finanças pessoais e o que é ideia do dono; sugestões de funções contábeis |
 | `docs/MAPA-DO-APP.md` | Onde mora cada assunto, mapa de cores, fluxo de uso (o app de hoje) |
 | `docs/GUIA-TESTADORES.md` | Como mandar o app a testadores e o que observar |
 | `docs/PLANO-BETA.md`, `docs/AUDITORIA-FUNCOES.md` | **Históricos** (como se chegou ao mapa atual) |
