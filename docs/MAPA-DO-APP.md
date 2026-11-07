@@ -75,7 +75,7 @@ O tipo vem do **menu de bolinhas** do botão + (2 toques). A folha mostra o tipo
 ### Planejar: "O que vem pela frente"
 > *"O que você precisa pagar e como se organizar."*
 1. **Ferramentas** (4 botões com ícone e seta: Metas do mês · Caixinhas · Contas fixas · Simulador), no topo para nunca ficarem escondidas atrás de uma lista longa
-2. **Acerto de contas do mês** (cartão preto com ouro: total que falta, 3 contas de prévia e o botão **Abrir o acerto de contas**, que mostra **todas** as dívidas e contas fixas do mês, cada uma com **Pagar**/**Paguei**, e o já pago embaixo; setas de mês) ← casa oficial
+2. **Acerto de contas do mês** (cartão preto com ouro: total que falta, 3 contas de prévia e o botão **Abrir o acerto de contas**, que sobe uma **janela preta e dourada por cima da tela** com **todas** as dívidas e contas fixas do mês, cada uma com o prazo em palavras ("vence em…", "atrasada há…") e **Pagar**/**Paguei**, o já pago embaixo e as setas de mês; depois de pagar, a janela volta) ← casa oficial
 3. **Agenda dos próximos dias** (visão rápida: mostra 4; "Ver todas" abre o resto)
 
 **Regra geral de cores (paleta preto, dourado e branco):** **dourado = clicável** (botões cheios, o +; botões secundários têm contorno dourado; links em ouro sublinhado; linhas que abrem algo têm seta ›); **preto = selecionado** (fundo preto com texto dourado; no tema escuro, creme); **branco** = fundo e cartões. Só o **preto** marca seleção.

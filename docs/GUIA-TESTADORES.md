@@ -17,6 +17,8 @@ Use este guia para **mandar o app a quem vai testar** e para **observar o que ac
 ## 2. Passo a passo para a pessoa
 
 ### Abrir e instalar (deixa com cara de aplicativo e funciona sem internet)
+
+Aberto no navegador, o app mostra uma vez, no Início, como instalar. Peça para a pessoa instalar: sem isso, o navegador põe a barra de endereço e botões dele (como uma seta de subir) por cima do app.
 - **Android (Chrome):** abra o link → toque nos **três pontinhos** → **"Instalar aplicativo"** ou **"Adicionar à tela inicial"**.
 - **iPhone (Safari):** abra o link **no Safari** (não em outro navegador) → toque no botão de **compartilhar** (quadrado com seta) → **"Adicionar à Tela de Início"**.
 

@@ -62,7 +62,7 @@ Legenda: ✅ completo · ◐ parcial · ❌ não existe
 - **Vocabulário protegido por teste**: uma varredura procura jargão ("gaveta", "lançamento", "projeção"…) em todas as telas.
 
 ### Dívidas técnicas (por ordem de importância)
-1. **Arquivo único de 2.400 linhas.** Funciona e é simples de publicar, mas está perto do ponto em que mexer fica lento. *Gatilho para dividir:* passar de ~3.500 linhas ou entrar mais gente no projeto. *Como:* pasta `src/` em módulos + um script que gera o `app/index.html` único (os testes continuam iguais).
+1. **Arquivo único de 2.400 linhas** (na época desta avaliação; hoje ~3.300). Funciona e é simples de publicar, mas está perto do ponto em que mexer fica lento. *Gatilho para dividir:* passar de ~3.500 linhas ou entrar mais gente no projeto. *Como:* pasta `src/` em módulos + um script que gera o `app/index.html` único (os testes continuam iguais).
 2. **Telas como texto HTML + estado global.** Cada tela é uma função que monta uma string e `desenhar()` refaz tudo. É simples e rápido o suficiente, mas qualquer ajuste de foco/animação exige cuidado (já houve casos: busca perdendo o foco, animação da balança repetindo).
 3. **Nomes internos antigos** (`modalGaveta`, `data-a="gaveta"`): na tela já é "conta". Renomear só com os testes rodando.
 4. **Funções longas** (`desenharFolha`, `telaInicio`, `pagarNoMes`) e **estilos inline repetidos**. Não causam erro, só dificultam mudanças.

@@ -3,6 +3,13 @@
 Formato: versão semântica (`MAIOR.MENOR.CORREÇÃO`). Cada versão diz **o que mudou para a pessoa que usa**.
 Antes da 1.0.0 as versões eram numeradas só pelo nome do cache do app (v1 a v16); estão aqui como marcos de desenvolvimento.
 
+## [1.13.1-beta.1]: 7 de novembro de 2026 · acerto de contas em janela, atrasada certa e dica de instalar
+- **Acerto de contas em janela por cima da tela.** "Abrir o acerto de contas" agora sobe uma janela **preta e dourada**, igual ao cartão (antes a lista abria **branca** dentro do cartão preto e esticava a tela). Tem botão **Fechar** grande e as setas de mês. Cada conta diz o prazo em palavras: **"vence em 13 dias"** ou **"atrasada há 4 dias"**, com as atrasadas primeiro. Ao tocar em **Pagar**, a janela dá lugar à folha de anotar já preenchida; ao salvar ou fechar a folha, **a janela volta** com o total atualizado, para pagar a próxima.
+- **Correção: conta vencida neste mês agora conta como atrasada.** Uma conta que venceu no dia 3, vista no dia 7, aparecia sem aviso no acerto de contas, enquanto a agenda dizia "atrasada há 4 dias". Agora os dois dizem a mesma coisa.
+- **Dica para instalar o app.** Aberto no navegador, o celular coloca a barra de endereço e botões dele (como uma **seta de subir**, que **não é do Caderneta** e por isso o app não consegue mover) por cima da tela. O Início mostra **uma vez por aparelho** como instalar (Android ou iPhone) e, quando o navegador permite, um botão **Instalar agora**. Some ao tocar em "Entendi" e não aparece em quem já instalou.
+- **Correção: o botão + fica exatamente no canto.** A palavra "Anotar" estava do lado direito do círculo; agora fica à esquerda, e as bolinhas saem do próprio botão.
+- Testes: 633 verificações em 22 arquivos (novo: acerto, atrasada e dica de instalar).
+
 ## [1.13.0-beta.1]: 7 de novembro de 2026 · botão + no canto, conta Dinheiro para todo mundo
 - **Botão + no canto direito de baixo**, logo acima da barra, com a palavrinha "Anotar" ao lado. Ele saiu do meio da barra, que agora tem **6 abas iguais** e deixa um espaço livre para a aba de Investimentos que vem a seguir.
 - **Bolinhas em quarto de círculo.** Ao tocar no +, as 4 bolinhas abrem **para a esquerda e para cima**, a partir do canto, igualmente espaçadas (0°, 30°, 60° e 90°) e com o nome ao lado de cada uma. O botão redondo de tipo dentro da folha também foi para o canto direito, no mesmo lugar, e abre as bolinhas do mesmo jeito. Cabe com letra Enorme.

@@ -583,9 +583,26 @@ h2:after{content:"";position:absolute;left:0;bottom:0;width:2.8rem;height:.32rem
 @keyframes spT{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @keyframes spSai{to{opacity:0;visibility:hidden}}
 html.calmo #splash{display:none}
+/* dica de instalar */
+.dica-inst{border-left:5px solid var(--latao)}
+.dica-inst p{margin:.35rem 0}
+.dica-inst .btn.peq{margin-right:.4rem}
+/* acerto de contas em janela por cima da tela, preta e dourada como o cartão */
+.modal.acm{background:#0A0A0A;color:#F5EFDF;border-top:3px solid var(--latao)}
+.acm-topo{display:flex;justify-content:space-between;align-items:center;gap:.6rem;margin-bottom:.4rem}
+.acm-t{font-family:Georgia,serif;font-size:1.15rem;color:#E8CB6A;margin:0;border:0;padding:0}
+.acm-t:before,.acm-t:after{display:none}
+.acm-x{min-height:2.75rem;padding:0 1rem;border-radius:999px;border:2px solid #E8CB6A;color:#E8CB6A;font-weight:800;flex:none}
+.acm .card.pagar{background:transparent;border:0;box-shadow:none;padding:0;margin:0}
+.acm .ac-lista{background:transparent;color:#F5EFDF;padding:0;border-radius:0}
+.acm .ac-row{border-bottom:1px solid rgba(232,203,106,.25)}
+.acm .ac-row.k-divida{border-left-color:#F29090}.acm .ac-row.k-fixa{border-left-color:#AEB8D6}
+.acm .ac-t span{color:#B9B09A}.acm .ac-t em{color:#F29090}
+.acm .ac-v{color:#F29090}.acm .ac-pagas .ac-v{color:#B9B09A}
+.acm .ac-pagas .ac-t b:before{content:"✓ ";color:#E8CB6A}
 /* ===== botão + no canto direito de baixo, logo acima da barra; bolinhas em quarto de círculo (esquerda e para cima) ===== */
 nav .in{grid-template-columns:repeat(6,1fr)}
-.fab{position:fixed;right:1rem;bottom:calc(4.7rem + env(safe-area-inset-bottom));z-index:21;display:flex;flex-direction:row-reverse;align-items:center;gap:.5rem;padding:0;opacity:1}
+.fab{position:fixed;right:1rem;bottom:calc(4.7rem + env(safe-area-inset-bottom));z-index:21;display:flex;flex-direction:row;align-items:center;gap:.5rem;padding:0;opacity:1}
 .fab span.b{margin-top:0}
 .fab em{font-style:normal;font-weight:800;font-size:.8rem;background:var(--capa);color:var(--capa-ink);border:2px solid var(--latao);border-radius:999px;padding:.2rem .7rem;box-shadow:0 3px 8px rgba(0,0,0,.3)}
 .fab.aberto em{display:none}
@@ -645,7 +662,7 @@ html[data-tam="g"] .fbl{max-width:4.8rem}
 /* ---------- utilidades ---------- */
 var KEY="caderneta:v2";
 /* versão do app (siga o CHANGELOG.md; subir junto com VERSAO em sw.js e "version" em package.json) */
-var VERSAO_APP="1.13.0-beta.1";
+var VERSAO_APP="1.13.1-beta.1";
 var RE_ID=/^[A-Za-z0-9_-]+$/, RE_DATA=/^\d{4}-\d{2}-\d{2}$/;
 var MES=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
 var MES3=["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
@@ -1036,12 +1053,12 @@ function pagarNoMes(ym){
   var hoje=hojeISO().slice(0,7), ini=ym+"-01", falta=[], pago=[];
   aPagar().forEach(function(g){
     var dentro=!!g.data&&g.data.slice(0,7)===ym, resto=ym===hoje&&(!g.data||g.data<ini);
-    if(dentro||resto)falta.push({k:"divida",data:g.data,valor:g.valor,titulo:g.conta.nome,atrasada:!!g.data&&g.data<ini,cid:g.conta.id});
+    if(dentro||resto)falta.push({k:"divida",data:g.data,valor:g.valor,titulo:g.conta.nome,atrasada:!!g.data&&g.data<hojeISO(),cid:g.conta.id});
   });
   S.fixas.forEach(function(fx){
     ocorrencias(fx,ym===hoje?ymMais(ym,-2):ym,ym).forEach(function(o){
       if(fixaPaga(fx,o.ref))return;
-      if(o.ref===ym||(ym===hoje&&o.ref<ym))falta.push({k:"fixa",data:o.data,valor:fx.valor,titulo:fx.nome,atrasada:o.ref<ym,fid:fx.id,ref:o.ref});
+      if(o.ref===ym||(ym===hoje&&o.ref<ym))falta.push({k:"fixa",data:o.data,valor:fx.valor,titulo:fx.nome,atrasada:o.ref<ym||(!!o.data&&o.data<hojeISO()),fid:fx.id,ref:o.ref});
     });
   });
   S.lancamentos.forEach(function(l){
@@ -1065,8 +1082,9 @@ function cartaoPagar(ym,o){
   var pc=tot?Math.round(p.tp/tot*100):0, aberto=!!o.aberto&&o.lista!==false;
   function linhaAc(x,pago){
     var dt=x.data?dataBR(x.data).slice(0,5):"sem data";
+    var info=pago||!x.data?dt:x.atrasada?'<em>'+esc(quandoTxt(x.data))+'</em> · '+dt:esc('vence '+quandoTxt(x.data))+' · '+dt;
     var bt=(pago||!atual)?'':x.k==="divida"?'<button class="btn peq" data-a="pagar" data-id="'+esc(x.cid)+'" data-valor="'+x.valor+'">Pagar</button>':'<button class="btn peq" data-a="fxPagar" data-id="'+esc(x.fid)+'" data-ref="'+esc(x.ref)+'" data-data="'+esc(x.data)+'">Paguei</button>';
-    return '<div class="ac-row k-'+esc(x.k||"divida")+'"><div class="ac-t"><b>'+esc(x.titulo)+'</b><span>'+(x.atrasada?'<em>atrasada</em> · ':'')+dt+'</span></div><div class="ac-v">'+esc(brl(x.valor))+'</div>'+(bt?'<div class="ac-b">'+bt+'</div>':'')+'</div>';
+    return '<div class="ac-row k-'+esc(x.k||"divida")+'"><div class="ac-t"><b>'+esc(x.titulo)+'</b><span>'+info+'</span></div><div class="ac-v">'+esc(brl(x.valor))+'</div>'+(bt?'<div class="ac-b">'+bt+'</div>':'')+'</div>';
   }
   var h='<div class="card pagar">'+nav+'<div class="rot2">'+esc(tit)+'</div><div class="gr'+(p.tf===0?" zero":"")+'">'+esc(brl(p.tf))+'</div>';
   if(p.tp>0)h+='<div class="barra2" role="img" aria-label="'+pc+'% já pago"><div style="width:'+pc+'%;background:var(--latao)"></div></div><p class="faint">Já pagou <b>'+esc(brl(p.tp))+'</b> de <b>'+esc(brl(tot))+'</b> neste mês</p>';
@@ -1079,13 +1097,23 @@ function cartaoPagar(ym,o){
       }).join("");
       if(p.falta.length>(o.max||3))h+='<p class="faint">e mais '+(p.falta.length-(o.max||3))+' conta(s)</p>';
     }
-    if(o.acerto)h+='<button class="btn peq" data-a="acToggle" aria-expanded="'+aberto+'">'+(aberto?"Fechar o acerto de contas":"Abrir o acerto de contas ("+p.falta.length+")")+'</button>';
+    if(o.acerto)h+='<button class="btn peq" data-a="acToggle" aria-haspopup="dialog" aria-expanded="'+AC_ABERTO+'">Abrir o acerto de contas ('+p.falta.length+')</button>';
   }
   if(aberto&&p.pago.length)h+='<p class="rot2" style="margin-top:.9rem">Já pago neste mês</p><div class="ac-lista ac-pagas">'+p.pago.map(function(x){return linhaAc(x,true)}).join("")+'</div>';
   if(o.botao)h+='<button class="link" data-a="ir" data-v="planejar">Ver a agenda e pagar</button>';
   return h+'</div>';
 }
-function cartaoPagarInicio(){return cartaoPagar(ymMais(hojeISO().slice(0,7),PAG_OFF),{max:3,setas:true,off:PAG_OFF,acerto:true,aberto:AC_ABERTO})}
+function cartaoPagarInicio(){return cartaoPagar(ymMais(hojeISO().slice(0,7),PAG_OFF),{max:3,setas:true,off:PAG_OFF,acerto:true})}
+/* acerto de contas: janela preta e dourada que sobe por cima da tela */
+var AC_VOLTA=false;
+function abrirAcerto(){
+  AC_ABERTO=true;
+  var ym=ymMais(hojeISO().slice(0,7),PAG_OFF);
+  abrirModal('<div class="acm-topo"><h2 class="acm-t">Acerto de contas</h2><button class="acm-x" data-a="acFechar">Fechar</button></div>'+
+    '<div id="acCorpo">'+cartaoPagar(ym,{setas:true,off:PAG_OFF,aberto:true})+'</div>',"acm");
+  var b=$("#cardPagar [data-a=\"acToggle\"]"); if(b)b.setAttribute("aria-expanded","true");
+}
+function fecharAcerto(){AC_ABERTO=false; fecharModal(); var b=$("#cardPagar [data-a=\"acToggle\"]"); if(b)b.setAttribute("aria-expanded","false")}
 /* No Início: só uma linha que leva ao Planejar, onde mora o cartão completo */
 function linhaFalta(){
   var ym=hojeISO().slice(0,7), p=pagarNoMes(ym), mes=MES[+ym.slice(5)-1];
@@ -1136,8 +1164,8 @@ function toastDesfazer(t,sn){
   tmr=setTimeout(function(){el.classList.remove("on","com-botao");DESF=null},8000);
 }
 var MOK=null;
-function abrirModal(html){$("#modal").innerHTML=html;$("#modalFundo").classList.add("on")}
-function fecharModal(){$("#modalFundo").classList.remove("on");MOK=null}
+function abrirModal(html,cls){var m=$("#modal"); m.className="modal"+(cls?" "+cls:""); m.innerHTML=html;$("#modalFundo").classList.add("on")}
+function fecharModal(){$("#modalFundo").classList.remove("on");MOK=null;if($("#modal").classList.contains("acm")){AC_ABERTO=false;$("#modal").className="modal"}}
 function confirmar(texto,rotulo,acao){
   MOK=acao;
   abrirModal('<p class="q">'+esc(texto)+'</p>'+
@@ -1167,6 +1195,7 @@ var ABA={anotacoes:"mais",relatorio:"relatorios",ajustes:"mais",caixinhas:"plane
 function ir(vw){
   if(vw==="anotacoes"&&VIEW!=="anotacoes"){AN_VOLTA=(VIEW==="mais"||VIEW==="relatorios")?VIEW:"inicio";AN.q="";AN.n=15}
   VIEW=vw;
+  if(AC_ABERTO)fecharAcerto();
   if(vw==="planejar"){PAG_OFF=0;AG_TODAS=false;AC_ABERTO=false}
   $("#tela").classList.remove("vira-d","vira-e");
   document.querySelectorAll("nav button[data-v]").forEach(function(b){
@@ -1472,12 +1501,24 @@ function jarraMeta(k,porSai){
   var gasto=porSai[k.id]||0, pct=Math.max(0,(k.meta-gasto)/k.meta*100);
   return jarra(pct,gasto>k.meta?"vm":pct<=25?"am":"",k.nome,gasto>k.meta?"estourou "+brl(gasto-k.meta):brl(k.meta-gasto)+" restam","categoria",k.id);
 }
+/* Aberto no navegador (e não instalado), o celular põe barras e botões dele por cima do app.
+   Mostra uma vez por aparelho como instalar; some ao tocar em "Entendi" ou depois de instalar. */
+var PEDIDO_INSTALAR=null;
+window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();PEDIDO_INSTALAR=e;if(VIEW==="inicio")desenhar()});
+function instalado(){try{return window.matchMedia("(display-mode: standalone)").matches||navigator.standalone===true}catch(e){return true}}
+function dicaInstalar(){
+  if(!window.matchMedia||instalado()||lsGet(KEY+":dicaInstalar"))return "";
+  var ios=/iPhone|iPad|iPod/.test(navigator.userAgent);
+  return '<div class="card dica-inst" id="dicaInst"><b>Use como aplicativo</b><p>Aberto no navegador, o celular coloca a barra de endereço e botões dele (como a seta de subir) por cima do Caderneta. Instalado, ele abre direto, em tela cheia.</p>'+
+    '<p class="faint">'+(ios?'No iPhone: toque em <b>Compartilhar</b> (o quadrado com a seta) e depois em <b>Adicionar à Tela de Início</b>.':'No Android: toque nos <b>três pontinhos</b> do navegador e depois em <b>Adicionar à tela inicial</b> ou <b>Instalar app</b>.')+'</p>'+
+    (PEDIDO_INSTALAR?'<button class="btn peq" data-a="instalar">Instalar agora</button> ':'')+'<button class="btn peq sec" data-a="dicaOk">Entendi</button></div>';
+}
 function telaInicio(){
   var d=new Date(), t=totais(), ym=hojeISO().slice(0,7), r=resumoMes(ym), sob=r.ent-r.sai, fr=fraseDoDia();
   var res=totalReservado(), metas=metasMes();
   var ult=S.lancamentos.slice().sort(ordemRecente).slice(0,3);
   return '<header class="capa grande"><div class="topo-capa"><span>Folha de '+d.getDate()+' de '+MES[d.getMonth()]+'</span><h1>Caderneta <small class="beta">beta</small></h1></div>'+
-    '<button class="frase" id="frase" data-a="frase" aria-label="Ver outra frase">'+fraseHTML(fr)+'</button></header>'+
+    '<button class="frase" id="frase" data-a="frase" aria-label="Ver outra frase">'+fraseHTML(fr)+'</button></header>'+dicaInstalar()+
     '<div class="hero"><div class="rot">'+esc(v("pl"))+'</div>'+
     '<div class="grande'+(t.pl<0?" neg":"")+'" data-roll="'+t.pl+'" data-k="pl">'+esc(brl(t.pl))+'</div>'+
     balanca(t)+legendaBalanca(t)+'<button class="como" data-a="como">Como ler a balança?</button>'+
@@ -2092,9 +2133,11 @@ function fecharFolha(){
   FOLHA_ABERTA=false; F=null;
   $("#folha").classList.remove("on"); document.body.style.overflow="";
   try{if(history.state&&history.state.f)history.back()}catch(e){}
+  voltaAcerto();
 }
+function voltaAcerto(){if(AC_VOLTA){AC_VOLTA=false; var c=$("#cardPagar"); if(c)c.innerHTML=cartaoPagarInicio(); if(VIEW==="planejar")abrirAcerto()}}
 window.addEventListener("popstate",function(){
-  if(FOLHA_ABERTA){FOLHA_ABERTA=false;F=null;$("#folha").classList.remove("on");document.body.style.overflow=""}
+  if(FOLHA_ABERTA){FOLHA_ABERTA=false;F=null;$("#folha").classList.remove("on");document.body.style.overflow="";voltaAcerto()}
 });
 
 function novaFolha(o){
@@ -2975,6 +3018,7 @@ var ACOES={
   },
   pagar:function(d){
     var c=conta(d.id); if(!c)return;
+    if(AC_ABERTO){fecharAcerto(); AC_VOLTA=true}
     var banco=S.contas.filter(function(x){return x.tipo==="ativo"&&!x.pessoa&&!x.bem})[0];
     if(!banco){toast("Crie uma conta com dinheiro para pagar");return}
     novaFolha({tipo:"transferencia",contaId:banco.id,destinoId:c.id,cent:+d.valor,desc:"Pagamento "+c.nome});
@@ -2987,7 +3031,10 @@ var ACOES={
     if(navigator.share){navigator.share({title:"Caderneta: "+i.nome,text:t}).catch(function(){});return}
     try{navigator.clipboard.writeText(t).then(function(){toast("Relatório copiado")},function(){toast("Não consegui copiar aqui")})}catch(e){toast("Não consegui copiar aqui")}
   },
-  acToggle:function(){AC_ABERTO=!AC_ABERTO; var c=$("#cardPagar"); if(c)c.innerHTML=cartaoPagarInicio()},
+  acToggle:function(){if(AC_ABERTO)fecharAcerto(); else abrirAcerto()},
+  acFechar:fecharAcerto,
+  dicaOk:function(){lsSet(KEY+":dicaInstalar","1"); var c=$("#dicaInst"); if(c)c.remove()},
+  instalar:function(){var p=PEDIDO_INSTALAR; if(!p)return; PEDIDO_INSTALAR=null; p.prompt(); p.userChoice.then(function(r){if(r&&r.outcome==="accepted"){lsSet(KEY+":dicaInstalar","1")} desenhar()}).catch(function(){})},
   dinAba:function(d){DIN_ABA=d.v; desenhar()},
   gaveta:function(d){modalGaveta(d.id||null)},
   frase:function(){
@@ -3041,6 +3088,7 @@ var ACOES={
   xApagar:function(){var id=X.id; confirmar("Apagar esta conta fixa? As anotações já feitas continuam.","Apagar",function(){var sn=foto(); S.fixas=S.fixas.filter(function(x){return x.id!==id}); salvar(); desenhar(); toastDesfazer("Conta fixa apagada.",sn)})},
   fxPagar:function(d){
     var f=S.fixas.filter(function(x){return x.id===d.id})[0]; if(!f)return;
+    if(AC_ABERTO){fecharAcerto(); AC_VOLTA=true}
     novaFolha({tipo:"saida",cent:f.valor,contaId:f.contaId,catId:f.catId,desc:f.nome,data:d.data,fixaId:f.id,ref:d.ref});
   },
   fxPular:function(d){
@@ -3060,6 +3108,7 @@ var ACOES={
   pagMes:function(d){
     PAG_OFF=Math.max(-2,Math.min(11,PAG_OFF+(+d.n)));
     var c=$("#cardPagar"); if(c)c.innerHTML=cartaoPagarInicio();
+    if(AC_ABERTO)abrirAcerto();
   },
   metaSalvar:function(){
     var k=cat($("#meCat").value), val=cent($("#meValor")); if(!k||!val){toast("Escolha a categoria e o valor");return}
