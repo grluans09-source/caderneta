@@ -108,6 +108,7 @@ html[data-tam="gg"] .inv-top{flex-direction:column}
 .trava-r svg{width:3.4rem;height:3.4rem;overflow:visible}
 .trava-m{margin:.35rem 0;line-height:1.45}
 .modal.trava-j{border-top-color:var(--latao)}
+.g-saldo{font-family:var(--serif);font-size:1.5rem;font-weight:700;margin:.1rem 0 .2rem}
 /* pílula "Perguntar" (D55/D56): canto esquerdo, simétrica à pena */
 .perg{position:fixed;left:1rem;bottom:calc(4.95rem + env(safe-area-inset-bottom));z-index:21;display:flex;align-items:center;gap:.35rem;min-height:3.3rem;background:#0A0A0A;border:2px solid var(--latao);border-radius:999px;padding:.2rem 1rem .2rem .25rem;color:#E8CB6A;font-family:var(--serif);font-weight:700;font-size:1.02rem;box-shadow:0 5px 0 rgba(0,0,0,.35),0 8px 16px rgba(0,0,0,.3)}
 .perg:active{transform:scale(.95)}
@@ -221,9 +222,7 @@ nav button[aria-current="page"]{opacity:1;font-weight:700;color:var(--latao)}
 nav svg{width:1.6rem;height:1.6rem;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .fab{align-items:center;opacity:1}
 .fab span.b{display:grid;place-items:center;width:3.6rem;height:3.6rem;border-radius:50%;background:var(--latao);color:#0A0A0A;margin-top:-1.5rem;border:3px solid var(--capa);box-shadow:0 4px 12px rgba(0,0,0,.35);font-size:2rem;line-height:1;font-weight:400;transition:transform .15s}
-.fab:active span.b{transform:scale(.92)}
 nav .in{position:relative}
-.fab em{font-style:normal;font-weight:700;color:var(--capa-ink)}
 
 /* folha (anotar) */
 .folha{position:fixed;inset:0;background:var(--bg);z-index:40;overflow-y:auto;display:none;padding-bottom:3rem}
@@ -235,11 +234,6 @@ nav .in{position:relative}
 .volta{min-height:2.75rem;min-width:2.75rem;display:grid;place-items:center;font-size:1.5rem;color:var(--capa-ink);margin-left:-.6rem}
 .capa.f{align-items:center;justify-content:flex-start}
 .capa.f h1{flex:1}
-.seg3{display:grid;grid-template-columns:repeat(2,1fr);gap:.4rem;margin-top:.9rem}
-.seg3 button{min-height:3.4rem;border-radius:.7rem;border:2px solid var(--rule2);background:var(--card);text-align:center;font-weight:700;font-size:.95rem;padding:.4rem .2rem}
-.seg3 button[aria-pressed="true"].s{background:var(--out-bg);border-color:var(--out);color:var(--out)}
-.seg3 button[aria-pressed="true"].e{background:var(--in-bg);border-color:var(--in);color:var(--in)}
-.seg3 button[aria-pressed="true"].t{background:var(--tr-bg);border-color:var(--tr);color:var(--tr)}
 .rot{display:block;font-weight:700;margin:1.1rem 0 .4rem}
 .dinheiro{width:100%;font-family:var(--serif);font-size:2.4rem;font-weight:700;border:0;border-bottom:3px double var(--ink);background:transparent;padding:.2rem 0;text-align:center;border-radius:0}
 .dinheiro.s{color:var(--out)} .dinheiro.e{color:var(--in)} .dinheiro.t{color:var(--tr)}
@@ -258,8 +252,8 @@ nav .in{position:relative}
 .ag.k-fixa{border-left-color:var(--tr)}
 .ag.k-receber{border-left-color:var(--in)}
 .ag.u-breve .dia{background:var(--out-bg);border-radius:.4rem;padding:.15rem 0}
-.ag.u-agora .dia{background:var(--out);color:#fff;border-radius:.4rem;padding:.15rem 0}
-.ag.u-agora .dia i{color:#fff}
+.ag.u-agora .dia{background:var(--out);color:var(--bg);border-radius:.4rem;padding:.15rem 0}
+.ag.u-agora .dia i,.ag.u-agora .dia b{color:var(--bg)}
 .ag.k-receber.u-breve .dia{background:var(--in-bg)}
 .ag.k-receber.u-agora .dia{background:var(--in)}
 .legenda-ag{display:flex;flex-wrap:wrap;gap:.4rem .9rem;margin:-.2rem 0 .5rem;font-size:.82rem;color:var(--ink2)}
@@ -269,8 +263,6 @@ nav .in{position:relative}
 .legenda-ag .k-fixa:before{background:var(--tr)}
 .legenda-ag .k-receber:before{background:var(--in)}
 /* Anotar em dois toques: o botão da pena abre 4 bolinhas, uma por tipo de anotação */
-.fab span.b{transition:transform .3s ease}
-.fab.aberto span.b{transform:rotate(45deg)}
 /* folha: 3 bolinhas para trocar de tipo */
 .capa.f h1{font-size:1.2rem}
 /* folha: listas curtas e busca */
@@ -446,7 +438,6 @@ svg.grafico{width:100%;height:auto;display:block}
 .res{padding:0;list-style:disc}
 .pt.b{background:#CC8A56}
 .marca.bem{background:#CC8A56}
-.seg3 button[aria-pressed="true"].b{background:var(--ouro-bg);border-color:var(--ouro);color:var(--ouro)}
 .pagar .rot2{font-weight:700;color:var(--ink2);font-size:.95rem}
 .pagar .gr{font-family:var(--serif);font-size:2.1rem;font-weight:700;color:var(--out);line-height:1.15;margin:.1rem 0}
 .pagar .gr.zero{color:var(--tr)}
@@ -487,12 +478,10 @@ html.calmo *,html.calmo *:before{animation:none!important;transition:none!import
 .chip[aria-pressed="true"],.opc button[aria-pressed="true"],.opt[aria-pressed="true"]{background:var(--selbg);color:var(--selink);border-color:var(--selbg);box-shadow:inset 0 0 0 1px var(--latao);font-weight:700}
 .opt[aria-pressed="true"] small{color:var(--selink);opacity:.85}
 .opt.novo,.chip.novo{border:2px dashed var(--latao);color:var(--ouro);box-shadow:none}
-.seg3 button[aria-pressed="true"]{box-shadow:none}
 .gaveta:after,.lanc[data-a]:after,.item:after{content:"›";color:var(--latao);font-size:1.6rem;line-height:1;margin-left:.3rem;flex:none}
 .ag .lanc:after{content:none}
 h2{border-bottom:1px solid var(--latao)}
 :focus-visible{outline:3px solid var(--latao)}
-.fab span.b{background:linear-gradient(#EAD27A,#C9A227);color:#0A0A0A;border-color:var(--capa)}
 .capa{border-bottom:3px solid var(--latao)}
 /* Planejar: ferramentas e acerto de contas */
 .ferrs{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin:.6rem 0 .2rem}
@@ -609,8 +598,6 @@ html[data-tam="gg"] .fb{width:3.1rem;height:3.1rem;margin:-1.55rem 0 0 -1.55rem}
 .fb:focus-visible .fbc{outline:3px solid var(--latao);outline-offset:3px}
 .fb.atual{pointer-events:none!important;opacity:.4!important;filter:grayscale(.7)}
 .fb.atual .fbl:after{content:" (você está aqui)";font-weight:600;display:block}
-.fab span.b{transition:transform .3s ease}
-.fab.aberto span.b{transform:rotate(45deg);animation:none}
 /* --- seletor de tipo dentro da folha: botão fixo embaixo, no centro --- */
 .dock{position:fixed;left:50%;bottom:calc(1rem + env(safe-area-inset-bottom));margin-left:-1.9rem;width:3.8rem;height:3.8rem;z-index:96;display:grid;place-items:center;border-radius:50%;border:4px solid #fff;color:#fff;font-size:2rem;font-weight:800;line-height:1;box-shadow:0 6px 0 rgba(0,0,0,.3),0 12px 22px rgba(0,0,0,.35);transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
 .dock.dk-gasto{background:var(--gasto-bg)}.dock.dk-ganho{background:var(--ganho-bg)}.dock.dk-transf{background:var(--tr)}.dock.dk-bem{background:var(--cobre)}
@@ -730,13 +717,13 @@ html[data-tam="gg"] .mm-tri{grid-template-columns:1fr}
 /* ===== botão de anotar (a pena) no canto direito de baixo, logo acima da barra; bolinhas em quarto de círculo (esquerda e para cima) ===== */
 nav .in{grid-template-columns:repeat(7,1fr)}
 .fab{position:fixed;right:1rem;bottom:calc(4.7rem + env(safe-area-inset-bottom));z-index:21;display:flex;flex-direction:row;align-items:center;gap:.5rem;padding:0;opacity:1}
-.fab span.b{margin-top:0}
+.fab span.b{margin-top:0;transition:transform .3s ease}
 /* o botão de anotar é a pena num medalhão de ouro (D55); aberto, vira um "×" */
 .fab span.b{background:none;border:0;padding:0;width:3.9rem;height:3.9rem;box-shadow:0 5px 0 rgba(0,0,0,.35),0 8px 16px rgba(0,0,0,.35)}
 .fab .pena{display:block;width:100%;height:100%;overflow:visible}
 .fab .pena-x{opacity:0;transition:opacity .2s}
 .fab .pena-i{transform-box:fill-box;transform-origin:50% 50%;transition:opacity .2s,transform .3s}
-.fab.aberto span.b{transform:none!important}
+.fab.aberto span.b{transform:none!important;animation:none}
 .fab.aberto .pena-i{opacity:0;transform:scale(.6) rotate(-30deg)}
 .fab.aberto .pena-x{opacity:1}
 .fab:active span.b{transform:scale(.92)}
@@ -799,7 +786,7 @@ html[data-tam="g"] .fbl{max-width:4.8rem}
 /* ---------- utilidades ---------- */
 var KEY="caderneta:v2";
 /* versão do app (siga o CHANGELOG.md; subir junto com VERSAO em sw.js e "version" em package.json) */
-var VERSAO_APP="1.21.0-beta.1";
+var VERSAO_APP="1.21.1-beta.1";
 var RE_ID=/^[A-Za-z0-9_-]+$/, RE_DATA=/^\d{4}-\d{2}-\d{2}$/;
 var MES=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
 var MES3=["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
@@ -897,7 +884,7 @@ function higienizar(p){
   (Array.isArray(p.categorias)?p.categorias:[]).forEach(function(c){
     if(!ehObj(c)||!id(c.id)||typeof c.nome!=="string"||(c.tipo!=="despesa"&&c.tipo!=="receita")){out.perdidos++;return}
     var kn={id:c.id,nome:c.nome,tipo:c.tipo};
-    if(["conf","rend","invtax"].indexOf(c.sis)>=0)kn.sis=c.sis;
+    if(["conf","rend","invtax","juros","perdas"].indexOf(c.sis)>=0)kn.sis=c.sis;
     if(c.tipo==="despesa"&&cent(c.meta)>0)kn.meta=cent(c.meta);
     out.categorias.push(kn);
   });
@@ -943,6 +930,10 @@ function higienizar(p){
     if(!ehObj(x)||!id(x.id)||!(v>0)||typeof x.data!=="string"||!RE_DATA.test(x.data)||!(x.de==="livre"||id(x.de))||!(x.para==="livre"||id(x.para))){out.perdidos++;return}
     var rv={id:x.id,data:x.data,de:x.de,para:x.para,valor:v}; if(id(x.conta))rv.conta=x.conta; if(typeof x.rend==="string"&&/^\d{4}-\d{2}$/.test(x.rend))rv.rend=x.rend;
     out.reservas.push(rv);
+  });
+  /* dados antigos: a categoria com o nome de sempre ganha o código fixo (uma vez, sem mudar o nome) */
+  [["juros","Juros e multas"],["perdas","Dívidas não pagas"]].forEach(function(x){
+    if(!out.categorias.some(function(k){return k.sis===x[0]})){var k=out.categorias.filter(function(k){return k.tipo==="despesa"&&!k.sis&&norm(k.nome)===norm(x[1])})[0]; if(k)k.sis=x[0]}
   });
   return out;
 }
@@ -1219,7 +1210,7 @@ function pagarNoMes(ym){
     var dv=l.tipo==="transferencia"?conta(l.destinoId):null, c=conta(l.contaId), k=l.catId?cat(l.catId):null;
     if(dv&&dv.tipo==="passivo")pago.push({data:l.data,valor:l.valor,titulo:"Pagamento: "+dv.nome});
     else if(l.tipo==="saida"&&l.fixaId&&c&&c.tipo==="ativo")pago.push({data:l.data,valor:l.valor,titulo:l.desc||"Conta fixa"});
-    else if(l.tipo==="saida"&&k&&k.nome==="Juros e multas")pago.push({data:l.data,valor:l.valor,titulo:l.desc||"Juros e multas"});
+    else if(l.tipo==="saida"&&k&&k.sis==="juros")pago.push({data:l.data,valor:l.valor,titulo:l.desc||"Juros e multas"});
   });
   falta.sort(cmpData); pago.sort(cmpData);
   var soma=function(a){return a.reduce(function(s,x){return s+x.valor},0)};
@@ -2197,14 +2188,16 @@ function salvarCarteira(){
   function aplicar(){
     c.nome=nome;
     if(contou){
-      var total=totalCed(G.ced); c.inicial+=total-saldoConta(c);
+      var total=totalCed(G.ced), dif=total-saldoConta(c);
+      /* a diferença aconteceu agora: vira anotação de hoje, sem mexer no passado (auditoria 1.21.1) */
+      if(dif!==0)S.lancamentos.push({id:uid(),tipo:dif<0?"saida":"entrada",valor:Math.abs(dif),desc:"Diferença ao contar as cédulas",contaId:c.id,destinoId:null,catId:catConferir(dif<0?"despesa":"receita").id,data:hojeISO()});
       var ce={}; CED.forEach(function(v){if(G.ced[v]>0)ce[v]=G.ced[v]});
       if(Object.keys(ce).length){c.cedulas=ce;c.contagem=hojeISO()} else {delete c.cedulas;delete c.contagem}
     }
     salvar(); fecharModal(); desenhar(); toast("Conta Dinheiro salva");
   }
   var novo=totalCed(G.ced), atual=saldoConta(c);
-  if(contou&&novo!==atual)confirmar("O saldo da conta "+c.nome+" vai de "+brl(atual)+" para "+brl(novo)+" (o que você contou). Continuar?","Sim, ajustar",aplicar);
+  if(contou&&novo!==atual)confirmar("O saldo da conta "+c.nome+" vai de "+brl(atual)+" para "+brl(novo)+" (o que você contou). A diferença entra como anotação de hoje. Continuar?","Sim, ajustar",aplicar);
   else aplicar();
 }
 function pintarArred(){
@@ -2361,7 +2354,7 @@ function indicadores(){
     graf:empHTML([{n:"Dinheiro para usar",v:usar,cor:"var(--selbg)"},{n:"Guardado e investido",v:guard,cor:"var(--am)"},{n:"Bens",v:B,cor:"var(--cobre)"},{n:"A receber",v:recPes,cor:"var(--in)"}])});
 
   /* 10. custo dos juros */
-  var kj=S.categorias.filter(function(k){return k.nome==="Juros e multas"})[0], jTot=0, eTot=0;
+  var kj=S.categorias.filter(function(k){return k.sis==="juros"})[0], jTot=0, eTot=0;
   var jSerie=serie.map(function(m){var v=0; if(kj)S.lancamentos.forEach(function(l){if(l.tipo==="saida"&&l.catId===kj.id&&l.data.slice(0,7)===m.ym)v+=l.valor}); jTot+=v; eTot+=m.ent; return {l:m.l,j:v}});
   var pJ=eTot>0?jTot/eTot*100:0;
   out.push({id:"juros",nome:"Custo dos juros e multas",pergunta:"Quanto eu perco pagando juros?",
@@ -3188,8 +3181,10 @@ function modalGaveta(id){
       '<button data-a="gTipo" data-t="ativo" aria-pressed="'+(G.tipo==="ativo")+'"'+(G.bloqueado?" disabled":"")+'>Tenho dinheiro aqui</button>'+
       '<button data-a="gTipo" data-t="passivo" aria-pressed="'+(G.tipo==="passivo")+'"'+(G.bloqueado?" disabled":"")+'>Devo aqui (cartão, empréstimo)</button></div>'+
     (G.bloqueado?'<p class="faint" style="margin-top:.3rem">O tipo não muda porque já há anotações nesta conta.</p>':"")+
-    '<div class="campo" id="gInicialWrap"><label for="gInicial">Quanto tem aí hoje?</label><input id="gInicial" inputmode="numeric" placeholder="R$ 0,00"></div>'+
-    '<div class="campo" id="gFaturasWrap"><label>O que você já deve aqui</label>'+
+    (c&&c.tipo==="ativo"&&uso
+      ?'<div class="campo" id="gInicialWrap"><span class="rot">Saldo de hoje</span><p class="g-saldo">'+esc(brl(saldoConta(c)))+'</p><p class="faint">O saldo muda pelas anotações. Se não bater com o banco, toque em <b>Conferir com o banco</b>: a diferença entra como anotação de hoje, sem mexer no passado.</p></div>'
+      :'<div class="campo" id="gInicialWrap"><label for="gInicial">Quanto tem aí hoje?</label><input id="gInicial" inputmode="numeric" placeholder="R$ 0,00"></div>')+
+    '<div class="campo" id="gFaturasWrap"><label>'+(c&&c.tipo==="passivo"&&uso?"O que você já devia aqui antes de usar o app":"O que você já deve aqui")+'</label>'+(c&&c.tipo==="passivo"&&uso?'<p class="faint">Hoje você deve <b>'+esc(brl(Math.max(0,saldoConta(c))))+'</b> aqui. As compras e os pagamentos anotados já entram nessa conta; não repita aqui.</p>':'')+
       '<p class="faint" style="margin-bottom:.5rem">Separe por vencimento. Ex.: R$ 190 que vence em 05/11 e R$ 15 que vence em 05/12. Se não souber a data, deixe em branco.</p>'+
       '<div id="gFaturas"></div><button class="btn sec peq" data-a="fAdd" data-c="#gFaturas">+ Outro vencimento</button></div>'+
     '<div id="gCartao"><div class="campo"><label for="gFecha">Dia que a fatura fecha (opcional)</label><input id="gFecha" type="number" min="1" max="31" inputmode="numeric" value="'+(c&&c.fecha||"")+'"></div>'+
@@ -3200,7 +3195,7 @@ function modalGaveta(id){
     (c?'<button class="btn perigo" data-a="gApagar">Apagar conta</button>':"")+
     '<button class="btn sec" data-a="mFechar">Cancelar</button>';
   abrirModal(h);
-  ligarDinheiro($("#gInicial"),c&&c.tipo==="ativo"?c.inicial:0);
+  if($("#gInicial"))ligarDinheiro($("#gInicial"),c&&c.tipo==="ativo"?c.inicial:0);
   ligarDinheiro($("#gLimite"),c&&c.limite||0);
   var linhas=c&&c.tipo==="passivo"?(c.abertas&&c.abertas.length?c.abertas:(c.inicial>0?[{data:null,valor:c.inicial}]:[])):[];
   if(!linhas.length)linhas=[null];
@@ -3239,7 +3234,8 @@ function salvarGaveta(){
   var nome=$("#gNome").value.trim();
   if(!nome){toast("Dê um nome para a conta");return}
   if(repetido(nome,S.contas,G.id)){toast("Já existe uma conta com esse nome");return}
-  var o={nome:nome,tipo:G.tipo,inicial:G.tipo==="ativo"?cent($("#gInicial")):0};
+  var c0=G.id?conta(G.id):null, gi=$("#gInicial");
+  var o={nome:nome,tipo:G.tipo,inicial:G.tipo==="ativo"?(gi?cent(gi):(c0?c0.inicial:0)):0};
   if(G.tipo==="passivo"){
     var ab=lerFaturas("#gFaturas"); o.inicial=somaFaturas(ab); if(ab.length)o.abertas=ab;
     var f=parseInt($("#gFecha").value,10), vc=parseInt($("#gVence").value,10), lim=cent($("#gLimite"));
@@ -3455,13 +3451,13 @@ function modalPessoa(id){
 }
 function primeiraGaveta(){return S.contas.filter(function(x){return x.tipo==="ativo"&&!x.pessoa&&!x.bem&&!x.inv})[0]||null}
 function jurosCat(){
-  var k=S.categorias.filter(function(x){return x.tipo==="despesa"&&x.nome==="Juros e multas"})[0];
-  if(!k){k={id:uid(),nome:"Juros e multas",tipo:"despesa"};S.categorias.push(k)}
+  var k=S.categorias.filter(function(x){return x.sis==="juros"})[0];
+  if(!k){k={id:uid(),nome:"Juros e multas",tipo:"despesa",sis:"juros"};S.categorias.push(k)}
   return k;
 }
 function perdasCat(){
-  var k=S.categorias.filter(function(x){return x.tipo==="despesa"&&x.nome==="Dívidas não pagas"})[0];
-  if(!k){k={id:uid(),nome:"Dívidas não pagas",tipo:"despesa"};S.categorias.push(k)}
+  var k=S.categorias.filter(function(x){return x.sis==="perdas"})[0];
+  if(!k){k={id:uid(),nome:"Dívidas não pagas",tipo:"despesa",sis:"perdas"};S.categorias.push(k)}
   return k;
 }
 

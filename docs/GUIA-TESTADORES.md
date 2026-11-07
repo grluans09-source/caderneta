@@ -56,7 +56,7 @@ Depois, peça que ela **abra a aba Gráficos**, escolha um indicador, **leia o r
 
 Peça também que a pessoa **anote um gasto e, no meio, troque para "Recebi" pelo botão redondo de baixo** (e veja se se localiza sabendo que o tipo atual fica apagado), e que **procure uma categoria tocando em "Buscar categoria"** sem digitar nada.
 
-Peça também que a pessoa **confira o saldo de uma conta com o app do banco** (Dinheiro > tocar na conta > Conferir com o banco) e conte se entendeu o que fazer quando não bate.
+Peça também que a pessoa **confira o saldo de uma conta com o app do banco** (Dinheiro > tocar na conta > Conferir com o banco) e conte se entendeu o que fazer quando não bate. Ao tocar numa conta que já tem anotações, o app mostra o **saldo de hoje só para ler**: a pessoa estranha não poder digitar ali?
 
 Observe também o **Mordomo** (a balança do Início): a pessoa entende que a cara dele mostra a situação? Os mascotes que aparecem ao receber, pagar e guardar agradam ou cansam?
 

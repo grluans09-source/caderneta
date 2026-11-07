@@ -6,7 +6,7 @@
 App de celular (instalável, funciona sem internet), em português, pensado para qualquer pessoa: do idoso ao jovem e ao adulto na correria.
 
 - **App no ar:** https://grluans09-source.github.io/caderneta/
-- **Versão atual:** 1.21.0-beta.1 (beta para testadores) (veja o [CHANGELOG](CHANGELOG.md))
+- **Versão atual:** 1.21.1-beta.1 (beta para testadores) (veja o [CHANGELOG](CHANGELOG.md))
 - **Seus dados ficam só no celular de cada pessoa.** Não existe servidor, conta nem banco de dados.
 
 > Em uma frase: a pessoa anota o que gasta e recebe, e o app mostra **quanto é dela de verdade**, para onde o dinheiro está indo e o que vem pela frente. A partida dobrada fica escondida no "motor"; a tela fala como a gente fala.
@@ -25,7 +25,7 @@ App de celular (instalável, funciona sem internet), em português, pensado para
 | **Planejar** | Ferramentas no topo (Metas do mês, Caixinhas, Contas fixas com **Contas do ano**, Simulador), **Acerto de contas do mês** (abre numa janela preta e dourada por cima da tela, com todas as dívidas, o prazo de cada uma em palavras e o botão Pagar) e a agenda do que vence |
 | **Gráficos** | Cartão **Mês a mês** (um mês comparado com o anterior) e 10 indicadores de finanças pessoais em imagem (patrimônio, folga de caixa, reserva de emergência, taxa de poupança, peso das dívidas, renda já reservada, **custo fixo de vida**, para onde vai o dinheiro, composição do patrimônio, custo dos juros), cada um com selo Saudável/Atenção/Alerta |
 | **Relatórios** | Um relatório por indicador, explicado como um consultor: o que é, como você está, para comparar, o que quer dizer e por onde começar. Abre com um panorama |
-| **Mais** | Anotações (buscar e ordenar por data, valor ou nome) e Ajustes (letra, cores, movimento, categorias, cópia dos dados, ajuda) |
+| **Mais** | Anotações (buscar e ordenar por data, valor ou nome), Notícias e Ajustes (letra, cores, movimento, categorias, cópia dos dados, ajuda) |
 
 ## Para quem vai mexer no projeto
 
@@ -47,7 +47,7 @@ caderneta/
 │   ├── index.html    O app inteiro: HTML + CSS + JavaScript, sem dependências
 │   ├── sw.js         Faz o app abrir sem internet (cache)
 │   ├── manifest.webmanifest, icon-*.png, icon.svg   Instalação na tela inicial
-├── tests/          Testes automáticos: 767 verificações que simulam uma pessoa usando o app
+├── tests/          Testes automáticos: 778 verificações que simulam uma pessoa usando o app
 ├── tools/          Ferramentas: servidor local e gerador de ícones
 ├── docs/           Documentação (leia a partir de docs/README.md)
 ├── .github/workflows/publicar.yml   Testa e publica sozinho a cada envio para o GitHub

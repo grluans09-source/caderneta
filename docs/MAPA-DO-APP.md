@@ -1,6 +1,6 @@
-# Mapa do app (passo 3 do plano da beta)
+# Mapa do app
 
-Aplica as decisões Q1 a Q7 da [auditoria](AUDITORIA-FUNCOES.md), aceitas pelo dono em 6 nov 2026.
+O app **de hoje** (versão 1.21.1): onde mora cada assunto, o que tem em cada tela e o mapa de cores. Nasceu no passo 3 do plano da beta (decisões Q1 a Q7 da [auditoria de funções](AUDITORIA-FUNCOES.md), aceitas pelo dono em 6 nov 2026) e foi completado com Investir, Notícias e o chat.
 
 **Regras do mapa**
 1. **Cada assunto mora em um único lugar.** Nos outros lugares só existe um **atalho** (uma linha que leva até a casa dele).
@@ -9,7 +9,7 @@ Aplica as decisões Q1 a Q7 da [auditoria](AUDITORIA-FUNCOES.md), aceitas pelo d
 4. **Cada botão diz o que faz** (verbo + coisa: "Guardar na caixinha", "Pagar a fatura").
 5. **No máximo 5 blocos por tela.** O resto fica atrás de "Ver mais".
 
-## 1. A barra de baixo (sempre igual: Início · Dinheiro · Investir · Planejar · Gráficos · Relatórios · Mais) e o botão da **pena** (anotar) solto no canto direito, logo acima dela; a pílula "Perguntar" do chat vai no canto esquerdo (passo 5)
+## 1. A barra de baixo (sempre igual: Início · Dinheiro · Investir · Planejar · Gráficos · Relatórios · Mais) e o botão da **pena** (anotar) solto no canto direito, logo acima dela; a pílula "Perguntar" do chat fica no canto esquerdo
 
 | Botão | Pergunta que responde |
 |---|---|
@@ -62,21 +62,29 @@ Em cada tela: **título**, **a frase que explica para que serve** (aparece no to
 
 ### Início: "Como estou hoje"
 > *"Quanto é seu de verdade hoje, e o que pede atenção."*
-1. Frase do dia (pequena, só na capa)
-2. Balança + 3 linhas: **Tenho · Devo · É meu de verdade** (com "Como ler a balança?")
-3. Resumo do mês: Entrou · Saiu · Sobrou
+1. Frase do dia (pequena, só na capa) e, enquanto o app não estiver instalado, a dica **Instalar**
+2. O **Mordomo** (a balança) + 3 linhas: **Tenho · Devo · É meu de verdade** (com "Como ler a balança?"); a cara dele mostra a situação
+3. Resumo do mês: Entrou · Saiu · Sobrou; do dia 1 ao 10, o cartão **"<mês> fechou"** (mês a mês)
 4. Uma linha: **"Falta pagar este mês: R$ X"** → Planejar
 5. Avisos urgentes (no máximo 3): atrasado, vence hoje ou amanhã, limite quase no fim, lembrete de cópia
-6. Vitrine das caixinhas (só se existirem) e metas (só se existirem)
-7. 3 últimas anotações + "Ver todas as anotações"
+6. **Hoje no Brasil**: as notícias oficiais mais importantes, com "para você" → Notícias
+7. Vitrine das caixinhas (só se existirem) e metas (só se existirem)
+8. 3 últimas anotações + "Ver todas as anotações"
 
 ### Dinheiro: "Onde está seu dinheiro"
 > *"Suas contas, o que você deve, seus bens e as pessoas."*
 Quatro abas curtas: **Contas · Dívidas · Bens · Pessoas**
-- **Contas:** cada conta mostra o saldo e, se houver caixinha, "guardado · para usar"
+- **Contas:** cada conta mostra o saldo e, se houver caixinha, "guardado · para usar". Ao tocar numa conta: nome, tipo e **Conferir com o banco**; se a conta já tem anotações, o saldo de hoje aparece **só para ler** (a diferença com o banco entra pelo Conferir, com a data de hoje). A conta **Dinheiro** (carteira) abre a contagem de cédulas
 - **Dívidas:** cartões e empréstimos, com limite, quanto devo e botão "Pagar a fatura"
 - **Bens:** o que tem valor e como o valor mudou
 - **Pessoas:** quem me deve e a quem devo
+
+### Investir: "Seu dinheiro rendendo"
+> *"Poupança, CDB, Tesouro, fundos. Informe a taxa ao ano que aparece no app do banco."*
+1. **Investido**, quanto **rendeu no mês** e **no ano**
+2. **Minhas aplicações**: cada uma com a taxa ao ano e os botões **Aplicar**, **Resgatar**, **Conferir com o banco** e editar; "+ Nova aplicação"
+3. **Caixinhas que rendem** (as que têm taxa)
+O rendimento é calculado a cada dia útil (sem fim de semana e feriado nacional) e anotado uma vez por mês. O investido **não** é "dinheiro para usar agora".
 
 ### Anotar (a pena): "O que aconteceu"
 > *"Escolha o que aconteceu e preencha: de onde saiu, para onde foi."*
@@ -105,7 +113,7 @@ O tipo vem do **menu de bolinhas** do botão da pena (2 toques). A folha mostra 
 Urgência na data de cada conta: **pintada** = vence hoje ou já passou; **clara** = vence em até 3 dias; sem destaque = mais longe.
 
 ### Planejar > Contas fixas: "Todo mês, no mesmo dia"
-Só o **cadastro** (as contas cadastradas, o total por mês e "+ Nova conta fixa"). O que vence aparece na Agenda.
+O **cadastro** (as contas cadastradas, o total por mês e "+ Nova conta fixa") e, no fim, **Contas do ano** (IPVA, IPTU...: quanto separar por mês até vencer, com atalho para uma caixinha). O que vence aparece na Agenda.
 
 ### Planejar > Metas do mês: "Quanto posso gastar em cada coisa"
 Limite por categoria (mercado, lazer...) e quanto já foi usado. Sai de dentro de Caixinhas.
@@ -117,16 +125,22 @@ Funciona como a caixinha do banco. Cofres animados, "Guardar" e "Tirar", e o din
 Como está hoje.
 
 ### Gráficos: "Seus números em imagens"
-Nove cartões, um por indicador (selo, valor, gráfico, leitura em uma frase e o botão **Ler o relatório**): O que é seu de verdade · Folga para os próximos 30 dias · Reserva de emergência · Taxa de poupança · Peso das dívidas · Quanto da renda já tem dono · Para onde vai o dinheiro · De que é feito o que você tem · Custo dos juros e multas. Selos: ✓ Saudável (preto), ! Atenção (ouro), ▲ Alerta (bordô).
+No topo, **Mês a mês** (este mês contra o anterior, com setas para voltar até 12 meses). Depois, dez cartões, um por indicador (selo, valor, gráfico, leitura em uma frase e o botão **Ler o relatório**): O que é seu de verdade · Folga para os próximos 30 dias · Reserva de emergência · Taxa de poupança · Peso das dívidas · Quanto da renda já tem dono · Custo fixo de vida · Para onde vai o dinheiro · De que é feito o que você tem · Custo dos juros e multas. Selos: ✓ Saudável (preto), ! Atenção (ouro), ▲ Alerta (bordô).
 
 ### Relatórios: "Leitura do seu momento"
 Abre com o **panorama** (quantos indicadores estão saudáveis, em atenção ou em alerta e qual é o mais urgente) e a lista de relatórios, com o que está em alerta primeiro. Cada relatório tem 5 partes (O que é · Como você está · Para comparar · O que isso quer dizer · Por onde começar) e um botão para compartilhar. É texto automático e educativo, sem substituir um profissional. No Modo contador, o balancete aparece no fim.
 
 ### Mais: "Tudo o resto"
-Entradas: **Anotações · Relatórios (atalho) · Ajustes**
+Entradas: **Anotações · Notícias · Ajustes** (Relatórios virou aba própria na 1.11.0)
 
 ### Mais > Anotações: "Tudo o que você anotou"
 Busca, ordem por data, valor ou nome, filtros e 15 por vez. É a única lista completa.
+
+### Notícias: "Hoje no Brasil" (Mais > Notícias, ou o cartão do Início)
+Dólar, Selic, CDI, inflação (e o que ficou mais caro ou mais barato), preço dos combustíveis, previsões do Boletim Focus e notícias oficiais do IBGE. Cada item tem o selo **CERTEZA** (dado publicado) ou **POSSIBILIDADE** (previsão), o **link do site oficial** e, quando dá, o **"para você"** calculado com os dados da pessoa. Atualiza ao meio-dia; sem internet, mostra a última cópia com a data.
+
+### O chat (a pílula "Perguntar", canto esquerdo de baixo)
+Abre uma janela preta e dourada com **53 perguntas prontas** em 5 grupos (Meu dinheiro · Contas e dívidas · Planejar · Como usar o app · Aprender); o grupo da aba atual abre primeiro. Tem busca por palavras (mostra até 3 perguntas parecidas, nunca inventa) e, em cada resposta, **Ver no app**. Sem internet e sem inteligência artificial. Lista em `CHAT-PERGUNTAS.md`.
 
 ### Mais > Ajustes: três grupos
 - **Aparência:** letra, cores, movimento, Modo contador
@@ -145,8 +159,14 @@ Busca, ordem por data, valor ou nome, filtros e 15 por vez. É a única lista co
 | Procurar um gasto antigo | Mais > Anotações (busca) |
 | Trocar de celular | Mais > Ajustes > Dados > Guardar uma cópia → no novo, Recuperar |
 | Apaguei sem querer | Botão **Desfazer** (8 segundos) |
+| O banco mostra outro valor | Dinheiro > a conta > **Conferir com o banco** |
+| Quanto rendeu meu CDB | **Investir** |
+| Tenho uma dúvida | **Perguntar** (canto esquerdo) |
+| O que mudou na economia | Início > **Hoje no Brasil** |
 
-## 5. O que muda no código (visão geral para o passo 5)
+## 5. O que mudou no código na reorganização (histórico: feito na 1.2.0)
+
+> Esta tabela registra a reorganização das telas de 6 nov 2026, já feita. O código de hoje está em `ARQUITETURA.md`.
 
 | Bloco | Mudança |
 |---|---|
@@ -160,7 +180,7 @@ Busca, ordem por data, valor ou nome, filtros e 15 por vez. É a única lista co
 | `telaMais`/`telaPlanejar` | Textos e atalhos novos |
 | Testes | Ajustar os que procuram textos nos lugares antigos |
 
-## 6. O que fica fora (de propósito)
-- Nenhuma função é removida do app.
-- Visual, balança, animações e carimbo continuam como estão. Os 3 novos modelos de interface são o passo 6.
+## 6. O que ficou fora (de propósito)
+- Nenhuma função foi removida na reorganização.
+- Os 3 modelos de interface testados depois (Balança, Razão e Cofre) viraram um só: a Balança (D39), que hoje é o Mordomo (D54).
 - Notificações: continuam fora (o app não tem servidor).

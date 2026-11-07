@@ -17,7 +17,12 @@ async function pega(url,tipo){
   if(!r.ok)throw new Error(r.status+" "+url);
   return tipo==="bin"?Buffer.from(await r.arrayBuffer()):tipo==="txt"?r.text():r.json();
 }
-async function tenta(nome,fn){try{return await fn()}catch(e){erros.push(nome+": "+e.message);return null}}
+/* tenta até 3 vezes (o IBGE às vezes recusa a primeira conexão), com pausa crescente */
+async function tenta(nome,fn){
+  for(let i=1;i<=3;i++){
+    try{return await fn()}catch(e){if(i===3){erros.push(nome+": "+e.message);return null} await new Promise(r=>setTimeout(r,4000*i))}
+  }
+}
 const num=s=>Number(String(s).replace(",","."));
 const isoBR=d=>{const p=d.split("/");return p[2]+"-"+p[1]+"-"+p[0]};
 const hoje=new Date(Date.now()-3*3600*1000).toISOString().slice(0,10);   /* horário de Brasília */

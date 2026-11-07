@@ -1,137 +1,138 @@
 # Avaliação do projeto
 
-**Data:** 6 de novembro de 2026 · **Versão avaliada:** 1.0.0 · **Situação:** beta fechado, pronto para teste com pessoas reais. *(Avaliação histórica da 1.0.0: os números abaixo são daquela versão; a 1.8.0-beta.1 tem 17 arquivos de teste e 490 verificações, e as telas foram reorganizadas conforme o MAPA-DO-APP.)*
+**Data:** 7 de novembro de 2026 · **Versão avaliada:** 1.21.1-beta.1 · **Situação:** beta, pronto para teste com pessoas reais.
+Esta avaliação substitui a da 1.0.0 (6 nov 2026). Ela junta o **passo 9 do plano: a auditoria completa** (estrutura, visual, harmonia, incoerências, cálculos e GitHub), pedida pelo dono e aprovada por ele item a item. Refaça esta página a cada auditoria; não deixe números velhos.
 
 ## 1. Resumo em poucas linhas
 
-- **O núcleo é sólido e bem testado.** O motor contábil fecha (débito = crédito em todo lançamento, ativo − passivo = PL, dinheiro = livre + guardado) e isso é conferido por teste automático.
-- **O maior risco não está no código: está no uso real.** O app nunca foi usado por outra pessoa num celular de verdade. Todos os testes rodam em computador (jsdom).
-- **O segundo risco são os dados.** Ficam só no navegador de cada aparelho; o único backup é manual.
-- **Recomendação:** antes de qualquer função nova, fazer um **teste de campo** com 3 a 5 pessoas (um idoso, um jovem, alguém na correria) por 1 a 2 semanas. Veja `ROTEIRO.md`.
+- **As contas fecham.** Uma auditoria com dados aleatórios (6 rodadas, cada uma com 180 anotações, cartão, empréstimo, pessoas, bens, aplicação, poupança, caixinhas e contas fixas) conferiu 12 regras em todas as telas e nas 53 respostas do chat: **nenhuma diferença**.
+- **A auditoria achou 7 problemas reais e todos foram corrigidos na 1.21.1** (lista na seção 3). O mais sério: contar as cédulas da carteira e editar uma conta podiam **mudar o passado**.
+- **O maior risco continua fora do código: o uso real.** O app ainda não foi usado por outra pessoa num celular de verdade. Tudo foi conferido em computador (jsdom e navegador em tamanho de celular).
+- **O segundo risco são os dados**: ficam só no aparelho; a cópia de segurança é manual.
+- **Próximo passo certo:** teste de campo com 3 a 5 pessoas (`GUIA-TESTADORES.md`). A conversa sobre venda fica para depois (pedido do dono).
 
 ## 2. Números (medidos, não estimados)
 
 | Item | Valor |
 |---|---|
-| Tamanho do app | 175 KB em **1 arquivo** (`app/index.html`) |
-| Linhas | 2.409 no total: **~308 de CSS** e **~2.065 de JavaScript** |
-| Funções | 172 · ações de tela: ~89 |
-| Dependências do app | **0** (nada de internet para funcionar) |
-| Testes automáticos | **15 arquivos, 470 verificações**, rodam em menos de 1 minuto (`npm test`) |
-| Versões publicadas até aqui | 16 (todas viram a **1.0.0** consolidada) |
-| Desempenho (computador, 10.000 anotações) | telas abrem em **30 a 80 ms**; busca digitando: **~9 ms**; salvar uma anotação: **~50 ms** |
-| Espaço de dados | ~150 bytes por anotação simples ⇒ **10.000 anotações ≈ 1,4 MB**; limite típico do navegador ~5 MB ⇒ **~34 mil anotações**. Quem anota 10 por dia gasta ~0,5 MB por ano (**~9 anos de folga**) |
+| Tamanho do app | **357 KB** em **1 arquivo** (`app/index.html`) |
+| Linhas | **4.242** no total: **~725 de CSS** e **~3.460 de JavaScript** |
+| Funções | ~311 · ações de tela: ~108 |
+| Dependências do app | **0** (nada de internet para funcionar; as notícias são opcionais) |
+| Testes automáticos | **30 arquivos, 778 verificações**, ~80 segundos (`npm test`) |
+| Desempenho (computador, 10.000 anotações) | abrir o app: **~250 ms**; telas: **5 a 90 ms** (Gráficos é a mais pesada); busca digitando: **~6 ms**; salvar uma anotação: **~50 ms** |
+| Espaço de dados | ~150 bytes por anotação simples ⇒ **10.000 anotações ≈ 1,4 MB**; limite típico do navegador ~5 MB ⇒ **~34 mil anotações** (quem anota 10 por dia tem ~9 anos de folga) |
 
-> No celular, espere de 3 a 6 vezes mais tempo que no computador: mesmo assim, folgado (menos de meio segundo no pior caso medido). Para repetir a medição: `node tools/medir-desempenho.js`.
+> No celular, espere de 3 a 6 vezes mais tempo que no computador: ainda abaixo de meio segundo no pior caso. Para repetir: `node tools/medir-desempenho.js`.
 
-## 3. O que está pronto e o que falta
+## 3. Auditoria da 1.21.1: o que foi conferido e o que mudou
+
+### 3.1 O que foi conferido
+| Frente | Como | Resultado |
+|---|---|---|
+| **Cálculos** | Script com dados aleatórios (6 rodadas): ativo − passivo = é meu; toda anotação com 2 partidas de mesmo valor; é meu = saldos iniciais + receitas − despesas + ajustes de bens; para usar + guardado = dinheiro nas contas; aplicações fora do "para usar"; resumo do mês; o que falta pagar = saldo da dívida; caixinha nunca negativa; um rendimento por mês e aplicação; cópia dos dados sem perda | **Nenhuma diferença** |
+| **Telas sem erro** | 14 telas e 10 relatórios atrás de "NaN", "undefined", "Infinity" | Nenhum |
+| **Layout** | 14 telas × 3 tamanhos de letra × 2 temas, procurando algo saindo da tela | **Nada vazando** |
+| **Código morto** | Funções declaradas e nunca usadas | Nenhuma |
+| **Vocabulário** | Palavras proibidas (gaveta, lançamento, débito…) em todas as telas e no chat | Nenhuma (o teste agora cobre Investir, Notícias e o chat) |
+| **Visual** | Botão da pena aberto e fechado, edição de conta, agenda com conta atrasada no tema escuro (375×812) | Conferido no navegador |
+
+### 3.2 Problemas encontrados e corrigidos (aprovados pelo dono: "Sim, tudo")
+1. **Contar as cédulas mudava o passado.** O app mexia no saldo inicial da carteira; o "é meu" de meses atrás mudava. Agora a diferença vira **uma anotação de hoje** ("Diferença ao contar as cédulas").
+2. **Editar uma conta mostrava o valor de quando ela foi criada** como se fosse o de hoje. Quem corrigisse ali mudava o passado (e podia dobrar o saldo). Agora, numa conta com anotações, o app mostra o **saldo de hoje só para ler** e indica o **Conferir com o banco**. No cartão, o texto deixa claro que a lista é do que já se devia **antes de usar o app** e mostra quanto se deve hoje.
+3. **"Juros e multas" e "Dívidas não pagas" eram achadas pelo nome.** Renomear a categoria tirava os juros do relatório. Agora têm **código fixo** (`sis:"juros"`, `sis:"perdas"`), e os dados antigos ganham o código sozinhos.
+4. **Data de conta atrasada** na agenda ficava com pouco contraste no tema escuro. Corrigido.
+5. **Robô das notícias**: a fonte de notícias do IBGE às vezes recusa a primeira conexão. Agora tenta **3 vezes** antes de desistir; se falhar, o resto das notícias sai normalmente.
+6. **CSS repetido e sem uso** (regras do botão da pena escritas três vezes e um estilo antigo inteiro) foi limpo.
+7. **A ferramenta que mede a velocidade** (`tools/medir-desempenho.js`) tinha parado de funcionar quando Relatórios virou aba. Consertada; agora mede também Investir e Gráficos e avisa se ficar desatualizada de novo.
+
+Também: o teste de vocabulário passou a varrer Investir, Notícias e as 53 respostas do chat (`tests/30-auditoria.test.js`), os documentos foram atualizados e a descrição do repositório no GitHub passou a dizer "Balancete".
+
+## 4. O que está pronto e o que falta
 
 Legenda: ✅ completo · ◐ parcial · ❌ não existe
 
 | Área | Situação | Observação |
 |---|---|---|
-| Anotar gasto, ganho, transferência e compra de bem | ✅ | Duas colunas (de onde saiu / para onde foi) e prévia em frase simples |
-| Editar e apagar anotação | ✅ | **Sem "desfazer"**: apagar é definitivo (com aviso) |
-| Contas, cartão (fecha/vence/limite), parcelas e fatura | ✅ | Ciclo do cartão testado nos casos difíceis (virada de ano, fevereiro, etc.) |
-| Pagar dívida com juros | ✅ | O valor dos juros é **informado pela pessoa** (o app não calcula) |
-| Dinheiro com pessoas (emprestei / devo) | ✅ | Data de cobrança; perdoar vira gasto |
-| Contas fixas (assinatura, plano, seguro) | ✅ | Confirmadas pela pessoa; **sem notificação** com o app fechado |
-| Caixinhas e metas do mês | ✅ | Só organização pessoal; dinheiro real, por conta |
-| Bens (carro, casa, TV) | ✅ | Valorização/desvalorização por **estimativa** da pessoa |
-| Simulador "e se eu comprar" | ✅ | Modelo simples (renda média × compromissos); é referência, não conselho |
-| O que pagar no mês (com setas) | ✅ | |
-| Anotações com busca, ordem e filtros | ✅ | 15 por vez |
-| Relatórios | ◐ | Só por mês; sem comparação entre meses/ano, sem rosca por categoria |
-| Backup e restauração | ✅ | **Manual** (arquivo `.json`); há lembrete após 30 dias |
+| Anotar gasto, ganho, transferência e compra de bem | ✅ | Pena → 4 bolinhas → folha curta com favoritas e busca |
+| Travas de coerência | ✅ | Impede o impossível (cartão acima do limite, carteira negativa); pergunta "era isso?" no estranho |
+| Editar e apagar anotação | ✅ | **Desfazer** por 8 segundos |
+| Contas, cartão (fecha/vence/limite), parcelas e fatura | ✅ | Ciclo do cartão testado nos casos difíceis |
+| Conferir com o banco | ✅ | A diferença vira anotação de hoje (contas e aplicações) |
+| Pagar dívida com juros | ✅ | Juros informados pela pessoa; contados no relatório pelo código fixo |
+| Dinheiro com pessoas | ✅ | Data de cobrança; perdoar vira gasto |
+| Contas fixas e contas do ano | ✅ | Sem notificação com o app fechado |
+| Caixinhas e metas do mês | ✅ | Caixinha pode render |
+| Investimentos | ✅ | Rendimento por dia útil, sem feriados; IR/IOF acertados pelo Conferir |
+| Bens | ✅ | Valorização/desvalorização por estimativa da pessoa |
+| Simulador "e se eu comprar" | ✅ | Referência, não conselho |
+| Gráficos e Relatórios (10 indicadores) e mês a mês | ✅ | Texto educativo automático |
+| Chat (53 perguntas prontas) | ✅ | Sem internet e sem inteligência artificial |
+| Notícias de fontes oficiais | ✅ | Banco Central, IBGE e ANP; atualiza ao meio-dia. Receita Federal: sem fonte em formato de dados |
+| Cópia de segurança | ◐ | **Manual** (arquivo `.json`), com lembrete |
 | Exportar para planilha/PDF | ❌ | |
-| Notificações e lembretes | ❌ | Exige servidor; alternativa estudada: exportar vencimentos para o calendário do celular |
-| Sincronizar entre aparelhos | ❌ | Exige login e servidor (decisão adiada: só depois de uso real) |
-| Bloqueio por senha/PIN | ❌ | Quem abre o app no celular desbloqueado vê tudo |
+| Lembretes com o app fechado | ❌ | Exige servidor; alternativa: exportar vencimentos para o calendário |
+| Sincronizar entre aparelhos | ❌ | Exige login e servidor |
+| Bloqueio por senha/PIN | ❌ | Quem abre o celular desbloqueado vê tudo |
 | Receitas que se repetem (salário fixo) | ❌ | Hoje só gastos fixos |
-| Ajuda embutida / tour guiado | ◐ | Só os "primeiros passos" (contas e cartão); "Como ler a balança" |
-| Acessibilidade | ◐ | Letra grande/enorme, contraste, tema escuro, "Movimento: Parado", rótulos nos botões. **Sem auditoria com leitor de tela** |
+| Acessibilidade | ◐ | Letra grande/enorme, tema escuro, "Movimento: Parado", rótulos. **Sem teste com leitor de tela** |
 | Instalável e sem internet (PWA) | ✅ | Falta conferir no iPhone e no Android reais |
 
-## 4. Qualidade do código
+## 5. Qualidade do código
 
 ### Pontos fortes
-- **Regras importantes protegidas por teste**: invariantes contábeis, ciclo do cartão, FIFO de pagamento, caixinhas por conta, bens e juros.
-- **Entrada de dados desconfiada**: `higienizar()` valida tudo que vem do armazenamento e de backups; item inválido é descartado e uma cópia do original é guardada.
-- **Segurança de texto**: o teste `15-seguranca-textos-maliciosos` coloca HTML malicioso em nomes de contas, categorias, bens, pessoas, caixinhas, contas fixas, descrições e em um backup adulterado, e percorre todas as telas e janelas: **nada foi injetado nem executado**.
-- **Sem dependências**: nada para atualizar, nada que quebre sozinho, nada que vaze dado para terceiros.
-- **Vocabulário protegido por teste**: uma varredura procura jargão ("gaveta", "lançamento", "projeção"…) em todas as telas.
+- **Regras importantes protegidas por teste**: partidas dobradas, ciclo do cartão, pagamento das parcelas mais antigas primeiro, caixinhas por conta, bens, juros, rendimento por dia útil, travas.
+- **Entrada desconfiada**: `higienizar()` valida o que vem do aparelho e de cópias; `noticiasValidas()` valida o arquivo de notícias; links só de sites oficiais.
+- **Segurança de texto**: o teste 15 põe HTML malicioso em todos os nomes e numa cópia adulterada: **nada é executado**.
+- **Categorias do sistema por código, não por nome** (`sis`: conferir, rendimentos, impostos de investimento, juros, dívidas não pagas).
+- **Sem dependências** no app.
 
 ### Dívidas técnicas (por ordem de importância)
-1. **Arquivo único de 2.400 linhas** (na época desta avaliação; hoje ~3.300). Funciona e é simples de publicar, mas está perto do ponto em que mexer fica lento. *Gatilho para dividir:* passar de ~3.500 linhas ou entrar mais gente no projeto. *Como:* pasta `src/` em módulos + um script que gera o `app/index.html` único (os testes continuam iguais).
-2. **Telas como texto HTML + estado global.** Cada tela é uma função que monta uma string e `desenhar()` refaz tudo. É simples e rápido o suficiente, mas qualquer ajuste de foco/animação exige cuidado (já houve casos: busca perdendo o foco, animação da balança repetindo).
-3. **Nomes internos antigos** (`modalGaveta`, `data-a="gaveta"`): na tela já é "conta". Renomear só com os testes rodando.
-4. **Funções longas** (`desenharFolha`, `telaInicio`, `pagarNoMes`) e **estilos inline repetidos**. Não causam erro, só dificultam mudanças.
-5. **Cálculos refeitos a cada desenho** (saldos varrem todas as anotações). Medido como folgado até 10 mil anotações; pode virar cache se algum dia passar disso.
-6. **Sem migração formal de dados.** Mudanças no formato dependem de `higienizar()` ser tolerante. Se um dia o formato mudar de forma incompatível, é preciso criar um passo de migração (ver `ROTEIRO.md`).
-7. **Sem política de segurança de conteúdo (CSP)** no HTML. Como o app não carrega nada de fora, o risco é baixo, mas é uma proteção extra barata (ver roteiro).
+1. **Arquivo único de 4.242 linhas.** Passou do gatilho que a avaliação anterior tinha marcado (~3.500). Ainda funciona e os testes protegem, mas mexer está mais lento. *Proposta:* dividir em módulos numa pasta `src/` com um script que gera o `app/index.html` único (testes iguais). Fazer **depois do teste de campo**, para não mexer na estrutura enquanto pessoas testam.
+2. **Telas como texto HTML + estado global**: `desenhar()` refaz tudo; foco e animação pedem cuidado.
+3. **Nomes internos antigos** (`modalGaveta`, `data-a="gaveta"`, "caderneta" nos dados). Os dos dados **não podem** mudar (perda de dados).
+4. **Funções longas** e estilos inline repetidos.
+5. **Cálculos refeitos a cada desenho**. Folgado até 10 mil anotações (seção 2).
+6. **Sem migração formal de dados**: as migrações (carteira, poupança, códigos de categoria) vivem dentro de `higienizar()`.
+7. **Sem política de segurança de conteúdo (CSP)** no HTML. Risco baixo; proteção barata.
 
-## 5. Avaliação contábil
+## 6. Avaliação contábil
+Detalhe em `ANALISE-CONTABIL.md`.
+- **Correto e testado**: partida dobrada em tudo; pagar fatura não é gasto novo; juros separados do principal; comprar bem não reduz o "é meu"; rendimento é receita financeira; IR/IOF é despesa; a conciliação ("Conferir com o banco") e a contagem de cédulas lançam a diferença **na data de hoje**, sem reescrever o passado (corrigido nesta auditoria).
+- **Limitações assumidas**: só competência; juros de financiamento informados pela pessoa; valorização de bens por estimativa; sem moeda estrangeira; sem fechamento de mês.
+- **De propósito**: o saldo inicial de uma conta só se edita enquanto ela não tem anotações; depois, só pelo Conferir com o banco.
 
-**Correto e protegido por teste**
-- Partida dobrada em todos os tipos de lançamento (gasto, ganho, transferência, bem, ajuste de valor).
-- Pagar fatura **não** é gasto novo; pagar dívida com juros separa principal e juros.
-- Comprar bem **não** reduz o patrimônio; a perda de valor é registrada à parte e **não** entra em "Saiu".
-- Caixinhas ficam **fora** do razão (só organização), então não distorcem patrimônio nem balancete.
-- Balancete do modo contador fecha com bens e ajustes.
+## 7. Avaliação de uso (UX)
+**Fortes:** um assunto por tela; botões grandes; prévia em frase simples; Mordomo e chat explicam sem jargão; letra grande; travas que explicam o porquê.
+**Preocupações:** muitos conceitos para iniciantes (contas, bens, pessoas, caixinhas, metas, aplicações); 7 abas na barra; nunca visto num celular real (toque, teclado numérico, fluidez em aparelho simples).
 
-**Limitações assumidas (são decisões, não erros)**
-- Só **competência** (a despesa nasce na data da compra); o regime de caixa foi retirado por confundir.
-- **Juros** de financiamentos são informados pela pessoa a cada pagamento (cada banco calcula de um jeito).
-- **Valorização/desvalorização** é estimativa por taxa anual escolhida; a pessoa pode corrigir o valor quando quiser.
-- Sem moedas estrangeiras, sem investimentos complexos, sem imposto.
-- Sem fechamento de mês: editar uma anotação antiga recalcula tudo (é o desejado para uso pessoal).
-
-**Pontos de atenção**
-- **Apagar com cascata é irreversível** (conta, bem e pessoa apagam também as anotações ligadas). O aviso é claro, mas não existe "desfazer".
-- Anotação de **estorno/devolução** no cartão funciona (entra na conta de dívida como pagamento), mas não tem tela própria: a pessoa precisa saber anotar como "Recebi" na conta do cartão.
-
-## 6. Avaliação de uso (UX)
-
-**Fortes:** um assunto por tela; botões grandes; prévia que explica o efeito em frase simples; balança com legenda e "Como ler"; letra grande; vocabulário comum; avisos claros antes de apagar.
-
-**Preocupações**
-- **A tela Início é longa** (frase, balança, legenda, resumo, o que pagar, avisos, cofres, metas, últimas anotações). Para o público mais velho ou mais apressado pode ser demais. *Ideia:* "Modo simples" que mostra só o essencial (ver roteiro).
-- **Muitos conceitos para quem está começando**: contas, bens, pessoas, caixinhas, metas, contas fixas. O primeiro uso ensina só contas e cartão. *Ideia:* tour curto e dicas na primeira visita de cada área.
-- **Caixinha × meta**: duas coisas parecidas (cofre × balde). Os nomes e visuais ajudam, mas precisa ser observado em uso real.
-- **Nunca visto num celular real**: alvos de toque, teclado numérico, rolagem e fluidez das animações em aparelhos simples ainda são hipóteses.
-
-## 7. Segurança e privacidade
-
+## 8. Segurança e privacidade
 | Tema | Situação |
 |---|---|
-| Dados saem do aparelho? | **Não.** Sem servidor, login, análise de uso ou anúncios |
-| Texto malicioso (XSS) | Testado em todas as telas; **nada foi executado** |
-| Backup adulterado | Itens inválidos são descartados; ids perigosos rejeitados |
-| Dados em repouso | `localStorage` **sem criptografia** e sem senha. Quem usa o celular desbloqueado vê tudo |
-| Por endereço | Os dados pertencem ao **endereço do app**. Trocar de endereço (ex.: ir para o Cloudflare Pages) **começa vazio**: é preciso guardar e recuperar uma cópia |
-| iPhone/Safari | O Safari pode **apagar dados de sites** que ficam muito tempo sem uso quando o app **não foi instalado** na tela inicial. O app pede armazenamento persistente (`storage.persist()`), mas isso não é garantido. *Mitigação:* orientar a instalar na tela inicial e guardar cópias |
-| Repositório | Público hoje. Contém só código e documentação (nunca dados). Pode virar privado quando migrar a hospedagem (ver `PUBLICACAO.md`) |
+| Dados saem do aparelho? | **Não.** Sem servidor, login, análise de uso ou anúncios. As notícias só **chegam** (arquivo do próprio site) |
+| Texto malicioso (XSS) | Testado em todas as telas; nada executado |
+| Cópia adulterada | Itens inválidos descartados; ids perigosos rejeitados |
+| Dados em repouso | `localStorage` sem criptografia e sem senha |
+| Por endereço | Trocar o endereço do app **começa vazio** (ver `PUBLICACAO.md`) |
+| iPhone/Safari | Pode apagar dados de sites não instalados e sem uso; orientar instalar e guardar cópias |
+| Repositório | Público; só código e documentos, nunca dados nem senhas |
 
-## 8. Confiabilidade e processo
+## 9. Confiabilidade e processo
+- ✅ Testes no repositório e no GitHub (bloqueiam a publicação se falharem).
+- ✅ Robô das notícias ao meio-dia, que não bloqueia a publicação se uma fonte cair.
+- ✅ Desempenho medido de novo nesta versão (`tools/medir-desempenho.js`).
+- ❌ Sem teste em celular real, Safari ou leitor de tela.
+- ⚠ O GitHub desliga o robô do meio-dia se o repositório ficar 60 dias sem envio.
 
-- ✅ Testes automáticos agora **dentro do repositório** e rodando também no GitHub (bloqueiam a publicação se falharem).
-- ❌ Não há teste em navegador real, em celular, em Safari, nem **teste visual** (animações, layout, toque).
-- ❌ Sem auditoria de acessibilidade com leitor de tela (TalkBack/VoiceOver).
-- ✅ Publicação reversível: voltar para uma versão anterior é um `git revert` (ver `PUBLICACAO.md`).
-- ⚠ Antes de hoje, os testes existiam **só no computador de trabalho** (fora do Git). Isso foi corrigido nesta organização.
-
-## 9. Riscos priorizados
-
+## 10. Riscos priorizados
 | # | Risco | Chance | Impacto | O que fazer |
 |---|---|---|---|---|
-| 1 | Problemas só aparecem no celular real (toque, teclado, desempenho, instalação no iPhone) | Alta | Alto | Teste de campo com 3 a 5 pessoas e 2 aparelhos (Android e iPhone) |
-| 2 | Perda de dados (limpar navegador, trocar de celular, Safari apagar) | Média | Alto | Reforçar o lembrete de backup; orientar instalar na tela inicial; considerar backup automático por compartilhamento |
-| 3 | Pessoa não entende algum conceito (caixinha × meta, bens) | Média | Médio | Tour curto, dicas na primeira visita, "Modo simples" |
-| 4 | Apagar por engano sem "desfazer" | Média | Médio | Lixeira ou "desfazer" por alguns segundos |
-| 5 | Arquivo único cresce demais | Baixa agora | Médio | Dividir em módulos quando passar de ~3.500 linhas |
-| 6 | Mudança de endereço apaga dados dos usuários | Certa (se migrar) | Alto | Plano de migração com aviso e botão de cópia (ver `PUBLICACAO.md`) |
-| 7 | Ninguém consegue abrir o app sem internet na primeira vez | Baixa | Baixo | Já abre sem internet depois da primeira visita; documentar |
+| 1 | Problemas só aparecem no celular real | Alta | Alto | Teste de campo com 3 a 5 pessoas, Android e iPhone |
+| 2 | Perda de dados (limpar navegador, trocar de celular) | Média | Alto | Lembrete de cópia; instalar na tela inicial |
+| 3 | Pessoa não entende algum conceito | Média | Médio | Chat, tour curto, dicas na primeira visita |
+| 4 | Arquivo único grande demais para mexer | Média | Médio | Dividir em módulos depois do teste de campo |
+| 5 | Mudança de endereço apaga dados | Certa (se migrar) | Alto | Plano de migração com aviso e cópia (`PUBLICACAO.md`) |
+| 6 | Uma fonte oficial muda o formato e a notícia some | Média | Baixo | O robô tenta 3 vezes e publica o resto; olhar a aba Actions |
 
-## 10. Veredito
-
-O app está **funcionalmente completo para o que foi pedido** e o motor de contas é **confiável** (provado por testes, desempenho e segurança medidos). O que falta para chamá-lo de "pronto para todo mundo" não é código novo: é **prova no mundo real**. O próximo passo certo é distribuir a 1.0.0 para um grupo pequeno, observar, e só então priorizar o que construir (veja `ROTEIRO.md`).
+## 11. Veredito
+O app está **completo para o que foi pedido** nos 9 passos do plano, e a auditoria mostrou que **as contas fecham**. Os problemas achados foram corrigidos e protegidos por teste. O que falta para "pronto para todo mundo" não é função nova: é **prova no mundo real**.

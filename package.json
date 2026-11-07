@@ -1,7 +1,7 @@
 {
   "name": "caderneta",
-  "version": "1.21.0-beta.1",
-  "description": "Caderneta: finanças pessoais simples e intuitivas, com contabilidade de partida dobrada por trás. App instalável (PWA), sem servidor e sem banco de dados.",
+  "version": "1.21.1-beta.1",
+  "description": "Balancete (antes Caderneta): finanças pessoais simples e intuitivas, com contabilidade de partida dobrada por trás. App instalável (PWA), sem servidor e sem banco de dados.",
   "private": true,
   "scripts": {
     "test": "node tests/rodar.js",

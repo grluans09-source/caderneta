@@ -5,6 +5,18 @@
 Formato: versão semântica (`MAIOR.MENOR.CORREÇÃO`). Cada versão diz **o que mudou para a pessoa que usa**.
 Antes da 1.0.0 as versões eram numeradas só pelo nome do cache do app (v1 a v16); estão aqui como marcos de desenvolvimento.
 
+## [1.21.1-beta.1]: 7 de novembro de 2026 · auditoria completa
+Passo 9 do plano (o último): uma auditoria de tudo no app, aprovada item a item pelo dono. Relatório completo em `docs/AVALIACAO.md`.
+- **As contas fecham.** Um teste com dados aleatórios (6 rodadas, todas as telas e as 53 respostas do chat) conferiu as regras de contabilidade e não achou nenhuma diferença.
+- **Contar as cédulas não muda mais o passado.** Se você conta R$ 50 e o app dizia R$ 80, a diferença de R$ 30 entra como **anotação de hoje** ("Diferença ao contar as cédulas"). Antes, o app mudava o saldo de partida e o "é meu" dos meses passados mudava junto.
+- **Editar uma conta**: se ela já tem anotações, o app mostra o **saldo de hoje** (só para ler) e indica o **Conferir com o banco** para acertar diferenças. Antes aparecia o valor de quando a conta foi criada, como se fosse o de hoje. No cartão, fica claro que a lista é do que você já devia **antes de usar o app**, e o app mostra quanto você deve hoje.
+- **Pode renomear "Juros e multas" e "Dívidas não pagas"**: os relatórios continuam contando certo (o app reconhece essas categorias por um código, não pelo nome). Dados antigos são ajustados sozinhos.
+- **Tema escuro**: a data de uma conta atrasada na agenda ficou legível.
+- **Notícias**: o robô tenta 3 vezes quando a fonte do IBGE recusa a conexão.
+- Por dentro: regras de estilo repetidas e sem uso removidas; a ferramenta que mede a velocidade (`tools/medir-desempenho.js`) voltou a funcionar e agora mede também Investir e Gráficos (com 10.000 anotações, as telas abrem em menos de 0,1 s no computador).
+- Documentos atualizados (avaliação nova, mapa com Investir, Notícias e chat, arquitetura com os campos novos, decisão D60) e a descrição do repositório no GitHub agora diz "Balancete".
+- Testes: 778 verificações em 30 arquivos (novo: auditoria).
+
 ## [1.21.0-beta.1]: 7 de novembro de 2026 · notícias de fontes oficiais
 - **"Hoje no Brasil" no Início** e uma **tela de Notícias** (também em Mais), com o que mudou na economia e o que isso pode significar para você.
 - **Só fontes oficiais**, cada uma com o **link do site oficial**:

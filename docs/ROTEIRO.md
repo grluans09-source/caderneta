@@ -1,6 +1,6 @@
 # Roteiro
 
-Onde estamos: **versão 1.21.0-beta.1** (a 1.20.0 está publicada para testadores). App reorganizado (`MAPA-DO-APP.md`), com anotar em dois toques, conta Dinheiro com cédulas e paleta nova. **Ainda sem uso real por outras pessoas**: o que falta é pôr o app na mão de 3 a 5 pessoas (`GUIA-TESTADORES.md`).
+Onde estamos: **versão 1.21.1-beta.1**. **O plano de 9 passos combinado em 7 nov 2026 terminou** com a auditoria completa (resultado em `AVALIACAO.md`). **Ainda sem uso real por outras pessoas**: o que falta é pôr o app na mão de 3 a 5 pessoas (`GUIA-TESTADORES.md`).
 Este documento diz **o que fazer a seguir, em que ordem e por quê**. Atualize-o a cada versão.
 
 ## Como priorizar
@@ -8,7 +8,7 @@ Este documento diz **o que fazer a seguir, em que ordem e por quê**. Atualize-o
 2. Primeiro o que **protege os dados** das pessoas; depois o que **reduz confusão**; só então o que **acrescenta função**.
 3. Cada item só está "pronto" quando passa na **definição de pronto** (no fim deste documento).
 
-## Fase 0: agora (beta 1.9.x)
+## Fase 0: agora (beta 1.21.x) · o próximo passo
 **Objetivo: descobrir o que as pessoas realmente sentem ao usar.**
 
 | # | Tarefa | Como saber que acabou |
@@ -30,20 +30,20 @@ Este documento diz **o que fazer a seguir, em que ordem e por quê**. Atualize-o
 | ✅ 1.15.0 | **Passo 3 do plano (1ª parte)**: nome **Balancete**, o **Brasão** como logo e ícone, a abertura em que ele ganha vida e a **letra de contabilidade** com números alinhados (D54) | Feito; ver no celular se o ícone e o nome novos aparecem e se a abertura não incomoda | Feito |
 | ✅ 1.16.0 | **Passo 3, 2ª parte**: o **Mordomo** é a balança do Início (sempre em equilíbrio, a cara mostra a situação, olhos que acompanham, reverência) e os **mascotes dos momentos** (Moedinha, Selo "PAGO", Pesinho, Pesão) | Feito; ver no celular se os mascotes agradam e não cansam | Feito |
 | ✅ 1.17.0 | **Passo 4**: o botão de anotar é a **pena** num medalhão de ouro; a pílula "Perguntar" vai no canto esquerdo (D55) | Feito; ver se as pessoas entendem a pena sem explicação | Feito |
-| ✅ 1.18.0 | **Passo 5: chat do Balancete** com 50 perguntas prontas, busca, "Ver no app" e a pílula "Perguntar" que reage em cada aba (D56) | Feito; ver com testadores quais perguntas faltam | Feito |
+| ✅ 1.18.0 | **Passo 5: chat do Balancete** com 50 perguntas prontas (hoje 53), busca, "Ver no app" e a pílula "Perguntar" que reage em cada aba (D56) | Feito; ver com testadores quais perguntas faltam | Feito |
 | ✅ 1.19.0 | **Passo 6: travas de coerência**: impede cartão acima do limite e carteira negativa; pergunta "era isso?" em banco negativo, pagar ou receber a mais, data distante, valor fora do costume e limite menor que a dívida (D57) | Feito; ver com testadores se os avisos ajudam ou incomodam | Feito |
 | ✅ 1.20.0 | **Passo 7: Investimentos**: aba Investir, rendimento por dia útil (sem feriados) numa anotação por mês, conferir com o banco, aplicar e resgatar, Poupança convertida, caixinhas que rendem, nova pergunta nos Primeiros passos (D50, D58) | Feito; ver com testadores se a taxa "ao ano" é fácil de achar no app do banco | Feito |
 | ✅ 1.21.0 | **Passo 8: notícias de fontes oficiais**: "Hoje no Brasil" e tela de Notícias com Banco Central, IBGE e ANP, selo certeza/possibilidade, link oficial e "para você"; robô ao meio-dia (D59) | Feito; acompanhar se o robô do meio-dia roda todo dia (aba Actions) | Feito |
 | **Depois (D59)** | Notícias de impostos da Receita Federal e de outros órgãos, se houver fonte oficial em formato de dados | Sem fonte automática hoje | Baixa |
-| **Próximo (passo 9)** | **Auditoria completa**: estrutura, visual, harmonia, incoerências, cálculos que não batem e o GitHub 100% em dia (inclui os pontos frágeis da análise contábil, como "Juros e multas" reconhecido pelo nome) | Fazer e trazer o relatório ao dono | Alta |
+| ✅ 1.21.1 | **Passo 9: auditoria completa**: cálculos com dados aleatórios (nenhuma diferença), 14 telas × 3 letras × 2 temas, código sem uso, vocabulário em Investir, Notícias e chat. Corrigido: cédulas e edição de conta não mudam mais o passado; Juros e multas e Dívidas não pagas por código fixo; contraste da data atrasada; robô das notícias tenta 3 vezes; CSS limpo; medição de desempenho consertada; descrição do GitHub atualizada (D60) | Feito; relatório em `AVALIACAO.md` | Feito |
 | ✅ 1.14.0 | **Passo 2 do plano**: análise contábil (`ANALISE-CONTABIL.md`) e as 4 funções escolhidas: conferir com o banco, contas do ano, mês a mês e custo fixo de vida | Feito; ver com testadores se "Conferir com o banco" é achado e entendido | Feito |
 | **Depois (D53)** | Fluxo de caixa do mês ("sobrou 500 mas o banco caiu"), relatório para o Imposto de Renda (perto da declaração), etiquetas por projeto | Escolhidas para depois na análise contábil | Média |
 | ✅ 1.13.1 | **Passo 1 do plano novo**: acerto de contas em janela preta e dourada, atrasada igual na agenda e no acerto, dica de instalar, + exatamente no canto | Feito; ver em celular real se a janela abre e fecha bem com o botão voltar | Feito |
-| **Plano combinado (7 nov 2026)** | ~~1) correções rápidas~~ (1.13.1); ~~2) análise contábil~~ (1.14.0); ~~3) identidade: nome, logo, mascotes~~ (1.15.0 e 1.16.0); ~~4) botão de anotar~~ (1.17.0); ~~5) chat do Balancete~~ (1.18.0); ~~6) travas de coerência~~ (1.19.0); ~~7) Investimentos~~ (1.20.0); ~~8) notícias~~ (1.21.0); **9) auditoria completa** (próximo) (o app impede o que não faz sentido, ex.: gasto no cartão acima do limite; pedido do dono em 7 nov 2026); 7) Investimentos (D50); 8) notícias de fontes oficiais; 9) auditoria completa e GitHub 100% em dia. A conversa sobre venda sem custo fica para depois (pedido do dono) | Cada passo é examinado e decidido com o dono antes de fazer | Em andamento |
+| ✅ **Plano combinado (7 nov 2026)** | ~~1) correções rápidas~~ (1.13.1); ~~2) análise contábil~~ (1.14.0); ~~3) identidade: nome, logo, mascotes~~ (1.15.0 e 1.16.0); ~~4) botão de anotar~~ (1.17.0); ~~5) chat do Balancete~~ (1.18.0); ~~6) travas de coerência~~ (1.19.0); ~~7) Investimentos~~ (1.20.0); ~~8) notícias~~ (1.21.0); ~~9) auditoria completa e GitHub 100% em dia~~ (1.21.1). A conversa sobre venda fica para depois (pedido do dono) | Cada passo foi examinado e decidido com o dono antes de fazer | Concluído |
 | ✅ 1.13.0 | **Botão + no canto direito**, bolinhas em quarto de círculo, Relatórios fora do Mais, **conta Dinheiro criada para quem já usava o app** | Feito; conferir em celular real se o botão não atrapalha o polegar nem tapa conteúdo | Feito |
 | ✅ 1.12.0 | **Visual vivo** (ícones cheios, formas redondas, abertura e animações), bolinhas em círculo, seletor de tipo na folha, busca com lista completa, 5 categorias favoritas | Feito; ver se as pessoas gostam do visual e se o Movimento Parado basta para quem prefere calma | Feito |
-| **Próximo (desenho decidido, D50)** | **Investimentos**: caixinha presa a uma conta e rendendo (taxa anual, cálculo por dia útil, ajuste manual); **nova aba Investimentos** (poupança, CDB, Tesouro, fundos); pergunta dos Primeiros passos trocada por "Você tem dinheiro guardado ou investido?" | Hoje caixinha não rende e poupança é uma conta comum. O espaço na barra já foi liberado (D51); falta o resto do desenho | Alta |
-| ✅ 1.11.0 | **Gráficos e Relatórios de consultor** (9 indicadores), paleta preto/dourado/branco, acerto de contas no Planejar | Feito; testar se os textos fazem sentido para as pessoas | Feito |
+| ✅ 1.20.0 | ~~**Investimentos** (desenho da D50)~~: feito no passo 7 (ver a linha 1.20.0 acima e a D58) | Substituído pela linha 1.20.0 | Feito |
+| ✅ 1.11.0 | **Gráficos e Relatórios de consultor** (9 indicadores; hoje 10), paleta preto/dourado/branco, acerto de contas no Planejar | Feito; testar se os textos fazem sentido para as pessoas | Feito |
 | ✅ 1.10.0 | **Anotar em dois toques**: o + gera 4 bolinhas; folha curta (Dinheiro + 3 favoritas, 5 categorias, busca); conta Dinheiro com cédulas e sugestão de reais inteiros | Feito; testar se as pessoas percebem as bolinhas e usam as favoritas | Feito |
 | Média | **Tour curto e dicas na primeira visita** de cada área (caixinhas, bens, pessoas) | Muitos conceitos para iniciantes | Médio |
 | Média | **Lembretes no calendário**: exportar vencimentos (arquivo `.ics`) para o calendário do celular | Resolve "sem notificação" sem servidor | Pequeno |
@@ -67,11 +67,11 @@ Este documento diz **o que fazer a seguir, em que ordem e por quê**. Atualize-o
 | (Depois) Chave de licença com servidor mínimo; app nas lojas | Só se o uso real pedir |
 
 ## Fase 2: crescer com segurança
-- **Dividir o código em módulos** quando passar de ~3.500 linhas ou quando mais de uma pessoa mexer: pasta `src/` + script que gera o `app/index.html` único. Os testes continuam iguais.
+- **Dividir o código em módulos** (o app já passou de ~3.500 linhas: tem ~4.240; fazer **depois do teste de campo**, para não mexer na estrutura durante o teste) ou quando mais de uma pessoa mexer: pasta `src/` + script que gera o `app/index.html` único. Os testes continuam iguais.
 - **Passo de migração de dados** (`migrar(dados)` por versão do formato) antes da primeira mudança incompatível de formato.
 - **Testes em navegador real** (Playwright) para layout, toque e animações, além do jsdom.
 - **Auditoria de acessibilidade** com TalkBack e VoiceOver.
-- **Relatórios melhores**: comparação mês a mês, rosca por categoria, relatório do ano.
+- **Relatórios melhores**: rosca por categoria, relatório do ano (a comparação mês a mês já existe desde a 1.14.0).
 - **Financiamento com tabela** (SAC/Price) para sugerir os juros de cada parcela (opcional).
 
 ## Fase 3: só se o uso real pedir

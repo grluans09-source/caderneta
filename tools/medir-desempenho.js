@@ -13,7 +13,7 @@ const iso = (d) => d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, 
 function cenario(nLanc) {
   const hoje = new Date();
   const contas = [
-    { id: "c1", nome: "Carteira", tipo: "ativo", inicial: 100000 }, { id: "c2", nome: "Banco", tipo: "ativo", inicial: 5000000 },
+    { id: "c1", nome: "Carteira", tipo: "ativo", inicial: 100000000, carteira: true }, { id: "c2", nome: "Banco", tipo: "ativo", inicial: 5000000 },
     { id: "c3", nome: "Poupança", tipo: "ativo", inicial: 2000000 },
     { id: "c4", nome: "Nubank", tipo: "passivo", inicial: 0, fecha: 25, vence: 5, limite: 5000000 },
     { id: "c5", nome: "Itaú", tipo: "passivo", inicial: 0, fecha: 10, vence: 20, limite: 5000000 },
@@ -52,19 +52,23 @@ function medir(nLanc) {
   const r = { lancamentos: nLanc, "abrir o app (carregar + 1ª tela)": abrir };
   r["tela Início"] = tempo("i", () => d.querySelector('nav [data-v="inicio"]').click());
   r["tela Dinheiro"] = tempo("c", () => d.querySelector('nav [data-v="contas"]').click());
+  r["tela Investir"] = tempo("v", () => d.querySelector('nav [data-v="investir"]').click());
   r["tela Planejar"] = tempo("p", () => d.querySelector('nav [data-v="planejar"]').click());
-  d.querySelector('#tela [data-v="caixinhas"]').click();
-  d.querySelector('nav [data-v="mais"]').click();
-  r["tela Relatórios"] = tempo("r", () => d.querySelector('#tela [data-v="relatorios"]').click());
+  r["tela Gráficos"] = tempo("g", () => d.querySelector('nav [data-v="graficos"]').click());
+  r["tela Relatórios"] = tempo("r", () => d.querySelector('nav [data-v="relatorios"]').click());
   d.querySelector('nav [data-v="mais"]').click();
   r["tela Anotações"] = tempo("a", () => d.querySelector('#tela [data-v="anotacoes"]').click());
   const busca = d.querySelector("#fBusca");
   r["digitar na busca (1 letra)"] = tempo("b", () => { busca.value = "Anotação 12"; busca.dispatchEvent(new dom.window.Event("input", { bubbles: true })); });
+  const n0 = dom.window.__T.S().lancamentos.length;
   r["salvar 1 anotação"] = tempo("s", () => {
     d.querySelector('[data-a="novo"]').click();
+    d.querySelector('#fabMenu [data-a="novoT"][data-t="saida"]').click();
     const v = d.getElementById("fValor"); v.value = "1000"; v.dispatchEvent(new dom.window.Event("input", { bubbles: true }));
+    d.querySelector('#lcD [data-a="fCat"]').click();
     d.querySelector('[data-a="fSalvar"]').click();
   });
+  if (dom.window.__T.S().lancamentos.length !== n0 + 1) throw new Error("a anotação de teste não foi salva: a medição está desatualizada");
   return r;
 }
 
