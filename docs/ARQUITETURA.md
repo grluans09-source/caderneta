@@ -1,6 +1,6 @@
 # Arquitetura
 
-Como o app funciona por dentro. Estado descrito: **versão 1.0.0**.
+Como o app funciona por dentro. Estado descrito: **versão 1.8.0-beta.1** (a base de dados e o motor vêm da 1.0.0; as telas foram reorganizadas conforme `MAPA-DO-APP.md`).
 
 ## 1. Visão geral
 
@@ -16,7 +16,7 @@ app/
   sw.js                service worker (VERSAO = "caderneta-<versão>")
   manifest.webmanifest nome, cores, ícones
   icon.svg, icon-180/192/512.png, icon-maskable-512.png
-tests/                 preparar.js + rodar.js + 15 arquivos *.test.js (jsdom)
+tests/                 preparar.js + rodar.js + 17 arquivos *.test.js (jsdom)
 tools/                 servidor-local.js, gerar-icones.js
 ```
 
@@ -153,7 +153,7 @@ Ativo cresce a débito; passivo cresce a crédito. **Patrimônio líquido (PL) =
 
 ## 6. Visual
 
-- **Tokens** em `:root` (papel creme, verde de capa, latão, azul tinta = entrou, vermelho tinta = saiu) com **tema escuro "lamparina"** (`prefers-color-scheme` + `data-tema`).
+- **Tokens** em `:root` (marfim, azul-noite de capa, ouro/latão, azul safira = entrou e é "o que eu tenho", bordô = saiu e é dívida, ametista = guardado, cobre = bens; **o dourado é só para "selecionado"**) com **tema escuro "lamparina"** (`prefers-color-scheme` + `data-tema`).
 - **Letra**: `html[data-tam="g|gg"]` (grande/enorme); com "Enorme" a conta em T vira lista de uma coluna e o fio some.
 - **Movimento**: classe `calmo` no `<html>` (config "Parado" **ou** `prefers-reduced-motion`) desliga tudo. Animar só `transform`/`opacity`.
 - Gráficos, balança, cofres e potes são **SVG desenhado à mão** (sem biblioteca). Fontes: só as do sistema (Georgia para números/títulos).
@@ -167,7 +167,7 @@ Ativo cresce a débito; passivo cresce a crédito. **Patrimônio líquido (PL) =
 
 - `npm test` → `tests/rodar.js`: **prepara uma cópia** do app em `tests/.tmp/app-teste.html` (com um gancho `window.__T` que expõe funções internas listadas em `tests/preparar.js`), confere a sintaxe do JS e roda cada `tests/*.test.js` em **jsdom**, simulando a pessoa: cliques, digitação, navegação.
 - Os testes ligam a classe `calmo` (sem esperas de animação). Animação, layout e toque **só se conferem no navegador/celular**.
-- Cobertura (470 verificações, 15 arquivos): fluxo básico, dívida por vencimento, pessoas/fixas/caixinhas/simulador, bens, juros, bem financiado, apagar, vocabulário (varre todas as telas atrás de jargão), "o que pagar no mês", caixinhas com dinheiro real, guardado por conta, cofres/setas, filtros de anotações, **segurança contra textos maliciosos (XSS)**. Os testes também conferem **invariantes** (partidas dobradas, ativo − passivo = PL, dinheiro = livre + guardado).
+- Cobertura (490 verificações, 17 arquivos): fluxo básico, dívida por vencimento, pessoas/fixas/caixinhas/simulador, bens, juros, bem financiado, apagar, vocabulário (varre todas as telas atrás de jargão), "o que pagar no mês", caixinhas com dinheiro real, guardado por conta, cofres/setas, filtros de anotações, **segurança contra textos maliciosos (XSS)**. Os testes também conferem **invariantes** (partidas dobradas, ativo − passivo = PL, dinheiro = livre + guardado).
 - **Escrever um teste novo**: copie um arquivo parecido, mude o `seed` (dados iniciais no `localStorage`) e os passos; use `eq(nome, obtido, esperado)`; termine com `console.log(ok?"TUDO OK":"HÁ FALHAS")`. O corredor reconhece "OK", "FAIL" e "TUDO OK".
 
 ## 9. Publicação

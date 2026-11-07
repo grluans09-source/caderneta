@@ -88,7 +88,7 @@ eq("o app continua funcionando depois de apagar",$("#tela").textContent.length>1
 // ---- onboarding também sem jargão ----
 const dom2=new JSDOM(html,{runScripts:"dangerously",url:"http://localhost/",virtualConsole:vc,pretendToBeVisual:true});
 const d2=dom2.window.document;let tx2="";
-tx2+=d2.getElementById("onbCorpo").textContent;d2.querySelector('[data-a="oProx"]').click();tx2+=d2.getElementById("onbCorpo").textContent;d2.querySelector('[data-a="oProx"]').click();tx2+=d2.getElementById("onbCorpo").textContent;d2.querySelector('[data-a="oProx"]').click();tx2+=d2.getElementById("onbCorpo").textContent;
+tx2+=d2.getElementById("onbCorpo").textContent;d2.querySelector('[data-a="oProx"]').click();tx2+=d2.getElementById("onbCorpo").textContent;d2.querySelector('[data-a="oProx"]').click();tx2+=d2.getElementById("onbCorpo").textContent;
 eq("primeiros passos sem jargão",/gaveta/i.test(tx2),false);
 eq("erros de script",errs,[]);
 console.log(ok?"TUDO OK":"HÁ FALHAS");process.exit(ok?0:1);

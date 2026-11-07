@@ -15,7 +15,7 @@ function irV(v){if(v==='caixinhas'||v==='fixas'||v==='simulador')click('[data-a=
 d.documentElement.classList.add("calmo");
 
 // primeiro uso: cartão devendo 190 (vence 05/11) + 15 (vence 05/12)
-click('[data-a="oProx"]');click('[data-a="oProx"]');click('[data-a="oProx"]');
+click('[data-a="oProx"]');click('[data-a="oProx"]');
 click('[data-a="oCartao"][data-s="1"]');
 $("#oNome").value="Nubank";$("#oFecha").value="25";$("#oVence").value="5";
 let linhas=d.querySelectorAll("#oFaturas .linha-f");

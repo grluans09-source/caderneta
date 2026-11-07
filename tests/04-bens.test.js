@@ -43,8 +43,8 @@ eq("bens somam R$ 30.000",T.bensTotal(),3000000);
 eq("o é meu sobe com o bem",T.totais().pl,pl0+3000000);
 click('[data-a="dinAba"][data-v="bens"]');eq("tela Dinheiro lista o bem",/Meus bens/.test($("#tela").textContent)&&/Carro/.test($("#tela").textContent)&&/Perde 12% ao ano/.test($("#tela").textContent),true);
 nav("inicio");
-eq("a balança diz 'O que eu tenho', sem a linha de bens",/O que eu tenho/.test($("#tela").textContent)&&!/Meus bens/.test($("#tela").textContent),true);
-eq("balança tem moedas azuis dos bens",$("#bal").innerHTML.includes("#5A86C9"),true);
+eq("a legenda tem a linha 'Meus bens' (moedas cor de cobre)",/Meus bens/.test($("#tela").textContent),true);
+eq("balança tem moedas cor de cobre dos bens",$("#bal").innerHTML.includes("#CC8A56"),true);
 eq("frase explica com bens",/vendendo os seus bens/.test($("#tela").textContent),true);
 tudoFecha("após bem");
 

@@ -11,7 +11,7 @@ Ordem pensada para **não refazer trabalho**: primeiro decidir o que existe e on
 | 3 ✅ | Mapa do app e lugar único de cada coisa | Um desenho do app: cada tela, cada função, onde mora, como se chega | Sim: você aprova o mapa |
 | 4 ✅ | Linguagem e telas autoexplicativas | Cada tela diz, em uma frase, para que serve; palavras de uso comum | Não |
 | 5 ✅ | Reorganizar o app conforme o mapa | Funções repetidas viram um lugar só; fluxo de uso mais claro | Não (segue o mapa aprovado) |
-| 6 ✅ | Mais 3 modelos de interface simples | 3 "jeitos" de usar o app: poucas informações, animados, com cara de contabilidade | Sim: escolher o padrão |
+| 6 ❌ | Mais 3 modelos de interface | Feitos, testados e depois **apagados a pedido do dono**: fica só a Balança (ver D39) | – |
 | 7 | Publicar a beta | Versão 1.7.1-beta, guia atualizado, aviso aos testadores | Sim: autorizar o envio |
 
 ---

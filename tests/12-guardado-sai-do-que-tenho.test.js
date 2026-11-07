@@ -24,14 +24,14 @@ function guardar(id,v){click('nav [data-v="planejar"]');click('#tela [data-a="ir
 
 // ---- antes de guardar ----
 click('nav [data-v="inicio"]');
-eq("sem caixinhas: o que eu tenho = 1.000, sem item de guardado",/O que eu tenho R\$ 1\.000,00/.test(tela())&&!/Guardado nas caixinhas/.test(tela()),true);
+eq("sem caixinhas: dinheiro para usar = 1.000, sem item de guardado",/Dinheiro para usar agora R\$ 1\.000,00/.test(tela())&&!/Guardado nas caixinhas/.test(tela()),true);
 caix();eq("sem dinheiro guardado não há botão de usar",!$('[data-a="tirarCx"]'),true);
 const pl0=T.totais().pl;
 
 // ---- guardar 300: sai do dinheiro que eu tenho ----
 guardar("x1",30000);
 click('nav [data-v="inicio"]');
-eq("guardar NÃO tira do total: o que eu tenho continua 1.000",/O que eu tenho R\$ 1\.000,00/.test(tela()),true);
+eq("guardar NÃO tira do total: o que é meu de verdade continua igual, e o dinheiro para usar cai para 700",[T.totais().pl===pl0,/Dinheiro para usar agora R\$ 700,00/.test(tela())],[true,true]);
 caix();eq("na tela Caixinhas, para usar agora caiu para 700",/Para usar agora R\$ 700,00/.test(tela()),true);click('nav [data-v="inicio"]');
 eq("aparece separado: Guardado nas caixinhas 300",/Guardado nas caixinhas \(continua seu\) R\$ 300,00/.test(tela()),true);
 eq("a balança ganhou moedas roxas do guardado",$("#bal").innerHTML.includes("#A98BD6"),true);

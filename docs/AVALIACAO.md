@@ -1,6 +1,6 @@
 # Avaliação do projeto
 
-**Data:** 6 de novembro de 2026 · **Versão avaliada:** 1.0.0 · **Situação:** beta fechado, pronto para teste com pessoas reais.
+**Data:** 6 de novembro de 2026 · **Versão avaliada:** 1.0.0 · **Situação:** beta fechado, pronto para teste com pessoas reais. *(Avaliação histórica da 1.0.0: os números abaixo são daquela versão; a 1.8.0-beta.1 tem 17 arquivos de teste e 490 verificações, e as telas foram reorganizadas conforme o MAPA-DO-APP.)*
 
 ## 1. Resumo em poucas linhas
 

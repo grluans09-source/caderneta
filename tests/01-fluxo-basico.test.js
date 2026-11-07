@@ -29,7 +29,7 @@ eq("fev venc 31",T.primeiroVencimento("2026-01-26",25,31),"2026-02-28");
 
 // onboarding
 eq("onboarding aparece",$("#onb").classList.contains("on"),true);
-click('[data-a="oProx"]');click('[data-a="oProx"]');
+click('[data-a="oProx"]');
 digita("#oCarteira","10000");digita("#oBanco","500000");
 eq("máscara",$("#oBanco").value,"R$ 5.000,00");
 click('[data-a="oProx"]');

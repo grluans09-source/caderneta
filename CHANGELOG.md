@@ -3,6 +3,13 @@
 Formato: versão semântica (`MAIOR.MENOR.CORREÇÃO`). Cada versão diz **o que mudou para a pessoa que usa**.
 Antes da 1.0.0 as versões eram numeradas só pelo nome do cache do app (v1 a v16); estão aqui como marcos de desenvolvimento.
 
+## [1.8.0-beta.1]: 7 de novembro de 2026 · só a interface Balança, paleta nova e revisão
+- **Apagados os jeitos Razão e Cofre e fluxo** (pedido do dono, D39). Fica só a interface Balança. Sem escolha de jeito em Ajustes; os Primeiros passos voltam a 3 passos. Quem tinha escolhido outro jeito volta sozinho para a Balança, sem perder dados.
+- **Paleta nova, de luxo contábil**: azul-noite, marfim e ouro. O **verde saiu do app** (confundia com "selecionado"). Agora cada cor tem um só significado: **azul safira** = entrou e dinheiro para usar; **bordô** = saiu e dívida; **ametista** = guardado nas caixinhas; **cobre** = bens; **ouro** = é meu de verdade; e **ouro com fundo claro** = item selecionado.
+- Ícone do app, cor da barra do celular e tela de abertura atualizados para a paleta nova.
+- **Inconsistências corrigidas**: a legenda da balança agora explica todas as moedas (faltava "Meus bens", e "O que eu tenho" somava o que as moedas azuis não mostravam); no cartão, "Livre" virou "Disponível" (o app já usava "para usar" para o dinheiro); as abas do Dinheiro cabem numa linha e nomes longos de conta não são mais cortados; o número grande do Início encolhe em vez de quebrar.
+- Documentação atualizada (README, arquitetura, avaliação).
+
 ## [1.7.1-beta.1]: 6 de novembro de 2026 · conferência final dos 3 jeitos
 Conferência com letra **Enorme**, tema **escuro** e **Movimento** parado e vivo, em tela de celular (375 px), nos 3 jeitos, em 16 telas (Início, 4 abas do Dinheiro, Planejar, Metas, Caixinhas, Contas fixas, Simulador, Mais, Anotações, Relatórios, Ajustes e a folha de Anotar):
 - **Corrigido:** no jeito Razão, com letra Enorme, as duas páginas do livro passavam da largura da tela. Agora, com letra Enorme, as páginas ficam uma embaixo da outra.
