@@ -31,7 +31,7 @@ function invariantes(n){
 
 const pl0=T.totais().pl, banco0=T.saldoConta(S().contas[1]);
 // pagar uma prestação de 2.050 com 50 de juros
-abreFolha();click('[data-a="fTipo"][data-t="transferencia"]');
+abreFolha("transferencia");
 eq("sem destino de dívida não há campo de juros",!$("#fJuros"),false?true:!$("#fJuros")===true);
 click('[data-a="fConta"][data-id="c2"]');click('[data-a="fDestino"][data-id="c3"]');
 eq("destino é dívida: aparece o campo de juros",!!$("#fJuros"),true);
@@ -55,14 +55,14 @@ invariantes("após pagar com juros");
 
 // sem juros continua igual
 const antes=S().lancamentos.length;
-abreFolha();click('[data-a="fTipo"][data-t="transferencia"]');click('[data-a="fConta"][data-id="c2"]');click('[data-a="fDestino"][data-id="c3"]');
+abreFolha("transferencia");click('[data-a="fConta"][data-id="c2"]');click('[data-a="fDestino"][data-id="c3"]');
 digita("#fValor","200000");click('[data-a="fSalvar"]');
 eq("sem juros cria um lançamento só",S().lancamentos.length,antes+1);
 eq("dívida quitada",T.saldoConta(S().contas[2]),0);
 invariantes("após quitar");
 
 // trocar o destino para gaveta normal some com o campo
-abreFolha();click('[data-a="fTipo"][data-t="transferencia"]');click('[data-a="fConta"][data-id="c2"]');click('[data-a="fDestino"][data-id="c1"]');
+abreFolha("transferencia");click('[data-a="fConta"][data-id="c2"]');click('[data-a="fDestino"][data-id="c1"]');
 eq("destino gaveta normal: sem campo de juros",!$("#fJuros"),true);
 click('[data-a="fFechar"]');
 eq("erros de script",errs,[]);

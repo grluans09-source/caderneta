@@ -50,6 +50,8 @@ Depois, peça que ela **pague algo em dinheiro vivo com centavos** (ex.: R$ 3,25
 
 Depois, peça que ela **abra a aba Gráficos**, escolha um indicador, **leia o relatório** e diga, com as palavras dela, **o que entendeu** e **se a explicação faz sentido** para a vida dela.
 
+Peça também que a pessoa **anote um gasto e, no meio, troque para "Recebi" pelo botão redondo de baixo** (e veja se se localiza sabendo que o tipo atual fica apagado), e que **procure uma categoria tocando em "Buscar categoria"** sem digitar nada.
+
 ## 4. Ficha de observação (uma por pessoa)
 
 | Campo | Anotação |

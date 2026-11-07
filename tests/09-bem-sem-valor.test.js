@@ -22,7 +22,7 @@ const S=()=>T.S();
 d.documentElement.classList.add("calmo");
 
 // compra um bem e depois apaga a anotação da compra
-abreFolha();click('[data-a="fTipo"][data-t="bem"]');
+abreFolha("bem");
 click('[data-a="fBemNovo"]');digita("#bNome","TV");click('[data-a="bVar"][data-s="-1"]');click('[data-a="bSalvar"]');
 digita("#fValor","200000");click('[data-a="fConta"][data-id="c2"]');click('[data-a="fSalvar"]');
 const tv=S().contas.find(c=>c.nome==="TV");

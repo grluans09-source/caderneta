@@ -86,12 +86,12 @@ eq("dívida caiu",T.saldoConta(nub),35000-15000);
 eq("PL não mudou ao pagar",T.totais().pl,510000-2500-35000);
 
 // pagamento parcial
-abreFolha();click('[data-a="fTipo"][data-t="transferencia"]');
+abreFolha("transferencia");
 click(`[data-a="fDestino"][data-id="${nub.id}"]`);digita("#fValor","4000");muda("#fData","2026-10-10");click('[data-a="fSalvar"]');
 eq("parcial",T.aPagar().map(g=>[g.data,g.valor]),[["2026-11-05",6000],["2026-12-05",10000]]);
 
 // identidade contábil
-abreFolha();click('[data-a="fTipo"][data-t="entrada"]');digita("#fValor","700000");click('[data-a="fSalvar"]');
+abreFolha("entrada");digita("#fValor","700000");click('[data-a="fSalvar"]');
 let ent=0,sai=0;S().lancamentos.forEach(l=>{if(l.tipo==="entrada")ent+=l.valor;if(l.tipo==="saida")sai+=l.valor});
 eq("PL = inicial + receitas - despesas",T.totais().pl,510000+ent-sai);
 eq("débito=crédito",S().lancamentos.every(l=>{const p=T.partidas(l);return p.length===2&&p[0].lado==="D"&&p[1].lado==="C"}),true);

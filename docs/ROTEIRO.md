@@ -1,6 +1,6 @@
 # Roteiro
 
-Onde estamos: **versão 1.11.0-beta.1** (a 1.10.0 está publicada para testadores). App reorganizado (`MAPA-DO-APP.md`), com anotar em dois toques, conta Dinheiro com cédulas e paleta nova. **Ainda sem uso real por outras pessoas**: o que falta é pôr o app na mão de 3 a 5 pessoas (`GUIA-TESTADORES.md`).
+Onde estamos: **versão 1.12.0-beta.1** (a 1.11.0 está publicada para testadores). App reorganizado (`MAPA-DO-APP.md`), com anotar em dois toques, conta Dinheiro com cédulas e paleta nova. **Ainda sem uso real por outras pessoas**: o que falta é pôr o app na mão de 3 a 5 pessoas (`GUIA-TESTADORES.md`).
 Este documento diz **o que fazer a seguir, em que ordem e por quê**. Atualize-o a cada versão.
 
 ## Como priorizar
@@ -27,6 +27,8 @@ Este documento diz **o que fazer a seguir, em que ordem e por quê**. Atualize-o
 | Parcial | **Backup mais fácil**: lembrete a cada 7 dias (feito); falta botão "Guardar cópia" no Início quando fizer tempo; compartilhar direto por WhatsApp/e-mail | Perda de dados é o maior risco | Médio |
 | Alta | **Migração de hospedagem** para o **Cloudflare Pages** (D33), com domínio próprio (D34), **aviso de mudança de endereço** e botão de cópia no endereço antigo. Só antes de vender | Plano em `PUBLICACAO.md` | Médio |
 | ✅ 1.2.0 | **Início enxuto** (balança, resumo, uma linha "Falta pagar", avisos, 3 últimas anotações) | Feito; falta só confirmar com testadores se basta | Feito |
+| ✅ 1.12.0 | **Visual vivo** (ícones cheios, formas redondas, abertura e animações), bolinhas em círculo, seletor de tipo na folha, busca com lista completa, 5 categorias favoritas | Feito; ver se as pessoas gostam do visual e se o Movimento Parado basta para quem prefere calma | Feito |
+| **Próximo (desenho decidido, D50)** | **Investimentos**: caixinha presa a uma conta e rendendo (taxa anual, cálculo por dia útil, ajuste manual); **nova aba Investimentos** (poupança, CDB, Tesouro, fundos); pergunta dos Primeiros passos trocada por "Você tem dinheiro guardado ou investido?" | Hoje caixinha não rende e poupança é uma conta comum. Falta resolver o espaço na barra de baixo (já tem 7) | Alta |
 | ✅ 1.11.0 | **Gráficos e Relatórios de consultor** (9 indicadores), paleta preto/dourado/branco, acerto de contas no Planejar | Feito; testar se os textos fazem sentido para as pessoas | Feito |
 | ✅ 1.10.0 | **Anotar em dois toques**: o + gera 4 bolinhas; folha curta (Dinheiro + 3 favoritas, 5 categorias, busca); conta Dinheiro com cédulas e sugestão de reais inteiros | Feito; testar se as pessoas percebem as bolinhas e usam as favoritas | Feito |
 | Média | **Tour curto e dicas na primeira visita** de cada área (caixinhas, bens, pessoas) | Muitos conceitos para iniciantes | Médio |

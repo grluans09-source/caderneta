@@ -24,7 +24,7 @@ d.documentElement.classList.add("calmo");
 const base={pl:T.totais().pl,banco:T.saldoConta(S().contas[1]),cartao:T.saldoConta(S().contas[2])};
 
 // ---- bem comprado no cartão (tem anotações) e depois com ajuste de valor ----
-abreFolha();click('[data-a="fTipo"][data-t="bem"]');
+abreFolha("bem");
 click('[data-a="fBemNovo"]');digita("#bNome","TV");click('[data-a="bSalvar"]');
 digita("#fValor","200000");click('[data-a="fConta"][data-id="c3"]');click('[data-a="fSalvar"]');
 const tv=S().contas.find(c=>c.nome==="TV");

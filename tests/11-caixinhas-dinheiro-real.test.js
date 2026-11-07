@@ -58,7 +58,7 @@ eq("gasto no cartão não reduz o livre (o dinheiro continua lá)",T.livreAgora(
 eq("mas reduz o é meu",T.totais().pl,pl0-30000);
 
 // tirar dinheiro das contas além do livre deixa o livre negativo e avisa
-abreFolha();click('[data-a="fTipo"][data-t="transferencia"]');click('[data-a="fConta"][data-id="c2"]');digita('.bcol[data-l="D"]',"João");click('[data-a="fDestino"][data-id="p1"]');digita("#fValor","50000");click('[data-a="fSalvar"]');
+abreFolha("transferencia");click('[data-a="fConta"][data-id="c2"]');digita('.bcol[data-l="D"]',"João");click('[data-a="fDestino"][data-id="p1"]');digita("#fValor","50000");click('[data-a="fSalvar"]');
 eq("emprestar tirou 500 da conta",T.dinheiroEmConta(),50000);
 eq("livre ficou negativo (separou mais do que tem)",T.livreAgora(),-50000);
 nav("caixinhas");

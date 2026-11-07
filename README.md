@@ -4,7 +4,7 @@
 App de celular (instalável, funciona sem internet), em português, pensado para qualquer pessoa: do idoso ao jovem e ao adulto na correria.
 
 - **App no ar:** https://grluans09-source.github.io/caderneta/
-- **Versão atual:** 1.11.0-beta.1 (beta para testadores) (veja o [CHANGELOG](CHANGELOG.md))
+- **Versão atual:** 1.12.0-beta.1 (beta para testadores) (veja o [CHANGELOG](CHANGELOG.md))
 - **Seus dados ficam só no celular de cada pessoa.** Não existe servidor, conta nem banco de dados.
 
 > Em uma frase: a pessoa anota o que gasta e recebe, e o app mostra **quanto é dela de verdade**, para onde o dinheiro está indo e o que vem pela frente. A partida dobrada fica escondida no "motor"; a tela fala como a gente fala.
@@ -14,7 +14,7 @@ App de celular (instalável, funciona sem internet), em português, pensado para
 | Parte | Para que serve |
 |---|---|
 | **Início** | Balança que mostra "o que eu tenho = o que eu devo + o que é meu", resumo do mês, uma linha "Falta pagar" (leva ao Planejar), avisos urgentes, caixinhas e metas (se existirem) e as 3 últimas anotações |
-| **Anotar** | O botão **+** do meio **gera 4 bolinhas com animação** (Gastei, Recebi, Transferi entre contas, Comprei um bem): um toque gera, outro escolhe. A folha tem listas curtas (a conta Dinheiro + 3 favoritas, 5 categorias) com busca. A conta **Dinheiro** é a carteira (não se apaga) e conta cédulas |
+| **Anotar** | O botão **+** do meio **gera 4 bolinhas em círculo, com animação** (Gastei, Recebi, Transferi entre contas, Comprei um bem): um toque gera, outro escolhe. Na folha, um botão redondo fixo embaixo troca o tipo (o atual fica apagado). As listas são curtas (Dinheiro + 3 contas favoritas, 5 categorias favoritas); tocar na busca abre a lista com tudo. A conta **Dinheiro** é a carteira (não se apaga) e conta cédulas |
 | **Dinheiro** | Quatro abas: Contas (com o guardado e o "para usar"), Dívidas (cartões e empréstimos), Bens e Pessoas (emprestei / devo) |
 | **Planejar** | Ferramentas no topo (Metas do mês, Caixinhas, Contas fixas, Simulador), **Acerto de contas do mês** (abre com todas as dívidas e o botão Pagar de cada uma) e a agenda do que vence |
 | **Gráficos** | 9 indicadores de finanças pessoais em imagem (patrimônio, folga de caixa, reserva de emergência, taxa de poupança, peso das dívidas, renda já reservada, para onde vai o dinheiro, composição do patrimônio, custo dos juros), cada um com selo Saudável/Atenção/Alerta |
@@ -41,7 +41,7 @@ caderneta/
 │   ├── index.html    O app inteiro: HTML + CSS + JavaScript, sem dependências
 │   ├── sw.js         Faz o app abrir sem internet (cache)
 │   ├── manifest.webmanifest, icon-*.png, icon.svg   Instalação na tela inicial
-├── tests/          Testes automáticos: 590 verificações que simulam uma pessoa usando o app
+├── tests/          Testes automáticos: 606 verificações que simulam uma pessoa usando o app
 ├── tools/          Ferramentas: servidor local e gerador de ícones
 ├── docs/           Documentação (leia a partir de docs/README.md)
 ├── .github/workflows/publicar.yml   Testa e publica sozinho a cada envio para o GitHub

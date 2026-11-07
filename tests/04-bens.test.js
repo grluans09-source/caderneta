@@ -57,7 +57,7 @@ click('[data-a="fFechar"]');
 
 // ---- comprei um bem no cartão em 4x (TV) ----
 const plA=T.totais().pl, saiA=T.resumoMes(hojeYM).sai;
-abreFolha();click('[data-a="fTipo"][data-t="bem"]');
+abreFolha("bem");
 eq("coluna da direita é 'Qual bem?'",/Qual bem\?/.test($(".th").textContent),true);
 click('[data-a="fBemNovo"]');digita("#bNome","TV");click('[data-a="bVar"][data-s="-1"]');$("#bTaxa").value="30";click('[data-a="bSalvar"]');
 const tv=S().contas.find(c=>c.nome==="TV");

@@ -22,6 +22,8 @@ Aplica as decisões Q1 a Q7 da [auditoria](AUDITORIA-FUNCOES.md), aceitas pelo d
 | **Relatórios** | O que cada indicador quer dizer sobre mim? (um relatório por indicador) |
 | **Mais** | Ver o histórico e ajustar o app |
 
+**Linguagem visual "viva"**: formas **grossas, redondas e cheias** (ícones preenchidos, botões em pílula, cartões arredondados) e **movimento com propósito**: abertura do app com moedas caindo, aba que quica e ganha bolha dourada, blocos que sobem em sequência, gráficos que crescem, bolinhas do + em círculo. Tudo isso some com "Movimento: Parado".
+
 ## 2. Onde mora cada assunto
 
 | Assunto | Casa (única) | Aparece como atalho em |
@@ -68,7 +70,7 @@ Quatro abas curtas: **Contas · Dívidas · Bens · Pessoas**
 
 ### + Anotar: "O que aconteceu"
 > *"Escolha o que aconteceu e preencha: de onde saiu, para onde foi."*
-O tipo vem do **menu de bolinhas** do botão + (2 toques). A folha mostra o tipo no título e **3 bolinhas** no canto para trocar. Duas colunas curtas: **"De onde saiu"** = conta Dinheiro + as **3 favoritas** (ou as 3 mais usadas); **"Para onde foi"** = as **5 categorias mais usadas**. Cada coluna tem uma **busca** que olha todas as contas ou categorias, e "★ Escolher minhas 3 favoritas". No dinheiro vivo, valores com centavos ganham a sugestão de **arredondar para reais inteiros**.
+O tipo vem do **menu de bolinhas** do botão + (2 toques). A folha mostra o tipo no título e, **embaixo no centro, um botão redondo fixo** (com a cor e o símbolo do tipo atual); tocar nele gera as 4 bolinhas de novo, com a do tipo atual **apagada** ("você está aqui") e as outras 3 trocando o tipo sem perder o que foi digitado. Duas colunas curtas: **"De onde saiu"** = conta Dinheiro + as **3 favoritas** (ou as 3 mais usadas); **"Para onde foi"** = as **5 categorias favoritas** (ou as mais usadas). Cada coluna tem uma **busca**: **tocar no campo abre a lista com tudo** (em ordem alfabética, rolando dentro da coluna), digitar filtra todas, e "↑ Mostrar só as favoritas" volta à lista curta. Há "★ Escolher minhas 3 favoritas" (contas) e "★ Escolher minhas 5 favoritas" (categorias). No dinheiro vivo, valores com centavos ganham a sugestão de **arredondar para reais inteiros**.
 
 ### Planejar: "O que vem pela frente"
 > *"O que você precisa pagar e como se organizar."*

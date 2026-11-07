@@ -44,7 +44,7 @@ nav("simulador");digita("#sValor","100000");click('[data-a="sConta"][data-id="c3
 click('[data-a="sTipo"][data-b="1"]');colhe("simulador bem");
 nav("inicio");click('[data-a="como"]');colhe("como ler");click('[data-a="mFechar"]');
 ["saida","entrada","transferencia","bem"].forEach(t=>{abreFolha(t);colhe("anotar "+t);click('[data-a="fFechar"]')});abreFolha();
-click('[data-a="fTipo"][data-t="transferencia"]');click('[data-a="fConta"][data-id="c2"]');click('[data-a="fDestino"][data-id="c3"]');colhe("transferir para dívida");
+click('[data-a="novo"]');click('#fabMenu [data-a="novoT"][data-t="transferencia"]');click('[data-a="fConta"][data-id="c2"]');click('[data-a="fDestino"][data-id="c3"]');colhe("transferir para dívida");
 click('[data-a="fFechar"]');
 nav("contas");
 click('[data-a="gaveta"][data-id=""]');colhe("nova conta");click('[data-a="mFechar"]');

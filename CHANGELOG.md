@@ -3,6 +3,16 @@
 Formato: versão semântica (`MAIOR.MENOR.CORREÇÃO`). Cada versão diz **o que mudou para a pessoa que usa**.
 Antes da 1.0.0 as versões eram numeradas só pelo nome do cache do app (v1 a v16); estão aqui como marcos de desenvolvimento.
 
+## [1.12.0-beta.1]: 7 de novembro de 2026 · visual vivo, bolinhas em círculo, busca com lista completa e categorias favoritas
+- **Busca com lista completa.** Tocar em "Buscar conta" ou "Buscar categoria" **abre a lista com tudo** (em ordem alfabética, rolando dentro da coluna), para quem lembra que a categoria existe mas não lembra o nome. Digitar filtra todas (sem limite) e mostra quantas achou. "↑ Mostrar só as favoritas" volta à lista curta.
+- **5 categorias favoritas.** Como as 3 contas favoritas: "★ Escolher minhas 5 favoritas" (separadas para gastos e para ganhos). Sem escolha, valem as mais usadas.
+- **Bolinhas do + em círculo exato e simétricas**: as 4 ficam em pontos de um mesmo círculo (22,5°, 67,5°, 112,5° e 157,5°) com o centro no botão +, espelhadas à esquerda e à direita; entram girando e quicando, uma depois da outra.
+- **Seletor de tipo dentro da folha de anotar.** Saíram as 3 bolinhas escondidas no topo. Agora há um **botão redondo fixo embaixo, no centro**, com a cor e o símbolo do tipo atual. Tocar nele gera as 4 bolinhas com a mesma animação; a do **tipo atual fica apagada** ("você está aqui") e as outras 3 trocam o tipo **sem perder o que já foi digitado**.
+- **Visual vivo.** Formas mais grossas, redondas e cheias no lugar das linhas finas: ícones da barra de baixo e das ferramentas viraram desenhos **cheios e arredondados**; botões e opções em formato de pílula com sombra, cartões mais arredondados, títulos com uma barrinha dourada grossa, curva do patrimônio com traço mais grosso e pontilhado em bolinhas; some a linha fina da margem.
+- **Movimento (só com Movimento: Vivo):** **abertura do app** com moedas douradas caindo e o nome aparecendo; **troca de aba** com o ícone quicando, bolha dourada sob a aba aberta e a tela entrando com os blocos subindo em sequência; **gráficos** que crescem (barras, réguas e composição); botão + que "respira" com um anel dourado; selo de alerta que pulsa; botões que afundam ao tocar.
+- Com letra Enorme a barra de baixo foi ajustada para não passar da largura.
+- Testes: 606 verificações em 20 arquivos.
+
 ## [1.11.0-beta.1]: 7 de novembro de 2026 · Gráficos, Relatórios de consultor, paleta preto/dourado/branco e acerto de contas
 - **Nova aba Gráficos** com **9 indicadores** de finanças pessoais, cada um com selo (Saudável, Atenção, Alerta), valor, gráfico e leitura em uma frase: O que é seu de verdade (patrimônio), Folga para os próximos 30 dias, Reserva de emergência (meses), Taxa de poupança, Peso das dívidas, Quanto da renda já tem dono, Para onde vai o dinheiro, De que é feito o que você tem e Custo dos juros e multas.
 - **Relatórios agora são de consultor.** Um relatório por indicador, com 5 partes: O que é · Como você está (com os números da pessoa) · Para comparar (faixas de referência) · O que isso quer dizer · Por onde começar. A tela abre com um **panorama** e lista primeiro o que está em alerta. Dá para compartilhar o relatório como texto. Texto automático e educativo; não substitui um profissional.
