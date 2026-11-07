@@ -86,7 +86,7 @@ eq("desvalorização reduz o é meu",T.totais().pl,plB-20000);
 eq("desvalorização não é 'Saiu' do mês",T.resumoMes(hojeYM).sai,saiA);
 eq("mas aparece como mudança de valor dos bens",T.resumoMes(hojeYM).aj,-20000);
 eq("partidas do ajuste: D desvalorização / C bem",T.partidas(aj).map(p=>p.lado+":"+p.id),["D:__desvaloriza","C:"+tv.id]);
-click('nav [data-v="mais"]');click('[data-a="ir"][data-v="relatorios"]');eq("relatório avisa que o valor dos bens mudou",/Valor dos bens/.test($("#tela").textContent),true);
+click('nav [data-v="relatorios"]');click('[data-a="relInd"][data-id="patrimonio"]');eq("o relatório do patrimônio avisa que o valor dos bens mudou",/valor dos seus bens mudou/.test($("#tela").textContent),true);
 tudoFecha("após ajuste");
 
 // ---- vender a TV por menos (perda) ----

@@ -1,6 +1,6 @@
 # Arquitetura
 
-Como o app funciona por dentro. Estado descrito: **versão 1.10.0-beta.1** (a base de dados e o motor vêm da 1.0.0; as telas foram reorganizadas conforme `MAPA-DO-APP.md`).
+Como o app funciona por dentro. Estado descrito: **versão 1.11.0-beta.1** (a base de dados e o motor vêm da 1.0.0; as telas foram reorganizadas conforme `MAPA-DO-APP.md`).
 
 ## 1. Visão geral
 
@@ -16,7 +16,7 @@ app/
   sw.js                service worker (VERSAO = "caderneta-<versão>")
   manifest.webmanifest nome, cores, ícones
   icon.svg, icon-180/192/512.png, icon-maskable-512.png
-tests/                 preparar.js + rodar.js + 19 arquivos *.test.js (jsdom)
+tests/                 preparar.js + rodar.js + 20 arquivos *.test.js (jsdom)
 tools/                 servidor-local.js, gerar-icones.js
 ```
 
@@ -153,7 +153,7 @@ Ativo cresce a débito; passivo cresce a crédito. **Patrimônio líquido (PL) =
 
 ## 6. Visual
 
-- **Tokens** em `:root` (marfim, azul-noite de capa, ouro/latão, azul safira = entrou e é "o que eu tenho", bordô = saiu e é dívida, ametista = guardado, cobre = bens; **o dourado é só para "selecionado"**) com **tema escuro "lamparina"** (`prefers-color-scheme` + `data-tema`).
+- **Tokens** em `:root` (preto, dourado e branco; azul safira = entrou e é "o que eu tenho", bordô = saiu e é dívida, ametista = guardado, cobre = bens; **dourado = clicável, preto = selecionado**; ver "Cores" abaixo) com **tema escuro** (`prefers-color-scheme` + `data-tema`).
 - **Letra**: `html[data-tam="g|gg"]` (grande/enorme); com "Enorme" a conta em T vira lista de uma coluna e o fio some.
 - **Movimento**: classe `calmo` no `<html>` (config "Parado" **ou** `prefers-reduced-motion`) desliga tudo. Animar só `transform`/`opacity`.
 - Gráficos, balança, cofres e potes são **SVG desenhado à mão** (sem biblioteca). Fontes: só as do sistema (Georgia para números/títulos).
@@ -167,7 +167,7 @@ Ativo cresce a débito; passivo cresce a crédito. **Patrimônio líquido (PL) =
 
 - `npm test` → `tests/rodar.js`: **prepara uma cópia** do app em `tests/.tmp/app-teste.html` (com um gancho `window.__T` que expõe funções internas listadas em `tests/preparar.js`), confere a sintaxe do JS e roda cada `tests/*.test.js` em **jsdom**, simulando a pessoa: cliques, digitação, navegação.
 - Os testes ligam a classe `calmo` (sem esperas de animação). Animação, layout e toque **só se conferem no navegador/celular**.
-- Cobertura (548 verificações, 19 arquivos; inclui planejar, anotar em dois toques, conta Dinheiro e mapa do app): fluxo básico, dívida por vencimento, pessoas/fixas/caixinhas/simulador, bens, juros, bem financiado, apagar, vocabulário (varre todas as telas atrás de jargão), "o que pagar no mês", caixinhas com dinheiro real, guardado por conta, cofres/setas, filtros de anotações, **segurança contra textos maliciosos (XSS)**. Os testes também conferem **invariantes** (partidas dobradas, ativo − passivo = PL, dinheiro = livre + guardado).
+- Cobertura (590 verificações, 20 arquivos; inclui planejar com acerto de contas, anotar em dois toques, conta Dinheiro, gráficos e relatórios e mapa do app): fluxo básico, dívida por vencimento, pessoas/fixas/caixinhas/simulador, bens, juros, bem financiado, apagar, vocabulário (varre todas as telas atrás de jargão), "o que pagar no mês", caixinhas com dinheiro real, guardado por conta, cofres/setas, filtros de anotações, **segurança contra textos maliciosos (XSS)**. Os testes também conferem **invariantes** (partidas dobradas, ativo − passivo = PL, dinheiro = livre + guardado).
 - **Escrever um teste novo**: copie um arquivo parecido, mude o `seed` (dados iniciais no `localStorage`) e os passos; use `eq(nome, obtido, esperado)`; termine com `console.log(ok?"TUDO OK":"HÁ FALHAS")`. O corredor reconhece "OK", "FAIL" e "TUDO OK".
 
 ## 9. Publicação
@@ -179,7 +179,9 @@ GitHub Actions (`.github/workflows/publicar.yml`): a cada envio para `main`, rod
 - **Anotar em dois toques**: o `.fab` (`novo`) alterna `fabMenu()`, que mostra `#fabMenu` com 4 bolinhas `.fb` (ação `novoT` abre `novaFolha({tipo})`). As bolinhas saem em leque por `transition` de `transform` com atraso (`--d`); `.calmo` desliga a animação. Na folha, `desenharFolha` mostra o título do tipo e 3 bolinhas `.tb` (ação `fTipo`); as colunas são montadas por `pintarColuna()` com `listaColuna()` (3 contas via `contasRapidas()` e favoritas em `S.config.favoritas`; 5 categorias via `catsRapidas()`; busca em `F.qE`/`F.qD`).
 - **Conta Dinheiro**: conta com `carteira:true` (uma só; `marcarCarteira()` marca uma conta chamada Dinheiro/Carteira em dados antigos e `finalizarOnb` cria a conta nova). Não se apaga (`gApagar` barra). `modalCarteira()` conta cédulas (`CED`), guarda `cedulas` e `contagem` e ajusta `inicial` para o saldo bater. `pintarArred()` sugere reais inteiros ao anotar com a carteira.
 - **Desfazer ao apagar**: `foto()` guarda uma cópia dos dados; `toastDesfazer()` mostra o botão por 8 s; ação `desfazer` restaura.
-- **Cores**: variáveis em `:root` (e nos 2 blocos do tema escuro). Cada cor tem um só significado (D40/D41): `--in` safira = entrou, `--out` bordô = saiu/dívida, `--tr` ardósia = compromisso fixo, `--am` ametista = guardado, `--cobre` = bens, `--latao`/`--sel` ouro = **selecionado**, `--capa` azul-noite = capa e botões. O verde **não** é usado. Cores de moedas e cofre estão nos desenhos da balança (`balanca()`).
+- **Cores (paleta preto, dourado e branco, D44)**: variáveis em `:root` e nos 2 blocos do tema escuro. `--capa` preto, `--latao`/`--ouro` dourado (**clicável**: `.btn` em degradê dourado, contornos e links), `--selbg`/`--selink` **selecionado** (preto com texto dourado; creme no tema escuro), `--in` safira = entrou, `--out` bordô = saiu/dívida, `--tr` ardósia = transferência/compromisso fixo, `--am` ametista = guardado, `--cobre` = bens. O verde **não** é usado.
+- **Indicadores**: `indicadores()` calcula os 9 (cada um com `id`, `valor`, `st` = ok/atencao/critico/info/sem, `leitura`, `d` com os números e `graf` com o desenho em HTML/SVG); `relatorioTexto(i)` gera as 5 partes do relatório; `telaGraficos`, `telaRel` (panorama + lista) e `telaRelatorio` (detalhe, `REL_ID`, ações `relInd` e `relShare`). Faixas de referência: dívidas ≤30% / ≤50%; reserva ≥6 / ≥3 meses; poupança ≥20% / ≥10%; renda reservada ≤30% / ≤50%; folga ≥2x / ≥1x; dinheiro no patrimônio ≥30% / ≥10%.
+- **Planejar**: `cartaoPagar()` virou o acerto de contas (prévia de 3 e, aberto por `acToggle`/`AC_ABERTO`, todas as contas com **Pagar** (`pagar`) ou **Paguei** (`fxPagar`)); `pagarNoMes()` agora devolve `cid`/`fid`/`ref` de cada item.
 - **Removido**: os jeitos Razão e Cofre (D39) não existem mais; não há `config.jeito`.
-- **Testes**: 19 arquivos, 548 verificações; o teste 03 conta 5 botões de navegação e 4 bolinhas no `#fabMenu`; os testes antigos abrem a folha por `abreFolha(tipo)` (toque no + e na bolinha).
+- **Testes**: 20 arquivos, 590 verificações; o teste 03 conta 5 botões de navegação e 4 bolinhas no `#fabMenu`; os testes antigos abrem a folha por `abreFolha(tipo)` (toque no + e na bolinha).
 - **Versão**: 3 lugares sobem juntos (`package.json`, `VERSAO_APP`, `sw.js`).

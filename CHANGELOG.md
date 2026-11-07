@@ -3,6 +3,14 @@
 Formato: versão semântica (`MAIOR.MENOR.CORREÇÃO`). Cada versão diz **o que mudou para a pessoa que usa**.
 Antes da 1.0.0 as versões eram numeradas só pelo nome do cache do app (v1 a v16); estão aqui como marcos de desenvolvimento.
 
+## [1.11.0-beta.1]: 7 de novembro de 2026 · Gráficos, Relatórios de consultor, paleta preto/dourado/branco e acerto de contas
+- **Nova aba Gráficos** com **9 indicadores** de finanças pessoais, cada um com selo (Saudável, Atenção, Alerta), valor, gráfico e leitura em uma frase: O que é seu de verdade (patrimônio), Folga para os próximos 30 dias, Reserva de emergência (meses), Taxa de poupança, Peso das dívidas, Quanto da renda já tem dono, Para onde vai o dinheiro, De que é feito o que você tem e Custo dos juros e multas.
+- **Relatórios agora são de consultor.** Um relatório por indicador, com 5 partes: O que é · Como você está (com os números da pessoa) · Para comparar (faixas de referência) · O que isso quer dizer · Por onde começar. A tela abre com um **panorama** e lista primeiro o que está em alerta. Dá para compartilhar o relatório como texto. Texto automático e educativo; não substitui um profissional.
+- **Barra de baixo** com 7 espaços: Início, Dinheiro, Planejar, **+**, **Gráficos**, **Relatórios**, Mais. Com letra grande, só a aba aberta mostra o nome (os outros ficam só com o ícone e nome para leitor de tela).
+- **Paleta preto, dourado e branco.** O que é **clicável** é dourado (botões, o +) ou tem **contorno dourado** e seta ›; o que está **selecionado** fica **preto** com texto dourado (no tema escuro, creme). Capa e barra pretas, fundo branco quente, cartões brancos. Cores com significado continuam: bordô = saiu/dívida, azul = entrou, ardósia = transferência, ametista = guardado, cobre = bens. Ícone e cor da barra do celular atualizados.
+- **Planejar harmonizado.** Três partes com título: **Ferramentas** (4 botões com ícone e seta), **Acerto de contas do mês** (cartão preto com ouro) e **Agenda**. No cartão, **"Abrir o acerto de contas"** mostra **todas as dívidas e contas fixas do mês**, cada uma com **Pagar** (ou **Paguei**); o que já foi pago aparece embaixo. A agenda segue como visão rápida.
+- Testes: 590 verificações em 20 arquivos.
+
 ## [1.10.0-beta.1]: 7 de novembro de 2026 · anotar em dois toques, listas curtas e conta Dinheiro com cédulas
 - **Anotar em dois toques.** O botão **+** agora **gera 4 bolinhas com animação** (saem do botão em leque): **Gastei** (bordô), **Recebi** (azul), **Transferi entre contas** (ardósia) e **Comprei um bem** (cobre). O 1º toque gera as bolinhas, o 2º escolhe o tipo e abre a folha já nesse tipo. Tocar fora, no × ou em Esc fecha. (Substitui as 2 bolinhas fixas da 1.9.0.)
 - **Folha de anotar mais curta.** Saíram os 4 botões de tipo do topo. No lugar, **3 bolinhas** (os outros 3 tipos) no canto do cabeçalho, para trocar de tipo; o título mostra o tipo atual.

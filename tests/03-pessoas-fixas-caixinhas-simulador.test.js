@@ -37,10 +37,10 @@ function invariante(n){
 }
 
 // ---- menu e R$ ----
-eq("5 botões de navegação no menu, e o + abre as 4 bolinhas de tipo",[d.querySelectorAll("nav button").length,d.querySelectorAll("#fabMenu .fb").length],[5,4]);
-eq("menu: início, dinheiro, planejar, mais",[...d.querySelectorAll("nav button[data-v]")].map(b=>b.dataset.v),["inicio","contas","planejar","mais"]);
+eq("7 botões no menu (6 abas e o +), e o + abre as 4 bolinhas de tipo",[d.querySelectorAll("nav button").length,d.querySelectorAll("#fabMenu .fb").length],[7,4]);
+eq("menu: início, dinheiro, planejar, gráficos, relatórios, mais",[...d.querySelectorAll("nav button[data-v]")].map(b=>b.dataset.v),["inicio","contas","planejar","graficos","relatorios","mais"]);
 nav("caixinhas");eq("caixinhas marca Planejar",$("nav [aria-current]").dataset.v,"planejar");
-nav("relatorios");eq("relatórios marca Mais",$("nav [aria-current]").dataset.v,"mais");
+nav("relatorios");eq("relatórios tem a sua própria aba",$("nav [aria-current]").dataset.v,"relatorios");
 nav("inicio");
 abreFolha();digita("#fValor","4500");eq("campo de valor mostra R$",$("#fValor").value,"R$ 45,00");
 eq("Salvar não é fixo (sem .acoes sticky)",w.getComputedStyle($(".acoes")).position!=="sticky"&&w.getComputedStyle($(".acoes")).position!=="fixed",true);
@@ -198,8 +198,8 @@ nav("simulador");digita("#sValor","50000");click('[data-a="sConta"][data-id="c2"
 eq("à vista mostra saldo da gaveta",/Em Banco tem/.test($("#sRes").textContent),true);
 eq("à vista fala das caixinhas",/caixinhas/.test($("#sRes").textContent),true);
 
-// ---- gráfico com projeção ----
-nav("relatorios");
+// ---- gráfico com projeção (agora na aba Gráficos) ----
+click('nav [data-v="graficos"]');
 eq("gráfico fala de previsão",/previsão/.test($("#tela").textContent),true);
 eq("gráfico tem 'hoje' e 'em 6 meses'",/hoje:/.test($("#tela").innerHTML)&&/em 6 meses:/.test($("#tela").innerHTML),true);
 

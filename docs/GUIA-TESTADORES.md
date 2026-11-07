@@ -39,7 +39,7 @@ Peça que a pessoa faça cada tarefa **sozinha, falando em voz alta o que pensa*
 |---|---|---|
 | 1 | Anotar um gasto do dia (ex.: mercado, R$ 45), **tocando no + e depois na bolinha vermelha "Gastei"** | Perceber que o + gera bolinhas e que elas são botões; achar a conta e a categoria nas listas curtas (ou na busca) |
 | 2 | Anotar uma compra parcelada no cartão | Escolher a conta do cartão e as parcelas |
-| 3 | Ver **quanto falta pagar neste mês** e no mês que vem | Achar o **Planejar** e usar as setas de mês do cartão "Falta pagar" |
+| 3 | Ver **quanto falta pagar neste mês** e **pagar uma conta pelo "Abrir o acerto de contas"** no Planejar | Achar o **Planejar** e usar as setas de mês do cartão "Falta pagar" |
 | 4 | **Guardar** um dinheiro numa caixinha e depois **usar** | Entender caixinha × meta, escolher a conta |
 | 5 | Cadastrar um bem (ex.: o carro) | Saber que bem não é gasto; informar o que ainda falta pagar |
 | 6 | Achar uma anotação antiga (pelo nome ou valor) | Achar "Anotações" no menu Mais |
@@ -47,6 +47,8 @@ Peça que a pessoa faça cada tarefa **sozinha, falando em voz alta o que pensa*
 Depois, pergunte: **"Com suas palavras, o que é essa balança da tela inicial?"** (mostra se a explicação funcionou).
 
 Depois, peça que ela **pague algo em dinheiro vivo com centavos** (ex.: R$ 3,25) e veja se entende a sugestão de **arredondar para reais inteiros**; e que **conte as cédulas** em Dinheiro > conta Dinheiro.
+
+Depois, peça que ela **abra a aba Gráficos**, escolha um indicador, **leia o relatório** e diga, com as palavras dela, **o que entendeu** e **se a explicação faz sentido** para a vida dela.
 
 ## 4. Ficha de observação (uma por pessoa)
 

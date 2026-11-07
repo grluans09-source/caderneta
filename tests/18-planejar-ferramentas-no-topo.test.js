@@ -46,5 +46,21 @@ eq("a agenda tem legenda com Dívida, Conta fixa e A receber",["k-divida","k-fix
 eq("cada linha da agenda tem a cor do tipo",d.querySelectorAll("#tela .ag.k-divida").length>=1,true);
 eq("a conta que vence amanhã ou em até 3 dias fica com a data em destaque claro",!!$("#tela .ag.u-breve"),true);
 eq("o texto explica a data pintada e a data clara",/Data pintada/.test($("#tela").textContent)&&/Data clara/.test($("#tela").textContent),true);
+// ---- acerto de contas: o card do mês abre e mostra todas as dívidas, com botão de pagar ----
+click('nav [data-v="planejar"]');
+eq("o card começa fechado: 3 contas de prévia e o botão de abrir o acerto",[d.querySelectorAll("#cardPagar .it").length,!$("#acLista"),/Abrir o acerto de contas \(9\)/.test($("#cardPagar").textContent),$("#cardPagar [data-a=\"acToggle\"]").getAttribute("aria-expanded")],[3,true,true,"false"]);
+click('#cardPagar [data-a="acToggle"]');
+eq("abrir mostra as 9 contas, cada uma com o botão Pagar",[d.querySelectorAll("#acLista .ac-row").length,d.querySelectorAll('#acLista [data-a="pagar"]').length,$("#cardPagar [data-a=\"acToggle\"]").getAttribute("aria-expanded")],[9,9,"true"]);
+eq("o botão vira Fechar o acerto de contas",/Fechar o acerto de contas/.test($("#cardPagar").textContent),true);
+click('#acLista [data-a="pagar"]');
+eq("Pagar abre a folha como transferência já preenchida com o valor da conta",[$("#folha").classList.contains("on"),$("#folhaCorpo .capa h1").textContent,$("#fValor").value],[true,"Transferi entre contas","R$ 10,00"]);
+click('[data-a="fFechar"]');
+eq("depois de fechar a folha o acerto continua aberto para pagar a próxima",!!$("#acLista"),true);
+click('#cardPagar [data-a="acToggle"]');
+eq("fechar o acerto volta à prévia",[!$("#acLista"),d.querySelectorAll("#cardPagar .it").length],[true,3]);
+click('#cardPagar [data-a="acToggle"]');click('nav [data-v="inicio"]');click('nav [data-v="planejar"]');
+eq("ao voltar ao Planejar o acerto volta fechado",!$("#acLista"),true);
+eq("o Planejar tem as 3 partes com título: Ferramentas, Acerto de contas e Agenda",[...d.querySelectorAll("#tela h2")].map(h=>h.textContent),["Ferramentas","Acerto de contas do mês","Agenda dos próximos dias"]);
+eq("cada ferramenta tem ícone (para se parecer com um botão) e seta",[...d.querySelectorAll("#tela .ferr")].every(b=>b.querySelector(".fi svg")),true);
 eq("erros de script",errs,[]);
 console.log(ok?"TUDO OK":"HÁ FALHAS");process.exit(ok?0:1);

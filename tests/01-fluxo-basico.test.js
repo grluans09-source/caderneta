@@ -126,7 +126,6 @@ for(const v of ["inicio","contas","planejar","caixinhas","fixas","simulador","ma
 click('[data-a="cfg"][data-g="contador"]');
 irV('relatorios');
 eq("balancete fecha",/Débito e crédito batem/.test($("#tela").textContent),true);
-click('[data-a="mes"][data-n="-1"]');click('[data-a="mes"][data-n="1"]');
 irV('ajustes');
 click('[data-a="cfg"][data-g="tamanho"][data-val="gg"]');eq("tamanho",d.documentElement.dataset.tam,"gg");
 click('[data-a="cfg"][data-g="tema"][data-val="escuro"]');eq("tema",d.documentElement.dataset.tema,"escuro");

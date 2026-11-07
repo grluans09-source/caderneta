@@ -11,7 +11,7 @@ function hex(h){return[1,3,5].map(i=>parseInt(h.slice(i,i+2),16))}
 // desenha em coordenadas 0..512 com 3x3 supersampling
 function render(w,maskable){
   const px=Buffer.alloc(w*w*4);
-  const INK=hex("#111B34"),PAP=hex("#F5F0E3"),OURO=hex("#C79A2B"),VERDE=hex("#C79A2B"),BR=hex("#111B34");
+  const INK=hex("#0A0A0A"),PAP=hex("#FFFFFF"),OURO=hex("#C9A227"),VERDE=hex("#C9A227"),BR=hex("#0A0A0A");
   const s=maskable?0.78:1, off=(512-512*s)/2;
   function rr(x,y,x0,y0,x1,y1,r){if(x<x0||x>x1||y<y0||y>y1)return false;const cx=Math.min(Math.max(x,x0+r),x1-r),cy=Math.min(Math.max(y,y0+r),y1-r);return(x-cx)**2+(y-cy)**2<=r*r}
   function amostra(X,Y){ // retorna [r,g,b,a]

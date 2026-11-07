@@ -4,9 +4,9 @@
 > aqui estão **as regras e o jeito de trabalhar**. O resto está em `docs/` (veja a tabela no fim).
 
 ## Em que pé estamos
-- **Versão 1.10.0-beta.1** (7 nov 2026): app reorganizado (`docs/MAPA-DO-APP.md`), só com a interface Balança (os jeitos Razão e Cofre foram apagados, D39), paleta azul-noite com ouro, anotar em dois toques (o + gera 4 bolinhas, D43) e conta Dinheiro com cédulas. **Ainda sem teste com pessoas reais em celular.**
+- **Versão 1.11.0-beta.1** (7 nov 2026): app reorganizado (`docs/MAPA-DO-APP.md`), só com a interface Balança (D39), paleta **preto, dourado e branco** (D44), anotar em dois toques (D43), conta Dinheiro com cédulas, **abas Gráficos e Relatórios com 9 indicadores** (D45) e acerto de contas no Planejar (D46). **Ainda sem teste com pessoas reais em celular.**
 - App no ar em https://grluans09-source.github.io/caderneta/ (GitHub Pages, publicado por GitHub Actions a partir da pasta `app/`).
-- 1 arquivo de app (`app/index.html`, ~2.400 linhas), 19 arquivos de teste (548 verificações) que rodam com `npm test`.
+- 1 arquivo de app (`app/index.html`, ~2.400 linhas), 20 arquivos de teste (590 verificações) que rodam com `npm test`.
 - Próximos passos em `docs/ROTEIRO.md`. Estado, riscos e dívidas em `docs/AVALIACAO.md`.
 
 ## Quem é o dono e como falar com ele
@@ -20,7 +20,7 @@
 1. App de finanças **pessoa física**, mobile-first, instalável (PWA), **sem servidor e sem banco de dados**. Dados em `localStorage`, por aparelho.
 2. Tem que ser usável por um **idoso**, um **jovem** e um **adulto na correria**: simples, intuitivo, letras grandes, poucas decisões por tela.
 3. A **contabilidade (partida dobrada) trabalha por trás**; a pessoa vê palavras comuns. O "Modo contador" (opcional) mostra os termos técnicos.
-4. Visual **"livro-razão vivo"**: papel marfim, tinta azul-noite, ouro e balança de latão, carimbo, animações com propósito. **Uma cor, um significado** (sem verde; ver `docs/MAPA-DO-APP.md`). O "exótico" está no visual, nunca na navegação.
+4. Visual **"livro-razão vivo"**: preto, dourado e branco (luxo com ar contábil), balança de latão, carimbo, animações com propósito. **Dourado = clicável, preto = selecionado; uma cor, um significado** (sem verde; ver `docs/MAPA-DO-APP.md`). O "exótico" está no visual, nunca na navegação.
 5. Tudo em **um arquivo HTML autocontido** (sem framework, sem build, sem fontes ou scripts externos).
 6. Distribuído por **link**; a pessoa instala na tela inicial. Backup manual pelo botão "Guardar uma cópia".
 

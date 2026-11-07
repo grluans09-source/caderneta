@@ -9,7 +9,7 @@ Aplica as decisões Q1 a Q7 da [auditoria](AUDITORIA-FUNCOES.md), aceitas pelo d
 4. **Cada botão diz o que faz** (verbo + coisa: "Guardar na caixinha", "Pagar a fatura").
 5. **No máximo 5 blocos por tela.** O resto fica atrás de "Ver mais".
 
-## 1. A barra de baixo (sempre igual)
+## 1. A barra de baixo (sempre igual: Início · Dinheiro · Planejar · + · Gráficos · Relatórios · Mais)
 
 | Botão | Pergunta que responde |
 |---|---|
@@ -18,7 +18,9 @@ Aplica as decisões Q1 a Q7 da [auditoria](AUDITORIA-FUNCOES.md), aceitas pelo d
 | **+ Anotar** (botão do meio) | O que aconteceu agora? |
 | **Menu de bolinhas**: o toque no + gera 4 bolinhas (Gastei bordô, Recebi azul, Transferi ardósia, Comprei um bem cobre) | Anotar em dois toques: o 2º toque abre a folha já no tipo escolhido. Vale em todas as telas |
 | **Planejar** | O que vem pela frente? |
-| **Mais** | Ver o histórico, os relatórios e ajustar o app |
+| **Gráficos** | Como estão minhas finanças, em imagem? (9 indicadores) |
+| **Relatórios** | O que cada indicador quer dizer sobre mim? (um relatório por indicador) |
+| **Mais** | Ver o histórico e ajustar o app |
 
 ## 2. Onde mora cada assunto
 
@@ -37,7 +39,8 @@ Aplica as decisões Q1 a Q7 da [auditoria](AUDITORIA-FUNCOES.md), aceitas pelo d
 | Bens (carro, casa...) | Dinheiro > Bens | – |
 | Pessoas (emprestei, devo) | Dinheiro > Pessoas | Agenda (cobranças) |
 | **Lista de anotações** (buscar, ordenar) | **Mais > Anotações** | Início (3 últimas + "Ver todas") |
-| Relatórios (para onde foi, de onde veio, evolução) | Mais > Relatórios | – |
+| Indicadores (números e gráficos) | **Gráficos** | Relatórios (cada indicador explicado) |
+| Relatórios (texto de consultor, um por indicador) | **Relatórios** | Gráficos (botão "Ler o relatório"); Mais (atalho) |
 | Cópia dos dados, recuperar, apagar tudo | Mais > Ajustes > Dados | Início (aviso de cópia) |
 | Feedback, "Como ler a balança" | Mais > Ajustes > Ajuda | Início ("Como ler a balança?") |
 
@@ -69,9 +72,11 @@ O tipo vem do **menu de bolinhas** do botão + (2 toques). A folha mostra o tipo
 
 ### Planejar: "O que vem pela frente"
 > *"O que você precisa pagar e como se organizar."*
-1. **Ferramentas no topo** (4 botões compactos: Metas do mês · Caixinhas · Contas fixas · Simulador), para nunca ficarem escondidas atrás de uma lista longa
-2. **Falta pagar este mês** (cartão com total, até 5 contas, já pago e setas de mês) ← casa oficial
-3. **Agenda dos próximos dias** (mostra 4; "Ver todas" abre o resto)
+1. **Ferramentas** (4 botões com ícone e seta: Metas do mês · Caixinhas · Contas fixas · Simulador), no topo para nunca ficarem escondidas atrás de uma lista longa
+2. **Acerto de contas do mês** (cartão preto com ouro: total que falta, 3 contas de prévia e o botão **Abrir o acerto de contas**, que mostra **todas** as dívidas e contas fixas do mês, cada uma com **Pagar**/**Paguei**, e o já pago embaixo; setas de mês) ← casa oficial
+3. **Agenda dos próximos dias** (visão rápida: mostra 4; "Ver todas" abre o resto)
+
+**Regra geral de cores (paleta preto, dourado e branco):** **dourado = clicável** (botões cheios, o +; botões secundários têm contorno dourado; links em ouro sublinhado; linhas que abrem algo têm seta ›); **preto = selecionado** (fundo preto com texto dourado; no tema escuro, creme); **branco** = fundo e cartões. Só o **preto** marca seleção.
 
 **Mapa de cores do Planejar** (uma cor, um significado; vale para as outras telas também):
 
@@ -82,7 +87,8 @@ O tipo vem do **menu de bolinhas** do botão + (2 toques). A folha mostra o tipo
 | Azul safira | Cobranças "A receber" na agenda | Dinheiro que **entra** |
 | Ametista | Ferramenta Caixinhas | Dinheiro **guardado** |
 | Cobre | Ferramenta Simulador | Compra de **bem** |
-| Ouro | (só quando algo está selecionado) | Item **selecionado** |
+| Ouro | Botões Pagar/Paguei, o + e contornos | **Clicável** |
+| Preto | Cartão do acerto de contas, itens selecionados | Destaque e **selecionado** |
 
 Urgência na data de cada conta: **pintada** = vence hoje ou já passou; **clara** = vence em até 3 dias; sem destaque = mais longe.
 
@@ -98,14 +104,17 @@ Funciona como a caixinha do banco. Cofres animados, "Guardar" e "Tirar", e o din
 ### Planejar > Simulador: "E se eu comprar"
 Como está hoje.
 
+### Gráficos: "Seus números em imagens"
+Nove cartões, um por indicador (selo, valor, gráfico, leitura em uma frase e o botão **Ler o relatório**): O que é seu de verdade · Folga para os próximos 30 dias · Reserva de emergência · Taxa de poupança · Peso das dívidas · Quanto da renda já tem dono · Para onde vai o dinheiro · De que é feito o que você tem · Custo dos juros e multas. Selos: ✓ Saudável (preto), ! Atenção (ouro), ▲ Alerta (bordô).
+
+### Relatórios: "Leitura do seu momento"
+Abre com o **panorama** (quantos indicadores estão saudáveis, em atenção ou em alerta e qual é o mais urgente) e a lista de relatórios, com o que está em alerta primeiro. Cada relatório tem 5 partes (O que é · Como você está · Para comparar · O que isso quer dizer · Por onde começar) e um botão para compartilhar. É texto automático e educativo, sem substituir um profissional. No Modo contador, o balancete aparece no fim.
+
 ### Mais: "Tudo o resto"
-Três entradas: **Anotações · Relatórios · Ajustes**
+Entradas: **Anotações · Relatórios (atalho) · Ajustes**
 
 ### Mais > Anotações: "Tudo o que você anotou"
 Busca, ordem por data, valor ou nome, filtros e 15 por vez. É a única lista completa.
-
-### Mais > Relatórios: "Como foi o mês"
-Setas de mês, **Para onde foi o dinheiro**, **De onde veio**, **Evolução** e, no Modo contador, o balancete. Sem repetir o resumo, o "O que pagar", a lista de contas nem a lista de anotações.
 
 ### Mais > Ajustes: três grupos
 - **Aparência:** letra, cores, movimento, Modo contador
