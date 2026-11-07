@@ -9,12 +9,13 @@ Aplica as decisões Q1 a Q7 da [auditoria](AUDITORIA-FUNCOES.md), aceitas pelo d
 4. **Cada botão diz o que faz** (verbo + coisa: "Guardar na caixinha", "Pagar a fatura").
 5. **No máximo 5 blocos por tela.** O resto fica atrás de "Ver mais".
 
-## 1. A barra de baixo (sempre igual: Início · Dinheiro · Planejar · Gráficos · Relatórios · Mais) e o botão da **pena** (anotar) solto no canto direito, logo acima dela; a pílula "Perguntar" do chat vai no canto esquerdo (passo 5)
+## 1. A barra de baixo (sempre igual: Início · Dinheiro · Investir · Planejar · Gráficos · Relatórios · Mais) e o botão da **pena** (anotar) solto no canto direito, logo acima dela; a pílula "Perguntar" do chat vai no canto esquerdo (passo 5)
 
 | Botão | Pergunta que responde |
 |---|---|
 | **Início** | Como estou hoje? |
 | **Dinheiro** | Onde está meu dinheiro e o que eu devo? |
+| **Investir** | Quanto meu dinheiro está rendendo? |
 | **Anotar** (a **pena dourada** num medalhão, no canto direito de baixo, fora da barra; aberto vira "×") | O que aconteceu agora? |
 | **Menu de bolinhas**: o toque na pena gera 4 bolinhas em quarto de círculo, para a esquerda e para cima (Gastei bordô, Recebi azul, Transferi ardósia, Comprei um bem cobre) | Anotar em dois toques: o 2º toque abre a folha já no tipo escolhido. Vale em todas as telas |
 | **Planejar** | O que vem pela frente? |
@@ -30,7 +31,7 @@ Aplica as decisões Q1 a Q7 da [auditoria](AUDITORIA-FUNCOES.md), aceitas pelo d
 |---|---|---|
 | Valor de verdade (balança: o **Mordomo**) | Início | – |
 | **Travas de coerência** (não deixa / pergunta "era isso?") | Ao salvar uma anotação, um cartão ou ao apagar | Chat: "Por que o app não deixou eu salvar?" |
-| **Chat do Balancete** (51 perguntas prontas) | Pílula **"Perguntar"**, canto esquerdo de baixo, em todas as abas | Cada resposta com "Ver no app" leva à casa do assunto |
+| **Chat do Balancete** (52 perguntas prontas) | Pílula **"Perguntar"**, canto esquerdo de baixo, em todas as abas | Cada resposta com "Ver no app" leva à casa do assunto |
 | Mascotes dos momentos (Moedinha ao receber, Selo "PAGO" ao pagar, Pesinho ao guardar, Pesão quando há conta atrasada) | Aparecem por cima da tela, só nesses momentos | Pesão: só no Início, 1 vez por dia |
 | Custo fixo de vida | Gráficos (indicador) | Relatórios |
 | Resumo do mês (entrou, saiu, sobrou) | Início | – |
@@ -41,9 +42,10 @@ Aplica as decisões Q1 a Q7 da [auditoria](AUDITORIA-FUNCOES.md), aceitas pelo d
 | **Conferir com o banco** | Dinheiro > tocar na conta | Lista de contas ("Conferido em…") |
 | **Mês a mês** (comparar com o mês anterior) | **Gráficos** (primeiro cartão) | Início ("Outubro fechou", nos 10 primeiros dias) |
 | Metas do mês (limite por categoria) | Planejar > Metas | Início (se existirem) |
-| Caixinhas (guardar) | Planejar > Caixinhas | Início (vitrine), Dinheiro (quanto está guardado em cada conta) |
+| Caixinhas (guardar; podem render com taxa) | Planejar > Caixinhas (as que rendem aparecem também em Investir) | Início (vitrine), Dinheiro (quanto está guardado em cada conta) |
 | Simulador "e se eu comprar" | Planejar > Simulador | – |
-| Contas (**Dinheiro**, banco, poupança) | Dinheiro > Contas. A conta **Dinheiro** é a carteira: não se apaga e conta cédulas | – |
+| **Aplicações** (poupança, CDB, Tesouro, fundos) e rendimentos | **Investir** | Dinheiro > Contas (um aviso com o total investido) |
+| Contas (**Dinheiro**, banco) | Dinheiro > Contas. A conta **Dinheiro** é a carteira: não se apaga e conta cédulas | – |
 | Cartões e empréstimos | Dinheiro > Dívidas | Planejar (quando vence) |
 | Bens (carro, casa...) | Dinheiro > Bens | – |
 | Pessoas (emprestei, devo) | Dinheiro > Pessoas | Agenda (cobranças) |

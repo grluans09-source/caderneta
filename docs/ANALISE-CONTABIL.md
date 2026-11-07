@@ -77,6 +77,6 @@ Ordem por **valor para quem usa** e **esforço**. Nenhuma precisa de servidor.
 
 ## 6. Decisão do dono (7 nov 2026)
 
-Aprovada a recomendação: **3, 4, 6 e 7 feitas na versão 1.14.0** (conferir com o banco, contas do ano, mês a mês e custo fixo de vida; decisão D53). A **1** entra com Investimentos (passo 6 do plano), a **2** logo depois, a **5** perto da declaração do Imposto de Renda e a **8** por último. Os pontos frágeis da seção 4 ficam para a auditoria (passo 8).
+Aprovada a recomendação: **3, 4, 6 e 7 feitas na versão 1.14.0** (conferir com o banco, contas do ano, mês a mês e custo fixo de vida; decisão D53). A **1** (rendimento como receita) **foi feita na 1.20.0** com Investimentos (D58), a **2** logo depois, a **5** perto da declaração do Imposto de Renda e a **8** por último. Os pontos frágeis da seção 4 ficam para a auditoria (passo 8).
 
 > Nota de implementação: a categoria "Diferença ao conferir" já nasce marcada por código (`sis:"conf"`), como a seção 4 recomenda. A categoria "Juros e multas" ainda depende do nome.

@@ -5,6 +5,19 @@
 Formato: versão semântica (`MAIOR.MENOR.CORREÇÃO`). Cada versão diz **o que mudou para a pessoa que usa**.
 Antes da 1.0.0 as versões eram numeradas só pelo nome do cache do app (v1 a v16); estão aqui como marcos de desenvolvimento.
 
+## [1.20.0-beta.1]: 7 de novembro de 2026 · Investimentos
+- **Aba nova: Investir**, logo depois de Dinheiro (a barra agora tem 7 abas). Mostra quanto está investido, quanto rendeu no mês e no ano, cada aplicação (poupança, CDB, Tesouro, fundos) e as caixinhas que rendem.
+- **Rendimento automático.** Cada aplicação tem a **taxa ao ano** que aparece no app do banco. O app calcula o rendimento **a cada dia útil**: sem sábado, domingo e **feriados nacionais**, inclusive Carnaval, Sexta-feira Santa e Corpus Christi, calculados sem internet a partir da Páscoa. Usa juros sobre juros, na convenção de 252 dias úteis no ano.
+- **Uma anotação por mês** por aplicação ("Rendimento de novembro"), que cresce a cada dia útil. Entra na categoria **Rendimentos**, receita financeira separada do que você ganha trabalhando.
+- **Conferir com o banco** numa aplicação: se o banco mostrar mais, a diferença vira **rendimento**; se mostrar menos, vira **imposto ou taxa** (IR, IOF). Assim o app sempre bate com o banco.
+- **Aplicar** e **Resgatar**: abrem a folha de transferência entre o banco e a aplicação. Não dá para resgatar mais do que há na aplicação (trava).
+- **A conta Poupança virou aplicação sozinha** (decisão do dono), com um aviso. É só informar a taxa para ela começar a render no app.
+- **Caixinhas podem render**: ao editar a caixinha, informe a taxa ao ano. O rendimento entra na conta onde o dinheiro dela está e fica guardado na caixinha.
+- **Primeiros passos**: a pergunta "Poupança ou reserva" virou **"Você tem dinheiro guardado ou investido?"**, com a taxa ao ano (opcional).
+- O dinheiro investido **não entra no "dinheiro para usar agora"**: o app não sugere pagar contas com ele. Ele continua no "é meu de verdade" e conta como **guardado e investido** na balança e na reserva de emergência.
+- Chat: nova pergunta **"Quanto meus investimentos renderam?"** (agora são 52).
+- Testes: 747 verificações em 28 arquivos (novo: investimentos).
+
 ## [1.19.0-beta.1]: 7 de novembro de 2026 · travas de coerência
 O app agora confere cada anotação antes de salvar (pedido do dono). Quando algo **não pode acontecer na vida real**, ele **não deixa salvar** e explica. Quando é **possível, mas estranho**, ele **pergunta "era isso?"** e deixa confirmar. A explicação vem numa janela com o Mordomo, com "Corrigir" e, quando cabe, "Sim, está certo".
 - **Não deixa salvar:**

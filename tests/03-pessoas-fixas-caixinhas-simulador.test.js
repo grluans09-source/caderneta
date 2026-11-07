@@ -37,8 +37,8 @@ function invariante(n){
 }
 
 // ---- menu e R$ ----
-eq("6 abas na barra de baixo, o + fica solto no canto e abre as 4 bolinhas de tipo",[d.querySelectorAll("nav button").length,!!d.querySelector("body > .fab"),!d.querySelector("nav .fab"),d.querySelectorAll("#fabMenu .fb").length],[6,true,true,4]);
-eq("menu: início, dinheiro, planejar, gráficos, relatórios, mais",[...d.querySelectorAll("nav button[data-v]")].map(b=>b.dataset.v),["inicio","contas","planejar","graficos","relatorios","mais"]);
+eq("7 abas na barra de baixo (com Investir), o botão de anotar fica solto no canto e abre as 4 bolinhas de tipo",[d.querySelectorAll("nav button").length,!!d.querySelector("body > .fab"),!d.querySelector("nav .fab"),d.querySelectorAll("#fabMenu .fb").length],[7,true,true,4]);
+eq("menu: início, dinheiro, investir, planejar, gráficos, relatórios, mais",[...d.querySelectorAll("nav button[data-v]")].map(b=>b.dataset.v),["inicio","contas","investir","planejar","graficos","relatorios","mais"]);
 nav("caixinhas");eq("caixinhas marca Planejar",$("nav [aria-current]").dataset.v,"planejar");
 nav("relatorios");eq("relatórios tem a sua própria aba",$("nav [aria-current]").dataset.v,"relatorios");
 nav("inicio");

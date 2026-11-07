@@ -1,6 +1,6 @@
 {
   "name": "caderneta",
-  "version": "1.19.0-beta.1",
+  "version": "1.20.0-beta.1",
   "description": "Caderneta: finanças pessoais simples e intuitivas, com contabilidade de partida dobrada por trás. App instalável (PWA), sem servidor e sem banco de dados.",
   "private": true,
   "scripts": {

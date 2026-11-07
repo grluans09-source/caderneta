@@ -64,6 +64,8 @@ Peça também que a pessoa **toque em "Perguntar"** e faça 2 ou 3 perguntas, in
 
 Teste também as **travas**: peça para a pessoa tentar gastar no cartão mais que o limite e anotar um valor com um zero a mais. Ela entendeu o aviso e soube corrigir?
 
+Se a pessoa tiver poupança ou CDB, peça para ela **cadastrar na aba Investir com a taxa ao ano** que aparece no app do banco. Ela achou a taxa? Depois de uns dias, peça para **conferir com o banco**.
+
 ## 4. Ficha de observação (uma por pessoa)
 
 | Campo | Anotação |

@@ -16,9 +16,9 @@ Passo 5 do plano: **aprovado pelo dono em 7 nov 2026 e no app desde a versão 1.
   - **[aprender]**: educação financeira simples.
 - **O que o chat não faz:** não recomenda investimento específico (não é consultor licenciado), não manda dados para lugar nenhum e não finge entender o que não está na lista.
 
-## As 51 perguntas
+## As 52 perguntas
 
-### Meu dinheiro (10)
+### Meu dinheiro (11)
 
 | # | Pergunta | Tipo | Como responde |
 |---|---|---|---|
@@ -32,6 +32,7 @@ Passo 5 do plano: **aprovado pelo dono em 7 nov 2026 e no app desde a versão 1.
 | 8 | Quanto sobrou no mês passado? | dados | Entrou − saiu do mês passado, com a frase de comparação |
 | 9 | Quanto tenho guardado nas caixinhas? | dados | Total e quanto tem em cada caixinha |
 | 10 | Quanto tenho em cada conta? | dados | Lista das contas com o saldo de cada uma e a data da última conferência com o banco |
+| 52 | Quanto meus investimentos renderam? | dados | Total investido, quanto rendeu no mês e no ano, e cada aplicação com a taxa. Acrescentada na 1.20.0 |
 
 ### Contas e dívidas (9)
 
