@@ -13,11 +13,11 @@ App de celular (instalável, funciona sem internet), em português, pensado para
 
 | Parte | Para que serve |
 |---|---|
-| **Início** | Balança que mostra "o que eu tenho = o que eu devo + o que é meu", resumo do mês, quanto falta pagar (com setas de mês), caixinhas e metas, últimas anotações |
-| **Anotar** | Gastei, Recebi, Transferi entre contas e Comprei um bem, em duas colunas (de onde saiu / para onde foi) |
-| **Dinheiro** | Contas (carteira, banco, cartão, empréstimos), meus bens e pessoas (emprestei / devo) |
-| **Planejar** | Agenda do que vence, contas fixas, caixinhas (guardar dinheiro por objetivo) e simulador "e se eu comprar..." |
-| **Mais** | Anotações (buscar e ordenar por data, valor ou nome), relatórios e ajustes (letra, cores, cópia dos dados) |
+| **Início** | Balança que mostra "o que eu tenho = o que eu devo + o que é meu", resumo do mês, uma linha "Falta pagar" (leva ao Planejar), avisos urgentes, caixinhas e metas (se existirem) e as 3 últimas anotações |
+| **Anotar** | Botão **+** do meio e, ao lado dele, as bolinhas de **anotação rápida**: **Gastei** (bordô) e **Recebi** (azul), em todas as telas. A folha tem Gastei, Recebi, Transferi entre contas e Comprei um bem, em duas colunas (de onde saiu / para onde foi) |
+| **Dinheiro** | Quatro abas: Contas (com o guardado e o "para usar"), Dívidas (cartões e empréstimos), Bens e Pessoas (emprestei / devo) |
+| **Planejar** | Ferramentas no topo (Metas do mês, Caixinhas, Contas fixas, Simulador), "Falta pagar" do mês com setas e a agenda do que vence (com cores por tipo) |
+| **Mais** | Anotações (buscar e ordenar por data, valor ou nome), Relatórios (para onde foi, de onde veio, evolução) e Ajustes (letra, cores, movimento, categorias, cópia dos dados, ajuda) |
 
 ## Para quem vai mexer no projeto
 
@@ -67,6 +67,9 @@ Detalhes do passo a passo, da publicação e da recuperação em caso de perda d
 | [docs/ROTEIRO.md](docs/ROTEIRO.md) | O que vem a seguir, em ordem de prioridade |
 | [docs/DECISOES.md](docs/DECISOES.md) | Decisões importantes e o motivo de cada uma |
 | [docs/PUBLICACAO.md](docs/PUBLICACAO.md) | Como publicar, versionar, fazer backup e migrar de hospedagem |
+| [docs/MAPA-DO-APP.md](docs/MAPA-DO-APP.md) | Onde mora cada assunto, o mapa de cores e o fluxo de uso (**vale para o app de hoje**) |
+| [docs/GUIA-TESTADORES.md](docs/GUIA-TESTADORES.md) | Mensagem pronta, tarefas e ficha para os testadores |
+| [docs/AUDITORIA-FUNCOES.md](docs/AUDITORIA-FUNCOES.md) e [docs/PLANO-BETA.md](docs/PLANO-BETA.md) | **Históricos**: como se chegou ao mapa atual |
 
 ## Privacidade
 

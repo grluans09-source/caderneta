@@ -1,5 +1,7 @@
 # Plano até a beta de uso (passo a passo)
 
+> **Status (7 nov 2026): documento histórico.** Passos 1 a 5 feitos e conferidos; o **passo 6 (3 modelos de interface) foi feito e depois apagado a pedido do dono (D39)**, então tudo sobre "jeitos", Razão e Cofre abaixo **não vale mais**; o passo 7 (publicar a beta) está feito. O que vale hoje está em `MAPA-DO-APP.md`, `DECISOES.md` e `ROTEIRO.md`.
+
 Pedido do dono em 6 nov 2026. Cada passo termina com: testes passando, conferência na tela, documentação e CHANGELOG atualizados, e **só então** vai ao ar (um passo por vez, com a sua autorização).
 
 Ordem pensada para **não refazer trabalho**: primeiro decidir o que existe e onde fica (passos 1 a 3), depois mexer em como aparece (4 a 6), por fim publicar (7).

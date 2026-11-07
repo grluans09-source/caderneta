@@ -1,5 +1,7 @@
 # Auditoria: o que é útil e o que é enfeite (passo 2 do plano da beta)
 
+> **Status (7 nov 2026): documento histórico.** É a leitura da versão 1.1.0. As decisões Q1 a Q7 foram aceitas e aplicadas na 1.2.0; **a organização atual está em `MAPA-DO-APP.md`**. As tabelas abaixo descrevem o app *antes* da reorganização.
+
 Feita lendo o código da versão 1.1.0-beta.1 (6 nov 2026). **Não é baseada em uso real**: é a minha leitura do que cada tela mostra. O teste de campo pode mudar os vereditos.
 
 **Critério:** uma função é *útil* se ajuda a pessoa a **decidir** algo ou a **não esquecer** algo. Se só repete um número que já aparece em outro lugar, é enfeite.

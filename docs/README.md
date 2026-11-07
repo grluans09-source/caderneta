@@ -18,4 +18,4 @@ Comece pelo que você precisa:
 | O **histórico de versões** | [../CHANGELOG.md](../CHANGELOG.md) |
 
 ## Regra de ouro da documentação
-Documentação desatualizada é pior que nenhuma. **Toda mudança que altera regra, dado ou decisão atualiza o documento correspondente no mesmo envio** (commit). Está no checklist de lançamento.
+Documentação desatualizada é pior que nenhuma. **Quem lê o repositório não pode encontrar algo velho, substituído ou melhorado como se ainda valesse.** Ao substituir ou remover algo, o documento é corrigido **ou marcado como histórico** (com um aviso no topo dizendo o que vale hoje). **Toda mudança que altera regra, dado ou decisão atualiza o documento correspondente no mesmo envio** (commit). Está no checklist de lançamento.

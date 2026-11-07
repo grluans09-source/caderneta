@@ -1,6 +1,6 @@
 # Arquitetura
 
-Como o app funciona por dentro. Estado descrito: **versão 1.8.0-beta.1** (a base de dados e o motor vêm da 1.0.0; as telas foram reorganizadas conforme `MAPA-DO-APP.md`).
+Como o app funciona por dentro. Estado descrito: **versão 1.9.0-beta.1** (a base de dados e o motor vêm da 1.0.0; as telas foram reorganizadas conforme `MAPA-DO-APP.md`).
 
 ## 1. Visão geral
 
@@ -172,3 +172,13 @@ Ativo cresce a débito; passivo cresce a crédito. **Patrimônio líquido (PL) =
 
 ## 9. Publicação
 GitHub Actions (`.github/workflows/publicar.yml`): a cada envio para `main`, roda `npm ci && npm test` e, **só se passar**, publica a pasta `app/` no GitHub Pages. Passo a passo em `PUBLICACAO.md`.
+
+
+## O que mudou no código da 1.2 à 1.9 (resumo para quem lê)
+- **Telas**: `telaInicio` enxuta e `linhaFalta()` (uma linha que leva ao Planejar); `telaPlanejar` com `ferr()` (4 ferramentas no topo), `cartaoPagarInicio()` (cartão do mês com setas, `PAG_OFF`) e agenda recolhida (`AG_TODAS`, ação `agMais`); nova `telaMetas`; `telaContas` em 4 abas (`DIN_ABA`, ação `dinAba`); `telaRel` sem repetições; `telaAjustes` em 3 grupos (Aparência, Dados, Ajuda).
+- **Anotação rápida**: duas bolinhas `.bolinha` dentro de `nav .in` (ação `novoT`, que chama `novaFolha({tipo})`). O botão `.fab` (`novo`) continua.
+- **Desfazer ao apagar**: `foto()` guarda uma cópia dos dados; `toastDesfazer()` mostra o botão por 8 s; ação `desfazer` restaura.
+- **Cores**: variáveis em `:root` (e nos 2 blocos do tema escuro). Cada cor tem um só significado (D40/D41): `--in` safira = entrou, `--out` bordô = saiu/dívida, `--tr` ardósia = compromisso fixo, `--am` ametista = guardado, `--cobre` = bens, `--latao`/`--sel` ouro = **selecionado**, `--capa` azul-noite = capa e botões. O verde **não** é usado. Cores de moedas e cofre estão nos desenhos da balança (`balanca()`).
+- **Removido**: os jeitos Razão e Cofre (D39) não existem mais; não há `config.jeito`.
+- **Testes**: 19 arquivos, 517 verificações; o teste 03 conta 5 botões de navegação + 2 bolinhas.
+- **Versão**: 3 lugares sobem juntos (`package.json`, `VERSAO_APP`, `sw.js`).

@@ -39,7 +39,7 @@ Peça que a pessoa faça cada tarefa **sozinha, falando em voz alta o que pensa*
 |---|---|---|
 | 1 | Anotar um gasto do dia (ex.: mercado, R$ 45), **de preferência pela bolinha vermelha "Gastei"** | Perceber que as bolinhas são botões; entender as duas colunas "de onde saiu / para onde foi" |
 | 2 | Anotar uma compra parcelada no cartão | Escolher a conta do cartão e as parcelas |
-| 3 | Ver **quanto falta pagar neste mês** e no mês que vem | Achar o cartão e usar as setas |
+| 3 | Ver **quanto falta pagar neste mês** e no mês que vem | Achar o **Planejar** e usar as setas de mês do cartão "Falta pagar" |
 | 4 | **Guardar** um dinheiro numa caixinha e depois **usar** | Entender caixinha × meta, escolher a conta |
 | 5 | Cadastrar um bem (ex.: o carro) | Saber que bem não é gasto; informar o que ainda falta pagar |
 | 6 | Achar uma anotação antiga (pelo nome ou valor) | Achar "Anotações" no menu Mais |

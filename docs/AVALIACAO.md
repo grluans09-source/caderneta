@@ -108,7 +108,7 @@ Legenda: ✅ completo · ◐ parcial · ❌ não existe
 | Texto malicioso (XSS) | Testado em todas as telas; **nada foi executado** |
 | Backup adulterado | Itens inválidos são descartados; ids perigosos rejeitados |
 | Dados em repouso | `localStorage` **sem criptografia** e sem senha. Quem usa o celular desbloqueado vê tudo |
-| Por endereço | Os dados pertencem ao **endereço do app**. Trocar de endereço (ex.: ir para o Netlify) **começa vazio**: é preciso guardar e recuperar uma cópia |
+| Por endereço | Os dados pertencem ao **endereço do app**. Trocar de endereço (ex.: ir para o Cloudflare Pages) **começa vazio**: é preciso guardar e recuperar uma cópia |
 | iPhone/Safari | O Safari pode **apagar dados de sites** que ficam muito tempo sem uso quando o app **não foi instalado** na tela inicial. O app pede armazenamento persistente (`storage.persist()`), mas isso não é garantido. *Mitigação:* orientar a instalar na tela inicial e guardar cópias |
 | Repositório | Público hoje. Contém só código e documentação (nunca dados). Pode virar privado quando migrar a hospedagem (ver `PUBLICACAO.md`) |
 

@@ -9,6 +9,7 @@ Antes da 1.0.0 as versões eram numeradas só pelo nome do cache do app (v1 a v1
 - O botão **+ Anotar** do meio continua igual. Os botões saíram do Início (um só lugar).
 - As cores seguem a regra da D40: saiu = bordô, entrou = azul. Com letra Enorme as bolinhas ficam um pouco menores.
 - Novo teste (517 verificações em 19 arquivos).
+- **Documentação revisada**: README, roteiro, arquitetura, decisões e guia dos testadores atualizados; `PLANO-BETA.md` e `AUDITORIA-FUNCOES.md` marcados como históricos; regra "Git sempre em dia" no CLAUDE.md.
 
 ## [1.8.2-beta.1]: 7 de novembro de 2026 · mapa de cores da aba Planejar
 A aba Planejar ganhou uma organização por cor, seguindo a regra "uma cor, um significado":
@@ -31,6 +32,7 @@ A aba Planejar ganhou uma organização por cor, seguindo a regra "uma cor, um s
 - Documentação atualizada (README, arquitetura, avaliação).
 
 ## [1.7.1-beta.1]: 6 de novembro de 2026 · conferência final dos 3 jeitos
+> *Histórico: esta versão tinha os jeitos Razão e Cofre e fluxo, **removidos na 1.8.0 (D39)**.*
 Conferência com letra **Enorme**, tema **escuro** e **Movimento** parado e vivo, em tela de celular (375 px), nos 3 jeitos, em 16 telas (Início, 4 abas do Dinheiro, Planejar, Metas, Caixinhas, Contas fixas, Simulador, Mais, Anotações, Relatórios, Ajustes e a folha de Anotar):
 - **Corrigido:** no jeito Razão, com letra Enorme, as duas páginas do livro passavam da largura da tela. Agora, com letra Enorme, as páginas ficam uma embaixo da outra.
 - **Corrigido:** o número grande do Início quebrava no meio ("R$ 102.930,0" e "0" em outra linha). Agora ele encolhe para caber.
@@ -38,10 +40,12 @@ Conferência com letra **Enorme**, tema **escuro** e **Movimento** parado e vivo
 - Depois das correções: nenhuma tela passa da largura (0 problemas nas 96 combinações de jeito, tema e tela conferidas com letra Enorme) e não houve erro no console.
 
 ## [1.7.0-beta.1]: 6 de novembro de 2026 · escolha do jeito na primeira abertura
+> *Histórico: esta versão tinha os jeitos Razão e Cofre e fluxo, **removidos na 1.8.0 (D39)**.*
 - Os **Primeiros passos** agora têm 4 passos. O 2º é **"Escolha seu jeito de usar"**, com uma miniatura de cada jeito (Balança, Razão, Cofre e fluxo). A barra de baixo já muda na hora e a escolha fica salva. Dá para trocar depois em Ajustes.
 - Novo teste (561 verificações em 22 arquivos).
 
 ## [1.6.0-beta.1]: 6 de novembro de 2026 · Mais, Anotações, Relatórios e Ajustes nos 3 jeitos
+> *Histórico: esta versão tinha os jeitos Razão e Cofre e fluxo, **removidos na 1.8.0 (D39)**.*
 - **Mais:** Balança (cartões), Razão (vira o **Índice** do livro, com a linha pontilhada e o resumo de cada item) e Cofre e fluxo (peças em forma de cofre).
 - **Anotações:** na Razão as linhas ficam em itálico, como num livro-caixa; no Cofre ganham uma faixa dourada na lateral.
 - **Relatórios:** na Razão as barras ficam tracejadas; no Cofre viram canos (vermelho para o que saiu, verde para o que veio).
@@ -49,17 +53,20 @@ Conferência com letra **Enorme**, tema **escuro** e **Movimento** parado e vivo
 - Novo teste (549 verificações em 21 arquivos).
 
 ## [1.5.0-beta.1]: 6 de novembro de 2026 · Anotar nos 3 jeitos
+> *Histórico: esta versão tinha os jeitos Razão e Cofre e fluxo, **removidos na 1.8.0 (D39)**.*
 - **Razão:** a folha de anotar vira páginas de livro ("Escrever no livro"; "Corrigir no livro" ao editar), com linhas de caderno e margem dourada.
 - **Cofre e fluxo:** a folha vira "Mover o dinheiro". Cada conta aparece como um cofre com o nível do que tem (dívidas em vermelho) e as colunas perguntam "De qual cofre sai" e "Para qual cofre vai". O fio que liga as duas colunas fica mais grosso, como um cano.
 - **Balança:** igual a antes.
 - Novo teste (537 verificações em 20 arquivos).
 
 ## [1.4.0-beta.1]: 6 de novembro de 2026 · jeitos em Planejar e Dinheiro
+> *Histórico: esta versão tinha os jeitos Razão e Cofre e fluxo, **removidos na 1.8.0 (D39)**.*
 - **Planejar / A pagar** nos 3 jeitos: Balança (cartão do mês), Razão (o mês como um livro com as páginas "A pagar" e "Já pago") e Cofre e fluxo (cada conta a pagar como um cano que se esvazia). Setas de mês, agenda e botões de pagar iguais nos três.
 - **Dinheiro / Contas** nos 3 jeitos: Balança (linhas), Razão (livro das contas com as páginas "Tenho" e "Devo") e Cofre e fluxo (um cofre por conta, o guardado em roxo). As abas Dívidas, Bens e Pessoas continuam iguais.
 - Novo teste (524 verificações em 19 arquivos).
 
 ## [1.3.0-beta.1]: 6 de novembro de 2026 · três jeitos de usar
+> *Histórico: esta versão tinha os jeitos Razão e Cofre e fluxo, **removidos na 1.8.0 (D39)**.*
 - Novo em **Ajustes > Aparência > Jeito de usar**: **Balança** (padrão), **Razão** e **Cofre e fluxo**. Cada jeito organiza o app de um modo (veja [JEITOS-DE-USAR.md](docs/JEITOS-DE-USAR.md)); os dados são os mesmos.
 - **Início nos 3 jeitos**: Balança (com botões Gastei e Recebi), Razão (livro do mês com páginas Entrou e Saiu) e Cofre e fluxo (um cofre por conta, cartões em vermelho).
 - A barra de baixo muda por jeito (Livro, Contas, A pagar; ou Cofres sem o botão Dinheiro). A capa tem cor própria em cada jeito.

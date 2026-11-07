@@ -20,7 +20,7 @@
 1. App de finanças **pessoa física**, mobile-first, instalável (PWA), **sem servidor e sem banco de dados**. Dados em `localStorage`, por aparelho.
 2. Tem que ser usável por um **idoso**, um **jovem** e um **adulto na correria**: simples, intuitivo, letras grandes, poucas decisões por tela.
 3. A **contabilidade (partida dobrada) trabalha por trás**; a pessoa vê palavras comuns. O "Modo contador" (opcional) mostra os termos técnicos.
-4. Visual **"livro-razão vivo"**: papel, tinta, balança de latão, carimbo, animações com propósito. O "exótico" está no visual, nunca na navegação.
+4. Visual **"livro-razão vivo"**: papel marfim, tinta azul-noite, ouro e balança de latão, carimbo, animações com propósito. **Uma cor, um significado** (sem verde; ver `docs/MAPA-DO-APP.md`). O "exótico" está no visual, nunca na navegação.
 5. Tudo em **um arquivo HTML autocontido** (sem framework, sem build, sem fontes ou scripts externos).
 6. Distribuído por **link**; a pessoa instala na tela inicial. Backup manual pelo botão "Guardar uma cópia".
 
@@ -49,9 +49,17 @@
 2. **Mudar** em `app/index.html` (e só nela, salvo ícones/manifest/sw).
 3. **Testar**: `npm test` (tem que dar "TUDO CERTO"). Mudança de comportamento ⇒ **escrever ou ajustar um teste** em `tests/`. Bug encontrado ⇒ teste que o reproduz **antes** da correção.
 4. **Ver no navegador** em 375×812 (`npm start`), inclusive letra "Enorme" e tema escuro quando mexer em layout. Animação só se confere com o painel visível.
-5. **Documentar**: atualizar `docs/ARQUITETURA.md` se mudou modelo/regra, `docs/DECISOES.md` se foi uma decisão, `docs/ROTEIRO.md` se mudou o plano, e `CHANGELOG.md`.
+5. **Documentar (obrigatório, no mesmo envio)**: ver "Git sempre em dia" abaixo.
 6. **Versionar** (ver "Versão e publicação") e **enviar ao GitHub**. O GitHub roda os testes e publica sozinho.
 7. **Reportar** ao dono em português simples, dizendo o que **não** foi verificado.
+
+## Git sempre em dia (regra do dono)
+O dono pediu: **quem ler o repositório nunca deve encontrar informação velha, substituída ou melhorada.** Em **todo envio**:
+1. **Procure o que ficou velho**: rode `grep -rn` pelos nomes e números que mudaram (versão, número de testes, nomes de tela e de botão, cores, hospedagem) em `README.md`, `CLAUDE.md` e `docs/`.
+2. **Corrija** o que mudou. Se um documento descreve um passado que não vale mais, ponha **no topo um aviso "histórico"** dizendo o que vale hoje (como em `PLANO-BETA.md` e `AUDITORIA-FUNCOES.md`).
+3. **Decisão substituída** em `DECISOES.md`: marque a antiga como *SUBSTITUÍDA pela Dxx* e crie a nova. Nunca apague sem deixar rastro.
+4. **Atualize sempre**: `CHANGELOG.md`, a linha "Em que pé estamos" deste arquivo (versão e número de testes), `docs/MAPA-DO-APP.md` (se mudou tela, botão ou cor), `docs/ARQUITETURA.md` (se mudou código ou regra), `docs/ROTEIRO.md` (se mudou o plano) e `docs/GUIA-TESTADORES.md` (se mudou algo que o testador vê).
+5. Só então **versionar e enviar**. Isto vale também para mudanças pequenas.
 
 ## Versão e publicação
 - Versão semântica `MAJOR.MINOR.PATCH`: **PATCH** = correção; **MINOR** = função nova compatível; **MAJOR** = quebra de dados/compatibilidade.
@@ -84,4 +92,7 @@ npm run icones  # regenera os ícones PNG a partir do desenho em tools/gerar-ico
 | `docs/ROTEIRO.md` | Próximos passos por prioridade |
 | `docs/DECISOES.md` | Decisões e motivos |
 | `docs/PUBLICACAO.md` | Publicar, backup, recuperar o projeto, migrar de hospedagem |
+| `docs/MAPA-DO-APP.md` | Onde mora cada assunto, mapa de cores, fluxo de uso (o app de hoje) |
+| `docs/GUIA-TESTADORES.md` | Como mandar o app a testadores e o que observar |
+| `docs/PLANO-BETA.md`, `docs/AUDITORIA-FUNCOES.md` | **Históricos** (como se chegou ao mapa atual) |
 | `CHANGELOG.md` | Histórico de versões |

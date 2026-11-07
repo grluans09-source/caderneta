@@ -81,7 +81,7 @@ Por quê: o botão fixo atrapalhava a visualização. Consequência: nada de `po
 
 **D28 · GitHub pessoal `grluans09-source`; a conta da empresa não é usada (A).**
 
-**D29 · Hospedagem hoje: GitHub Pages (repositório público). Plano: Netlify + repositório privado (A, "por enquanto só organizar").** Por quê: Pages gratuito exige repositório público. Consequência: a troca muda o endereço e **os dados não acompanham**; exige aviso e cópia (ver `PUBLICACAO.md`).
+**D29 · *(parcialmente substituída pela D33: o plano passou de Netlify para Cloudflare Pages)* Hospedagem hoje: GitHub Pages (repositório público). Plano: Netlify + repositório privado (A, "por enquanto só organizar").** Por quê: Pages gratuito exige repositório público. Consequência: a troca muda o endereço e **os dados não acompanham**; exige aviso e cópia (ver `PUBLICACAO.md`).
 
 **D30 · Frases da capa só de autores reais, atribuição conferida (A).** Consequência: texto é tradução livre; ao incluir novas, conferir a fonte.
 
@@ -101,7 +101,7 @@ Por quê: o botão fixo atrapalhava a visualização. Consequência: nada de `po
 
 **D37 · Reorganização por lugar único (A).** Decisões Q1 a Q7 da auditoria aceitas: Início enxuto com uma linha "Falta pagar"; Planejar é a casa do que vence; Dinheiro em 4 abas; Metas em tela própria; Relatórios sem repetir; Ajustes em 3 grupos. Mapa em `docs/MAPA-DO-APP.md`.
 
-**D38 · Três jeitos de usar para o app inteiro: Balança, Razão e Cofre e fluxo (A).** O visual antigo deixa de ser uma opção separada (a Balança o continua). Cada jeito muda o visual e a distribuição das telas; dados e regras são os mesmos. Entrega por etapas (J1 a J7 em `docs/JEITOS-DE-USAR.md`); J1 (base e Início), J2 (Planejar) e J3 (Dinheiro) e J4 (Anotar) e J5 (Mais, Anotações, Relatórios, Ajustes) e J6 (escolha nos Primeiros passos) e J7 (conferência final) feitas.
+**D38 · *(SUBSTITUÍDA pela D39: os jeitos foram apagados)* Três jeitos de usar para o app inteiro: Balança, Razão e Cofre e fluxo (A).** O visual antigo deixa de ser uma opção separada (a Balança o continua). Cada jeito muda o visual e a distribuição das telas; dados e regras são os mesmos. Entrega por etapas (J1 a J7 em `docs/JEITOS-DE-USAR.md`); J1 (base e Início), J2 (Planejar) e J3 (Dinheiro) e J4 (Anotar) e J5 (Mais, Anotações, Relatórios, Ajustes) e J6 (escolha nos Primeiros passos) e J7 (conferência final) feitas.
 
 **D39 · Os jeitos Razão e Cofre e fluxo foram apagados; fica só a Balança (A).** O dono pediu para tirar as duas interfaces extras e manter a padrão. Substitui a D38. Consequência: sem escolha de jeito em Ajustes nem nos Primeiros passos (voltaram a 3 passos); a reorganização por lugar único (D37) continua valendo. Quem tinha escolhido outro jeito volta sozinho para a Balança.
 
