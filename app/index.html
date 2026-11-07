@@ -77,6 +77,11 @@ h2{font-size:1.05rem;font-weight:700;margin:1.5rem 0 .55rem;font-family:var(--se
 @keyframes mdPisca{0%,94%,100%{transform:scaleY(1)}96%{transform:scaleY(.08)}}
 .bal .md-ref{animation:mdRef 7s ease-in-out infinite}
 @keyframes mdRef{0%,60%{transform:translateX(0)}100%{transform:translateX(150px)}}
+/* janela das travas: o Mordomo explica com calma */
+.trava{display:grid;grid-template-columns:3.4rem 1fr;gap:.8rem;align-items:start}
+.trava-r svg{width:3.4rem;height:3.4rem;overflow:visible}
+.trava-m{margin:.35rem 0;line-height:1.45}
+.modal.trava-j{border-top-color:var(--latao)}
 /* pílula "Perguntar" (D55/D56): canto esquerdo, simétrica à pena */
 .perg{position:fixed;left:1rem;bottom:calc(4.95rem + env(safe-area-inset-bottom));z-index:21;display:flex;align-items:center;gap:.35rem;min-height:3.3rem;background:#0A0A0A;border:2px solid var(--latao);border-radius:999px;padding:.2rem 1rem .2rem .25rem;color:#E8CB6A;font-family:var(--serif);font-weight:700;font-size:1.02rem;box-shadow:0 5px 0 rgba(0,0,0,.35),0 8px 16px rgba(0,0,0,.3)}
 .perg:active{transform:scale(.95)}
@@ -767,7 +772,7 @@ html[data-tam="g"] .fbl{max-width:4.8rem}
 /* ---------- utilidades ---------- */
 var KEY="caderneta:v2";
 /* versão do app (siga o CHANGELOG.md; subir junto com VERSAO em sw.js e "version" em package.json) */
-var VERSAO_APP="1.18.0-beta.1";
+var VERSAO_APP="1.19.0-beta.1";
 var RE_ID=/^[A-Za-z0-9_-]+$/, RE_DATA=/^\d{4}-\d{2}-\d{2}$/;
 var MES=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
 var MES3=["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
@@ -1604,6 +1609,7 @@ var PERGS=[
  {g:"app",q:"Como anoto dinheiro que emprestei ou que devo a alguém?",kw:"emprestei emprestimo pessoa amigo devo alguem parente",ir:"contas",aba:"pessoas",r:function(){return 'Em <b>Dinheiro > Pessoas</b>. Cadastre a pessoa e anote se você emprestou ou se pegou emprestado. Dá até para marcar a data combinada.'}},
  {g:"app",q:"Como faço uma cópia dos meus dados?",kw:"copia backup salvar dados guardar seguranca",ir:"ajustes",r:function(){return 'Em <b>Mais > Ajustes > Guardar uma cópia</b>. Faça <b>toda semana</b>: seus dados ficam só neste celular, e a cópia é o que salva tudo se ele quebrar ou for perdido.'}},
  {g:"app",q:"Troquei de celular. Como levo meus dados?",kw:"trocar celular novo levar dados passar recuperar",ir:"ajustes",r:function(){return 'No celular <b>antigo</b>, guarde uma cópia (Mais > Ajustes) e mande para você mesmo. No <b>novo</b>, abra o app e use <b>Recuperar de uma cópia</b> com esse arquivo.'}},
+ {g:"app",q:"Por que o app não deixou eu salvar?",kw:"nao deixou salvar bloqueou travou impediu limite carteira aviso erro",r:function(){return 'Eu confiro cada anotação antes de salvar. Eu <b>não deixo</b> quando não pode acontecer de verdade: a <b>carteira</b> ficar negativa (não existe nota negativa) ou um gasto <b>passar do limite do cartão</b>. E eu <b>pergunto</b> quando é possível mas estranho: banco negativo (cheque especial), pagar mais do que deve, data muito distante ou valor muito acima do costume. Aí é só confirmar.'}},
  {g:"app",q:"Como deixo a letra maior ou a tela escura?",kw:"letra maior grande tamanho tela escura tema cores",ir:"ajustes",r:function(){return 'Em <b>Mais > Ajustes</b>: escolha o <b>tamanho da letra</b> (até Enorme) e as <b>cores</b> (claro ou escuro). Lá também dá para deixar o app parado, sem animações.'}},
  /* ---------- Aprender ---------- */
  {g:"aprender",q:"O que é reserva de emergência e quanto devo ter?",kw:"reserva emergencia o que e quanto ter",r:function(){return 'É um dinheiro guardado só para imprevistos: perder o emprego, uma doença, um conserto. O ideal é ter de <b>3 a 6 meses</b> do seu custo básico, num lugar fácil de tirar. Comece com pouco: o importante é começar.'}},
@@ -2769,6 +2775,59 @@ function previa(){
   }
   el.innerHTML=h;
 }
+/* =====================================================================
+   TRAVAS DE COERÊNCIA (D57): o app impede o que não pode acontecer na vida
+   real (carteira negativa, passar do limite do cartão) e pergunta "era isso?"
+   quando algo é possível mas estranho. Tudo antes de salvar.
+   ===================================================================== */
+/* quanto uma anotação muda o saldo de uma conta (mesma regra de saldoConta) */
+function efeitoConta(l,c){
+  if(!l||!c)return 0; var d=0;
+  if(l.tipo==="saida"&&l.contaId===c.id)d=-l.valor;
+  else if(l.tipo==="entrada"&&l.contaId===c.id)d=l.valor;
+  else if(l.tipo==="ajuste"&&l.contaId===c.id)d=l.sinal==="alta"?l.valor:-l.valor;
+  else if(l.tipo==="transferencia"||l.tipo==="bem"){if(l.destinoId===c.id)d=l.valor; else if(l.contaId===c.id)d=-l.valor}
+  return c.tipo==="ativo"?d:-d;
+}
+/* saldo de c se as anotações "antes" forem trocadas pelas "depois" */
+function saldoApos(c,antes,depois){
+  var s=saldoConta(c);
+  (antes||[]).forEach(function(l){s-=efeitoConta(l,c)});
+  (depois||[]).forEach(function(l){s+=efeitoConta(l,c)});
+  return s;
+}
+function janelaTrava(msgs,pode){
+  abrirModal('<div class="trava"><div class="trava-r">'+rostoPerg()+'</div><div><p class="q">'+(pode?'Confira antes de salvar':'Não dá para salvar assim')+'</p>'+
+    msgs.map(function(m){return '<p class="trava-m">'+m+'</p>'}).join("")+'</div></div>'+
+    (pode?'<button class="btn" data-a="mFechar">Corrigir</button><button class="btn sec" data-a="fConfirma">Sim, está certo</button>':'<button class="btn" data-a="mFechar">Corrigir</button>'),"trava-j");
+}
+function valorEstranho(tipo,valor){
+  var vs=S.lancamentos.filter(function(l){return l.tipo===tipo}).slice(-30).map(function(l){return l.valor});
+  if(vs.length<5)return false;
+  var med=vs.reduce(function(a,b){return a+b},0)/vs.length;
+  return valor>100000&&valor>20*med;
+}
+/* devolve {impede:[...], avisa:[...]} para a anotação nova l (e a antiga, se for alteração) */
+function conferirAnotacao(l,extra,antiga){
+  var antes=antiga?[antiga]:[], depois=[l].concat(extra?[extra]:[]), imp=[], av=[];
+  var envolvidas=[conta(l.contaId),conta(l.destinoId)].filter(Boolean);
+  envolvidas.forEach(function(c){
+    var depoisS=saldoApos(c,antes,depois), mudou=depoisS-saldoApos(c,antes,[]);
+    if(c.carteira&&depoisS<0&&mudou<0)imp.push('Na carteira ('+esc(c.nome)+') só tem <b>'+esc(brl(Math.max(0,saldoApos(c,antes,[]))))+'</b>. Confira o valor ou conte as cédulas.');
+    else if(c.tipo==="passivo"&&!c.pessoa&&c.limite&&mudou>0&&depoisS>c.limite){
+      var disp=Math.max(0,c.limite-saldoApos(c,antes,[]));
+      imp.push('O limite disponível do <b>'+esc(c.nome)+'</b> é <b>'+esc(brl(disp))+'</b>. Este valor de <b>'+esc(brl(l.valor))+'</b> passa do limite. Confira o valor ou atualize o limite do cartão (em Dinheiro, na aba Dívidas).');
+    }
+    else if(c.tipo==="ativo"&&!c.carteira&&!c.pessoa&&!c.bem&&depoisS<0&&mudou<0)av.push('O <b>'+esc(c.nome)+'</b> ficaria com <b>−'+esc(brl(-depoisS))+'</b>. Você usou o cheque especial?');
+    else if(c.tipo==="passivo"&&l.tipo==="transferencia"&&l.destinoId===c.id&&depoisS<0)av.push('Você deve <b>'+esc(brl(Math.max(0,saldoApos(c,antes,[]))))+'</b> '+(c.pessoa?'para '+esc(c.nome):'no '+esc(c.nome))+' e está pagando <b>'+esc(brl(l.valor))+'</b>. O que passar vira um crédito '+(c.pessoa?'com essa pessoa':'nessa conta')+'.');
+    else if(c.pessoa&&c.tipo==="ativo"&&l.contaId===c.id&&depoisS<0)av.push(esc(c.nome)+' te devia <b>'+esc(brl(Math.max(0,saldoApos(c,antes,[]))))+'</b>, e você está anotando <b>'+esc(brl(l.valor))+'</b>. Era isso?');
+  });
+  var dias=diasAte(l.data);
+  if(dias>60)av.push('Esta data é daqui a <b>'+Math.round(dias/30)+' meses</b> ('+esc(dataBR(l.data))+'). Era isso?');
+  else if(dias<-5*365)av.push('Esta data é de <b>'+esc(l.data.slice(0,4))+'</b>, há mais de 5 anos. Era isso?');
+  if((l.tipo==="saida"||l.tipo==="entrada")&&valorEstranho(l.tipo,l.valor))av.push('<b>'+esc(brl(l.valor))+'</b>? É bem maior que os seus '+(l.tipo==="saida"?'gastos':'ganhos')+' de costume. Confira os zeros.');
+  return {impede:imp,avisa:av};
+}
 function salvarFolha(){
   if(!F.cent){toast("Diga quanto foi");$("#fValor").focus();return}
   if(F.tipo==="transferencia"){
@@ -2789,6 +2848,10 @@ function salvarFolha(){
     extra={id:uid(),tipo:"saida",valor:F.juros,desc:"Juros e multa — "+(F.desc.trim()||dj.nome),contaId:F.contaId,destinoId:null,catId:jurosCat().id,data:F.data};
   }
   var i=-1; S.lancamentos.forEach(function(x,k){if(x.id===l.id)i=k});
+  var cf=conferirAnotacao(l,extra,i>=0?S.lancamentos[i]:null);
+  if(cf.impede.length){F.salvando=false; janelaTrava(cf.impede,false); return}
+  if(cf.avisa.length&&!F.confirmado){F.salvando=false; janelaTrava(cf.avisa,true); return}
+  F.confirmado=false;
   if(i>=0)S.lancamentos[i]=l; else S.lancamentos.push(l);
   if(extra)S.lancamentos.push(extra);
   salvar(); ULTIMO=l.id; WOB=true;
@@ -2874,12 +2937,20 @@ function salvarGaveta(){
     if(lim>0)o.limite=lim;
   }
   var c=G.id?conta(G.id):null;
-  if(c){
-    c.nome=o.nome;c.tipo=o.tipo;c.inicial=o.inicial;
-    delete c.fecha;delete c.vence;delete c.limite;delete c.abertas;
-    Object.keys(o).forEach(function(k){c[k]=o[k]});
-  }else{o.id=uid();S.contas.push(o)}
-  salvar(); fecharModal(); desenhar(); toast("Conta salva");
+  function aplicaConta(){
+    if(c){
+      c.nome=o.nome;c.tipo=o.tipo;c.inicial=o.inicial;
+      delete c.fecha;delete c.vence;delete c.limite;delete c.abertas;
+      Object.keys(o).forEach(function(k){c[k]=o[k]});
+    }else{o.id=uid();S.contas.push(o)}
+    salvar(); fecharModal(); desenhar(); toast("Conta salva");
+  }
+  /* trava (D57): limite menor do que já se deve no cartão -> pergunta antes */
+  if(o.tipo==="passivo"&&o.limite){
+    var deve=c?saldoConta(c)-(c.inicial||0)+o.inicial:o.inicial;
+    if(deve>o.limite){confirmar("Você já deve "+brl(deve)+" neste cartão, mais que o limite de "+brl(o.limite)+" que você informou. Confira o limite. Salvar assim mesmo?","Sim, salvar",aplicaConta);return}
+  }
+  aplicaConta();
 }
 
 var K=null;
@@ -3554,7 +3625,7 @@ var ACOES={
   pagar:function(d){
     var c=conta(d.id); if(!c)return;
     if(AC_ABERTO){fecharAcerto(); AC_VOLTA=true}
-    var banco=S.contas.filter(function(x){return x.tipo==="ativo"&&!x.pessoa&&!x.bem})[0];
+    var banco=melhorConta();   /* paga, de início, pela conta com mais dinheiro livre (a pessoa pode trocar) */
     if(!banco){toast("Crie uma conta com dinheiro para pagar");return}
     novaFolha({tipo:"transferencia",contaId:banco.id,destinoId:c.id,cent:+d.valor,desc:"Pagamento "+c.nome});
   },
@@ -3621,7 +3692,7 @@ var ACOES={
   },
   pReceber:function(){var c=conta(PS.id),g=primeiraGaveta(); fecharModal(); if(!g){toast("Crie uma conta com dinheiro primeiro");return} novaFolha({tipo:"transferencia",contaId:c.id,destinoId:g.id,cent:Math.max(0,saldoConta(c)),desc:"Recebi de "+c.nome})},
   pReceberId:function(d){var c=conta(d.id),g=primeiraGaveta(); if(!c)return; if(!g){toast("Crie uma conta com dinheiro primeiro");return} novaFolha({tipo:"transferencia",contaId:c.id,destinoId:g.id,cent:Math.max(0,saldoConta(c)),desc:"Recebi de "+c.nome})},
-  pPagar:function(){var c=conta(PS.id),g=primeiraGaveta(); fecharModal(); if(!g){toast("Crie uma conta com dinheiro primeiro");return} novaFolha({tipo:"transferencia",contaId:g.id,destinoId:c.id,cent:Math.max(0,saldoConta(c)),desc:"Paguei "+c.nome})},
+  pPagar:function(){var c=conta(PS.id),g=melhorConta(); fecharModal(); if(!g){toast("Crie uma conta com dinheiro primeiro");return} novaFolha({tipo:"transferencia",contaId:g.id,destinoId:c.id,cent:Math.max(0,saldoConta(c)),desc:"Paguei "+c.nome})},
   pMais:function(){
     var c=conta(PS.id),g=primeiraGaveta(); fecharModal(); if(!g){toast("Crie uma conta com dinheiro primeiro");return}
     if(c.tipo==="ativo")novaFolha({tipo:"transferencia",contaId:g.id,destinoId:c.id,desc:"Empréstimo para "+c.nome});
@@ -3796,8 +3867,12 @@ var ACOES={
   fOutraData:function(){var w=$("#wData");w.hidden=false;document.querySelectorAll('[data-a="fData"],[data-a="fOutraData"]').forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.a==="fOutraData"))});$("#fData").focus()},
   fN:function(d){F.n=Math.max(1,Math.min(24,F.n+(+d.n)));previa()},
   fSalvar:salvarFolha,
+  fConfirma:function(){F.confirmado=true; fecharModal(); salvarFolha()},
   fApagar:function(){
-    var id=F.id; confirmar("Apagar esta anotação?","Apagar",function(){
+    var id=F.id, velho=S.lancamentos.filter(function(x){return x.id===id})[0];
+    var cw=velho&&[conta(velho.contaId),conta(velho.destinoId)].filter(function(c){return c&&c.carteira&&saldoApos(c,[velho],[])<0})[0];
+    if(cw){janelaTrava(['Apagar esta anotação deixaria a carteira ('+esc(cw.nome)+') com <b>−'+esc(brl(-saldoApos(cw,[velho],[])))+'</b>. Confira as outras anotações da carteira ou conte as cédulas.'],false);return}
+    confirmar("Apagar esta anotação?","Apagar",function(){
       var sn=foto(); S.lancamentos=S.lancamentos.filter(function(x){return x.id!==id}); salvar(); fecharFolha(); desenhar(); toastDesfazer("Anotação apagada.",sn)});
   },
   /* primeiros passos */

@@ -31,7 +31,7 @@ click('nav [data-v="planejar"]'); await espera(20);
 click(".perg");
 eq("tocar na pílula abre o chat, com saudação, busca e os 5 grupos",[$("#modal").classList.contains("chatm"),!!$("#chBusca"),d.querySelectorAll("#chGrupos .chip").length,/Em que posso ajudar/.test($("#chMsgs").textContent)],[true,true,5,true]);
 eq("no Planejar, o grupo Planejar já vem aberto",[$('#chGrupos [aria-pressed="true"]').textContent,d.querySelectorAll("#chLista .ch-q").length],["Planejar",8]);
-eq("são 50 perguntas: 10 + 9 + 8 + 13 + 10",["dinheiro","dividas","planejar","app","aprender"].map(g=>T.PERGS.filter(p=>p.g===g).length),[10,9,8,13,10]);
+eq("são 51 perguntas: 10 + 9 + 8 + 14 + 10",["dinheiro","dividas","planejar","app","aprender"].map(g=>T.PERGS.filter(p=>p.g===g).length),[10,9,8,14,10]);
 // ---- respostas com os dados ----
 const i3=T.PERGS.findIndex(p=>/gastar por dia/.test(p.q));
 click('#chGrupos [data-g="dinheiro"]'); click('#chLista [data-i="'+i3+'"]');
@@ -52,7 +52,7 @@ eq("'Quem me deve dinheiro' lista o João com a data combinada",/João/.test(r19
 // ---- todas as 50 respondem, sem erro e sem palavras proibidas ----
 const proib=/gaveta|partida dobrada|lançamento|saldo devedor|comprometid|projeção/i;
 const falhas=T.PERGS.map((p,i)=>{try{const r=p.r();return (typeof r==="string"&&r.length>20&&!proib.test(r)&&!/undefined|NaN/.test(r))?null:i}catch(e){return i+":"+e.message}}).filter(x=>x!==null);
-eq("as 50 respostas saem sem erro, sem 'undefined' e sem as palavras proibidas",falhas,[]);
+eq("as 51 respostas saem sem erro, sem 'undefined' e sem as palavras proibidas",falhas,[]);
 // ---- busca ----
 const nomeQ=i=>T.PERGS[i].q;
 eq("escrever 'fatura do cartão' acha a pergunta da fatura",/fatura do cartão/.test(T.buscaPerg("quando vence a fatura do cartão").map(nomeQ).join("|")),true);

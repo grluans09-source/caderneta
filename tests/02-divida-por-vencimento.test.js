@@ -37,14 +37,15 @@ eq("PL = -205",T.totais().pl,-20500);
 click('[data-a="ir"][data-v="contas"]');
 click('[data-a="dinAba"][data-v="dividas"]');eq("mostra próxima conta 190",/190,00/.test($("#tela").textContent),true);
 
-// pagar 190 -> sobra só 15
+// pagar 190 -> sobra só 15 (a carteira começa com 500,00: a trava não deixa a carteira ficar negativa)
+S().contas[0].inicial=50000;
 click('[data-a="pagar"]');
 eq("pagar vem com 190",$("#fValor").value,"R$ 190,00");
 const plAntes=T.totais().pl;
 click('[data-a="fSalvar"]');
 eq("sobra só 15",T.aPagar().map(g=>[g.data,g.valor]),[["2026-12-05",1500]]);
 eq("dívida agora 15",T.saldoConta(S().contas.find(c=>c.nome==="Nubank")),1500);
-eq("pagar move dinheiro (carteira fica -190)",T.saldoConta(S().contas[0]),-19000);
+eq("pagar move dinheiro (a carteira vai de 500 para 310)",T.saldoConta(S().contas[0]),50000-19000);
 
 // editar a gaveta: mostra as duas linhas e permite mudar
 click(`[data-a="gaveta"][data-id="${nub.id}"]`);

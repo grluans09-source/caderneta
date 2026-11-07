@@ -29,7 +29,8 @@ Aplica as decisões Q1 a Q7 da [auditoria](AUDITORIA-FUNCOES.md), aceitas pelo d
 | Assunto | Casa (única) | Aparece como atalho em |
 |---|---|---|
 | Valor de verdade (balança: o **Mordomo**) | Início | – |
-| **Chat do Balancete** (50 perguntas prontas) | Pílula **"Perguntar"**, canto esquerdo de baixo, em todas as abas | Cada resposta com "Ver no app" leva à casa do assunto |
+| **Travas de coerência** (não deixa / pergunta "era isso?") | Ao salvar uma anotação, um cartão ou ao apagar | Chat: "Por que o app não deixou eu salvar?" |
+| **Chat do Balancete** (51 perguntas prontas) | Pílula **"Perguntar"**, canto esquerdo de baixo, em todas as abas | Cada resposta com "Ver no app" leva à casa do assunto |
 | Mascotes dos momentos (Moedinha ao receber, Selo "PAGO" ao pagar, Pesinho ao guardar, Pesão quando há conta atrasada) | Aparecem por cima da tela, só nesses momentos | Pesão: só no Início, 1 vez por dia |
 | Custo fixo de vida | Gráficos (indicador) | Relatórios |
 | Resumo do mês (entrou, saiu, sobrou) | Início | – |

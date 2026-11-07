@@ -62,6 +62,8 @@ Observe também o **Mordomo** (a balança do Início): a pessoa entende que a ca
 
 Peça também que a pessoa **toque em "Perguntar"** e faça 2 ou 3 perguntas, inclusive **escrevendo uma dúvida com as próprias palavras**. Anote o que ela quis perguntar e **não achou**: é assim que a lista cresce.
 
+Teste também as **travas**: peça para a pessoa tentar gastar no cartão mais que o limite e anotar um valor com um zero a mais. Ela entendeu o aviso e soube corrigir?
+
 ## 4. Ficha de observação (uma por pessoa)
 
 | Campo | Anotação |

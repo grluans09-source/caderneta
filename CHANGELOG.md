@@ -5,6 +5,22 @@
 Formato: versão semântica (`MAIOR.MENOR.CORREÇÃO`). Cada versão diz **o que mudou para a pessoa que usa**.
 Antes da 1.0.0 as versões eram numeradas só pelo nome do cache do app (v1 a v16); estão aqui como marcos de desenvolvimento.
 
+## [1.19.0-beta.1]: 7 de novembro de 2026 · travas de coerência
+O app agora confere cada anotação antes de salvar (pedido do dono). Quando algo **não pode acontecer na vida real**, ele **não deixa salvar** e explica. Quando é **possível, mas estranho**, ele **pergunta "era isso?"** e deixa confirmar. A explicação vem numa janela com o Mordomo, com "Corrigir" e, quando cabe, "Sim, está certo".
+- **Não deixa salvar:**
+  - um gasto ou compra no **cartão acima do limite disponível**, quando o cartão tem limite cadastrado (compra parcelada conta pelo valor total, como no banco);
+  - a **carteira (Dinheiro) ficar negativa**, ao gastar, transferir, alterar ou **apagar** uma anotação.
+- **Pergunta antes de salvar:**
+  - o **banco ficar negativo** ("você usou o cheque especial?");
+  - **pagar mais do que deve** (o que passar vira crédito);
+  - **receber de uma pessoa mais do que ela devia**;
+  - **data a mais de 2 meses no futuro ou de mais de 5 anos atrás**;
+  - **valor 20 vezes acima do costume** e acima de R$ 1.000 ("confira os zeros");
+  - salvar um cartão com **limite menor do que já se deve** nele.
+- Os botões **"Pagar"** (acerto de contas) e **"Paguei"** (pessoas) agora sugerem pagar pela **conta com mais dinheiro livre**, e não mais pela primeira da lista (que costumava ser a carteira). A pessoa pode trocar.
+- Chat: nova pergunta **"Por que o app não deixou eu salvar?"** (agora são 51).
+- Testes: 723 verificações em 27 arquivos (novo: travas de coerência).
+
 ## [1.18.0-beta.1]: 7 de novembro de 2026 · o chat do Balancete
 - **Pílula "Perguntar"** no canto esquerdo de baixo, com o rostinho do Mordomo (simétrica à pena, à direita).
   - A cada troca de aba ela **fala uma frase curta** e **reage**: acena no Início, olha para baixo no Dinheiro ("cada centavo no seu lugar"), olha para cima no Planejar, lê nos Gráficos e Relatórios.

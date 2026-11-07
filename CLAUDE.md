@@ -4,9 +4,9 @@
 > aqui estão **as regras e o jeito de trabalhar**. O resto está em `docs/` (veja a tabela no fim).
 
 ## Em que pé estamos
-- **Versão 1.18.0-beta.1** (7 nov 2026): **chat do Balancete** com 50 perguntas prontas (D56); botão de anotar é a **pena** (D55). o app se chama **Balancete**, com o **Brasão** como logo, abertura em que ele ganha vida, letra de contabilidade, o **Mordomo** como balança do Início e os mascotes dos momentos especiais (D54). Antes: app reorganizado (`docs/MAPA-DO-APP.md`), só com a interface Balança (D39), paleta **preto, dourado e branco** (D44), anotar em dois toques (D43), conta Dinheiro com cédulas, **abas Gráficos e Relatórios com 10 indicadores** (D45, D53), acerto de contas no Planejar (D46), busca com lista completa e categorias favoritas (D47), seletor de tipo na folha (D48), visual "vivo" com animações (D49) e botão + solto no canto direito, com novidades que chegam a quem já usa o app (D51), e acerto de contas em janela por cima da tela, com dica de instalar (D52), e as funções contábeis conferir com o banco, contas do ano, mês a mês e custo fixo de vida (D53; análise em `docs/ANALISE-CONTABIL.md`). **Plano em andamento** (passos 6 a 9 no `docs/ROTEIRO.md`): cada passo é examinado, melhorado e decidido com o dono antes de fazer. **Próximo (desenho decidido, ainda sem código):** investimentos, caixinhas que rendem e nova aba (D50). **Ainda sem teste com pessoas reais em celular.**
+- **Versão 1.19.0-beta.1** (7 nov 2026): **travas de coerência** (D57); **chat do Balancete** com 51 perguntas prontas (D56); botão de anotar é a **pena** (D55). o app se chama **Balancete**, com o **Brasão** como logo, abertura em que ele ganha vida, letra de contabilidade, o **Mordomo** como balança do Início e os mascotes dos momentos especiais (D54). Antes: app reorganizado (`docs/MAPA-DO-APP.md`), só com a interface Balança (D39), paleta **preto, dourado e branco** (D44), anotar em dois toques (D43), conta Dinheiro com cédulas, **abas Gráficos e Relatórios com 10 indicadores** (D45, D53), acerto de contas no Planejar (D46), busca com lista completa e categorias favoritas (D47), seletor de tipo na folha (D48), visual "vivo" com animações (D49) e botão + solto no canto direito, com novidades que chegam a quem já usa o app (D51), e acerto de contas em janela por cima da tela, com dica de instalar (D52), e as funções contábeis conferir com o banco, contas do ano, mês a mês e custo fixo de vida (D53; análise em `docs/ANALISE-CONTABIL.md`). **Plano em andamento** (passos 7 a 9 no `docs/ROTEIRO.md`): cada passo é examinado, melhorado e decidido com o dono antes de fazer. **Próximo (desenho decidido, ainda sem código):** investimentos, caixinhas que rendem e nova aba (D50). **Ainda sem teste com pessoas reais em celular.**
 - App no ar em https://grluans09-source.github.io/caderneta/ (GitHub Pages, publicado por GitHub Actions a partir da pasta `app/`).
-- 1 arquivo de app (`app/index.html`, ~3.300 linhas), 26 arquivos de teste (709 verificações) que rodam com `npm test`.
+- 1 arquivo de app (`app/index.html`, ~3.300 linhas), 27 arquivos de teste (723 verificações) que rodam com `npm test`.
 - Próximos passos em `docs/ROTEIRO.md`. Estado, riscos e dívidas em `docs/AVALIACAO.md`.
 
 ## Quem é o dono e como falar com ele
@@ -42,6 +42,7 @@
 - **Caixinhas são organização pessoal**, fora da contabilidade: olham só o **dinheiro real nas contas** (sem dívidas), o guardado **continua na conta e continua sendo da pessoa** (como a caixinha de um banco: o total não muda), só sai de "Dinheiro para usar agora" e volta ao tirar. Na tela, "livre" virou "para usar".
 - **Listas longas nunca aparecem inteiras**: 15 por vez, com busca e ordem por data, valor ou nome.
 - **Apagar** conta, bem ou pessoa com anotações é permitido, **com aviso claro** do que sai junto.
+- **Travas de coerência (D57)**: o app **impede** o que não acontece na vida real (cartão acima do limite, carteira negativa) e **pergunta "era isso?"** no que é possível mas estranho (banco negativo, pagar ou receber a mais, data distante, valor fora do costume). Função nova que grava anotações deve passar por `conferirAnotacao()`.
 - Conteúdo educativo (frases da capa): só autores reais, atribuição conferida.
 
 ## Como trabalhar (fluxo de toda mudança)
@@ -95,7 +96,7 @@ npm run icones  # regenera app/icon.svg e os PNGs a partir do Brasão (tools/bra
 | `docs/DECISOES.md` | Decisões e motivos |
 | `docs/PUBLICACAO.md` | Publicar, backup, recuperar o projeto, migrar de hospedagem |
 | `docs/ANALISE-CONTABIL.md` | O que é contabilidade de verdade, o que é finanças pessoais e o que é ideia do dono; sugestões de funções contábeis |
-| `docs/CHAT-PERGUNTAS.md` | As 50 perguntas do chat e como cada uma é respondida |
+| `docs/CHAT-PERGUNTAS.md` | As 51 perguntas do chat e como cada uma é respondida |
 | `docs/MAPA-DO-APP.md` | Onde mora cada assunto, mapa de cores, fluxo de uso (o app de hoje) |
 | `docs/GUIA-TESTADORES.md` | Como mandar o app a testadores e o que observar |
 | `docs/design/balancete-identidade.html` | Protótipo aprovado do Brasão, do Mordomo, da abertura, do botão do chat, dos secundários e da letra (abra no navegador) |

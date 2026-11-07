@@ -16,7 +16,7 @@ Passo 5 do plano: **aprovado pelo dono em 7 nov 2026 e no app desde a versão 1.
   - **[aprender]**: educação financeira simples.
 - **O que o chat não faz:** não recomenda investimento específico (não é consultor licenciado), não manda dados para lugar nenhum e não finge entender o que não está na lista.
 
-## As 50 perguntas
+## As 51 perguntas
 
 ### Meu dinheiro (10)
 
@@ -60,7 +60,7 @@ Passo 5 do plano: **aprovado pelo dono em 7 nov 2026 e no app desde a versão 1.
 | 26 | Quanto falta para completar minha caixinha? | dados | Para cada caixinha com alvo: quanto falta e quanto guardar por mês até a data |
 | 27 | Minhas finanças estão saudáveis? | dados | Resumo dos 10 indicadores: quantos estão saudáveis, em atenção e em alerta, e o mais urgente |
 
-### Como usar o app (13)
+### Como usar o app (14)
 
 | # | Pergunta | Tipo | Como responde |
 |---|---|---|---|
@@ -77,6 +77,7 @@ Passo 5 do plano: **aprovado pelo dono em 7 nov 2026 e no app desde a versão 1.
 | 38 | Como faço uma cópia dos meus dados? | app | Mais → Ajustes → Guardar uma cópia (e por que fazer toda semana) |
 | 39 | Troquei de celular. Como levo meus dados? | app | Guardar uma cópia no celular antigo e recuperar no novo |
 | 40 | Como deixo a letra maior ou a tela escura? | app | Mais → Ajustes → Letra e Cores |
+| 51 | Por que o app não deixou eu salvar? | app | Explica as travas de coerência (D57): o que ele impede e o que só pergunta. Acrescentada na 1.19.0 |
 
 ### Aprender (10)
 
