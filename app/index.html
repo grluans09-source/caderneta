@@ -201,7 +201,7 @@ nav .in{position:relative}
 .legenda-ag .k-divida:before{background:var(--out)}
 .legenda-ag .k-fixa:before{background:var(--tr)}
 .legenda-ag .k-receber:before{background:var(--in)}
-/* Anotar em dois toques: o botão + abre 4 bolinhas, uma por tipo de anotação */
+/* Anotar em dois toques: o botão da pena abre 4 bolinhas, uma por tipo de anotação */
 .fab span.b{transition:transform .3s ease}
 .fab.aberto span.b{transform:rotate(45deg)}
 /* folha: 3 bolinhas para trocar de tipo */
@@ -660,16 +660,23 @@ html[data-tam="gg"] .mm-tri{grid-template-columns:1fr}
 .acm .ac-t span{color:#B9B09A}.acm .ac-t em{color:#F29090}
 .acm .ac-v{color:#F29090}.acm .ac-pagas .ac-v{color:#B9B09A}
 .acm .ac-pagas .ac-t b:before{content:"✓ ";color:#E8CB6A}
-/* ===== botão + no canto direito de baixo, logo acima da barra; bolinhas em quarto de círculo (esquerda e para cima) ===== */
+/* ===== botão de anotar (a pena) no canto direito de baixo, logo acima da barra; bolinhas em quarto de círculo (esquerda e para cima) ===== */
 nav .in{grid-template-columns:repeat(6,1fr)}
 .fab{position:fixed;right:1rem;bottom:calc(4.7rem + env(safe-area-inset-bottom));z-index:21;display:flex;flex-direction:row;align-items:center;gap:.5rem;padding:0;opacity:1}
 .fab span.b{margin-top:0}
-.fab em{font-style:normal;font-weight:800;font-size:.8rem;background:var(--capa);color:var(--capa-ink);border:2px solid var(--latao);border-radius:999px;padding:.2rem .7rem;box-shadow:0 3px 8px rgba(0,0,0,.3)}
-.fab.aberto em{display:none}
+/* o botão de anotar é a pena num medalhão de ouro (D55); aberto, vira um "×" */
+.fab span.b{background:none;border:0;padding:0;width:3.9rem;height:3.9rem;box-shadow:0 5px 0 rgba(0,0,0,.35),0 8px 16px rgba(0,0,0,.35)}
+.fab .pena{display:block;width:100%;height:100%;overflow:visible}
+.fab .pena-x{opacity:0;transition:opacity .2s}
+.fab .pena-i{transform-box:fill-box;transform-origin:50% 50%;transition:opacity .2s,transform .3s}
+.fab.aberto span.b{transform:none!important}
+.fab.aberto .pena-i{opacity:0;transform:scale(.6) rotate(-30deg)}
+.fab.aberto .pena-x{opacity:1}
+.fab:active span.b{transform:scale(.92)}
 .fabmenu{--R:8.5rem}
 html[data-tam="g"] .fabmenu{--R:8rem}
 html[data-tam="gg"] .fabmenu{--R:7.2rem}
-.fabarco{left:auto;right:calc(1rem + 1.8rem);bottom:calc(4.7rem + 1.8rem + env(safe-area-inset-bottom))}
+.fabarco{left:auto;right:calc(1rem + 1.95rem);bottom:calc(4.7rem + 1.95rem + env(safe-area-inset-bottom))}
 .fabmenu.emfolha .fabarco{right:calc(1rem + 1.9rem);bottom:calc(1rem + 1.9rem + env(safe-area-inset-bottom))}
 .fbl{top:50%;left:auto;right:100%;transform:translateY(-50%);margin:0 .55rem 0 0;text-align:right}
 .fb-bem .fbl{top:auto;bottom:100%;right:0;transform:none;margin:0 0 .45rem 0}
@@ -692,7 +699,7 @@ html[data-tam="g"] .fbl{max-width:4.8rem}
   <button data-a="ir" data-v="relatorios"><span class="ic"><svg viewBox="0 0 24 24"><path d="M7 2.4h6.7l6 6V18.4a3.2 3.2 0 0 1-3.2 3.2H7a3.2 3.2 0 0 1-3.2-3.2V5.6A3.2 3.2 0 0 1 7 2.4z"/><path class="acc cut" d="M13.7 2.4V6a2.4 2.4 0 0 0 2.4 2.4h3.6z"/><rect class="cut" x="7.2" y="12" width="9.6" height="2.3" rx="1.15"/><rect class="cut" x="7.2" y="16.2" width="6.2" height="2.3" rx="1.15"/></svg></span><span class="lb">Relatórios</span></button>
   <button data-a="ir" data-v="mais"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="2.6"/><circle cx="12" cy="12" r="2.6"/><circle cx="19" cy="12" r="2.6"/></svg></span><span class="lb">Mais</span></button>
 </div></nav>
-<button class="fab" data-a="novo" aria-label="Anotar: escolher o tipo" aria-haspopup="true" aria-expanded="false"><em>Anotar</em><span class="b" aria-hidden="true">+</span></button>
+<button class="fab" data-a="novo" aria-label="Anotar: escolher o tipo" aria-haspopup="true" aria-expanded="false"><span class="b" aria-hidden="true"><svg class="pena" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="48" fill="url(#mg-oV)" stroke="#6E520C" stroke-width="1.5"/><circle cx="50" cy="50" r="44.5" fill="none" stroke="#7C5E0F" stroke-width="3" stroke-dasharray="1 1.7"/><circle cx="50" cy="50" r="40" fill="url(#mg-oR)" stroke="#6E520C" stroke-width="1.2"/><circle cx="50" cy="50" r="37.5" fill="none" stroke="#FFF3C4" stroke-width="1" opacity=".6"/><g class="pena-i"><path d="M66 22C52 26 40 40 33 58L30 70L40 62C56 54 66 40 70 26Z" fill="#141007"/><path d="M68 24C56 32 46 44 37 60" stroke="#E8C14F" stroke-width="1.6" fill="none"/><path d="M33 58L30 70" stroke="#141007" stroke-width="3" stroke-linecap="round"/><path class="pena-t" d="M24 76Q34 70 44 76T64 76" stroke="#141007" stroke-width="3" fill="none" stroke-linecap="round"/></g><path class="pena-x" d="M37 37L63 63M63 37L37 63" stroke="#141007" stroke-width="7" stroke-linecap="round"/></svg></span></button>
 
 <div class="fabmenu" id="fabMenu" aria-hidden="true">
   <div class="fabfundo" data-a="fabFecha"></div>
@@ -723,7 +730,7 @@ html[data-tam="g"] .fbl{max-width:4.8rem}
 /* ---------- utilidades ---------- */
 var KEY="caderneta:v2";
 /* versão do app (siga o CHANGELOG.md; subir junto com VERSAO em sw.js e "version" em package.json) */
-var VERSAO_APP="1.16.0-beta.1";
+var VERSAO_APP="1.17.0-beta.1";
 var RE_ID=/^[A-Za-z0-9_-]+$/, RE_DATA=/^\d{4}-\d{2}-\d{2}$/;
 var MES=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
 var MES3=["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
@@ -1687,12 +1694,12 @@ function telaInicio(){
     (metas.length?'<h2>Metas do mês</h2><div class="card"><div class="jarras">'+metas.slice(0,4).map(function(k){return jarraMeta(k,r.porSai)}).join("")+'</div><button class="link" data-a="ir" data-v="metas">Ver todas as metas</button></div>':'')+
     '<h2>Últimas anotações</h2><div class="card" style="padding:.3rem 1rem">'+
     (ult.length?'<div class="lista">'+ult.map(linha).join("")+'</div>'
-      :'<div class="vazio"><b>Nada anotado ainda</b>Toque no botão <b style="display:inline">+</b> embaixo para começar.</div>')+
+      :'<div class="vazio"><b>Nada anotado ainda</b>Toque na <b style="display:inline">pena dourada</b>, embaixo à direita, para começar.</div>')+
     '</div>'+(ult.length?'<button class="link" data-a="ir" data-v="anotacoes">Ver todas as anotações, procurar e ordenar</button>':'');
 }
 
 /* =====================================================================
-   ANOTAR EM DOIS TOQUES: o botão + abre 4 bolinhas (os 4 tipos); a folha traz
+   ANOTAR EM DOIS TOQUES: o botão da pena abre 4 bolinhas (os 4 tipos); a folha traz
    listas curtas (3 contas, 5 categorias) com busca; a conta Dinheiro é a carteira
    ===================================================================== */
 var TIPOS=[["saida","Gastei","−","gasto"],["entrada","Recebi","+","ganho"],["transferencia","Transferi","⇄","transf"],["bem","Comprei um bem","⌂","bem"]];
@@ -3230,7 +3237,7 @@ function finalizarOnb(){
   }
   S.contas=contas; S.categorias=categoriasPadrao(); S.lancamentos=[]; S.fixas=[]; S.caixas=[]; S.reservas=[]; S.config.pronto=true;
   salvar(); $("#onb").classList.remove("on"); document.body.style.overflow=""; O=null; ir("inicio");
-  toast("Tudo pronto! Toque em + para anotar.");
+  toast("Tudo pronto! Toque na pena dourada para anotar.");
 }
 
 /* =====================================================================

@@ -21,9 +21,12 @@ const linhas=[...d.querySelectorAll("#modal #acLista .ac-t span")].map(x=>x.text
 eq("na janela a vencida diz 'atrasada há 4 dias' e a outra 'vence em 10 dias'",[/atrasada há 4 dias/.test(linhas[0]),/vence em 10 dias/.test(linhas[1])],[true,true]);
 eq("a atrasada vem primeiro",/Carnê/.test(d.querySelector("#modal #acLista .ac-t b").textContent),true);
 eq("o mesmo texto aparece na agenda",/atrasada há 4 dias/.test($("#tela").textContent),true);
-// ---- botão + no canto: a palavra Anotar fica à esquerda do círculo ----
+// ---- botão de anotar no canto: a pena num medalhão, sem a palavra do lado ----
 const fab=$("body > .fab");
-eq("o botão + fica fora da barra, com a palavra antes do círculo (o círculo é o último, encostado no canto)",[fab.firstElementChild.tagName,fab.lastElementChild.classList.contains("b")],["EM",true]);
+eq("o botão de anotar fica fora da barra e é a pena, sem a palavra Anotar do lado (o nome fica só para leitor de tela)",[!!fab.querySelector("svg.pena"),!fab.querySelector("em"),fab.getAttribute("aria-label")],[true,true,"Anotar: escolher o tipo"]);
+fab.click();
+eq("aberto, a pena dá lugar a um × para fechar",[fab.classList.contains("aberto"),!!fab.querySelector(".pena-x")],[true,true]);
+fab.click();
 // ---- dica de instalar ----
 eq("sem saber se está instalado (ambiente de teste), não mostra a dica",!!$("#dicaInst"),false);
 const w2=abre("navegador");w2.document.querySelector('nav [data-v="inicio"]').click();

@@ -9,14 +9,14 @@ Aplica as decisões Q1 a Q7 da [auditoria](AUDITORIA-FUNCOES.md), aceitas pelo d
 4. **Cada botão diz o que faz** (verbo + coisa: "Guardar na caixinha", "Pagar a fatura").
 5. **No máximo 5 blocos por tela.** O resto fica atrás de "Ver mais".
 
-## 1. A barra de baixo (sempre igual: Início · Dinheiro · Planejar · Gráficos · Relatórios · Mais) e o botão + solto no canto direito, logo acima dela
+## 1. A barra de baixo (sempre igual: Início · Dinheiro · Planejar · Gráficos · Relatórios · Mais) e o botão da **pena** (anotar) solto no canto direito, logo acima dela; a pílula "Perguntar" do chat vai no canto esquerdo (passo 5)
 
 | Botão | Pergunta que responde |
 |---|---|
 | **Início** | Como estou hoje? |
 | **Dinheiro** | Onde está meu dinheiro e o que eu devo? |
-| **+ Anotar** (botão redondo no canto direito de baixo, fora da barra) | O que aconteceu agora? |
-| **Menu de bolinhas**: o toque no + gera 4 bolinhas em quarto de círculo, para a esquerda e para cima (Gastei bordô, Recebi azul, Transferi ardósia, Comprei um bem cobre) | Anotar em dois toques: o 2º toque abre a folha já no tipo escolhido. Vale em todas as telas |
+| **Anotar** (a **pena dourada** num medalhão, no canto direito de baixo, fora da barra; aberto vira "×") | O que aconteceu agora? |
+| **Menu de bolinhas**: o toque na pena gera 4 bolinhas em quarto de círculo, para a esquerda e para cima (Gastei bordô, Recebi azul, Transferi ardósia, Comprei um bem cobre) | Anotar em dois toques: o 2º toque abre a folha já no tipo escolhido. Vale em todas as telas |
 | **Planejar** | O que vem pela frente? |
 | **Gráficos** | Como estão minhas finanças, em imagem? (Mês a mês e 10 indicadores) |
 | **Relatórios** | O que cada indicador quer dizer sobre mim? (um relatório por indicador) |
@@ -73,9 +73,9 @@ Quatro abas curtas: **Contas · Dívidas · Bens · Pessoas**
 - **Bens:** o que tem valor e como o valor mudou
 - **Pessoas:** quem me deve e a quem devo
 
-### + Anotar: "O que aconteceu"
+### Anotar (a pena): "O que aconteceu"
 > *"Escolha o que aconteceu e preencha: de onde saiu, para onde foi."*
-O tipo vem do **menu de bolinhas** do botão + (2 toques). A folha mostra o tipo no título e, **embaixo no canto direito, um botão redondo fixo** (com a cor e o símbolo do tipo atual); tocar nele gera as 4 bolinhas de novo, com a do tipo atual **apagada** ("você está aqui") e as outras 3 trocando o tipo sem perder o que foi digitado. Duas colunas curtas: **"De onde saiu"** = conta Dinheiro + as **3 favoritas** (ou as 3 mais usadas); **"Para onde foi"** = as **5 categorias favoritas** (ou as mais usadas). Cada coluna tem uma **busca**: **tocar no campo abre a lista com tudo** (em ordem alfabética, rolando dentro da coluna), digitar filtra todas, e "↑ Mostrar só as favoritas" volta à lista curta. Há "★ Escolher minhas 3 favoritas" (contas) e "★ Escolher minhas 5 favoritas" (categorias). No dinheiro vivo, valores com centavos ganham a sugestão de **arredondar para reais inteiros**.
+O tipo vem do **menu de bolinhas** do botão da pena (2 toques). A folha mostra o tipo no título e, **embaixo no canto direito, um botão redondo fixo** (com a cor e o símbolo do tipo atual); tocar nele gera as 4 bolinhas de novo, com a do tipo atual **apagada** ("você está aqui") e as outras 3 trocando o tipo sem perder o que foi digitado. Duas colunas curtas: **"De onde saiu"** = conta Dinheiro + as **3 favoritas** (ou as 3 mais usadas); **"Para onde foi"** = as **5 categorias favoritas** (ou as mais usadas). Cada coluna tem uma **busca**: **tocar no campo abre a lista com tudo** (em ordem alfabética, rolando dentro da coluna), digitar filtra todas, e "↑ Mostrar só as favoritas" volta à lista curta. Há "★ Escolher minhas 3 favoritas" (contas) e "★ Escolher minhas 5 favoritas" (categorias). No dinheiro vivo, valores com centavos ganham a sugestão de **arredondar para reais inteiros**.
 
 ### Planejar: "O que vem pela frente"
 > *"O que você precisa pagar e como se organizar."*
@@ -133,7 +133,7 @@ Busca, ordem por data, valor ou nome, filtros e 15 por vez. É a única lista co
 | Situação | Caminho |
 |---|---|
 | Primeiro acesso | Primeiros passos (3 telas) → Início |
-| Gastei no mercado | **+ Anotar** → Gastei → Salvar |
+| Gastei no mercado | **pena** → Gastei → Salvar |
 | Quero saber o que ainda vou pagar | Início ("Falta pagar") → Planejar |
 | Paguei a fatura do cartão | Dinheiro > Dívidas > Pagar a fatura |
 | Quero guardar dinheiro | Planejar > Caixinhas > Guardar |

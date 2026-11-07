@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Passo 4: anotar e chat</title>
+<style>
+:root{--bg:#F6F1E4;--card:#FFFDF7;--ink:#141414;--ink2:#5C574B;--ouro:#C9A227;--preto:#0A0A0A;--rule:#E4DCC6;--serif:'Times New Roman',Times,'Noto Serif',serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E0E0E;--card:#191816;--ink:#F3EEE0;--ink2:#B9B09A;--rule:#2E2B25}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.45;font-variant-numeric:lining-nums tabular-nums}
+.wrap{max-width:62rem;margin:0 auto;padding:1rem 16px 4rem}
+header.capa{background:var(--preto);color:#F5EFDF;border-bottom:3px solid var(--ouro);padding:1.4rem 16px}
+header.capa .wrap{padding:0}
+h1{font-family:var(--serif);font-size:1.6rem;margin:0;color:#E8CB6A}
+.capa p{margin:.3rem 0 0;color:#CFC6AD}
+h2{font-family:var(--serif);font-size:1.35rem;margin:2.2rem 0 .3rem}
+h2:after{content:"";display:block;width:2.6rem;height:.3rem;border-radius:.2rem;background:var(--ouro);margin-top:.35rem}
+.sub{color:var(--ink2);margin:.2rem 0 1rem}
+.grade{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:.9rem}
+.op{background:var(--card);border:1px solid var(--rule);border-top:5px solid var(--ouro);border-radius:1.2rem;padding:1rem;text-align:center}
+.op h3{font-family:var(--serif);margin:.6rem 0 .2rem;font-size:1.1rem}
+.op p{margin:0;color:var(--ink2);font-size:.9rem}
+.vit{background:radial-gradient(ellipse at 50% 85%,#2B230F 0%,#0A0A0A 65%);border-radius:1rem;height:9rem;display:grid;place-items:center}
+.fabx{width:4.4rem;height:4.4rem;border-radius:50%;border:0;padding:0;background:none;cursor:pointer;position:relative;-webkit-tap-highlight-color:transparent}
+.fabx svg{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 6px 5px rgba(0,0,0,.45))}
+.fabx:active svg{transform:scale(.93)}
+.fabx .anel{transform-box:fill-box;transform-origin:50% 50%;animation:respira 3.8s ease-in-out infinite}
+@keyframes respira{0%,70%,100%{opacity:0;transform:scale(1)}82%{opacity:.5;transform:scale(1.25)}}
+.fabx.toca .icone{animation:escreve .9s ease-in-out}
+@keyframes escreve{0%,100%{transform:none}25%{transform:translate(-3px,2px) rotate(-8deg)}50%{transform:translate(3px,-1px) rotate(4deg)}75%{transform:translate(-2px,1px) rotate(-4deg)}}
+.icone{transform-box:fill-box;transform-origin:50% 50%}
+.fabx.toca .traco{animation:traco .9s ease-in-out}
+@keyframes traco{from{stroke-dashoffset:40}to{stroke-dashoffset:0}}
+/* celulares */
+.fone{position:relative;height:30rem;border:9px solid #1b1b1b;border-radius:2rem;overflow:hidden;background:var(--bg);box-shadow:0 12px 28px rgba(0,0,0,.25)}
+.fone .topo{background:#0A0A0A;color:#E8CB6A;padding:.75rem .9rem;border-bottom:3px solid var(--ouro);font-family:var(--serif);font-weight:700;display:flex;align-items:center;justify-content:space-between}
+.fone .blocos{padding:.8rem}
+.fone .blocos i{display:block;height:3.4rem;border-radius:.8rem;background:var(--card);border:1px solid var(--rule);margin-bottom:.55rem}
+.fone nav{position:absolute;left:0;right:0;bottom:0;height:3.4rem;background:#0A0A0A;border-top:3px solid var(--ouro);display:grid;grid-template-columns:repeat(7,1fr);align-items:center;justify-items:center}
+.fone nav b{width:1.05rem;height:1.05rem;border-radius:.35rem;background:#CFC6AD;opacity:.55}
+.fone nav b.inv{background:#E8CB6A;opacity:1}
+.f-anotar{position:absolute;width:3.7rem;height:3.7rem}
+.pilula{position:absolute;display:flex;align-items:center;gap:.3rem;background:#0A0A0A;border:2px solid var(--ouro);border-radius:999px;padding:.15rem .75rem .15rem .2rem;color:#E8CB6A;font-weight:800;font-family:var(--serif);font-size:.95rem;box-shadow:0 4px 0 rgba(0,0,0,.3);cursor:pointer;border-style:solid}
+.pilula svg{width:2.4rem;height:2.4rem}
+.pilula.compacta{padding:.15rem;border-radius:50%}
+.pilula.compacta span{display:none}
+.lado{display:grid;grid-template-columns:repeat(auto-fit,minmax(15.5rem,1fr));gap:1rem}
+.lay h3{font-family:var(--serif);margin:.7rem 0 .2rem}
+.lay p{margin:0;color:var(--ink2);font-size:.9rem}
+.tag{display:inline-block;font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#0A0A0A;background:var(--ouro);border-radius:999px;padding:.1rem .55rem;margin-left:.3rem;vertical-align:.15rem}
+.bal{position:absolute;background:#0A0A0A;color:#F5EFDF;border:2px solid var(--ouro);border-radius:.9rem;padding:.35rem .6rem;font-size:.78rem;font-weight:700;font-family:var(--serif);max-width:10rem;opacity:0;transition:opacity .3s}
+.fone.on .bal{opacity:1}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="capa"><div class="wrap"><h1>Passo 4 · o botão de anotar e o chat</h1><p>O botão de anotar perde a palavra "Anotar" do lado e ganha um desenho que já diz "anotar". E a pílula "Perguntar" do chat precisa de um lugar que não brigue com ele.</p></div></header>
+<main class="wrap">
+
+<h2>1. O desenho do botão de anotar</h2>
+<p class="sub">Todos no mesmo formato: um medalhão de ouro redondo, como o Brasão, para combinar com o app. Toque em cada um: o desenho "escreve" um risquinho. O anel dourado que pulsa de vez em quando continua, para chamar atenção sem palavra.</p>
+<div class="grade" id="icones"></div>
+
+<h2>2. Onde ficam o botão de anotar e a pílula "Perguntar"</h2>
+<p class="sub">A barra de baixo já tem o espaço livre para a aba <b>Investimentos</b> (o quadradinho dourado). Toque em cada celular para ver a pílula falar.</p>
+<div class="lado" id="layouts"></div>
+</main>
+
+<script>
+(function(){
+"use strict";
+function defs(p){
+  return '<defs>'+
+   '<linearGradient id="'+p+'oV" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBEAA6"/><stop offset=".38" stop-color="#E2BC4A"/><stop offset=".7" stop-color="#B98E1F"/><stop offset="1" stop-color="#7C5E0F"/></linearGradient>'+
+   '<radialGradient id="'+p+'oR" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#FFF1BC"/><stop offset=".45" stop-color="#DDB547"/><stop offset="1" stop-color="#8A6A12"/></radialGradient>'+
+   '<radialGradient id="'+p+'esm" cx=".4" cy=".32" r=".75"><stop offset="0" stop-color="#2E2E2E"/><stop offset=".55" stop-color="#121212"/><stop offset="1" stop-color="#030303"/></radialGradient></defs>';
+}
+var UID=0;
+/* medalhão de ouro (o botão) com um desenho preto no meio */
+function medalhao(p,miolo){
+  return '<svg viewBox="0 0 100 100">'+defs(p)+
+   '<circle class="anel" cx="50" cy="50" r="46" fill="none" stroke="#C9A227" stroke-width="3"/>'+
+   '<circle cx="50" cy="50" r="46" fill="url(#'+p+'oV)" stroke="#6E520C" stroke-width="1.5"/>'+
+   '<circle cx="50" cy="50" r="42.5" fill="none" stroke="#7C5E0F" stroke-width="3" stroke-dasharray="1 1.7"/>'+
+   '<circle cx="50" cy="50" r="38" fill="url(#'+p+'oR)" stroke="#6E520C" stroke-width="1.2"/>'+
+   '<circle cx="50" cy="50" r="35.5" fill="none" stroke="#FFF3C4" stroke-width="1" opacity=".6"/>'+
+   '<g class="icone">'+miolo+'</g></svg>';
+}
+var PRETO="#141007";
+var ICONES=[
+ {id:"pena",n:"A. Pena de escrever",d:"A pena de tinteiro dos livros contábeis antigos, com um traço de tinta. Clássico e luxuoso: diz \"anotar\" sem palavra.",tag:"Recomendado",
+  m:'<path d="M66 22C52 26 40 40 33 58L30 70L40 62C56 54 66 40 70 26Z" fill="'+PRETO+'"/><path d="M68 24C56 32 46 44 37 60" stroke="#E8C14F" stroke-width="1.6" fill="none"/><path d="M33 58L30 70" stroke="'+PRETO+'" stroke-width="3" stroke-linecap="round"/><path class="traco" d="M24 76Q34 70 44 76T64 76" stroke="'+PRETO+'" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="40"/>'},
+ {id:"caneta",n:"B. Ponta de caneta-tinteiro",d:"A ponta da caneta-tinteiro, símbolo de assinatura e de quem fecha contrato. Moderno e elegante.",
+  m:'<path d="M50 20L66 46L56 74H44L34 46Z" fill="'+PRETO+'"/><path d="M50 30V58" stroke="#E8C14F" stroke-width="2"/><circle cx="50" cy="58" r="4" fill="#E8C14F"/><path d="M44 74H56V80H44Z" fill="'+PRETO+'"/>'},
+ {id:"livro",n:"C. Livro-razão com +",d:"O livro aberto de contabilidade com um \"+\" dourado: o mais explícito, une \"anotar\" e \"somar\".",
+  m:'<path d="M20 34Q34 28 49 34V74Q34 68 20 74Z" fill="'+PRETO+'"/><path d="M80 34Q66 28 51 34V74Q66 68 80 74Z" fill="'+PRETO+'"/><path d="M25 44H43M25 52H43M25 60H40" stroke="#C9A227" stroke-width="2" stroke-linecap="round" opacity=".7"/><circle cx="66" cy="54" r="11" fill="#E8C14F"/><path d="M66 48V60M60 54H72" stroke="'+PRETO+'" stroke-width="3.2" stroke-linecap="round"/>'},
+ {id:"mais",n:"D. Mais e menos (±)",d:"O sinal de entradas e saídas, a essência da contabilidade. Limpo, mas menos óbvio para quem nunca usou o app.",
+  m:'<path d="M50 26V58M34 42H66" stroke="'+PRETO+'" stroke-width="7" stroke-linecap="round"/><path d="M34 72H66" stroke="'+PRETO+'" stroke-width="7" stroke-linecap="round"/>'}
+];
+var gi=document.getElementById("icones");
+ICONES.forEach(function(o){
+  var el=document.createElement("article"); el.className="op";
+  el.innerHTML='<div class="vit"><button class="fabx" aria-label="'+o.n+'">'+medalhao("i"+(++UID),o.m)+'</button></div><h3>'+o.n+(o.tag?'<span class="tag">'+o.tag+'</span>':'')+'</h3><p>'+o.d+'</p>';
+  gi.appendChild(el);
+  var b=el.querySelector(".fabx"); b.addEventListener("click",function(){b.classList.remove("toca");void b.offsetWidth;b.classList.add("toca")});
+});
+
+/* rostinho do Mordomo para a pílula */
+function olhos(e,r,cy){var s='';[-1,1].forEach(function(k){s+='<g transform="translate('+(k*e)+' '+cy+')"><path d="M'+(-r*1.25)+' 0 Q0 '+(-r*1.1)+' '+(r*1.25)+' 0 Q0 '+(r*1.1)+' '+(-r*1.25)+' 0 Z" fill="#F5EBCB"/><circle r="'+(r*.55)+'" fill="#0A0A0A"/></g><path transform="translate('+(k*e)+' '+(cy-r*1.45)+')" d="M'+(-r*1.15)+' 0 Q0 '+(-r*.5)+' '+(r*1.15)+' 0" fill="none" stroke="#EAD27A" stroke-width="2.2" stroke-linecap="round"/>'});return s}
+function rosto(){var p="r"+(++UID);return '<svg viewBox="-40 -40 80 80">'+defs(p)+'<circle r="37" fill="url(#'+p+'oV)" stroke="#6E520C" stroke-width="1.2"/><circle r="30.5" fill="#6E520C"/><circle r="29" fill="url(#'+p+'esm)"/>'+olhos(10.5,6,-3)+'<path transform="translate(0 13)" d="M-10 -1 Q0 8 10 -1" fill="none" stroke="#EAD27A" stroke-width="2.3" stroke-linecap="round"/></svg>'}
+function anotar(){return medalhao("a"+(++UID),ICONES[0].m)}
+var NAV='<nav><b></b><b></b><b></b><b></b><b></b><b class="inv" title="Investimentos"></b><b></b></nav>';
+var LAY=[
+ {n:"1. Um em cada canto",tag:"Recomendado",d:"Anotar no canto direito (onde já está) e \"Perguntar\" no canto esquerdo. Simétrico, cada um no seu lado, sem disputa. A pílula fala ao trocar de aba.",
+  h:'<div class="f-anotar" style="right:.7rem;bottom:4.1rem">'+anotar()+'</div><div class="pilula" style="left:.7rem;bottom:4.35rem">'+rosto()+'<span>Perguntar</span></div><div class="bal" style="left:.7rem;bottom:7.3rem">Bom dia. Em que posso ajudar?</div>'},
+ {n:"2. Os dois à direita, empilhados",d:"\"Perguntar\" fica logo acima do botão de anotar, numa coluna só. Deixa o lado esquerdo da tela livre, mas fica mais longe do polegar.",
+  h:'<div class="f-anotar" style="right:.7rem;bottom:4.1rem">'+anotar()+'</div><div class="pilula compacta" style="right:1.15rem;bottom:8.3rem">'+rosto()+'<span>Perguntar</span></div><div class="bal" style="right:4.4rem;bottom:8.6rem">Bom dia. Em que posso ajudar?</div>'},
+ {n:"3. Perguntar no topo da tela",d:"A pílula vai para o cabeçalho de cada tela, ao lado do título, como o \"ajuda\" dos aplicativos de banco. Embaixo fica só o anotar. A tela fica mais limpa, mas o chat chama menos atenção.",
+  top:'<div class="pilula" style="position:static;padding:.05rem .55rem .05rem .1rem;font-size:.8rem">'+rosto().replace('<svg ','<svg style="width:1.8rem;height:1.8rem" ')+'<span>Perguntar</span></div>',
+  h:'<div class="f-anotar" style="right:.7rem;bottom:4.1rem">'+anotar()+'</div><div class="bal" style="right:.8rem;top:3.6rem">Bom dia. Em que posso ajudar?</div>'}
+];
+var gl=document.getElementById("layouts");
+LAY.forEach(function(o){
+  var el=document.createElement("div"); el.className="lay";
+  el.innerHTML='<div class="fone"><div class="topo"><span>Início</span>'+(o.top||'')+'</div><div class="blocos"><i></i><i></i><i></i><i></i><i></i></div>'+o.h+NAV+'</div><h3>'+o.n+(o.tag?'<span class="tag">'+o.tag+'</span>':'')+'</h3><p>'+o.d+'</p>';
+  gl.appendChild(el);
+  var f=el.querySelector(".fone"); f.addEventListener("click",function(){f.classList.add("on");clearTimeout(f._t);f._t=setTimeout(function(){f.classList.remove("on")},2600)});
+  setTimeout(function(){f.click()},800);
+});
+})();
+</script>
+</body>
+</html>

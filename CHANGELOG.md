@@ -5,6 +5,13 @@
 Formato: versão semântica (`MAIOR.MENOR.CORREÇÃO`). Cada versão diz **o que mudou para a pessoa que usa**.
 Antes da 1.0.0 as versões eram numeradas só pelo nome do cache do app (v1 a v16); estão aqui como marcos de desenvolvimento.
 
+## [1.17.0-beta.1]: 7 de novembro de 2026 · o botão de anotar é uma pena
+- **O botão de anotar virou uma pena de escrever** num medalhão de ouro com serrilha, como o Brasão. Saiu a palavrinha "Anotar" do lado: a pena já diz o que o botão faz, como a pena de tinteiro dos livros contábeis antigos. O nome continua para quem usa leitor de tela. O anel dourado que pulsa de vez em quando continua.
+- Aberto, a pena dá lugar a um **×** para fechar, e as 4 bolinhas saem do mesmo jeito.
+- Os textos que diziam "toque no +" agora dizem "toque na pena dourada".
+- Decidido no passo 4: a pílula **"Perguntar"** do chat vai ficar no **canto esquerdo de baixo** (um botão em cada canto). Ela entra junto com o chat, no passo 5, para ninguém tocar num botão que ainda não faz nada.
+- Testes: 688 verificações em 25 arquivos.
+
 ## [1.16.0-beta.1]: 7 de novembro de 2026 · o Mordomo no Início e os mascotes dos momentos especiais
 - **O Mordomo é a balança do Início.** A balança virou o personagem: metal com volume, pratos fundos pendurados por correntes, pedestal art déco, gravata-borboleta e o rosto no medalhão de esmalte. As moedas coloridas continuam nos pratos, com o mesmo significado de antes.
   - **Ele fica sempre em equilíbrio**, porque é a regra da contabilidade: o que você tem é igual ao que você deve mais o que é seu de verdade. Quem mostra a situação é **a cara dele**: **confiante** quando sobra bem, **atento** quando está apertado ou há conta atrasada, **preocupado** quando você deve mais do que tem.

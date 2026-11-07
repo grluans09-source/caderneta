@@ -29,7 +29,7 @@ Aberto no navegador, o app mostra uma vez, no Início, como instalar. Peça para
 ### Primeiros passos
 1. Responder "Onde está seu dinheiro hoje?" (carteira, banco, poupança). Pode deixar vazio o que não tem.
 2. Dizer se usa cartão de crédito (dia que fecha e dia que vence).
-3. Tocar no botão **+ Anotar** (redondo, dourado, no canto direito de baixo) para o primeiro gasto.
+3. Tocar no botão da **pena dourada** (redondo, no canto direito de baixo) para o primeiro gasto.
 
 ### Guardar e recuperar uma cópia dos dados
 - **Guardar:** Mais → Ajustes → **Guardar uma cópia**. Mandar o arquivo para o próprio e-mail ou WhatsApp.
@@ -41,7 +41,7 @@ Peça que a pessoa faça cada tarefa **sozinha, falando em voz alta o que pensa*
 
 | # | Tarefa | Onde costuma travar (hipótese) |
 |---|---|---|
-| 1 | Anotar um gasto do dia (ex.: mercado, R$ 45), **tocando no + e depois na bolinha vermelha "Gastei"** | Perceber que o + gera bolinhas e que elas são botões; achar a conta e a categoria nas listas curtas (ou na busca) |
+| 1 | Anotar um gasto do dia (ex.: mercado, R$ 45), **tocando na pena e depois na bolinha vermelha "Gastei"** | Perceber, sem ninguém explicar, que a pena é o botão de anotar e gera bolinhas e que elas são botões; achar a conta e a categoria nas listas curtas (ou na busca) |
 | 2 | Anotar uma compra parcelada no cartão | Escolher a conta do cartão e as parcelas |
 | 3 | Ver **quanto falta pagar neste mês** e **pagar uma conta pelo "Abrir o acerto de contas"** no Planejar | Achar o **Planejar** e usar as setas de mês do cartão "Falta pagar" |
 | 4 | **Guardar** um dinheiro numa caixinha e depois **usar** | Entender caixinha × meta, escolher a conta |
