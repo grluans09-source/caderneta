@@ -4,7 +4,7 @@
 > aqui estão **as regras e o jeito de trabalhar**. O resto está em `docs/` (veja a tabela no fim).
 
 ## Em que pé estamos
-- **Versão 1.8.0-beta.1** (7 nov 2026): app reorganizado (`docs/MAPA-DO-APP.md`), só com a interface Balança (os jeitos Razão e Cofre foram apagados, D39) e paleta nova azul-noite com ouro. **Ainda sem teste com pessoas reais em celular.**
+- **Versão 1.8.1-beta.1** (7 nov 2026): app reorganizado (`docs/MAPA-DO-APP.md`), só com a interface Balança (os jeitos Razão e Cofre foram apagados, D39) e paleta nova azul-noite com ouro. **Ainda sem teste com pessoas reais em celular.**
 - App no ar em https://grluans09-source.github.io/caderneta/ (GitHub Pages, publicado por GitHub Actions a partir da pasta `app/`).
 - 1 arquivo de app (`app/index.html`, ~2.400 linhas), 17 arquivos de teste que rodam com `npm test`.
 - Próximos passos em `docs/ROTEIRO.md`. Estado, riscos e dívidas em `docs/AVALIACAO.md`.

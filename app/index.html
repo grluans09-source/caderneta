@@ -147,6 +147,11 @@ nav .fab em{font-style:normal;font-weight:700;color:var(--capa-ink)}
 .dinheiro.s{color:var(--out)} .dinheiro.e{color:var(--in)} .dinheiro.t{color:var(--tr)}
 .dinheiro::placeholder{color:var(--ink3);opacity:.6}
 .chips{display:flex;flex-wrap:wrap;gap:.45rem}
+.ferrs{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin:.8rem 0 .2rem}
+.ferr{display:flex;flex-direction:column;gap:.15rem;min-height:4.2rem;padding:.65rem .8rem;border-radius:.8rem;background:var(--card);border:1px solid var(--rule);border-left:4px solid var(--latao);box-shadow:var(--shadow);text-align:left;color:var(--ink)}
+.ferr b{font-family:Georgia,serif;font-size:1rem}
+.ferr span{font-size:.8rem;color:var(--ink2)}
+html[data-tam="gg"] .ferrs{grid-template-columns:1fr}
 .abas-din{margin:.8rem 0 .2rem;flex-wrap:nowrap;gap:.35rem}
 .abas-din .chip{min-width:0;padding:.55rem .3rem;font-size:.9rem}
 html[data-tam="g"] .abas-din,html[data-tam="gg"] .abas-din{flex-wrap:wrap}
@@ -367,7 +372,7 @@ html.calmo *,html.calmo *:before{animation:none!important;transition:none!import
 /* ---------- utilidades ---------- */
 var KEY="caderneta:v2";
 /* versão do app (siga o CHANGELOG.md; subir junto com VERSAO em sw.js e "version" em package.json) */
-var VERSAO_APP="1.8.0-beta.1";
+var VERSAO_APP="1.8.1-beta.1";
 var RE_ID=/^[A-Za-z0-9_-]+$/, RE_DATA=/^\d{4}-\d{2}-\d{2}$/;
 var MES=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
 var MES3=["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
@@ -783,7 +788,7 @@ function cartaoPagar(ym,o){
   if(o.botao)h+='<button class="link" data-a="ir" data-v="planejar">Ver a agenda e pagar</button>';
   return h+'</div>';
 }
-function cartaoPagarInicio(){return cartaoPagar(ymMais(hojeISO().slice(0,7),PAG_OFF),{max:8,setas:true,off:PAG_OFF})}
+function cartaoPagarInicio(){return cartaoPagar(ymMais(hojeISO().slice(0,7),PAG_OFF),{max:5,setas:true,off:PAG_OFF})}
 /* No Início: só uma linha que leva ao Planejar, onde mora o cartão completo */
 function linhaFalta(){
   var ym=hojeISO().slice(0,7), p=pagarNoMes(ym), mes=MES[+ym.slice(5)-1];
@@ -865,7 +870,7 @@ var ABA={anotacoes:"mais",relatorios:"mais",ajustes:"mais",caixinhas:"planejar",
 function ir(vw){
   if(vw==="anotacoes"&&VIEW!=="anotacoes"){AN_VOLTA=(VIEW==="mais"||VIEW==="relatorios")?VIEW:"inicio";AN.q="";AN.n=15}
   VIEW=vw;
-  if(vw==="planejar")PAG_OFF=0;
+  if(vw==="planejar"){PAG_OFF=0;AG_TODAS=false}
   $("#tela").classList.remove("vira-d","vira-e");
   document.querySelectorAll("nav button[data-v]").forEach(function(b){
     if(b.dataset.v===(ABA[vw]||vw))b.setAttribute("aria-current","page"); else b.removeAttribute("aria-current");
@@ -1865,17 +1870,22 @@ function telaMais(){
     atalho("relatorios","Relatórios","Para onde foi o dinheiro, de onde veio e como evolui")+
     atalho("ajustes","Ajustes","Letra, cores, movimento, categorias e cópia dos dados")+'</div>';
 }
+var AG_TODAS=false;
 function telaPlanejar(){
   var ag=agenda(), mensal=S.fixas.filter(function(f){return f.freq!=="anual"}).reduce(function(s,f){return s+f.valor},0), res=totalReservado(), livre=livreAgora();
+  var nm=metasMes().length, mostra=AG_TODAS?ag.slice(0,30):ag.slice(0,4);
+  function ferr(v,t,s){return '<button class="ferr" data-a="ir" data-v="'+v+'"><b>'+esc(t)+'</b><span>'+esc(s)+'</span></button>'}
   return capa("O que vem pela frente","Planejar")+
-    '<p class="sub lead">O que você precisa pagar e como se organizar.</p><div id="cardPagar">'+cartaoPagarInicio()+'</div>'+
+    '<p class="sub lead">O que você precisa pagar e como se organizar.</p>'+
+    '<div class="ferrs" aria-label="Ferramentas">'+
+      ferr("metas","Metas do mês",nm?nm+(nm>1?" metas":" meta")+" de gasto":"Limite por categoria")+
+      ferr("caixinhas","Caixinhas",res>0?"Guardado "+brl(res):"Guardar por objetivo")+
+      ferr("fixas","Contas fixas",S.fixas.length?S.fixas.length+" · "+brl(mensal)+"/mês":"Assinaturas e planos")+
+      ferr("simulador","Simulador","E se eu comprar...?")+'</div>'+
+    '<div id="cardPagar">'+cartaoPagarInicio()+'</div>'+
     '<h2>Agenda dos próximos dias</h2><div class="card" style="padding:.3rem 1rem">'+
-    (ag.length?ag.slice(0,8).map(linhaAgenda).join(""):'<div class="vazio"><b>Nada para os próximos dias</b>Contas do cartão, contas fixas e cobranças aparecem aqui.</div>')+'</div>'+
-    '<h2>Ferramentas</h2>'+
-    atalho("metas","Metas do mês",metasMes().length?metasMes().length+" meta"+(metasMes().length>1?"s":"")+" de gasto":"Quanto posso gastar em cada coisa")+
-    atalho("caixinhas","Caixinhas","Para usar "+brl(livre)+" · Guardado "+brl(res))+
-    atalho("fixas","Contas fixas",S.fixas.length?S.fixas.length+" cadastrada"+(S.fixas.length>1?"s":"")+" · "+brl(mensal)+" por mês":"Assinaturas, plano de saúde, seguro...")+
-    atalho("simulador","Simulador","E se eu comprar...? Veja o peso nos próximos 12 meses");
+    (ag.length?mostra.map(linhaAgenda).join(""):'<div class="vazio"><b>Nada para os próximos dias</b>Contas do cartão, contas fixas e cobranças aparecem aqui.</div>')+'</div>'+
+    (ag.length>4?'<button class="link" data-a="agMais">'+(AG_TODAS?"Mostrar menos":"Ver todas ("+ag.length+")")+'</button>':'');
 }
 function telaFixas(){
   var mensal=S.fixas.filter(function(f){return f.freq!=="anual"}).reduce(function(s,f){return s+f.valor},0);
@@ -2221,6 +2231,7 @@ var ACOES={
     if(!banco){toast("Crie uma conta com dinheiro para pagar");return}
     novaFolha({tipo:"transferencia",contaId:banco.id,destinoId:c.id,cent:+d.valor,desc:"Pagamento "+c.nome});
   },
+  agMais:function(){AG_TODAS=!AG_TODAS; desenhar()},
   dinAba:function(d){DIN_ABA=d.v; desenhar()},
   gaveta:function(d){modalGaveta(d.id||null)},
   frase:function(){

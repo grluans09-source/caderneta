@@ -68,9 +68,9 @@ Gastei · Recebi · Transferi entre contas · Comprei um bem (duas colunas, como
 
 ### Planejar: "O que vem pela frente"
 > *"O que você precisa pagar e como se organizar."*
-1. **Falta pagar este mês** (cartão com total, já pago e setas de mês) ← casa oficial
-2. **Agenda dos próximos dias**
-3. Entradas: **Contas fixas · Metas do mês · Caixinhas · Simulador**
+1. **Ferramentas no topo** (4 botões compactos: Metas do mês · Caixinhas · Contas fixas · Simulador), para nunca ficarem escondidas atrás de uma lista longa
+2. **Falta pagar este mês** (cartão com total, até 5 contas, já pago e setas de mês) ← casa oficial
+3. **Agenda dos próximos dias** (mostra 4; "Ver todas" abre o resto)
 
 ### Planejar > Contas fixas: "Todo mês, no mesmo dia"
 Só o **cadastro** (as contas cadastradas, o total por mês e "+ Nova conta fixa"). O que vence aparece na Agenda.

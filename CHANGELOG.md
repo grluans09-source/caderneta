@@ -3,6 +3,11 @@
 Formato: versão semântica (`MAIOR.MENOR.CORREÇÃO`). Cada versão diz **o que mudou para a pessoa que usa**.
 Antes da 1.0.0 as versões eram numeradas só pelo nome do cache do app (v1 a v16); estão aqui como marcos de desenvolvimento.
 
+## [1.8.1-beta.1]: 7 de novembro de 2026 · Planejar com as ferramentas sempre à vista
+- **Problema:** com muitas contas a pagar, as ferramentas (Metas, Caixinhas, Contas fixas, Simulador) ficavam lá embaixo, depois da agenda.
+- **Solução:** as 4 ferramentas agora ficam **no topo** da tela Planejar, em 4 botões compactos. O cartão do mês lista até 5 contas (e diz "e mais N"), e a **agenda mostra só 4** com o botão **"Ver todas (N)"** / "Mostrar menos". Ao voltar à tela, a agenda volta recolhida.
+- Novo teste (497 verificações em 18 arquivos).
+
 ## [1.8.0-beta.1]: 7 de novembro de 2026 · só a interface Balança, paleta nova e revisão
 - **Apagados os jeitos Razão e Cofre e fluxo** (pedido do dono, D39). Fica só a interface Balança. Sem escolha de jeito em Ajustes; os Primeiros passos voltam a 3 passos. Quem tinha escolhido outro jeito volta sozinho para a Balança, sem perder dados.
 - **Paleta nova, de luxo contábil**: azul-noite, marfim e ouro. O **verde saiu do app** (confundia com "selecionado"). Agora cada cor tem um só significado: **azul safira** = entrou e dinheiro para usar; **bordô** = saiu e dívida; **ametista** = guardado nas caixinhas; **cobre** = bens; **ouro** = é meu de verdade; e **ouro com fundo claro** = item selecionado.
