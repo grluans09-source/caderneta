@@ -38,5 +38,13 @@ eq("'Mostrar menos' volta a 4",linhasAg(),antes);
 eq("o cartão do mês lista no máximo 5 e avisa quantas faltam",/e mais \d+ conta/.test($("#cardPagar").textContent),true);
 click('nav [data-v="inicio"]');click('nav [data-v="planejar"]');
 eq("ao voltar ao Planejar a agenda volta recolhida",linhasAg(),antes);
+// ---- mapa de cores da aba: cada cor, um significado ----
+click('nav [data-v="planejar"]');
+eq("cada ferramenta tem a classe da sua cor (metas, caixinhas, fixas, simulador)",["metas","caixinhas","fixas","simulador"].map(v=>!!$('#tela .ferr.f-'+v)),[true,true,true,true]);
+eq("o cartão do mês tem a faixa de 'sai' e as linhas têm a cor do tipo (dívida)",[!!$("#tela .card.pagar"),!!$("#cardPagar .it.k-divida")],[true,true]);
+eq("a agenda tem legenda com Dívida, Conta fixa e A receber",["k-divida","k-fixa","k-receber"].map(k=>!!$("#tela .legenda-ag .lg."+k)),[true,true,true]);
+eq("cada linha da agenda tem a cor do tipo",d.querySelectorAll("#tela .ag.k-divida").length>=1,true);
+eq("a conta que vence amanhã ou em até 3 dias fica com a data em destaque claro",!!$("#tela .ag.u-breve"),true);
+eq("o texto explica a data pintada e a data clara",/Data pintada/.test($("#tela").textContent)&&/Data clara/.test($("#tela").textContent),true);
 eq("erros de script",errs,[]);
 console.log(ok?"TUDO OK":"HÁ FALHAS");process.exit(ok?0:1);

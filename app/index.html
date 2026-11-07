@@ -19,20 +19,21 @@
   --in:#1E3A8A; --in-bg:#E1E7F6; --out:#9B1C2E; --out-bg:#F4DDE0; --tr:#4B5675; --tr-bg:#E3E6EF;
   --ouro:#8A6410; --ouro-bg:#F3E8C6; --latao:#C79A2B; --capa:#111B34; --capa-ink:#F5F0E3;
   --btn:#111B34; --btn-ink:#F5F0E3; --sel:#F6EBC6; --margem:#B5495A; --shadow:0 2px 8px rgba(17,27,52,.12);
+  --am:#6B4E9B; --cobre:#B26A3C;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-tema="claro"]){
     --bg:#0B1020; --card:#141B32; --ink:#EDE6D3; --ink2:#B9BFD2; --ink3:#9098B2; --rule:#242C48; --rule2:#3A4463;
     --in:#93ABF5; --in-bg:#1E2A4A; --out:#F08A98; --out-bg:#3A1C25; --tr:#AEB8D6; --tr-bg:#222C45;
     --ouro:#E2B945; --ouro-bg:#3A3118; --latao:#E2B945; --capa:#070B18; --capa-ink:#EDE6D3;
-    --btn:#E2B945; --btn-ink:#0B1020; --sel:#33290E; --margem:#6B3A44; --shadow:none;
+    --btn:#E2B945; --btn-ink:#0B1020; --sel:#33290E; --margem:#6B3A44; --shadow:none; --am:#A98BD6; --cobre:#CC8A56;
   }
 }
 :root[data-tema="escuro"]{
   --bg:#0B1020; --card:#141B32; --ink:#EDE6D3; --ink2:#B9BFD2; --ink3:#9098B2; --rule:#242C48; --rule2:#3A4463;
   --in:#93ABF5; --in-bg:#1E2A4A; --out:#F08A98; --out-bg:#3A1C25; --tr:#AEB8D6; --tr-bg:#222C45;
   --ouro:#E2B945; --ouro-bg:#3A3118; --latao:#E2B945; --capa:#070B18; --capa-ink:#EDE6D3;
-  --btn:#E2B945; --btn-ink:#0B1020; --sel:#33290E; --margem:#6B3A44; --shadow:none;
+  --btn:#E2B945; --btn-ink:#0B1020; --sel:#33290E; --margem:#6B3A44; --shadow:none; --am:#A98BD6; --cobre:#CC8A56;
 }
 html{font-size:16px;-webkit-text-size-adjust:100%}
 html[data-tam="g"]{font-size:19px}
@@ -147,6 +148,29 @@ nav .fab em{font-style:normal;font-weight:700;color:var(--capa-ink)}
 .dinheiro.s{color:var(--out)} .dinheiro.e{color:var(--in)} .dinheiro.t{color:var(--tr)}
 .dinheiro::placeholder{color:var(--ink3);opacity:.6}
 .chips{display:flex;flex-wrap:wrap;gap:.45rem}
+/* Planejar: uma cor, um significado. Bordô = sai/dívida · ardósia = compromisso fixo · safira = entra · ametista = guardado · cobre = compra de bem */
+.ferr.f-metas{border-left-color:var(--out)}
+.ferr.f-caixinhas{border-left-color:var(--am)}
+.ferr.f-fixas{border-left-color:var(--tr)}
+.ferr.f-simulador{border-left-color:var(--cobre)}
+.card.pagar{border-left:5px solid var(--out)}
+.pagar .it.k-divida{border-left:3px solid var(--out);padding-left:.5rem}
+.pagar .it.k-fixa{border-left:3px solid var(--tr);padding-left:.5rem}
+.ag{border-left:5px solid var(--rule2);padding-left:.5rem;margin-left:-.5rem}
+.ag.k-divida{border-left-color:var(--out)}
+.ag.k-fixa{border-left-color:var(--tr)}
+.ag.k-receber{border-left-color:var(--in)}
+.ag.u-breve .dia{background:var(--out-bg);border-radius:.4rem;padding:.15rem 0}
+.ag.u-agora .dia{background:var(--out);color:#fff;border-radius:.4rem;padding:.15rem 0}
+.ag.u-agora .dia i{color:#fff}
+.ag.k-receber.u-breve .dia{background:var(--in-bg)}
+.ag.k-receber.u-agora .dia{background:var(--in)}
+.legenda-ag{display:flex;flex-wrap:wrap;gap:.4rem .9rem;margin:-.2rem 0 .5rem;font-size:.82rem;color:var(--ink2)}
+.legenda-ag .lg{display:inline-flex;align-items:center;gap:.35rem}
+.legenda-ag .lg:before{content:"";width:.9rem;height:.45rem;border-radius:.25rem;background:var(--rule2)}
+.legenda-ag .k-divida:before{background:var(--out)}
+.legenda-ag .k-fixa:before{background:var(--tr)}
+.legenda-ag .k-receber:before{background:var(--in)}
 .ferrs{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin:.8rem 0 .2rem}
 .ferr{display:flex;flex-direction:column;gap:.15rem;min-height:4.2rem;padding:.65rem .8rem;border-radius:.8rem;background:var(--card);border:1px solid var(--rule);border-left:4px solid var(--latao);box-shadow:var(--shadow);text-align:left;color:var(--ink)}
 .ferr b{font-family:Georgia,serif;font-size:1rem}
@@ -372,7 +396,7 @@ html.calmo *,html.calmo *:before{animation:none!important;transition:none!import
 /* ---------- utilidades ---------- */
 var KEY="caderneta:v2";
 /* versão do app (siga o CHANGELOG.md; subir junto com VERSAO em sw.js e "version" em package.json) */
-var VERSAO_APP="1.8.1-beta.1";
+var VERSAO_APP="1.8.2-beta.1";
 var RE_ID=/^[A-Za-z0-9_-]+$/, RE_DATA=/^\d{4}-\d{2}-\d{2}$/;
 var MES=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
 var MES3=["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
@@ -781,7 +805,7 @@ function cartaoPagar(ym,o){
   if(o.lista!==false&&p.falta.length){
     h+=p.falta.slice(0,o.max||5).map(function(x){
       var dt=x.data?dataBR(x.data).slice(0,5):"sem data";
-      return '<div class="it"><span>'+esc(x.titulo)+' <span class="faint">'+dt+'</span>'+(x.atrasada?' <em>atrasada</em>':'')+'</span><b>'+esc(brl(x.valor))+'</b></div>';
+      return '<div class="it k-'+esc(x.k)+'"><span>'+esc(x.titulo)+' <span class="faint">'+dt+'</span>'+(x.atrasada?' <em>atrasada</em>':'')+'</span><b>'+esc(brl(x.valor))+'</b></div>';
     }).join("");
     if(p.falta.length>(o.max||5))h+='<p class="faint">e mais '+(p.falta.length-(o.max||5))+' conta(s)</p>';
   }
@@ -1861,7 +1885,8 @@ function linhaAgenda(a){
   var bts=a.k==="divida"?'<button class="btn peq" data-a="pagar" data-id="'+a.g.conta.id+'" data-valor="'+a.valor+'">Pagar</button>'
     :a.k==="fixa"?'<button class="btn peq" data-a="fxPagar" data-id="'+a.x.fixa.id+'" data-ref="'+a.x.ref+'" data-data="'+a.data+'">Paguei</button><button class="btn peq sec" data-a="fxPular" data-id="'+a.x.fixa.id+'" data-ref="'+a.x.ref+'">Pular este mês</button>'
     :'<button class="btn peq" data-a="pReceberId" data-id="'+a.r.conta.id+'">Recebi</button>';
-  return '<div class="ag"><div class="lanc"><span class="dia"><b>'+(p?p[2]:"—")+'</b><i>'+(p?MES3[+p[1]-1]:"")+'</i></span><span class="txt"><b>'+esc(tit)+'</b><i>'+esc(sub)+'</i></span><span class="pont"></span><span class="vl '+(rec?"in":"out")+'">'+esc(brl(a.valor))+'</span></div><div class="bts">'+bts+'</div></div>';
+  var dd=a.data?diasAte(a.data):-1, urg=dd<=0?" u-agora":dd<=3?" u-breve":"";
+  return '<div class="ag k-'+a.k+urg+'"><div class="lanc"><span class="dia"><b>'+(p?p[2]:"—")+'</b><i>'+(p?MES3[+p[1]-1]:"")+'</i></span><span class="txt"><b>'+esc(tit)+'</b><i>'+esc(sub)+'</i></span><span class="pont"></span><span class="vl '+(rec?"in":"out")+'">'+esc(brl(a.valor))+'</span></div><div class="bts">'+bts+'</div></div>';
 }
 function atalho(v,t,s){return '<button class="atalho" data-a="ir" data-v="'+v+'"><div><b>'+esc(t)+'</b><span>'+esc(s)+'</span></div><i>›</i></button>'}
 function telaMais(){
@@ -1874,7 +1899,7 @@ var AG_TODAS=false;
 function telaPlanejar(){
   var ag=agenda(), mensal=S.fixas.filter(function(f){return f.freq!=="anual"}).reduce(function(s,f){return s+f.valor},0), res=totalReservado(), livre=livreAgora();
   var nm=metasMes().length, mostra=AG_TODAS?ag.slice(0,30):ag.slice(0,4);
-  function ferr(v,t,s){return '<button class="ferr" data-a="ir" data-v="'+v+'"><b>'+esc(t)+'</b><span>'+esc(s)+'</span></button>'}
+  function ferr(v,t,s){return '<button class="ferr f-'+v+'" data-a="ir" data-v="'+v+'"><b>'+esc(t)+'</b><span>'+esc(s)+'</span></button>'}
   return capa("O que vem pela frente","Planejar")+
     '<p class="sub lead">O que você precisa pagar e como se organizar.</p>'+
     '<div class="ferrs" aria-label="Ferramentas">'+
@@ -1883,8 +1908,9 @@ function telaPlanejar(){
       ferr("fixas","Contas fixas",S.fixas.length?S.fixas.length+" · "+brl(mensal)+"/mês":"Assinaturas e planos")+
       ferr("simulador","Simulador","E se eu comprar...?")+'</div>'+
     '<div id="cardPagar">'+cartaoPagarInicio()+'</div>'+
-    '<h2>Agenda dos próximos dias</h2><div class="card" style="padding:.3rem 1rem">'+
+    '<h2>Agenda dos próximos dias</h2>'+(ag.length?'<p class="legenda-ag"><span class="lg k-divida">Dívida</span><span class="lg k-fixa">Conta fixa</span><span class="lg k-receber">A receber</span></p>':'')+'<div class="card" style="padding:.3rem 1rem">'+
     (ag.length?mostra.map(linhaAgenda).join(""):'<div class="vazio"><b>Nada para os próximos dias</b>Contas do cartão, contas fixas e cobranças aparecem aqui.</div>')+'</div>'+
+    (ag.length?'<p class="faint" style="margin-top:.4rem">Data pintada: vence hoje ou já passou. Data clara: vence em até 3 dias.</p>':'')+
     (ag.length>4?'<button class="link" data-a="agMais">'+(AG_TODAS?"Mostrar menos":"Ver todas ("+ag.length+")")+'</button>':'');
 }
 function telaFixas(){

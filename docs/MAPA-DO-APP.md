@@ -72,6 +72,19 @@ Gastei · Recebi · Transferi entre contas · Comprei um bem (duas colunas, como
 2. **Falta pagar este mês** (cartão com total, até 5 contas, já pago e setas de mês) ← casa oficial
 3. **Agenda dos próximos dias** (mostra 4; "Ver todas" abre o resto)
 
+**Mapa de cores do Planejar** (uma cor, um significado; vale para as outras telas também):
+
+| Cor | Onde aparece no Planejar | Significa |
+|---|---|---|
+| Bordô | Faixa do cartão "Falta pagar", dívidas na agenda, ferramenta Metas, data pintada | Dinheiro que **sai**; dívida |
+| Ardósia | Contas fixas (faixa e linhas) | Compromisso que se repete |
+| Azul safira | Cobranças "A receber" na agenda | Dinheiro que **entra** |
+| Ametista | Ferramenta Caixinhas | Dinheiro **guardado** |
+| Cobre | Ferramenta Simulador | Compra de **bem** |
+| Ouro | (só quando algo está selecionado) | Item **selecionado** |
+
+Urgência na data de cada conta: **pintada** = vence hoje ou já passou; **clara** = vence em até 3 dias; sem destaque = mais longe.
+
 ### Planejar > Contas fixas: "Todo mês, no mesmo dia"
 Só o **cadastro** (as contas cadastradas, o total por mês e "+ Nova conta fixa"). O que vence aparece na Agenda.
 
