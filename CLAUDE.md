@@ -1,12 +1,12 @@
-# Caderneta: regras e contexto para trabalhar no projeto
+# Balancete (antes Caderneta): regras e contexto para trabalhar no projeto
 
 > Este arquivo é lido primeiro por quem (pessoa ou Claude) for mexer no projeto. É curto de propósito:
 > aqui estão **as regras e o jeito de trabalhar**. O resto está em `docs/` (veja a tabela no fim).
 
 ## Em que pé estamos
-- **Versão 1.14.0-beta.1** (7 nov 2026): app reorganizado (`docs/MAPA-DO-APP.md`), só com a interface Balança (D39), paleta **preto, dourado e branco** (D44), anotar em dois toques (D43), conta Dinheiro com cédulas, **abas Gráficos e Relatórios com 10 indicadores** (D45, D53), acerto de contas no Planejar (D46), busca com lista completa e categorias favoritas (D47), seletor de tipo na folha (D48), visual "vivo" com animações (D49) e botão + solto no canto direito, com novidades que chegam a quem já usa o app (D51), e acerto de contas em janela por cima da tela, com dica de instalar (D52), e as funções contábeis conferir com o banco, contas do ano, mês a mês e custo fixo de vida (D53; análise em `docs/ANALISE-CONTABIL.md`). **Plano em andamento** (passos 3 a 8 no `docs/ROTEIRO.md`): cada passo é examinado, melhorado e decidido com o dono antes de fazer. **Próximo (desenho decidido, ainda sem código):** investimentos, caixinhas que rendem e nova aba (D50). **Ainda sem teste com pessoas reais em celular.**
+- **Versão 1.15.0-beta.1** (7 nov 2026): o app agora se chama **Balancete**, com o **Brasão** como logo, abertura em que ele ganha vida e letra de contabilidade (D54). Antes: app reorganizado (`docs/MAPA-DO-APP.md`), só com a interface Balança (D39), paleta **preto, dourado e branco** (D44), anotar em dois toques (D43), conta Dinheiro com cédulas, **abas Gráficos e Relatórios com 10 indicadores** (D45, D53), acerto de contas no Planejar (D46), busca com lista completa e categorias favoritas (D47), seletor de tipo na folha (D48), visual "vivo" com animações (D49) e botão + solto no canto direito, com novidades que chegam a quem já usa o app (D51), e acerto de contas em janela por cima da tela, com dica de instalar (D52), e as funções contábeis conferir com o banco, contas do ano, mês a mês e custo fixo de vida (D53; análise em `docs/ANALISE-CONTABIL.md`). **Plano em andamento** (passos 3 a 8 no `docs/ROTEIRO.md`): cada passo é examinado, melhorado e decidido com o dono antes de fazer. **Próximo (desenho decidido, ainda sem código):** investimentos, caixinhas que rendem e nova aba (D50). **Ainda sem teste com pessoas reais em celular.**
 - App no ar em https://grluans09-source.github.io/caderneta/ (GitHub Pages, publicado por GitHub Actions a partir da pasta `app/`).
-- 1 arquivo de app (`app/index.html`, ~3.300 linhas), 23 arquivos de teste (657 verificações) que rodam com `npm test`.
+- 1 arquivo de app (`app/index.html`, ~3.300 linhas), 24 arquivos de teste (669 verificações) que rodam com `npm test`.
 - Próximos passos em `docs/ROTEIRO.md`. Estado, riscos e dívidas em `docs/AVALIACAO.md`.
 
 ## Quem é o dono e como falar com ele
@@ -20,7 +20,7 @@
 1. App de finanças **pessoa física**, mobile-first, instalável (PWA), **sem servidor e sem banco de dados**. Dados em `localStorage`, por aparelho.
 2. Tem que ser usável por um **idoso**, um **jovem** e um **adulto na correria**: simples, intuitivo, letras grandes, poucas decisões por tela.
 3. A **contabilidade (partida dobrada) trabalha por trás**; a pessoa vê palavras comuns. O "Modo contador" (opcional) mostra os termos técnicos.
-4. Visual **"livro-razão vivo"**: preto, dourado e branco (luxo com ar contábil), balança de latão, carimbo, animações com propósito. **Dourado = clicável, preto = selecionado; uma cor, um significado** (sem verde; ver `docs/MAPA-DO-APP.md`). O "exótico" está no visual, nunca na navegação.
+4. Visual **"livro-razão vivo"**, **sério e luxuoso mas próximo**: preto, dourado e branco, o **Brasão** (logo) e o **Mordomo** (a balança-personagem), animações com propósito (D54). **Letra:** `var(--serif)` (Times New Roman / Noto Serif) em títulos e valores e **algarismos tabulares** em todos os números. **Dourado = clicável, preto = selecionado; uma cor, um significado** (sem verde; ver `docs/MAPA-DO-APP.md`). O "exótico" está no visual, nunca na navegação.
 5. Tudo em **um arquivo HTML autocontido** (sem framework, sem build, sem fontes ou scripts externos).
 6. Distribuído por **link**; a pessoa instala na tela inicial. Backup manual pelo botão "Guardar uma cópia".
 
@@ -72,7 +72,7 @@ O dono pediu: **quem ler o repositório nunca deve encontrar informação velha,
 npm install     # uma vez, instala o jsdom (só para os testes)
 npm test        # roda tudo; sai com erro se algo falhar
 npm start       # app em http://localhost:8765 (pasta app/)
-npm run icones  # regenera os ícones PNG a partir do desenho em tools/gerar-icones.js
+npm run icones  # regenera app/icon.svg e os PNGs a partir do Brasão (tools/brasao.js), usando o Chrome sem janela
 ```
 
 ## Armadilhas conhecidas
@@ -80,6 +80,8 @@ npm run icones  # regenera os ícones PNG a partir do desenho em tools/gerar-ico
 - O painel de navegador escondido **congela animações**: mostre-o antes de conferir.
 - Os testes usam uma **cópia** do app com um "gancho" (`window.__T`). Se um teste novo precisar de outra função interna, acrescente o nome em `tests/preparar.js`.
 - Nomes internos antigos continuam (`modalGaveta`, `data-a="gaveta"`): na tela já é "conta". **Não renomear às cegas**; se for renomear, faça com teste rodando.
+- **Por dentro o app continua "caderneta"** (chave dos dados `caderneta:v2`, formato da cópia `app:"caderneta"`, cache do service worker, endereço `/caderneta/`). **Não renomear**: as pessoas perderiam os dados. Só o nome na tela é Balancete (D54).
+- O desenho do **Brasão** existe em `tools/brasao.js` e tem **cópias dentro do `index.html`** (símbolo do cabeçalho e abertura). Mudou o desenho? Rode `npm run icones` e recopie os dois SVGs.
 - Cuidado com `desenhar()`: refaz a tela inteira. Para campos com foco (busca), repintar só o pedaço (veja `pintarAnot`).
 
 ## Onde está o resto
@@ -95,5 +97,6 @@ npm run icones  # regenera os ícones PNG a partir do desenho em tools/gerar-ico
 | `docs/ANALISE-CONTABIL.md` | O que é contabilidade de verdade, o que é finanças pessoais e o que é ideia do dono; sugestões de funções contábeis |
 | `docs/MAPA-DO-APP.md` | Onde mora cada assunto, mapa de cores, fluxo de uso (o app de hoje) |
 | `docs/GUIA-TESTADORES.md` | Como mandar o app a testadores e o que observar |
+| `docs/design/balancete-identidade.html` | Protótipo aprovado do Brasão, do Mordomo, da abertura, do botão do chat, dos secundários e da letra (abra no navegador) |
 | `docs/PLANO-BETA.md`, `docs/AUDITORIA-FUNCOES.md` | **Históricos** (como se chegou ao mapa atual) |
 | `CHANGELOG.md` | Histórico de versões |

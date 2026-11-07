@@ -1,10 +1,12 @@
-# Caderneta
+# Balancete
+
+> Antes chamado **Caderneta**. O endereço e os dados continuam os mesmos.
 
 **Finanças pessoais simples de usar, com a contabilidade de verdade trabalhando por trás.**
 App de celular (instalável, funciona sem internet), em português, pensado para qualquer pessoa: do idoso ao jovem e ao adulto na correria.
 
 - **App no ar:** https://grluans09-source.github.io/caderneta/
-- **Versão atual:** 1.14.0-beta.1 (beta para testadores) (veja o [CHANGELOG](CHANGELOG.md))
+- **Versão atual:** 1.15.0-beta.1 (beta para testadores) (veja o [CHANGELOG](CHANGELOG.md))
 - **Seus dados ficam só no celular de cada pessoa.** Não existe servidor, conta nem banco de dados.
 
 > Em uma frase: a pessoa anota o que gasta e recebe, e o app mostra **quanto é dela de verdade**, para onde o dinheiro está indo e o que vem pela frente. A partida dobrada fica escondida no "motor"; a tela fala como a gente fala.
@@ -41,7 +43,7 @@ caderneta/
 │   ├── index.html    O app inteiro: HTML + CSS + JavaScript, sem dependências
 │   ├── sw.js         Faz o app abrir sem internet (cache)
 │   ├── manifest.webmanifest, icon-*.png, icon.svg   Instalação na tela inicial
-├── tests/          Testes automáticos: 657 verificações que simulam uma pessoa usando o app
+├── tests/          Testes automáticos: 669 verificações que simulam uma pessoa usando o app
 ├── tools/          Ferramentas: servidor local e gerador de ícones
 ├── docs/           Documentação (leia a partir de docs/README.md)
 ├── .github/workflows/publicar.yml   Testa e publica sozinho a cada envio para o GitHub

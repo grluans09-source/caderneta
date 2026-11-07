@@ -123,7 +123,7 @@ Por quê: o botão fixo atrapalhava a visualização. Consequência: nada de `po
 
 **D48 · *(a posição "círculo ao redor do botão, no centro" foi SUBSTITUÍDA pela D51)* Bolinhas em círculo exato e seletor de tipo fixo na folha (A).** As 4 bolinhas do + ficam em pontos de um círculo com centro no botão (simétricas). Na folha, o seletor é um botão redondo **fixo embaixo no centro**, que gera as mesmas 4 bolinhas com o tipo atual **apagado** (a pessoa se localiza) e troca de tipo sem perder o digitado. Substitui as 3 bolinhas do cabeçalho (D43).
 
-**D49 · Linguagem visual "viva" (A).** O dono achou as linhas finas com "cara de IA e ar robótico". Agora: formas **grossas, redondas e cheias**, ícones preenchidos, botões em pílula, e movimento com propósito (abertura do app, troca de aba, gráficos que crescem, bolinhas do +). Regras: só `transform` e `opacity`; tudo desliga em "Movimento: Parado"; nada de animação que atrase uma ação.
+**D49 · *(a abertura "moedas caindo" foi SUBSTITUÍDA pela D54: agora o Brasão ganha vida)* Linguagem visual "viva" (A).** O dono achou as linhas finas com "cara de IA e ar robótico". Agora: formas **grossas, redondas e cheias**, ícones preenchidos, botões em pílula, e movimento com propósito (abertura do app, troca de aba, gráficos que crescem, bolinhas do +). Regras: só `transform` e `opacity`; tudo desliga em "Movimento: Parado"; nada de animação que atrase uma ação.
 
 **D50 · Poupança, caixinhas e investimentos: DECIDIDO o desenho, AINDA NÃO IMPLEMENTADO (A).** O dono apontou que poupança e caixinhas, na prática, ficam presas a uma conta de banco e rendem. Decisões de 7 nov 2026: (1) **Caixinha pertence a uma conta** (ex.: Nubank) e **rende**. (2) A pessoa informa a **taxa anual** que vê no app do banco; o rendimento é **calculado por dia útil** (a taxa é anual, a conta é diária) e **lançado sozinho**; a pessoa pode **ajustar o valor** do rendimento quando conferir o banco e ver diferença. (3) **Nova aba Investimentos** (poupança, CDB, Tesouro, fundos como aplicações ligadas a uma conta, com taxa e rendimento), refletida nos Gráficos e Relatórios. (4) Nos **Primeiros passos**, a pergunta "Poupança ou reserva" é **trocada** por "Você tem dinheiro guardado ou investido?", que cria a aplicação com a conta e a taxa. **Pontos a resolver ao implementar:** *(o espaço na barra foi resolvido pela D51: o + saiu da barra e sobra 1 espaço para a aba Investimentos)*; como tratar o rendimento na contabilidade (receita financeira, não confundir com o que a pessoa ganhou trabalhando); feriados para dias úteis; e a migração das caixinhas e da conta Poupança que já existem.
 
@@ -138,3 +138,15 @@ Por quê: o botão fixo atrapalhava a visualização. Consequência: nada de `po
 - **Custo fixo de vida**: o 10º indicador.
 
 Ficaram para depois: rendimento como receita (com Investimentos, D50), fluxo de caixa do mês, relatório para o Imposto de Renda (perto da declaração) e etiquetas.
+
+**D54 · Identidade: Balancete, o Brasão e a letra de contabilidade (A).** Decidido pelo dono em 7 nov 2026, depois de protótipos (cópia em `docs/design/balancete-identidade.html`).
+- **Nome:** Balancete. Caderneta se confundia com a caderneta de poupança e é palavra comum, difícil de registrar. Balancete vem da contabilidade e todo mundo entende ("balanço"). Ainda falta conferir no INPI antes de vender.
+- **Tom:** sério e luxuoso, mas próximo de quem usa.
+- **Logo:** o **Brasão**, uma moeda de ouro em faixas (serrilha, aro, nome em cima, "suas contas em ordem" embaixo, balança em relevo), **sem olhos e sem estrelas**. Ele **só ganha vida na abertura do app**.
+- **Personagem do dia a dia:** o **Mordomo**, a balança encorpada com medalhão de esmalte, olhos amendoados, sobrancelhas e gravata-borboleta. Cumprimenta com uma reverência.
+- **Botão do chat:** a **pílula "Perguntar"** com o rostinho do Mordomo.
+- **Mascotes secundários:** Pesinho (guardou dinheiro), Moedinha (entrou dinheiro), Selo de lacre bordô "PAGO" (pagou conta, no lugar do carimbo) e Pesão de ferro (conta atrasada).
+- **Letra:** Times New Roman nos títulos e valores (Noto Serif no Android) e **algarismos tabulares** em todos os números.
+- **Não muda:** endereço, chave dos dados e formato da cópia (ninguém perde dados).
+
+Na 1.15.0 entraram o nome, o Brasão (ícones e cabeçalho), a abertura e a letra. O Mordomo no Início, os secundários e a pílula do chat entram nos próximos passos.

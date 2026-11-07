@@ -1,4 +1,4 @@
-# Guia para quem vai testar a Caderneta
+# Guia para quem vai testar o Balancete (antes Caderneta)
 
 Use este guia para **mandar o app a quem vai testar** e para **observar o que acontece**. Tem três partes: a mensagem pronta, o passo a passo para a pessoa, e a ficha para você anotar o que viu.
 
@@ -17,6 +17,8 @@ Use este guia para **mandar o app a quem vai testar** e para **observar o que ac
 ## 2. Passo a passo para a pessoa
 
 ### Abrir e instalar (deixa com cara de aplicativo e funciona sem internet)
+
+O ícone é uma **moeda de ouro com uma balança** (o Brasão) e o nome é **Balancete**. Quem já tinha instalado com o nome antigo vê o nome e o ícone novos depois de abrir o app uma ou duas vezes (em alguns celulares, só reinstalando o atalho).
 
 Aberto no navegador, o app mostra uma vez, no Início, como instalar. Peça para a pessoa instalar: sem isso, o navegador põe a barra de endereço e botões dele (como uma seta de subir) por cima do app.
 - **Android (Chrome):** abra o link → toque nos **três pontinhos** → **"Instalar aplicativo"** ou **"Adicionar à tela inicial"**.

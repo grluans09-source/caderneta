@@ -1,6 +1,6 @@
 # Arquitetura
 
-Como o app funciona por dentro. Estado descrito: **versão 1.14.0-beta.1** (a base de dados e o motor vêm da 1.0.0; as telas foram reorganizadas conforme `MAPA-DO-APP.md`).
+Como o app funciona por dentro. Estado descrito: **versão 1.15.0-beta.1** (a base de dados e o motor vêm da 1.0.0; as telas foram reorganizadas conforme `MAPA-DO-APP.md`).
 
 ## 1. Visão geral
 
@@ -16,8 +16,8 @@ app/
   sw.js                service worker (VERSAO = "caderneta-<versão>")
   manifest.webmanifest nome, cores, ícones
   icon.svg, icon-180/192/512.png, icon-maskable-512.png
-tests/                 preparar.js + rodar.js + 23 arquivos *.test.js (jsdom)
-tools/                 servidor-local.js, gerar-icones.js
+tests/                 preparar.js + rodar.js + 24 arquivos *.test.js (jsdom)
+tools/                 servidor-local.js, brasao.js (desenho do logo), gerar-icones.js
 ```
 
 ## 2. Dados (`S`)
@@ -156,7 +156,7 @@ Ativo cresce a débito; passivo cresce a crédito. **Patrimônio líquido (PL) =
 - **Tokens** em `:root` (preto, dourado e branco; azul safira = entrou e é "o que eu tenho", bordô = saiu e é dívida, ametista = guardado, cobre = bens; **dourado = clicável, preto = selecionado**; ver "Cores" abaixo) com **tema escuro** (`prefers-color-scheme` + `data-tema`).
 - **Letra**: `html[data-tam="g|gg"]` (grande/enorme); com "Enorme" a conta em T vira lista de uma coluna e o fio some.
 - **Movimento**: classe `calmo` no `<html>` (config "Parado" **ou** `prefers-reduced-motion`) desliga tudo. Animar só `transform`/`opacity`.
-- Gráficos, balança, cofres e potes são **SVG desenhado à mão** (sem biblioteca). Fontes: só as do sistema (Georgia para números/títulos).
+- Gráficos, balança, cofres e potes são **SVG desenhado à mão** (sem biblioteca). Fontes: só as do sistema. Títulos e valores usam `var(--serif)` = Times New Roman (Noto Serif no Android), a letra de balanço; o `body` liga `font-variant-numeric: lining-nums tabular-nums`, então **todo número tem algarismos alinhados** (padrão contábil). O resto do texto usa a letra do celular (`system-ui`).
 
 ## 7. Segurança dos dados no navegador
 - Entrada sempre validada por `higienizar()` (tipos, datas, ids; descarta item inválido e guarda cópia do original).
@@ -167,7 +167,7 @@ Ativo cresce a débito; passivo cresce a crédito. **Patrimônio líquido (PL) =
 
 - `npm test` → `tests/rodar.js`: **prepara uma cópia** do app em `tests/.tmp/app-teste.html` (com um gancho `window.__T` que expõe funções internas listadas em `tests/preparar.js`), confere a sintaxe do JS e roda cada `tests/*.test.js` em **jsdom**, simulando a pessoa: cliques, digitação, navegação.
 - Os testes ligam a classe `calmo` (sem esperas de animação). Animação, layout e toque **só se conferem no navegador/celular**.
-- Cobertura (657 verificações, 23 arquivos; inclui planejar com acerto de contas, anotar em dois toques, conta Dinheiro, gráficos e relatórios e mapa do app): fluxo básico, dívida por vencimento, pessoas/fixas/caixinhas/simulador, bens, juros, bem financiado, apagar, vocabulário (varre todas as telas atrás de jargão), "o que pagar no mês", caixinhas com dinheiro real, guardado por conta, cofres/setas, filtros de anotações, **segurança contra textos maliciosos (XSS)**. Os testes também conferem **invariantes** (partidas dobradas, ativo − passivo = PL, dinheiro = livre + guardado).
+- Cobertura (669 verificações, 24 arquivos; inclui planejar com acerto de contas, anotar em dois toques, conta Dinheiro, gráficos e relatórios e mapa do app): fluxo básico, dívida por vencimento, pessoas/fixas/caixinhas/simulador, bens, juros, bem financiado, apagar, vocabulário (varre todas as telas atrás de jargão), "o que pagar no mês", caixinhas com dinheiro real, guardado por conta, cofres/setas, filtros de anotações, **segurança contra textos maliciosos (XSS)**. Os testes também conferem **invariantes** (partidas dobradas, ativo − passivo = PL, dinheiro = livre + guardado).
 - **Escrever um teste novo**: copie um arquivo parecido, mude o `seed` (dados iniciais no `localStorage`) e os passos; use `eq(nome, obtido, esperado)`; termine com `console.log(ok?"TUDO OK":"HÁ FALHAS")`. O corredor reconhece "OK", "FAIL" e "TUDO OK".
 
 ## 9. Publicação
@@ -180,10 +180,11 @@ GitHub Actions (`.github/workflows/publicar.yml`): a cada envio para `main`, rod
 - **Conta Dinheiro**: conta com `carteira:true` (uma só; `marcarCarteira()` marca uma conta chamada Dinheiro/Carteira em dados antigos e `finalizarOnb` cria a conta nova). Não se apaga (`gApagar` barra). `modalCarteira()` conta cédulas (`CED`), guarda `cedulas` e `contagem` e ajusta `inicial` para o saldo bater. `pintarArred()` sugere reais inteiros ao anotar com a carteira.
 - **Desfazer ao apagar**: `foto()` guarda uma cópia dos dados; `toastDesfazer()` mostra o botão por 8 s; ação `desfazer` restaura.
 - **Cores (paleta preto, dourado e branco, D44)**: variáveis em `:root` e nos 2 blocos do tema escuro. `--capa` preto, `--latao`/`--ouro` dourado (**clicável**: `.btn` em degradê dourado, contornos e links), `--selbg`/`--selink` **selecionado** (preto com texto dourado; creme no tema escuro), `--in` safira = entrou, `--out` bordô = saiu/dívida, `--tr` ardósia = transferência/compromisso fixo, `--am` ametista = guardado, `--cobre` = bens. O verde **não** é usado.
-- **Visual vivo**: ícones SVG **cheios** (classes `.cut` e `.acc` para recortes e partes claras) dentro de `nav .ic`; `ir()` faz o ícone da aba quicar (`.pop`) e a tela entrar (`#tela.entra`, blocos em sequência); `#splash` é a abertura (some sozinho, e não aparece com `.calmo`); gráficos crescem por `animation` de `transform` (`cresceX`/`cresceY`). Tudo usa só `transform` e `opacity`, e `html.calmo *` desliga as animações.
+- **Visual vivo**: ícones SVG **cheios** (classes `.cut` e `.acc` para recortes e partes claras) dentro de `nav .ic`; `ir()` faz o ícone da aba quicar (`.pop`) e a tela entrar (`#tela.entra`, blocos em sequência); `#splash` é a abertura: o Brasão vivo (`.br-moeda` cai girando, `.br-reflexo` passa, `.br-pino` cresce e `.br-olhos` abrem e piscam, `.br-trav` balança), some em 4,1 s ou ao tocar; com `.calmo` fica parado e some em 1,2 s; gráficos crescem por `animation` de `transform` (`cresceX`/`cresceY`). Tudo usa só `transform` e `opacity`, e `html.calmo *` desliga as animações.
 - **Migração de dados antigos**: `marcarCarteira()` roda dentro de `higienizar()` (por isso vale para dados do aparelho e para backups restaurados). Sem conta de carteira e com pelo menos uma conta, ela reconhece uma conta chamada Dinheiro/Carteira ou **cria** "Dinheiro" (ou "Dinheiro vivo"/"Carteira" se o nome já estiver em uso por outra conta) e liga `CARTEIRA_NOVA`; `carregar()` então salva e mostra o aviso uma vez. Dados vazios não criam conta.
 - **Indicadores**: `indicadores()` calcula os 9 (cada um com `id`, `valor`, `st` = ok/atencao/critico/info/sem, `leitura`, `d` com os números e `graf` com o desenho em HTML/SVG); `relatorioTexto(i)` gera as 5 partes do relatório; `telaGraficos`, `telaRel` (panorama + lista) e `telaRelatorio` (detalhe, `REL_ID`, ações `relInd` e `relShare`). Faixas de referência: dívidas ≤30% / ≤50%; reserva ≥6 / ≥3 meses; poupança ≥20% / ≥10%; renda reservada ≤30% / ≤50%; folga ≥2x / ≥1x; dinheiro no patrimônio ≥30% / ≥10%.
 - **Planejar**: `cartaoPagar()` é o acerto de contas: no Planejar mostra a prévia de 3; `acToggle` chama `abrirAcerto()`, que abre o modal com a classe `acm` (preto e dourado) e `cartaoPagar(ym,{aberto:true})` dentro de `#acCorpo`, com todas as contas e **Pagar** (`pagar`) ou **Paguei** (`fxPagar`). Pagar fecha a janela e liga `AC_VOLTA`; `fecharFolha()` (e o botão voltar do celular) chama `voltaAcerto()`, que reabre a janela. `ir()` fecha a janela ao trocar de tela. `abrirModal(html,cls)` aceita uma classe e `fecharModal()` a limpa. Atrasada = vencimento antes de hoje (`hojeISO()`), igual a `quandoTxt()` da agenda.
+- **Identidade (D54)**: o desenho do Brasão mora em `tools/brasao.js` (`brasao({p,vivo,fundo,margem})`). Dele saem `app/icon.svg` e os PNGs (`npm run icones`, que usa o Chrome sem janela; `CHROME=caminho` se ele estiver em outro lugar) e as duas cópias dentro do `index.html`: o `<symbol id="brasaoSimb">` (sem olhos, usado no cabeçalho por `<use href="#brasaoSimb">`) e o SVG da abertura (com olhos). Se mudar o desenho, gere os ícones e recopie os dois SVGs no `index.html`. Por dentro o app continua "caderneta": a chave dos dados (`caderneta:v2`), o formato da cópia (`app:"caderneta"`), o nome do cache do service worker e o endereço `/caderneta/`; mudar isso faria as pessoas perderem os dados.
 - **Funções contábeis (D53)**:
   - **Conferir com o banco**: `modalConferir(id)` e `pintarConferir()` (estado em `CF`). `cfOk` grava `conta.conferido` (data); `cfAnotar` abre `novaFolha` com a diferença; `cfCorrigir` cria uma anotação `saida`/`entrada` comum (débito = crédito) na categoria do sistema devolvida por `catConferir(tipo)`. Essa categoria é reconhecida pela marca `sis:"conf"`, **não pelo nome**; `higienizar()` preserva `sis` e `conferido`.
   - **Contas do ano**: `contasDoAno()` usa `ocorrencias()` e `fixaPaga()` das fixas anuais. Uma caixinha com o mesmo nome (`norm`) conta como guardado. `porMes` = falta ÷ meses até o mês do vencimento, arredondado para cima em reais. `blocoContasDoAno()` fica no fim de `telaFixas()`; `cxAno` chama `modalCaixa(null,null,{nome,alvo,prazo})` (o 3º parâmetro preenche a caixinha nova).
@@ -192,5 +193,5 @@ GitHub Actions (`.github/workflows/publicar.yml`): a cada envio para `main`, rod
 - **Dica de instalar**: `dicaInstalar()` no Início, só se `matchMedia` existe e o app não está instalado (`display-mode: standalone` ou `navigator.standalone`); guardada por aparelho em `localStorage` (`KEY+":dicaInstalar"`), fora dos dados da pessoa; `beforeinstallprompt` vira o botão **Instalar agora** (`instalar`).
 - **Planejar (cont.)**: `pagarNoMes()` agora devolve `cid`/`fid`/`ref` de cada item.
 - **Removido**: os jeitos Razão e Cofre (D39) não existem mais; não há `config.jeito`.
-- **Testes**: 23 arquivos, 657 verificações; o teste 03 conta 6 botões na `nav` (o `.fab` fica fora dela, direto no `body`) e 4 bolinhas no `#fabMenu`; os testes antigos abrem a folha por `abreFolha(tipo)` (toque no + e na bolinha).
+- **Testes**: 24 arquivos, 669 verificações; o teste 03 conta 6 botões na `nav` (o `.fab` fica fora dela, direto no `body`) e 4 bolinhas no `#fabMenu`; os testes antigos abrem a folha por `abreFolha(tipo)` (toque no + e na bolinha).
 - **Versão**: 3 lugares sobem juntos (`package.json`, `VERSAO_APP`, `sw.js`).

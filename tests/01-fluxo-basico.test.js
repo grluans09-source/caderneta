@@ -141,7 +141,7 @@ setTimeout(()=>{
   eq("restaurou lançamentos",JSON.stringify(S().lancamentos),antes);
   irV('ajustes');const inp2=$("#arquivo");Object.defineProperty(inp2,"files",{value:[new w.File(['{"contas":[]}'],"x.json")],configurable:true});inp2.dispatchEvent(new w.Event("change",{bubbles:true}));
   setTimeout(()=>{
-    eq("rejeita formato estranho",$("#toast").textContent,"Esse arquivo não é uma cópia da Caderneta");
+    eq("rejeita formato estranho",$("#toast").textContent,"Esse arquivo não é uma cópia do Balancete");
     const d2=new JSDOM(html,{runScripts:"dangerously",url:"http://localhost/",beforeParse(win){win.localStorage.setItem("caderneta:v2",w.localStorage.getItem("caderneta:v2"))},virtualConsole:vc});
     eq("reabre direto no início",d2.window.document.getElementById("onb").classList.contains("on"),false);
     eq("erros de script",errs,[]);

@@ -1,4 +1,4 @@
-# Análise contábil do Caderneta
+# Análise contábil do Balancete (antes Caderneta)
 
 Estado analisado: **versão 1.13.1-beta.1** (7 nov 2026); as funções escolhidas entraram na 1.14.0 (seção 6). Passo 2 do plano combinado com o dono.
 

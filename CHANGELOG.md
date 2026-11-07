@@ -1,7 +1,17 @@
 # Histórico de versões
 
+> O app se chamava **Caderneta** até a versão 1.14.0. A partir da 1.15.0 o nome é **Balancete** (o endereço e os dados não mudaram).
+
 Formato: versão semântica (`MAIOR.MENOR.CORREÇÃO`). Cada versão diz **o que mudou para a pessoa que usa**.
 Antes da 1.0.0 as versões eram numeradas só pelo nome do cache do app (v1 a v16); estão aqui como marcos de desenvolvimento.
+
+## [1.15.0-beta.1]: 7 de novembro de 2026 · o app agora se chama Balancete
+- **Nome novo: Balancete** (antes Caderneta, que se confundia com a caderneta de poupança). Muda o nome na tela, no ícone instalado, na aba do navegador e nos textos. **Não mudam** o endereço do app nem o lugar onde os dados ficam guardados, então ninguém perde nada; cópias de dados antigas continuam servindo.
+- **Logo novo: o Brasão.** Uma moeda de ouro com serrilha, aro em relevo, o nome em cima, "suas contas em ordem" embaixo e a balança em alto-relevo no meio. É o novo ícone do app (iPhone, Android e navegador) e aparece pequeno ao lado do nome no Início.
+- **Abertura nova: o Brasão ganha vida.** A moeda cai girando e assenta, um reflexo passa pelo ouro, o centro da balança cresce, **abre os olhos e pisca**, a balança se acomoda e ele volta a ser logo, com o nome aparecendo. Leva cerca de 4 segundos; **tocar na tela pula**. Com "Movimento: Parado", aparece só o logo e o nome por um instante.
+- **Letra de contabilidade.** Títulos e valores passam da Georgia para **Times New Roman** (no Android, a parecida Noto Serif), a letra dos balanços publicados. **Todos os números agora têm algarismos alinhados** (mesma altura e largura), como manda a contabilidade: vírgulas e centavos ficam um embaixo do outro. Antes os números "subiam e desciam" e o Android nem tinha a Georgia.
+- Os ícones PNG agora são desenhados a partir do mesmo desenho do Brasão (`tools/brasao.js`), pelo Chrome sem janela (`npm run icones`).
+- Testes: 669 verificações em 24 arquivos (novo: identidade do Balancete).
 
 ## [1.14.0-beta.1]: 7 de novembro de 2026 · quatro funções contábeis: conferir com o banco, contas do ano, mês a mês e custo fixo de vida
 Escolhidas pelo dono a partir da análise contábil (`docs/ANALISE-CONTABIL.md`).

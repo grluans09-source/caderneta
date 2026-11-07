@@ -1,4 +1,4 @@
-# Documentação da Caderneta
+# Documentação do Balancete (antes Caderneta)
 
 Comece pelo que você precisa:
 
