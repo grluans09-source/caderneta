@@ -1,12 +1,15 @@
 name: Testar e publicar
 
 # A cada envio para a branch main: roda os testes e, SÓ SE PASSAREM, publica a pasta app/ no GitHub Pages.
+# Todo dia ao meio-dia (horário de Brasília = 15h UTC) roda de novo só para atualizar as notícias oficiais (D59).
 # Em qualquer outra branch ou pull request, só roda os testes (não publica).
 on:
   push:
     branches: [main]
   pull_request:
   workflow_dispatch:
+  schedule:
+    - cron: "0 15 * * *"
 
 permissions:
   contents: read
@@ -40,6 +43,12 @@ jobs:
       url: ${{ steps.deploy.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Buscar as notícias oficiais (não derruba a publicação se uma fonte falhar)
+        run: node tools/noticias.js app/noticias.json
+        continue-on-error: true
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

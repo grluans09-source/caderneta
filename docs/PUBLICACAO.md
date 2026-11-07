@@ -8,7 +8,10 @@ você (ou Claude) envia o código para o GitHub (branch main)
         ▼
 GitHub Actions (.github/workflows/publicar.yml)
    1) roda `npm ci` e `npm test`      ← se algum teste falhar, PARA aqui (nada é publicado)
-   2) publica a pasta `app/` no GitHub Pages
+   2) busca as notícias oficiais (tools/noticias.js → app/noticias.json; se uma fonte falhar, publica assim mesmo)
+   3) publica a pasta `app/` no GitHub Pages
+   E todo dia ao meio-dia (Brasília) roda sozinho só para atualizar as notícias (D59).
+   Atenção: o GitHub desliga esse agendamento se o repositório ficar 60 dias sem envio.
         │
         ▼
 https://grluans09-source.github.io/caderneta/    (o app no ar)

@@ -77,6 +77,20 @@ h2{font-size:1.05rem;font-weight:700;margin:1.5rem 0 .55rem;font-family:var(--se
 @keyframes mdPisca{0%,94%,100%{transform:scaleY(1)}96%{transform:scaleY(.08)}}
 .bal .md-ref{animation:mdRef 7s ease-in-out infinite}
 @keyframes mdRef{0%,60%{transform:translateX(0)}100%{transform:translateX(150px)}}
+/* notícias de fontes oficiais */
+.nt-selo{display:inline-block;font-size:.68rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:.12rem .55rem;margin-right:.4rem;vertical-align:.1rem;white-space:nowrap}
+.nt-cert{background:#0A0A0A;color:#F5EFDF}
+.nt-poss{border:2px solid var(--latao);color:var(--ink)}
+[data-tema="escuro"] .nt-cert{background:#F5EFDF;color:#0A0A0A}
+.nt-hoje{border-left:5px solid var(--latao)}
+.nt-cab{display:flex;justify-content:space-between;align-items:baseline;gap:.6rem;margin-bottom:.3rem}.nt-cab b{font-family:var(--serif);font-size:1.1rem}.nt-cab span{font-size:.75rem;color:var(--ink2)}
+.nt-lin{display:flex;gap:.2rem;align-items:flex-start;padding:.45rem 0;border-bottom:1px solid var(--rule)}.nt-lin:last-of-type{border-bottom:0}
+.nt-lin i{display:block;font-style:normal;font-size:.84rem;color:var(--ink2);margin-top:.15rem}
+.nt-card h3{font-family:var(--serif);font-size:1.12rem;margin:.45rem 0 .25rem}
+.nt-card p{margin:.3rem 0}
+.nt-sig{color:var(--ink2);font-size:.94rem}
+.nt-pv{background:var(--bg);border-left:4px solid var(--latao);padding:.45rem .6rem;border-radius:0 .6rem .6rem 0;font-size:.94rem}
+.nt-link{font-size:.92rem}
 /* aba Investir */
 .inv-res{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.5rem;text-align:center}
 .inv-res span{display:block;font-size:.78rem;color:var(--ink2)}.inv-res b{font-family:var(--serif);font-size:1.08rem}
@@ -785,7 +799,7 @@ html[data-tam="g"] .fbl{max-width:4.8rem}
 /* ---------- utilidades ---------- */
 var KEY="caderneta:v2";
 /* versão do app (siga o CHANGELOG.md; subir junto com VERSAO em sw.js e "version" em package.json) */
-var VERSAO_APP="1.20.0-beta.1";
+var VERSAO_APP="1.21.0-beta.1";
 var RE_ID=/^[A-Za-z0-9_-]+$/, RE_DATA=/^\d{4}-\d{2}-\d{2}$/;
 var MES=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
 var MES3=["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
@@ -1329,7 +1343,7 @@ function cent(el){return parseInt(el.dataset.cent,10)||0}
    NAVEGAÇÃO
    ===================================================================== */
 var VIEW="inicio", REF=new Date(); REF.setDate(1);
-var ABA={anotacoes:"mais",relatorio:"relatorios",ajustes:"mais",caixinhas:"planejar",metas:"planejar",fixas:"planejar",simulador:"planejar"};
+var ABA={noticias:"inicio",anotacoes:"mais",relatorio:"relatorios",ajustes:"mais",caixinhas:"planejar",metas:"planejar",fixas:"planejar",simulador:"planejar"};
 
 function ir(vw){
   if(vw==="investir"&&atualizarRendimentos())salvar();
@@ -1349,7 +1363,7 @@ function ir(vw){
 }
 function desenhar(){
   var t=$("#tela");
-  var tela={inicio:telaInicio,contas:telaContas,investir:telaInvestir,planejar:telaPlanejar,caixinhas:telaCaixinhas,metas:telaMetas,fixas:telaFixas,simulador:telaSimulador,mais:telaMais,graficos:telaGraficos,relatorios:telaRel,relatorio:telaRelatorio,ajustes:telaAjustes,anotacoes:telaAnotacoes}[VIEW]||telaInicio;
+  var tela={inicio:telaInicio,contas:telaContas,investir:telaInvestir,noticias:telaNoticias,planejar:telaPlanejar,caixinhas:telaCaixinhas,metas:telaMetas,fixas:telaFixas,simulador:telaSimulador,mais:telaMais,graficos:telaGraficos,relatorios:telaRel,relatorio:telaRelatorio,ajustes:telaAjustes,anotacoes:telaAnotacoes}[VIEW]||telaInicio;
   t.innerHTML = tela();
   ULTIMO=null;
   if(VIEW==="inicio")animarInicio();
@@ -1644,6 +1658,10 @@ var PERGS=[
  {g:"app",q:"Por que o app não deixou eu salvar?",kw:"nao deixou salvar bloqueou travou impediu limite carteira aviso erro",r:function(){return 'Eu confiro cada anotação antes de salvar. Eu <b>não deixo</b> quando não pode acontecer de verdade: a <b>carteira</b> ficar negativa (não existe nota negativa) ou um gasto <b>passar do limite do cartão</b>. E eu <b>pergunto</b> quando é possível mas estranho: banco negativo (cheque especial), pagar mais do que deve, data muito distante ou valor muito acima do costume. Aí é só confirmar.'}},
  {g:"app",q:"Como deixo a letra maior ou a tela escura?",kw:"letra maior grande tamanho tela escura tema cores",ir:"ajustes",r:function(){return 'Em <b>Mais > Ajustes</b>: escolha o <b>tamanho da letra</b> (até Enorme) e as <b>cores</b> (claro ou escuro). Lá também dá para deixar o app parado, sem animações.'}},
  /* ---------- Aprender ---------- */
+ {g:"aprender",q:"O que mudou na economia que me afeta?",kw:"economia noticias dolar inflacao gasolina juros selic mudou hoje afeta",ir:"noticias",r:function(){
+   var n=noticiasGuardadas(); if(!n)return 'As notícias oficiais ainda não chegaram neste celular. Elas chegam quando há internet; tente de novo daqui a pouco.';
+   var it=itensNoticias(n).filter(function(x){return x.id.indexOf("ibge")!==0}).slice(0,4);
+   return 'O mais importante agora, de fontes oficiais ('+esc(quandoNot(n).toLowerCase())+'):'+listaHTML(it.map(function(x){return '<b>'+esc(x.tit)+'</b>'+(x.pv?': '+esc(x.pv):'')}));}},
  {g:"aprender",q:"O que é reserva de emergência e quanto devo ter?",kw:"reserva emergencia o que e quanto ter",r:function(){return 'É um dinheiro guardado só para imprevistos: perder o emprego, uma doença, um conserto. O ideal é ter de <b>3 a 6 meses</b> do seu custo básico, num lugar fácil de tirar. Comece com pouco: o importante é começar.'}},
  {g:"aprender",q:"Por que \"sobrou\" no mês é diferente do que tenho no banco?",kw:"sobrou diferente banco caiu por que cartao fatura",r:function(){return 'Porque o gasto no cartão conta no <b>dia da compra</b>, e não no dia em que a fatura é paga. Então pode sobrar R$ 500 no mês e o banco cair, se você pagou a fatura de compras do mês anterior. As duas coisas estão certas.'}},
  {g:"aprender",q:"O que é \"é meu de verdade\"?",kw:"meu de verdade patrimonio o que significa",ir:"inicio",r:function(){return 'É o seu <b>patrimônio</b>: tudo o que você tem (dinheiro, bens, o que te devem) menos tudo o que você deve. É o que sobraria se você pagasse todas as dívidas hoje. É esse número que mostra se você está ficando mais rico ou mais pobre.'}},
@@ -1982,7 +2000,7 @@ function telaInicio(){
       '<div><span>'+esc(v("sobrou"))+'</span><b data-roll="'+sob+'" data-k="sob" style="color:'+(sob<0?"var(--out)":"var(--ink)")+'">'+(sob<0?"−":"")+num(sob)+'</b></div></div>'+
     '<p class="faint" style="text-align:center;margin-top:.4rem">Valores de '+MES[d.getMonth()]+'</p>'+cardFechou()+
         linhaFalta()+
-    avisos()+
+    avisos()+cardHojeBrasil()+
     (S.caixas.length?'<h2>Minhas caixinhas</h2><div class="card"><div class="jarras">'+S.caixas.slice(0,4).map(function(x,i){return cofre(x,i)}).join("")+'</div><button class="link" data-a="ir" data-v="caixinhas">Ver e mexer nas caixinhas</button></div>':'')+
     (metas.length?'<h2>Metas do mês</h2><div class="card"><div class="jarras">'+metas.slice(0,4).map(function(k){return jarraMeta(k,r.porSai)}).join("")+'</div><button class="link" data-a="ir" data-v="metas">Ver todas as metas</button></div>':'')+
     '<h2>Últimas anotações</h2><div class="card" style="padding:.3rem 1rem">'+
@@ -2810,6 +2828,136 @@ function previa(){
   el.innerHTML=h;
 }
 /* =====================================================================
+   NOTÍCIAS DE FONTES OFICIAIS (D59): o robô (tools/noticias.js) busca os
+   números do Banco Central, IBGE e ANP ao meio-dia e publica noticias.json
+   junto com o app. O app só fala com o próprio endereço; guarda a última
+   cópia para funcionar sem internet; e monta as frases e o "para você"
+   aqui no celular, com os dados da pessoa (nada sai do aparelho).
+   CERTEZA = dado oficial já publicado. POSSIBILIDADE = previsão (Focus).
+   ===================================================================== */
+var NOT=null, NOT_BUSCA=0;
+function linkOficial(u){return typeof u==="string"&&/^https:\/\/([a-z0-9-]+\.)*(ibge\.gov\.br|bcb\.gov\.br|gov\.br)\//.test(u)?u:null}
+/* o arquivo vem da internet: só passa o que tem o formato esperado */
+function noticiasValidas(j){
+  if(!ehObj(j)||typeof j.gerado!=="string")return null;
+  function n(x,min,max){x=Number(x);return isFinite(x)&&x>=min&&x<=max?x:null}
+  function d(x){return typeof x==="string"&&/^\d{4}-\d{2}(-\d{2})?$/.test(x)?x:null}
+  var o={gerado:j.gerado.slice(0,25)};
+  if(ehObj(j.dolar)&&n(j.dolar.v,0.5,50))o.dolar={v:+j.dolar.v,ant:n(j.dolar.ant,0.5,50),data:d(j.dolar.data)};
+  if(ehObj(j.selic)&&n(j.selic.v,0,100)!==null)o.selic={v:+j.selic.v,data:d(j.selic.data)};
+  if(ehObj(j.cdi)&&n(j.cdi.v,0,100)!==null)o.cdi={v:+j.cdi.v,data:d(j.cdi.data)};
+  if(ehObj(j.ipca)&&n(j.ipca.mes,-20,50)!==null&&d(j.ipca.ref))o.ipca={mes:+j.ipca.mes,doze:n(j.ipca.doze,-50,500),ref:j.ipca.ref};
+  if(ehObj(j.grupos)&&Array.isArray(j.grupos.itens)&&d(j.grupos.ref))o.grupos={ref:j.grupos.ref,itens:j.grupos.itens.filter(function(x){return ehObj(x)&&typeof x.nome==="string"&&n(x.v,-50,50)!==null}).slice(0,12).map(function(x){return {nome:x.nome.slice(0,40),v:+x.v}})};
+  if(ehObj(j.focus)&&n(j.focus.ipca,-50,500)!==null)o.focus={ipca:+j.focus.ipca,selic:n(j.focus.selic,0,100),cambio:n(j.focus.cambio,0.5,50),ano:String(j.focus.ano||"").slice(0,4),data:d(j.focus.data)};
+  if(ehObj(j.combustiveis)&&ehObj(j.combustiveis.gasolina)&&n(j.combustiveis.gasolina.v,0.5,50)){
+    var c=j.combustiveis, cb=function(x,max){return ehObj(x)&&n(x.v,0.5,max)?{v:+x.v,ant:n(x.ant,0.5,max)}:null};
+    o.combustiveis={de:d(c.de),ate:d(c.ate),gasolina:cb(c.gasolina,50),etanol:cb(c.etanol,50),diesel:cb(c.diesel,50),glp:cb(c.glp,1000)};
+  }
+  if(Array.isArray(j.ibge))o.ibge=j.ibge.filter(function(x){return ehObj(x)&&typeof x.titulo==="string"&&linkOficial(x.link)}).slice(0,3).map(function(x){return {titulo:x.titulo.slice(0,160),intro:String(x.intro||"").slice(0,300),link:x.link,data:d(x.data)}});
+  return o;
+}
+function noticiasGuardadas(){
+  if(NOT)return NOT;
+  try{var t=lsGet(KEY+":noticias"); NOT=t?noticiasValidas(JSON.parse(t)):null}catch(e){NOT=null}
+  return NOT;
+}
+function buscarNoticias(){
+  if(typeof fetch!=="function"||!/^https?:$/.test(location.protocol))return;
+  if(Date.now()-NOT_BUSCA<10*60*1000)return; NOT_BUSCA=Date.now();
+  fetch("noticias.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.json():null}).then(function(j){
+    var v=j&&noticiasValidas(j); if(!v)return;
+    var antes=noticiasGuardadas(); NOT=v; lsSet(KEY+":noticias",JSON.stringify(j));
+    if((!antes||antes.gerado!==v.gerado)&&(VIEW==="inicio"||VIEW==="noticias"))desenhar();
+  }).catch(function(){});
+}
+function pc(v,sinal){return (sinal&&v>0?"+":v<0?"−":"")+Math.abs(v).toFixed(2).replace(".",",")+"%"}
+function reais(v){return brl(Math.round(v*100))}
+/* quanto a pessoa gasta por mês, em média nos últimos 3 meses, nas categorias cujo nome combina */
+var GRUPO_CAT=[["Alimentação",/mercado|aliment|comida|feira|padaria|restaurante|lanche|acougue|supermerc|bebida/],["Habitação",/casa|aluguel|luz|energia|agua|gas|moradia|condominio/],["Transportes",/transporte|combust|gasolina|uber|onibus|carro|moto|estacion|pedagio|metro/],["Saúde",/saude|farmacia|remedio|medic|plano de saude|dentista|higiene|beleza/],["Educação",/educa|escola|curso|faculdade|livro|estudo/],["Vestuário",/roupa|vestu|calcad|sapato/],["Comunicação",/internet|celular|telefone|streaming/],["Despesas pessoais",/lazer|pessoal|academia|cabel/],["Artigos de residência",/movei|eletro|utensil|decora/]];
+function gastoMedioCat(re){
+  var ym=hojeISO().slice(0,7), soma=0, meses=0, nomes={};
+  for(var i=1;i<=3;i++){var r=resumoMes(ymMais(ym,-i)), s=0; Object.keys(r.porSai).forEach(function(k){var nm=nomeCat(k); if(re.test(norm(nm))){s+=r.porSai[k]; nomes[nm]=1}}); if(r.lanc.length){soma+=s; meses++}}
+  return {v:meses?Math.round(soma/meses):0,nomes:Object.keys(nomes)};
+}
+function itensNoticias(n){
+  var it=[], t=totais();
+  if(n.dolar){
+    var dv=n.dolar.ant?(n.dolar.v/n.dolar.ant-1)*100:0;
+    it.push({id:"dolar",sel:"certeza",tit:"Dólar a "+reais(n.dolar.v),fato:"Cotação de venda"+(n.dolar.data?" de "+dataBR(n.dolar.data):"")+" (Banco Central): "+(Math.abs(dv)<0.05?"praticamente igual ao dia anterior.":(dv>0?"subiu ":"caiu ")+pc(Math.abs(dv))+" em relação ao dia anterior."),
+      sig:dv>=0?"Dólar mais alto costuma encarecer eletrônicos, remédios e produtos importados, viagens e, com o tempo, combustível e pão (o trigo é importado).":"Dólar mais baixo pode baratear, com o tempo, eletrônicos, importados e viagens.",
+      fonte:"Banco Central",link:"https://www.bcb.gov.br/estabilidadefinanceira/historicocotacoes"});
+  }
+  if(n.combustiveis&&n.combustiveis.gasolina){
+    var c=n.combustiveis, g=c.gasolina, gv=g.ant?(g.v/g.ant-1)*100:0, gm=gastoMedioCat(/combust|gasolina|posto|etanol/), pv=null;
+    if(gm.v>0&&Math.abs(gv)>=0.05)pv="Você gasta cerca de "+brl(gm.v)+" por mês com "+gm.nomes.join(", ")+": com essa variação, são uns "+brl(Math.round(Math.abs(gm.v*gv/100)/100)*100)+(gv>0?" a mais":" a menos")+" por mês.";
+    it.push({id:"combustiveis",sel:"certeza",tit:"Gasolina a "+reais(g.v)+" o litro (média Brasil)",fato:"Pesquisa semanal da ANP"+(c.de&&c.ate?" de "+dataBR(c.de).slice(0,5)+" a "+dataBR(c.ate).slice(0,5):"")+": "+(Math.abs(gv)<0.05?"igual à semana anterior":(gv>0?"subiu ":"caiu ")+pc(Math.abs(gv))+" na semana")+"."+(c.etanol?" Etanol "+reais(c.etanol.v)+".":"")+(c.diesel?" Diesel "+reais(c.diesel.v)+".":"")+(c.glp?" Gás de cozinha "+reais(c.glp.v)+" o botijão.":""),
+      sig:"Pesa direto em quem usa carro ou moto e, com o tempo, no frete e no preço dos produtos.",pv:pv,fonte:"ANP",link:"https://www.gov.br/anp/pt-br/assuntos/precos-e-defesa-da-concorrencia/precos"});
+  }
+  if(n.ipca){
+    var mes=MES[+n.ipca.ref.slice(5)-1], livre=livreAgora(), ivs=contasInvest().filter(function(c){return c.inv.taxa>0}), pvi=[];
+    if(livre>0&&n.ipca.mes>0)pvi.push("Seus "+brl(livre)+" para usar agora perdem cerca de "+brl(Math.round(livre*n.ipca.mes/100/100)*100)+" de poder de compra num mês como esse, se ficarem parados.");
+    if(ivs.length&&n.ipca.doze!=null){var acima=ivs.filter(function(c){return c.inv.taxa>n.ipca.doze}); pvi.push(acima.length===ivs.length?"Suas aplicações rendem acima da inflação de 12 meses: o dinheiro investido está crescendo de verdade.":"Atenção: "+ivs.filter(function(c){return c.inv.taxa<=n.ipca.doze}).map(function(c){return c.nome}).join(", ")+" rende menos que a inflação de 12 meses.")}
+    it.push({id:"ipca",sel:"certeza",tit:"Inflação de "+mes+": "+pc(n.ipca.mes),fato:(n.ipca.doze!=null?"Em 12 meses, "+pc(n.ipca.doze)+". ":"")+"Índice oficial de preços (IPCA, do IBGE).",
+      sig:"Os preços subiram, em média, "+pc(n.ipca.mes)+" no mês. Dinheiro parado perde esse tanto de valor; o que rende menos que isso também.",pv:pvi.join(" ")||null,fonte:"IBGE",link:"https://www.ibge.gov.br/explica/inflacao.php"});
+  }
+  if(n.grupos&&n.grupos.itens.length){
+    var gs=n.grupos.itens.slice().sort(function(a,b){return b.v-a.v}), altas=gs.filter(function(x){return x.v>0}).slice(0,2), quedas=gs.filter(function(x){return x.v<0}).slice(-2).reverse(), melhor=null;
+    GRUPO_CAT.forEach(function(gc){
+      var gr=n.grupos.itens.filter(function(x){return norm(x.nome).indexOf(norm(gc[0]))===0})[0]; if(!gr||gr.v<=0)return;
+      var gm2=gastoMedioCat(gc[1]); if(gm2.v<=0)return; var ex=gm2.v*gr.v/100;
+      if(!melhor||ex>melhor.ex)melhor={ex:ex,g:gr,gm:gm2};
+    });
+    it.push({id:"grupos",sel:"certeza",tit:"O que ficou mais caro e mais barato em "+MES[+n.grupos.ref.slice(5)-1],
+      fato:"Mais caro: "+(altas.length?altas.map(function(x){return x.nome+" ("+pc(x.v,true)+")"}).join(", "):"nenhum grupo")+". "+(quedas.length?"Mais barato: "+quedas.map(function(x){return x.nome+" ("+pc(x.v,true)+")"}).join(", ")+".":"Nenhum grupo ficou mais barato."),
+      sig:"É a inflação do IBGE separada por tipo de gasto: ajuda a saber onde o dinheiro está rendendo menos.",
+      pv:melhor&&melhor.ex>=50?"Você gasta cerca de "+brl(melhor.gm.v)+" por mês com "+melhor.gm.nomes.join(", ")+": com a alta de "+pc(melhor.g.v)+" em "+melhor.g.nome+", são uns "+brl(Math.round(melhor.ex/100)*100)+" a mais por mês.":null,
+      fonte:"IBGE",link:"https://sidra.ibge.gov.br/tabela/7060"});
+  }
+  if(n.selic){
+    it.push({id:"selic",sel:"certeza",tit:"Juros básicos (Selic): "+pc(n.selic.v)+" ao ano",fato:"Taxa definida pelo Banco Central"+(n.selic.data?", em vigor em "+dataBR(n.selic.data):"")+".",
+      sig:n.selic.v>=10?"Juros altos: guardar dinheiro rende mais, e parcelar, usar o cheque especial e atrasar o cartão sai mais caro.":"Juros mais baixos: o crédito fica mais barato, e guardar rende menos.",
+      pv:t.passivo>0?"Você deve "+brl(t.passivo)+": com os juros assim, quitar primeiro as dívidas mais caras costuma ser o melhor uso do dinheiro.":null,fonte:"Banco Central",link:"https://www.bcb.gov.br/controleinflacao/taxaselic"});
+  }
+  if(n.cdi){
+    var ivc=contasInvest().filter(function(c){return c.inv.taxa>0});
+    it.push({id:"cdi",sel:"certeza",tit:"CDI: "+pc(n.cdi.v)+" ao ano",fato:"Referência da maioria dos CDBs e das caixinhas de banco (Banco Central"+(n.cdi.data?", "+dataBR(n.cdi.data):"")+").",
+      sig:"Uma aplicação que rende \"100% do CDI\" rende cerca de "+pc(n.cdi.v)+" ao ano. Se o seu banco mostra \"% do CDI\", é só multiplicar.",
+      pv:ivc.length?ivc.map(function(c){return c.nome+" ("+pc(c.inv.taxa)+" ao ano) rende cerca de "+Math.round(c.inv.taxa/n.cdi.v*100)+"% do CDI."}).join(" "):null,fonte:"Banco Central",link:"https://www.bcb.gov.br/controleinflacao/taxaselic"});
+  }
+  if(n.focus){
+    var f=n.focus;
+    it.push({id:"focus",sel:"possibilidade",tit:"O mercado espera inflação de "+pc(f.ipca)+" em "+f.ano,fato:"Boletim Focus"+(f.data?" de "+dataBR(f.data):"")+" (Banco Central), a mediana das previsões de economistas"+(f.selic!=null?": Selic de "+pc(f.selic)+" no fim do ano":"")+(f.cambio!=null?" e dólar a "+reais(f.cambio):"")+".",
+      sig:"É uma previsão, não uma certeza: muda toda semana. Serve para planejar com cuidado.",fonte:"Banco Central",link:"https://www.bcb.gov.br/publicacoes/focus"});
+  }
+  (n.ibge||[]).forEach(function(x,i){it.push({id:"ibge"+i,sel:"certeza",tit:x.titulo,fato:x.intro,sig:"Notícia oficial do IBGE"+(x.data?", de "+dataBR(x.data):"")+".",fonte:"IBGE",link:x.link})});
+  return it;
+}
+function seloNot(s){return '<span class="nt-selo '+(s==="certeza"?"nt-cert":"nt-poss")+'">'+(s==="certeza"?"Certeza":"Possibilidade")+'</span>'}
+function quandoNot(n){var d=new Date(n.gerado); return isNaN(d)?"":"Atualizado em "+pad(d.getDate())+"/"+pad(d.getMonth()+1)+" às "+pad(d.getHours())+"h"+pad(d.getMinutes())}
+function cardHojeBrasil(){
+  var n=noticiasGuardadas(); if(!n)return "";
+  var it=itensNoticias(n).filter(function(x){return ["dolar","combustiveis","ipca","grupos"].indexOf(x.id)>=0}).slice(0,3);
+  if(!it.length)return "";
+  return '<div class="card nt-hoje"><div class="nt-cab"><b>Hoje no Brasil</b><span>'+esc(quandoNot(n))+'</span></div>'+
+    it.map(function(x){return '<div class="nt-lin">'+seloNot(x.sel)+'<span>'+esc(x.tit)+(x.pv?'<i>Para você: '+esc(x.pv)+'</i>':'')+'</span></div>'}).join("")+
+    '<button class="link" data-a="ir" data-v="noticias">Ver todas as notícias ›</button></div>';
+}
+function telaNoticias(){
+  buscarNoticias();
+  var n=noticiasGuardadas();
+  var h=capa("Fontes oficiais, todo dia ao meio-dia","Notícias","inicio")+
+    '<p class="sub lead">O que mudou na economia e o que isso pode significar para você. <b>Certeza</b> é dado oficial já publicado; <b>Possibilidade</b> é previsão e pode mudar.</p>';
+  if(!n)return h+'<div class="card"><div class="vazio"><b>As notícias ainda não chegaram</b>Elas chegam quando o celular está com internet. Tente de novo daqui a pouco.</div></div>';
+  h+='<p class="faint">'+esc(quandoNot(n))+'</p>';
+  h+=itensNoticias(n).map(function(x){
+    return '<article class="card nt-card">'+seloNot(x.sel)+'<h3>'+esc(x.tit)+'</h3><p>'+esc(x.fato)+'</p>'+
+      '<p class="nt-sig"><b>O que isso significa:</b> '+esc(x.sig)+'</p>'+(x.pv?'<p class="nt-pv"><b>Para você:</b> '+esc(x.pv)+'</p>':'')+
+      (linkOficial(x.link)?'<a class="link nt-link" href="'+esc(x.link)+'" target="_blank" rel="noopener noreferrer">Ver no site oficial ('+esc(x.fonte)+') ›</a>':'')+'</article>';
+  }).join("");
+  return h+'<p class="faint" style="margin-top:.8rem">As notícias mostram o que os números costumam significar. Não são recomendação de investimento.</p>';
+}
+
+/* =====================================================================
    INVESTIMENTOS (D50, D58): aplicações (poupança, CDB, Tesouro, fundos) são
    contas "ativo" com c.inv = {taxa (% ao ano), banco (id da conta ligada),
    ate (até que dia o rendimento já foi calculado)}. O rendimento é calculado
@@ -3367,6 +3515,7 @@ function atalho(v,t,s){return '<button class="atalho" data-a="ir" data-v="'+v+'"
 function telaMais(){
   return capa("Tudo o resto","Mais")+'<p class="sub lead">Ver o que você anotou, entender o mês e ajustar o app.</p><div>'+
     atalho("anotacoes","Anotações","Procure e ordene por data, valor ou nome")+
+    atalho("noticias","Notícias","Dólar, juros, inflação e gasolina, de fontes oficiais")+
     atalho("ajustes","Ajustes","Letra, cores, movimento, categorias e cópia dos dados")+'</div>';
 }
 var AG_TODAS=false;
@@ -4085,6 +4234,7 @@ if("serviceWorker" in navigator && /^https?:$/.test(location.protocol)){
 try{ if(navigator.storage&&navigator.storage.persist)navigator.storage.persist(); }catch(e){}
 if(S.config.pronto&&S.contas.length)ir("inicio"); else iniciarOnb();
 var pr=$("#pergRosto"); if(pr)pr.innerHTML=rostoPerg();
+setTimeout(buscarNoticias,1500);
 var spTira=function(){var sp=$("#splash"); if(sp)sp.remove()};
 setTimeout(spTira,calmo()?1200:4100);
 if($("#splash"))$("#splash").addEventListener("click",spTira);   /* tocar pula a abertura */

@@ -16,7 +16,7 @@ Passo 5 do plano: **aprovado pelo dono em 7 nov 2026 e no app desde a versão 1.
   - **[aprender]**: educação financeira simples.
 - **O que o chat não faz:** não recomenda investimento específico (não é consultor licenciado), não manda dados para lugar nenhum e não finge entender o que não está na lista.
 
-## As 52 perguntas
+## As 53 perguntas
 
 ### Meu dinheiro (11)
 
@@ -80,7 +80,7 @@ Passo 5 do plano: **aprovado pelo dono em 7 nov 2026 e no app desde a versão 1.
 | 40 | Como deixo a letra maior ou a tela escura? | app | Mais → Ajustes → Letra e Cores |
 | 51 | Por que o app não deixou eu salvar? | app | Explica as travas de coerência (D57): o que ele impede e o que só pergunta. Acrescentada na 1.19.0 |
 
-### Aprender (10)
+### Aprender (11)
 
 | # | Pergunta | Tipo | Como responde |
 |---|---|---|---|
@@ -94,6 +94,7 @@ Passo 5 do plano: **aprovado pelo dono em 7 nov 2026 e no app desde a versão 1.
 | 48 | O que são juros compostos? | aprender | Juros sobre juros, com um exemplo simples, a favor (guardar) e contra (dívida) |
 | 49 | Como começo a guardar ganhando pouco? | aprender | Guardar primeiro e um pouco (até 5%), automático, e usar caixinhas com objetivo |
 | 50 | Meus dados ficam seguros? Alguém vê? | aprender | Ficam só neste celular; ninguém (nem o Balancete) vê; por isso a cópia é importante |
+| 53 | O que mudou na economia que me afeta? | dados + aprender | As notícias oficiais mais importantes do dia, com o "para você" (D59). Acrescentada na 1.21.0 |
 
 ## Decisões para o dono
 

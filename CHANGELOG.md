@@ -5,6 +5,24 @@
 Formato: versão semântica (`MAIOR.MENOR.CORREÇÃO`). Cada versão diz **o que mudou para a pessoa que usa**.
 Antes da 1.0.0 as versões eram numeradas só pelo nome do cache do app (v1 a v16); estão aqui como marcos de desenvolvimento.
 
+## [1.21.0-beta.1]: 7 de novembro de 2026 · notícias de fontes oficiais
+- **"Hoje no Brasil" no Início** e uma **tela de Notícias** (também em Mais), com o que mudou na economia e o que isso pode significar para você.
+- **Só fontes oficiais**, cada uma com o **link do site oficial**:
+  - **Banco Central**: dólar, Selic, CDI e as previsões do Boletim Focus;
+  - **IBGE**: inflação do mês e de 12 meses, o que ficou mais caro e mais barato (grupos do IPCA) e as últimas notícias oficiais;
+  - **ANP**: preço médio no Brasil de gasolina, etanol, diesel e gás de cozinha.
+- **Certeza ou possibilidade**: o selo **CERTEZA** marca dado oficial já publicado; **POSSIBILIDADE**, previsão (Focus), que pode mudar.
+- **"Para você"**, calculado só no celular, com os seus dados. Exemplos:
+  - "Você gasta cerca de R$ 400 por mês com Combustível: com essa variação, são uns R$ 11 a mais";
+  - "Seus R$ 2.950 para usar agora perdem cerca de R$ 24 de poder de compra num mês como esse";
+  - "Seu CDB (12% ao ano) rende cerca de 88% do CDI";
+  - a lembrança de quitar as dívidas mais caras quando os juros estão altos.
+- **Atualiza todo dia ao meio-dia** (horário de Brasília). Um robô gratuito do próprio GitHub busca os dados (`tools/noticias.js`) e publica junto com o app. Não há servidor, e o celular só conversa com o endereço do próprio app. Sem internet, aparece a última cópia guardada, com a data.
+- **Segurança**: o arquivo de notícias é conferido antes de aparecer. Números fora do normal, texto malicioso e links que não sejam de sites oficiais (gov.br, bcb.gov.br, ibge.gov.br) são descartados.
+- As notícias explicam o que os números costumam significar, sem recomendar investimento.
+- Chat: nova pergunta **"O que mudou na economia que me afeta?"** (agora são 53).
+- Testes: 767 verificações em 29 arquivos (novo: notícias).
+
 ## [1.20.0-beta.1]: 7 de novembro de 2026 · Investimentos
 - **Aba nova: Investir**, logo depois de Dinheiro (a barra agora tem 7 abas). Mostra quanto está investido, quanto rendeu no mês e no ano, cada aplicação (poupança, CDB, Tesouro, fundos) e as caixinhas que rendem.
 - **Rendimento automático.** Cada aplicação tem a **taxa ao ano** que aparece no app do banco. O app calcula o rendimento **a cada dia útil**: sem sábado, domingo e **feriados nacionais**, inclusive Carnaval, Sexta-feira Santa e Corpus Christi, calculados sem internet a partir da Páscoa. Usa juros sobre juros, na convenção de 252 dias úteis no ano.

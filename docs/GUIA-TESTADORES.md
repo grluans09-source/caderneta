@@ -66,6 +66,8 @@ Teste também as **travas**: peça para a pessoa tentar gastar no cartão mais q
 
 Se a pessoa tiver poupança ou CDB, peça para ela **cadastrar na aba Investir com a taxa ao ano** que aparece no app do banco. Ela achou a taxa? Depois de uns dias, peça para **conferir com o banco**.
 
+Mostre o cartão **"Hoje no Brasil"** no Início. A pessoa entende a diferença entre **Certeza** e **Possibilidade**? O "Para você" faz sentido para ela?
+
 ## 4. Ficha de observação (uma por pessoa)
 
 | Campo | Anotação |
