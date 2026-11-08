@@ -1,6 +1,6 @@
 # Roteiro
 
-Onde estamos: **versão 1.23.1-beta.1**. **O plano de 9 passos combinado em 7 nov 2026 terminou** com a auditoria completa (resultado em `AVALIACAO.md`). **Ainda sem uso real por outras pessoas**: o que falta é pôr o app na mão de 3 a 5 pessoas (`GUIA-TESTADORES.md`).
+Onde estamos: **versão 1.24.0-beta.1**. **O plano de 9 passos combinado em 7 nov 2026 terminou** com a auditoria completa (resultado em `AVALIACAO.md`). **Ainda sem uso real por outras pessoas**: o que falta é pôr o app na mão de 3 a 5 pessoas (`GUIA-TESTADORES.md`).
 Este documento diz **o que fazer a seguir, em que ordem e por quê**. Atualize-o a cada versão.
 
 ## Como priorizar
@@ -37,6 +37,7 @@ Este documento diz **o que fazer a seguir, em que ordem e por quê**. Atualize-o
 | **Depois (D59)** | Notícias de impostos da Receita Federal e de outros órgãos, se houver fonte oficial em formato de dados | Sem fonte automática hoje | Baixa |
 | ✅ 1.22.0 | **Notícias do IBGE pelo celular** (D62): o IBGE recusa o robô do GitHub (fora do Brasil); o celular busca direto, sem enviar dado nenhum | Feito; no lançamento, avaliar um servidor no Brasil para o robô se surgirem outras tarefas de servidor | Feito |
 | ✅ 1.23.0 | **Interface simplificada** (D64): auditoria de inconsistências e camadas (aba Saúde, seções que abrem, Mais detalhes, "?"), sem remover nada; trava do dinheiro guardado em caixinha (D63) | Feito; ver com testadores se acham o que foi para as camadas | Feito |
+| ✅ 1.24.0 | **Cada investimento rende do seu jeito** (D65): % do CDI, taxa fixa, IPCA +, poupança e varia; imposto estimado no resgate; atualizar o valor; lembrete semanal de conferir | Feito; ver com testadores se acham "Como rende?" e se o lembrete semanal ajuda ou incomoda | Feito |
 | ✅ 1.21.1 | **Passo 9: auditoria completa**: cálculos com dados aleatórios (nenhuma diferença), 14 telas × 3 letras × 2 temas, código sem uso, vocabulário em Investir, Notícias e chat. Corrigido: cédulas e edição de conta não mudam mais o passado; Juros e multas e Dívidas não pagas por código fixo; contraste da data atrasada; robô das notícias tenta 3 vezes; CSS limpo; medição de desempenho consertada; descrição do GitHub atualizada (D60) | Feito; relatório em `AVALIACAO.md` | Feito |
 | ✅ 1.14.0 | **Passo 2 do plano**: análise contábil (`ANALISE-CONTABIL.md`) e as 4 funções escolhidas: conferir com o banco, contas do ano, mês a mês e custo fixo de vida | Feito; ver com testadores se "Conferir com o banco" é achado e entendido | Feito |
 | **Depois (D53)** | Fluxo de caixa do mês ("sobrou 500 mas o banco caiu"), relatório para o Imposto de Renda (perto da declaração), etiquetas por projeto | Escolhidas para depois na análise contábil | Média |

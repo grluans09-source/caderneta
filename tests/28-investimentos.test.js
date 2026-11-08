@@ -51,7 +51,7 @@ click('nav [data-v="investir"]');
 eq("a aba Investir fica logo depois de Dinheiro e mostra investido, rendeu no mês e no ano",[[...d.querySelectorAll("nav button[data-v]")].map(b=>b.dataset.v).slice(0,3),/Investido/.test($("#tela").textContent),/Rendeu em/.test($("#tela").textContent)],[["inicio","contas","investir"],true,true]);
 eq("cada aplicação mostra taxa e banco e um botão só; a janela dela tem Aplicar, Resgatar, Conferir, Editar e Apagar (1.23.0)",[/12% ao ano · Banco/.test($("#tela").textContent),$('#tela [data-a="aplicacao"][data-id="cdb"]')&&($('#tela [data-a="aplicacao"][data-id="cdb"]').click(),true),!!$('#modal [data-a="invAplicar"][data-id="cdb"]'),!!$('#modal [data-a="invResgatar"][data-id="cdb"]'),!!$('#modal [data-a="conferir"][data-id="cdb"]'),!!$('#modal [data-a="invEditar"][data-id="cdb"]'),!!$('#modal [data-a="invApagar"][data-id="cdb"]')],[true,true,true,true,true,true,true]);
 $('#modal [data-a="mFechar"]').click();
-eq("a Poupança sem taxa pede para informar a taxa",/sem taxa: toque abaixo para informar/.test($("#tela").textContent),true);
+eq("a Poupança convertida rende pela regra oficial da poupança (1.24.0)",/Poupança \(regra oficial\)/.test($("#tela").textContent),true);
 eq("a caixinha que rende aparece com a taxa",/Reserva/.test($("#tela").textContent)&&/10% ao ano/.test($("#tela").textContent),true);
 // aplicar: transferência do banco ligado para a aplicação
 click('#tela [data-a="aplicacao"][data-id="cdb"]');click('[data-a="invAplicar"][data-id="cdb"]');
@@ -69,10 +69,10 @@ click('[data-a="cfCorrigir"]'); click('#modal [data-a="mOk"]');
 const aj=S().lancamentos[S().lancamentos.length-1];
 eq("ajustar cria um rendimento de R$ 5 e o saldo bate com o banco",[aj.tipo,aj.valor,aj.catId===kr.id,T.saldoConta(cdb)],["entrada",500,true,saldoCdb+500]);
 // editar: informar a taxa da poupança (rende daqui para a frente)
-click('nav [data-v="investir"]'); click('#tela [data-a="aplicacao"][data-id="po"]'); click('[data-a="invEditar"][data-id="po"]'); digita("#ivTaxa","6,17"); click('[data-a="ivSalvar"]');
-eq("informar a taxa da Poupança: passa a render a partir de hoje",[po.inv.taxa,po.inv.ate],[6.17,hoje]);
+click('nav [data-v="investir"]'); click('#tela [data-a="aplicacao"][data-id="po"]'); click('[data-a="invEditar"][data-id="po"]'); click('#modal [data-a="rendModo"][data-v="fixa"]'); digita("#ivTaxa","6,17"); click('[data-a="ivSalvar"]');
+eq("trocar a Poupança para taxa fixa de 6,17% ao ano: passa a usar a taxa (sem refazer nada, ainda não havia rendimento)",[po.inv.modo,po.inv.taxa,po.inv.ate],["fixa",6.17,hoje]);
 // nova aplicação
-click('[data-a="invEditar"][data-id=""]'); digita("#ivNome","Tesouro Selic"); digita("#ivValor","300000"); digita("#ivTaxa","11"); click('[data-a="ivSalvar"]');
+click('[data-a="invEditar"][data-id=""]'); digita("#ivNome","Tesouro Selic"); digita("#ivValor","300000"); click('#modal [data-a="rendModo"][data-v="fixa"]'); digita("#ivTaxa","11"); click('[data-a="ivSalvar"]');
 const ts=S().contas.find(c=>c.nome==="Tesouro Selic");
 eq("nova aplicação com quanto tem e a taxa",[!!ts,ts&&ts.inicial,ts&&ts.inv.taxa],[true,300000,11]);
 // a cópia dos dados guarda tudo
@@ -86,10 +86,10 @@ const w2=abre(null), d2=w2.document; const $2=s=>d2.querySelector(s);
 $2('[data-a="oProx"]').click();
 const lab=$2('label[for="oPoup"]').textContent;
 const dg=(s,t)=>{const el=$2(s);el.value=t;el.dispatchEvent(new w2.Event("input",{bubbles:true}))};
-dg("#oPoup","500000"); dg("#oTaxa","10,5");
+dg("#oPoup","500000"); $2('[data-a="oModoRend"][data-v="fixa"]').click(); dg("#oTaxa","10,5");
 $2('[data-a="oProx"]').click(); $2('[data-a="oFim"]')&&$2('[data-a="oFim"]').click();
 const inv=w2.__T.S().contas.find(c=>c.inv);
-eq("Primeiros passos pergunta 'Você tem dinheiro guardado ou investido?' e cria a aplicação com a taxa",[/guardado ou investido/.test(lab),!!inv&&inv.inicial,inv&&inv.inv.taxa],[true,500000,10.5]);
+eq("Primeiros passos pergunta 'Você tem dinheiro guardado ou investido?' e cria a aplicação com a taxa",[/guardado ou investido/.test(lab),!!inv&&inv.inicial,inv&&inv.inv.taxa,inv&&inv.inv.modo],[true,500000,10.5,"fixa"]);
 eq("erros de script",errs,[]);
 console.log(ok?"TUDO OK":"HÁ FALHAS");process.exit(ok?0:1);
 })();

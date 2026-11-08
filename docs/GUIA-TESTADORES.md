@@ -64,7 +64,7 @@ Peça também que a pessoa **toque em "Perguntar"** e faça 2 ou 3 perguntas, in
 
 Teste também as **travas**: peça para a pessoa tentar gastar no cartão mais que o limite e anotar um valor com um zero a mais. Ela entendeu o aviso e soube corrigir?
 
-Se a pessoa tiver poupança ou CDB, peça para ela **cadastrar na aba Investir com a taxa ao ano** que aparece no app do banco. Ela achou a taxa? Depois de uns dias, peça para **conferir com o banco**.
+Se a pessoa tiver poupança ou CDB, peça para ela **cadastrar na aba Investir** e escolher **como rende** do jeito que aparece no app do banco ("115% do CDI", "12% ao ano"...). Ela achou essa informação no banco e entendeu a escolha? Depois de uns dias, peça para **conferir com o banco**.
 
 Mostre o cartão **"Hoje no Brasil"** no Início. A pessoa entende a diferença entre **Certeza** e **Possibilidade**? O "Para você" faz sentido para ela?
 

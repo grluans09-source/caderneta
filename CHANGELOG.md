@@ -5,6 +5,18 @@
 Formato: versão semântica (`MAIOR.MENOR.CORREÇÃO`). Cada versão diz **o que mudou para a pessoa que usa**.
 Antes da 1.0.0 as versões eram numeradas só pelo nome do cache do app (v1 a v16); estão aqui como marcos de desenvolvimento.
 
+## [1.24.0-beta.1]: 8 de novembro de 2026 · cada investimento rende do seu jeito
+O dono percebeu: a caixinha que rende **115% do CDI** virava "100% ao ano" no app (o campo só entendia taxa ao ano e cortava em 100). O rendimento anotado ficava cerca de 5 vezes maior que o real. Agora (D65):
+- **"Como rende?"** em cada aplicação e caixinha, do jeito que aparece no app do banco: **% do CDI** (caixinhas, CDB, LCI, LCA), **taxa fixa ao ano**, **IPCA + taxa** (Tesouro IPCA+), **poupança** (regra oficial: 0,5% ao mês com a Selic acima de 8,5%, no dia do aniversário) ou **varia** (fundos e ações: atualize o valor).
+- O app usa o **CDI, a Selic e a inflação oficiais de cada dia** (Banco Central e IBGE, que já chegavam pelas Notícias) e guarda o histórico no celular. Sem internet ainda, o cálculo espera em vez de inventar.
+- **"Se resgatar hoje, recebe cerca de R$ X"**, já sem o Imposto de Renda (22,5% até 6 meses, 20% até 1 ano, 17,5% até 2 anos, 15% depois) e o IOF dos primeiros 30 dias. Poupança, LCI e LCA não descontam.
+- **"Era isso?"** quando a taxa está fora do comum (ex.: taxa fixa acima de 30% ao ano), sugerindo "% do CDI".
+- **Mudou como algo rende? O app refaz os rendimentos que ele mesmo calculou** com a regra nova (avisa antes; o que você anotou ou conferiu não muda). É assim que o erro dos 115 se corrige.
+- **Atualizar o valor da caixinha** com o que o banco mostra: dizendo se a diferença foi rendimento, imposto ou dinheiro que você guardou ou tirou. Na aplicação, o botão agora se chama "Atualizar o valor (conferir com o banco)".
+- **Lembrete semanal** no Início: "Hora de conferir seus investimentos", com a lista para atualizar cada um, "Tudo bateu" e "Lembrar na semana que vem". O app calcula sozinho, mas pode errar.
+- Primeiros passos perguntam se o rendimento é "% do CDI" ou "% ao ano". A conta Poupança convertida passa a render pela regra oficial.
+- Testes: 872 verificações em 33 arquivos (novo: como cada investimento rende).
+
 ## [1.23.1-beta.1]: 8 de novembro de 2026 · aplicações por último também na hora de anotar
 - Em **Gastei** e **Comprei um bem**, a coluna "De onde saiu" não mostra mais as aplicações (CDB, Poupança...) na lista curta, porque dinheiro investido não é dinheiro para usar agora. Na lista completa (tocando na busca) elas aparecem **por último, com "(resgatar)"**, como no simulador. Se você marcar uma aplicação como favorita, ela continua aparecendo.
 - Em **Transferi entre contas** nada muda: é assim que se aplica e se resgata.

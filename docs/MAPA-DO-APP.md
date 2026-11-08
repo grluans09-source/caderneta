@@ -66,7 +66,7 @@ Em cada tela: **título**, **a frase que explica para que serve** (aparece no to
 2. O **Mordomo** (a balança) + 3 linhas: **Tenho · Devo · É meu de verdade** (com "Como ler a balança?"); a cara dele mostra a situação
 3. Resumo do mês, sempre com R$: Entrou · Saiu · Sobrou; do dia 1 ao 10, a linha **"<mês> fechou: sobrou R$ X"**, que abre o resumo e "Ver mês a mês"
 4. Uma linha: **"Falta pagar este mês: R$ X · N contas a pagar"** → Planejar
-5. Avisos urgentes, **no máximo 3**: as contas atrasadas viram **um aviso só** com o total ("5 contas a pagar atrasadas: R$ X", abre o acerto de contas); depois limite quase no fim, lembrete de cópia e o que vence em até 7 dias
+5. Avisos urgentes, **no máximo 3**: as contas atrasadas viram **um aviso só** com o total ("5 contas a pagar atrasadas: R$ X", abre o acerto de contas); depois limite quase no fim, lembrete de cópia, **"Hora de conferir seus investimentos"** (uma vez por semana, quando há aplicação ou caixinha sem conferir há mais de 7 dias; abre a lista para atualizar cada uma) e o que vence em até 7 dias
 6. **Hoje no Brasil**: uma linha com as 2 primeiras notícias, que abre as 3 mais importantes com "para você" e o atalho para Notícias
 7. **Seus objetivos** (se existirem): seção que abre com as caixinhas e as metas do mês
 8. 3 últimas anotações + "Ver todas as anotações"
@@ -81,11 +81,11 @@ A explicação do que é uma "conta" fica no **"?"** do topo.
 - **Pessoas:** quem me deve e a quem devo. Na janela da pessoa, as ações (Recebi, Paguei, Emprestei mais, Perdoar) vêm primeiro; mudar nome, data ou apagar ficam em "Mais detalhes"
 
 ### Investir: "Seu dinheiro rendendo"
-> *"Poupança, CDB, Tesouro, fundos. Informe a taxa ao ano que aparece no app do banco."*
+> *"Poupança, CDB, Tesouro e fundos, rendendo sozinhos."*
 1. **Investido**, quanto **rendeu no mês** e **no ano**
-2. **Minhas aplicações**: cada uma com a taxa ao ano e **um botão só**, "Aplicar, resgatar ou conferir", que abre a janela da aplicação com **Aplicar**, **Resgatar**, **Conferir com o banco**, **Editar nome e taxa** e **Apagar aplicação**; "+ Nova aplicação". A explicação da taxa fica no "?" do topo
-3. **Caixinhas que rendem** (as que têm taxa)
-O rendimento é calculado a cada dia útil (sem fim de semana e feriado nacional) e anotado uma vez por mês. O investido **não** é "dinheiro para usar agora".
+2. **Minhas aplicações**: cada uma mostra **como rende** ("115% do CDI", "12% ao ano", "IPCA + 6% ao ano", "Poupança (regra oficial)" ou "Varia") e **um botão só**, "Aplicar, resgatar ou conferir", que abre a janela da aplicação: valor, como rende, **"Se resgatar hoje, recebe cerca de R$ X"** (sem o Imposto de Renda e o IOF), **Aplicar**, **Resgatar**, **Atualizar o valor (conferir com o banco)**, **Editar nome e como rende** e **Apagar aplicação**. "+ Nova aplicação" pede nome, quanto tem, **Como rende?** (5 escolhas, com "?"), o número certo para cada uma, se paga Imposto de Renda e, em "Mais detalhes", desde quando está aplicado
+3. **Caixinhas que rendem**
+O rendimento é calculado a cada dia útil (sem fim de semana e feriado nacional) com o CDI, a Selic e a inflação oficiais de cada dia, e anotado uma vez por mês; a poupança rende no dia do aniversário. O investido **não** é "dinheiro para usar agora". Taxa fora do comum pergunta "era isso?"; mudar como rende refaz os rendimentos calculados (D65).
 
 ### Anotar (a pena): "O que aconteceu"
 > *"Escolha o que aconteceu e preencha: de onde saiu, para onde foi."*
@@ -120,7 +120,7 @@ O **cadastro** (as contas cadastradas, o total por mês e "+ Nova conta fixa"; n
 Limite por categoria (mercado, lazer...) e quanto já foi usado. A janela de cada meta diz que ela **não guarda dinheiro** (quem guarda é a caixinha).
 
 ### Planejar > Caixinhas: "Guardar sem sair da conta"
-Primeiro as **caixinhas** (cofres animados, "Guardar" e "Tirar"); em cima, o total guardado e para usar, com o saldo de cada conta em **"Ver por conta"**; embaixo, a sugestão de guardar a sobra das metas e **"Tirar de uma caixinha"**. A explicação fica no "?". No formulário, alvo, prazo e rendimento ficam em "Mais detalhes".
+Primeiro as **caixinhas** (cofres animados, "Guardar" e "Tirar"); em cima, o total guardado e para usar, com o saldo de cada conta em **"Ver por conta"**; embaixo, a sugestão de guardar a sobra das metas e **"Tirar de uma caixinha"**. A explicação fica no "?". Cada caixinha que rende mostra como rende e quanto receberia se resgatasse hoje, e tem **"Atualizar o valor"** (o que o banco mostra; a diferença pode ser rendimento, imposto ou dinheiro guardado ou tirado). No formulário, alvo, prazo e **como rende** (não rende, % do CDI ou taxa fixa ao ano) ficam em "Mais detalhes".
 
 ### Planejar > Simulador: "E se eu comprar"
 Valor, com o que vai pagar (as aplicações aparecem por último, com "(resgatar)") e em quantas vezes; "Minha renda por mês" fica em "Mais detalhes".
@@ -165,6 +165,8 @@ Abre uma janela preta e dourada com **53 perguntas prontas** em 5 grupos (Meu di
 | Apaguei sem querer | Botão **Desfazer** (8 segundos) |
 | O banco mostra outro valor | Dinheiro > a conta > **Conferir com o banco** |
 | Quanto rendeu meu CDB | **Investir** |
+| Minha caixinha rende 115% do CDI | Planejar > Caixinhas > Editar > Mais detalhes > **% do CDI** (ou Investir > + Nova aplicação) |
+| O valor da caixinha não bate com o banco | Caixinhas > **Atualizar o valor** (ou o lembrete semanal do Início) |
 | Minhas finanças vão bem? | **Saúde** |
 | Tenho uma dúvida | **Perguntar** (canto esquerdo) |
 | O que mudou na economia | Início > **Hoje no Brasil** |

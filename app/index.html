@@ -766,6 +766,10 @@ details.rec>summary:focus-visible{outline:3px solid var(--latao);outline-offset:
 /* ferramentas do Planejar: com letra Grande, o texto quebra em vez de sair da tela */
 .ferrs{grid-template-columns:repeat(2,minmax(0,1fr))}
 .ferr .ft{min-width:0}.ferr .ft span{overflow-wrap:anywhere}
+/* lista "Conferir com o banco" (lembrete semanal, D65) */
+.cf-lista{margin:.6rem 0}
+.cf-item{display:flex;align-items:center;justify-content:space-between;gap:.6rem;padding:.6rem 0;border-bottom:1px solid var(--rule)}
+.cf-item span{min-width:0}.cf-item b{display:block}.cf-item i{display:block;font-style:normal;font-size:.85rem;color:var(--ink2)}
 </style>
 </head>
 <body>
@@ -814,7 +818,7 @@ details.rec>summary:focus-visible{outline:3px solid var(--latao);outline-offset:
 /* ---------- utilidades ---------- */
 var KEY="caderneta:v2";
 /* versão do app (siga o CHANGELOG.md; subir junto com VERSAO em sw.js e "version" em package.json) */
-var VERSAO_APP="1.23.1-beta.1";
+var VERSAO_APP="1.24.0-beta.1";
 var RE_ID=/^[A-Za-z0-9_-]+$/, RE_DATA=/^\d{4}-\d{2}-\d{2}$/;
 var MES=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
 var MES3=["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
@@ -871,7 +875,7 @@ function primeiroVencimento(compra,fecha,vence){
 
 /* ---------- dados ---------- */
 var S={contas:[],categorias:[],lancamentos:[],fixas:[],caixas:[],reservas:[],
-  config:{tamanho:"m",tema:"auto",contador:false,ultimoBackup:null,pronto:false,movimento:"vivo",renda:0,sobraRef:null,favoritas:[],favCats:[]}};
+  config:{tamanho:"m",tema:"auto",contador:false,ultimoBackup:null,pronto:false,movimento:"vivo",renda:0,sobraRef:null,favoritas:[],favCats:[],idx:{cdi:[],selic:[],ipca:[]}}};
 
 /* valida qualquer dado vindo do armazenamento ou de um backup */
 var CARTEIRA_NOVA=false, INV_NOVA=false;
@@ -897,8 +901,9 @@ function higienizar(p){
     if(typeof c.cobrar==="string"&&RE_DATA.test(c.cobrar))n.cobrar=c.cobrar;
     if(typeof c.conferido==="string"&&RE_DATA.test(c.conferido))n.conferido=c.conferido;
     if(ehObj(c.inv)&&c.tipo==="ativo"&&c.pessoa!==true&&c.bem!==true&&c.carteira!==true){
-      var itx=Number(c.inv.taxa);
-      n.inv={taxa:isFinite(itx)?Math.max(0,Math.min(100,Math.round(itx*100)/100)):0,banco:id(c.inv.banco)?c.inv.banco:null,ate:(typeof c.inv.ate==="string"&&RE_DATA.test(c.inv.ate))?c.inv.ate:null};
+      var itx=Number(c.inv.taxa), imodo=["cdi","fixa","ipca","poup","varia"].indexOf(c.inv.modo)>=0?c.inv.modo:"fixa";
+      n.inv={modo:imodo,taxa:isFinite(itx)?Math.max(0,Math.min(imodo==="cdi"?300:100,Math.round(itx*100)/100)):0,ir:typeof c.inv.ir==="boolean"?c.inv.ir:imodo!=="poup",banco:id(c.inv.banco)?c.inv.banco:null,ate:(typeof c.inv.ate==="string"&&RE_DATA.test(c.inv.ate))?c.inv.ate:null};
+      ["desde","calc0"].forEach(function(k){if(typeof c.inv[k]==="string"&&RE_DATA.test(c.inv[k]))n.inv[k]=c.inv[k]});
     }
     if(c.tipo==="passivo"&&Array.isArray(c.abertas)){
       var ab=c.abertas.filter(function(a){return ehObj(a)&&cent(a.valor)>0&&(a.data==null||(typeof a.data==="string"&&RE_DATA.test(a.data)))})
@@ -908,7 +913,7 @@ function higienizar(p){
     out.contas.push(n);
   });
   marcarCarteira(out.contas);
-  out.contas.forEach(function(c){if(c.tipo==="ativo"&&!c.inv&&!c.pessoa&&!c.bem&&!c.carteira&&norm(c.nome)==="poupanca"){c.inv={taxa:0,banco:null,ate:null};INV_NOVA=true}});
+  out.contas.forEach(function(c){if(c.tipo==="ativo"&&!c.inv&&!c.pessoa&&!c.bem&&!c.carteira&&norm(c.nome)==="poupanca"){c.inv={modo:"poup",taxa:0,ir:false,banco:null,ate:null};INV_NOVA=true}});
   (Array.isArray(p.categorias)?p.categorias:[]).forEach(function(c){
     if(!ehObj(c)||!id(c.id)||typeof c.nome!=="string"||(c.tipo!=="despesa"&&c.tipo!=="receita")){out.perdidos++;return}
     var kn={id:c.id,nome:c.nome,tipo:c.tipo};
@@ -933,6 +938,7 @@ function higienizar(p){
     if(id(l.fixaId))n.fixaId=l.fixaId;
     if(typeof l.rend==="string"&&/^\d{4}-\d{2}$/.test(l.rend))n.rend=l.rend;
     if(id(l.rendCx))n.rendCx=l.rendCx;
+    if(id(l.cxAj))n.cxAj=l.cxAj;
     if(typeof l.ref==="string"&&/^\d{4}-\d{2}$/.test(l.ref))n.ref=l.ref;
     out.lancamentos.push(n);
   });
@@ -949,8 +955,10 @@ function higienizar(p){
     if(!ehObj(x)||!id(x.id)||typeof x.nome!=="string"){out.perdidos++;return}
     var n={id:x.id,nome:x.nome,alvo:Math.max(0,cent(x.alvo)||0)};
     if(typeof x.prazo==="string"&&RE_DATA.test(x.prazo))n.prazo=x.prazo;
-    var ctx=Number(x.taxa); if(isFinite(ctx)&&ctx>0)n.taxa=Math.min(100,Math.round(ctx*100)/100);
+    var ctx=Number(x.taxa), cmodo=x.modo==="cdi"?"cdi":"fixa";
+    if(isFinite(ctx)&&ctx>0){n.taxa=Math.min(cmodo==="cdi"?300:100,Math.round(ctx*100)/100); n.modo=cmodo; n.ir=x.ir!==false}
     if(typeof x.ate==="string"&&RE_DATA.test(x.ate))n.ate=x.ate;
+    ["calc0","conferido"].forEach(function(k){if(typeof x[k]==="string"&&RE_DATA.test(x[k]))n[k]=x[k]});
     out.caixas.push(n);
   });
   (Array.isArray(p.reservas)?p.reservas:[]).forEach(function(x){
@@ -965,6 +973,13 @@ function higienizar(p){
   });
   return out;
 }
+/* histórico dos índices oficiais (CDI e Selic por data, IPCA por mês), guardado no aparelho */
+function higIdx(o){
+  var r={cdi:[],selic:[],ipca:[]}; if(!ehObj(o))return r;
+  ["cdi","selic"].forEach(function(k){if(Array.isArray(o[k]))r[k]=o[k].filter(function(x){return ehObj(x)&&typeof x.d==="string"&&RE_DATA.test(x.d)&&isFinite(+x.v)&&+x.v>=0&&+x.v<100}).map(function(x){return {d:x.d,v:+x.v}}).slice(-200)});
+  if(Array.isArray(o.ipca))r.ipca=o.ipca.filter(function(x){return ehObj(x)&&typeof x.m==="string"&&/^\d{4}-\d{2}$/.test(x.m)&&isFinite(+x.v)&&Math.abs(+x.v)<50}).map(function(x){return {m:x.m,v:+x.v}}).slice(-200);
+  return r;
+}
 function higienizarConfig(c){
   var d=S.config;
   if(!ehObj(c))return d;
@@ -978,7 +993,8 @@ function higienizarConfig(c){
     renda:Math.max(0,Math.round(Number(c.renda))||0),
     sobraRef:typeof c.sobraRef==="string"&&/^\d{4}-\d{2}$/.test(c.sobraRef)?c.sobraRef:null,
     favoritas:Array.isArray(c.favoritas)?c.favoritas.filter(function(x){return typeof x==="string"&&/^[A-Za-z0-9_-]{1,40}$/.test(x)}).slice(0,3):[],
-    favCats:Array.isArray(c.favCats)?c.favCats.filter(function(x){return typeof x==="string"&&/^[A-Za-z0-9_-]{1,40}$/.test(x)}).slice(0,20):[]
+    favCats:Array.isArray(c.favCats)?c.favCats.filter(function(x){return typeof x==="string"&&/^[A-Za-z0-9_-]{1,40}$/.test(x)}).slice(0,20):[],
+    idx:higIdx(c.idx)
   };
 }
 
@@ -994,8 +1010,9 @@ function carregar(){
     S.config=higienizarConfig(p.config);
     if(INV_NOVA){
       INV_NOVA=false; if(S.config.pronto)salvar();
-      setTimeout(function(){toast("Novidade: sua Poupança agora fica na aba Investir. Informe a taxa ao ano para ela render no app.")},1500);
+      setTimeout(function(){toast("Novidade: sua Poupança agora fica na aba Investir e rende pela regra oficial da poupança.")},1500);
     }
+    registrarIndices(noticiasGuardadas());
     if(S.config.pronto&&atualizarRendimentos())salvar();
     if(CARTEIRA_NOVA){
       CARTEIRA_NOVA=false; if(S.config.pronto)salvar();
@@ -1601,8 +1618,8 @@ var PERGS=[
    return 'Guardado ao todo: '+B(totalReservado())+'.'+listaHTML(S.caixas.map(function(x){return esc(x.nome)+': '+esc(brl(saldoCaixa(x.id)))+(x.alvo?' de '+esc(brl(x.alvo)):'')}));}},
  {g:"dinheiro",q:"Quanto meus investimentos renderam?",kw:"investimentos investimento rendeu rendimento renderam aplicacao cdb poupanca tesouro juros",ir:"investir",r:function(){
    var cs=contasInvest(), ym=hojeISO().slice(0,7);
-   if(!cs.length&&!S.caixas.some(function(x){return x.taxa>0}))return 'Você ainda não tem aplicações. Na aba <b>Investir</b>, cadastre a poupança, o CDB ou o Tesouro com a taxa ao ano, e eu calculo o rendimento a cada dia útil.';
-   return 'Você tem '+B(investidoTotal())+' investido. Rendeu '+B(rendNoPeriodo(ym))+' em '+esc(nomeMes(ym))+' e '+B(rendNoPeriodo(ym.slice(0,4)))+' no ano.'+listaHTML(cs.map(function(c){return '<b>'+esc(c.nome)+'</b>: '+esc(brl(saldoConta(c)))+(c.inv.taxa>0?' ('+esc(taxaTxt(c.inv.taxa))+')':' (sem taxa informada)')}));}},
+   if(!cs.length&&!S.caixas.some(rendeAuto))return 'Você ainda não tem aplicações. Na aba <b>Investir</b>, cadastre a poupança, a caixinha, o CDB ou o Tesouro e diga como rende (por exemplo, 115% do CDI), e eu calculo o rendimento a cada dia útil.';
+   return 'Você tem '+B(investidoTotal())+' investido. Rendeu '+B(rendNoPeriodo(ym))+' em '+esc(nomeMes(ym))+' e '+B(rendNoPeriodo(ym.slice(0,4)))+' no ano.'+listaHTML(cs.map(function(c){return '<b>'+esc(c.nome)+'</b>: '+esc(brl(saldoConta(c)))+(rendeTxt(c.inv)?' ('+esc(rendeTxt(c.inv))+')':' (sem taxa informada)')}));}},
  {g:"dinheiro",q:"Quanto tenho em cada conta?",kw:"cada conta banco contas saldo carteira",ir:"contas",r:function(){
    var cs=contasDinheiro(); if(!cs.length)return 'Você ainda não tem contas cadastradas.';
    return listaHTML(cs.map(function(c){return '<b>'+esc(c.nome)+'</b>: '+esc(brl(saldoConta(c)))+(c.conferido?' <i>(conferido em '+esc(dataBR(c.conferido))+')</i>':'')}));}},
@@ -1960,6 +1977,7 @@ function avisos(){
   var u=S.config.ultimoBackup;
   if(S.lancamentos.length>=3&&(!u||diasAte(u)<-7))
     L.push('<button class="alerta" data-a="backup"><div><b>Guarde uma cópia dos seus dados</b><span>'+(u?"Faz mais de 7 dias.":"Você ainda não guardou nenhuma.")+' Toque aqui.</span></div></button>');
+  var lc=lembreteConferir(); if(lc)L.push(lc);
   prox.forEach(function(a){L.push(item(a))});
   return L.slice(0,3).join("");
 }
@@ -2992,6 +3010,7 @@ function buscarNoticias(){
   fetch("noticias.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.json():null}).then(function(j){
     var v=j&&noticiasValidas(j); if(!v)return;
     var antes=noticiasGuardadas(); NOT=v; lsSet(KEY+":noticias",JSON.stringify(j));
+    if(registrarIndices(v)){atualizarRendimentos(); salvar()}
     if((!antes||antes.gerado!==v.gerado)&&(VIEW==="inicio"||VIEW==="noticias"))desenhar();
   }).catch(function(){});
 }
@@ -3019,9 +3038,9 @@ function itensNoticias(n){
       sig:"Pesa direto em quem usa carro ou moto e, com o tempo, no frete e no preço dos produtos.",pv:pv,fonte:"ANP",link:"https://www.gov.br/anp/pt-br/assuntos/precos-e-defesa-da-concorrencia/precos"});
   }
   if(n.ipca){
-    var mes=MES[+n.ipca.ref.slice(5)-1], livre=livreAgora(), ivs=contasInvest().filter(function(c){return c.inv.taxa>0}), pvi=[];
+    var mes=MES[+n.ipca.ref.slice(5)-1], livre=livreAgora(), ivs=contasInvest().filter(function(c){return taxaAnual(c.inv)!=null}), pvi=[];
     if(livre>0&&n.ipca.mes>0)pvi.push("Seus "+brl(livre)+" para usar agora perdem cerca de "+brl(Math.round(livre*n.ipca.mes/100/100)*100)+" de poder de compra num mês como esse, se ficarem parados.");
-    if(ivs.length&&n.ipca.doze!=null){var acima=ivs.filter(function(c){return c.inv.taxa>n.ipca.doze}); pvi.push(acima.length===ivs.length?"Suas aplicações rendem acima da inflação de 12 meses: o dinheiro investido está crescendo de verdade.":"Atenção: "+ivs.filter(function(c){return c.inv.taxa<=n.ipca.doze}).map(function(c){return c.nome}).join(", ")+" rende menos que a inflação de 12 meses.")}
+    if(ivs.length&&n.ipca.doze!=null){var acima=ivs.filter(function(c){return taxaAnual(c.inv)>n.ipca.doze}); pvi.push(acima.length===ivs.length?"Suas aplicações rendem acima da inflação de 12 meses: o dinheiro investido está crescendo de verdade.":"Atenção: "+ivs.filter(function(c){return taxaAnual(c.inv)<=n.ipca.doze}).map(function(c){return c.nome}).join(", ")+" rende menos que a inflação de 12 meses.")}
     it.push({id:"ipca",sel:"certeza",tit:"Inflação de "+mes+": "+pc(n.ipca.mes),fato:(n.ipca.doze!=null?"Em 12 meses, "+pc(n.ipca.doze)+". ":"")+"Índice oficial de preços (IPCA, do IBGE).",
       sig:"Os preços subiram, em média, "+pc(n.ipca.mes)+" no mês. Dinheiro parado perde esse tanto de valor; o que rende menos que isso também.",pv:pvi.join(" ")||null,fonte:"IBGE",link:"https://www.ibge.gov.br/explica/inflacao.php"});
   }
@@ -3044,10 +3063,10 @@ function itensNoticias(n){
       pv:t.passivo>0?"Você deve "+brl(t.passivo)+": com os juros assim, quitar primeiro as dívidas mais caras costuma ser o melhor uso do dinheiro.":null,fonte:"Banco Central",link:"https://www.bcb.gov.br/controleinflacao/taxaselic"});
   }
   if(n.cdi){
-    var ivc=contasInvest().filter(function(c){return c.inv.taxa>0});
+    var ivc=contasInvest().filter(function(c){return taxaAnual(c.inv)!=null});
     it.push({id:"cdi",sel:"certeza",tit:"CDI: "+pc(n.cdi.v)+" ao ano",fato:"Referência da maioria dos CDBs e das caixinhas de banco (Banco Central"+(n.cdi.data?", "+dataBR(n.cdi.data):"")+").",
       sig:"Uma aplicação que rende \"100% do CDI\" rende cerca de "+pc(n.cdi.v)+" ao ano. Se o seu banco mostra \"% do CDI\", é só multiplicar.",
-      pv:ivc.length?ivc.map(function(c){return c.nome+" ("+pc(c.inv.taxa)+" ao ano) rende cerca de "+Math.round(c.inv.taxa/n.cdi.v*100)+"% do CDI."}).join(" "):null,fonte:"Banco Central",link:"https://www.bcb.gov.br/controleinflacao/taxaselic"});
+      pv:ivc.length?ivc.map(function(c){var a=taxaAnual(c.inv); return c.inv.modo==="cdi"?c.nome+" ("+rendeTxt(c.inv)+") rende cerca de "+pc(a)+" ao ano.":c.nome+" ("+pc(a)+" ao ano) rende cerca de "+Math.round(a/n.cdi.v*100)+"% do CDI."}).join(" "):null,fonte:"Banco Central",link:"https://www.bcb.gov.br/controleinflacao/taxaselic"});
   }
   if(n.focus){
     var f=n.focus;
@@ -3121,13 +3140,114 @@ function feriados(y){
 }
 function diaUtil(iso){var p=iso.split("-").map(Number), w=new Date(p[0],p[1]-1,p[2]).getDay(); return w!==0&&w!==6&&!feriados(p[0])[iso]}
 function fatorDia(taxa){return Math.pow(1+taxa/100,1/252)-1}
+/* ===== Como cada investimento rende (D65) =====
+   modo: "cdi" (taxa = % do CDI), "fixa" (taxa = % ao ano), "ipca" (taxa = % ao ano acima do IPCA),
+   "poup" (regra oficial da poupança, no dia do aniversário) ou "varia" (fundos e ações: só pelo Conferir).
+   O CDI, a Selic e o IPCA vêm das notícias oficiais e ficam guardados com a data (S.config.idx). */
+var MODOS_REND=[["cdi","% do CDI"],["fixa","Taxa fixa ao ano"],["ipca","IPCA + taxa"],["poup","Poupança"],["varia","Varia (fundos, ações)"]];
+function idxs(){if(!ehObj(S.config.idx))S.config.idx={cdi:[],selic:[],ipca:[]}; ["cdi","selic","ipca"].forEach(function(k){if(!Array.isArray(S.config.idx[k]))S.config.idx[k]=[]}); return S.config.idx}
+function registrarIndices(n){
+  if(!n)return false; var I=idxs(), mudou=false;
+  function add(lista,chave,val,dt){
+    if(val==null||!dt||!isFinite(val))return; var u=lista[lista.length-1];
+    if(u&&u[chave]===dt){if(u.v!==val){u.v=val;mudou=true}return}
+    if(u&&u[chave]>dt)return;
+    if(u&&chave==="d"&&u.v===val)return;
+    var o={v:val}; o[chave]=dt; lista.push(o); if(lista.length>200)lista.shift(); mudou=true;
+  }
+  if(n.cdi)add(I.cdi,"d",n.cdi.v,n.cdi.data);
+  if(n.selic)add(I.selic,"d",n.selic.v,n.selic.data);
+  if(n.ipca)add(I.ipca,"m",n.ipca.mes,n.ipca.ref);
+  return mudou;
+}
+/* valor do índice num dia: o último publicado até aquele dia (antes do primeiro, usa o primeiro) */
+function idxEm(k,d){var l=idxs()[k]; if(!l.length)return null; var v=l[0].v; for(var i=0;i<l.length;i++){if(l[i].d<=d)v=l[i].v; else break} return v}
+function ipcaDoMes(ym){var l=idxs().ipca; if(!l.length)return null; var v=null; l.forEach(function(x){if(x.m<=ym)v=x.v}); return v==null?l[0].v:v}
+function diasUteisMes(ym){var q=ym.split("-").map(Number), n=ultimoDia(q[0],q[1]-1), c=0; for(var i=1;i<=n;i++)if(diaUtil(ym+"-"+pad(i)))c++; return c||21}
+function taxaPoupMes(d){var sl=idxEm("selic",d); return (sl==null||sl>8.5)?0.005:Math.pow(1+0.7*sl/100,1/12)-1}
+function rendeAuto(o){return !!o&&(o.modo==="poup"||((o.modo==="cdi"||o.modo==="fixa"||o.modo==="ipca"||!o.modo)&&o.taxa>0))}
+/* quanto rende num dia útil (null = falta o índice oficial; o cálculo espera) */
+function fatorRend(o,d){
+  if(o.modo==="cdi"){var cdi=idxEm("cdi",d); return cdi==null?null:fatorDia(cdi)*o.taxa/100}
+  if(o.modo==="ipca"){var ip=ipcaDoMes(d.slice(0,7)); if(ip==null)return null; return (1+fatorDia(o.taxa))*Math.pow(1+ip/100,1/diasUteisMes(d.slice(0,7)))-1}
+  return fatorDia(o.taxa);
+}
+function rendeTxt(o){
+  if(!o)return ""; var t=String(Math.round((o.taxa||0)*100)/100).replace(".",",");
+  if(o.modo==="cdi")return o.taxa>0?t+"% do CDI":"";
+  if(o.modo==="ipca")return o.taxa>0?"IPCA + "+t+"% ao ano":"";
+  if(o.modo==="poup")return "Poupança (regra oficial)";
+  if(o.modo==="varia")return "Varia: atualize o valor de vez em quando";
+  return o.taxa>0?t+"% ao ano":"";
+}
+/* o mesmo rendimento em "% ao ano", hoje (para comparar com a inflação e o CDI) */
+function taxaAnual(o){
+  var h=hojeISO(); if(!o)return null;
+  if(o.modo==="cdi"){var c=idxEm("cdi",h); return c==null||!(o.taxa>0)?null:(Math.pow(1+fatorDia(c)*o.taxa/100,252)-1)*100}
+  if(o.modo==="ipca"){var n=noticiasGuardadas(), i12=n&&n.ipca?n.ipca.doze:null; return i12==null||!(o.taxa>0)?null:((1+i12/100)*(1+o.taxa/100)-1)*100}
+  if(o.modo==="poup")return (Math.pow(1+taxaPoupMes(h),12)-1)*100;
+  if(o.modo==="varia")return null;
+  return o.taxa>0?o.taxa:null;
+}
+/* Imposto de Renda (tabela que diminui com o tempo) e IOF (só nos primeiros 30 dias), sobre o que rendeu */
+var IOF_TAB=[96,93,90,86,83,80,76,73,70,66,63,60,56,53,50,46,43,40,36,33,30,26,23,20,16,13,10,6,3,0];
+function lucroDe(contaId,cx){
+  var kr=S.categorias.filter(function(k){return k.sis==="rend"})[0], kt=S.categorias.filter(function(k){return k.sis==="invtax"})[0], soma=0;
+  S.lancamentos.forEach(function(l){
+    if(cx?(l.rendCx===cx||l.cxAj===cx):(l.contaId===contaId&&!l.rendCx&&!l.cxAj)){
+      if(kr&&l.catId===kr.id&&l.tipo==="entrada")soma+=l.valor;
+      if(kt&&l.catId===kt.id&&l.tipo==="saida")soma-=l.valor;
+    }
+  });
+  return Math.max(0,soma);
+}
+function estimaResgate(o,saldo,lucro,desde){
+  var dias=desde?Math.max(0,-diasAte(desde)):null;   /* sem a data: sem IOF e a alíquota mais alta (a estimativa fica do lado seguro) */
+  if(!o||o.ir===false||o.modo==="poup"||!(lucro>0))return {liq:saldo,ir:0,iof:0,aliq:0,dias:dias};
+  var iof=dias!=null&&dias<30?Math.round(lucro*IOF_TAB[Math.min(29,Math.max(0,dias-1))]/100):0;
+  var aliq=dias==null||dias<=180?22.5:dias<=360?20:dias<=720?17.5:15, ir=Math.round((lucro-iof)*aliq/100);
+  return {liq:saldo-iof-ir,ir:ir,iof:iof,aliq:aliq,dias:dias};
+}
+function textoResgate(o,saldo,lucro,desde){
+  if(!o||!rendeAuto(o)&&o.modo!=="varia")return "";
+  if(o.ir===false||o.modo==="poup")return "Sem Imposto de Renda: se resgatar hoje, recebe cerca de "+brl(saldo)+".";
+  if(!(lucro>0))return "";
+  var e=estimaResgate(o,saldo,lucro,desde);
+  return "Se resgatar hoje, recebe cerca de "+brl(e.liq)+" (Imposto de Renda de "+String(e.aliq).replace(".",",")+"% sobre o que rendeu: "+brl(e.ir)+(e.iof?"; IOF: "+brl(e.iof):"")+"). É uma estimativa: o banco faz a conta exata no resgate."+(desde?"":" Para a conta ficar mais certa, informe desde quando o dinheiro está aplicado (em Editar).");
+}
+/* "era isso?" para taxas fora do comum (o 115 que virava 115% ao ano) */
+function avisoTaxa(modo,tx){
+  var cdi=idxEm("cdi",hojeISO()), c=cdi!=null?" (o CDI hoje está em "+pc(cdi)+" ao ano)":"";
+  if(modo==="fixa"&&tx>30)return "Taxa fixa de "+pc(tx)+" ao ano é muito alta"+c+". Se o banco mostra “% do CDI” (como “115% do CDI”), volte e escolha “% do CDI”. Está certo assim?";
+  if(modo==="ipca"&&tx>15)return "IPCA + "+pc(tx)+" ao ano é muito acima do comum (costuma ficar entre 4% e 8%). Está certo assim?";
+  if(modo==="cdi"&&tx>200)return pc(tx)+" do CDI é muito acima do comum (caixinhas e CDBs costumam pagar de 90% a 130% do CDI). Está certo assim?";
+  if(modo==="cdi"&&tx>0&&tx<30)return pc(tx)+" do CDI é bem pouco. Se o banco mostra a taxa “ao ano” (como “12% a.a.”), volte e escolha “Taxa fixa ao ano”. Está certo assim?";
+  return "";
+}
+/* apaga os rendimentos que o app calculou para esta aplicação/caixinha e recalcula desde o começo (D65) */
+function inicioRendimentos(o,cid,cx){
+  if(o.calc0)return o.calc0;
+  var meses=S.lancamentos.filter(function(l){return cx?l.rendCx===cx:(l.rend&&l.contaId===cid&&!l.rendCx)}).map(function(l){return l.rend}).filter(Boolean).sort();
+  var ini=meses.length?meses[0]+"-01":hojeISO();
+  var prim=cx?S.reservas.filter(function(r){return r.para===cx&&!r.rend}).map(function(r){return r.data}).sort()[0]
+    :S.lancamentos.filter(function(l){return (l.contaId===cid||l.destinoId===cid)&&!l.rend}).map(function(l){return l.data}).sort()[0];
+  if(prim&&prim>ini)ini=prim;
+  return ini;
+}
+function refazerRendimentos(o,cid,cx){
+  var ini=inicioRendimentos(o,cid,cx);
+  S.lancamentos=S.lancamentos.filter(function(l){return !(cx?l.rendCx===cx:(l.rend&&l.contaId===cid&&!l.rendCx))});
+  if(cx)S.reservas=S.reservas.filter(function(r){return !(r.rend&&r.para===cx)});
+  o.calc0=ini; o.ate=ini;
+  atualizarRendimentos();
+  return ini;
+}
 function catSis(sis,nome,tipo){
   var k=S.categorias.filter(function(x){return x.sis===sis})[0];
   if(!k){k={id:uid(),nome:nome,tipo:tipo,sis:sis};S.categorias.push(k)}
   return k;
 }
-function taxaTxt(t){return (t>0?String(Math.round(t*100)/100).replace(".",","):"0")+"% ao ano"}
-function lerTaxa(v){var n=Number(String(v||"").replace(/[^\d,.]/g,"").replace(",","."));return isFinite(n)&&n>0?Math.min(100,Math.round(n*100)/100):0}
+function lerTaxa(v,max){var n=Number(String(v||"").replace(/[^\d,.]/g,"").replace(",","."));return isFinite(n)&&n>0?Math.min(max||100,Math.round(n*100)/100):0}
 /* calcula o que rendeu desde a última vez, por dia útil, e lança no mês certo */
 function atualizarRendimentos(){
   var hoje=hojeISO(), mudou=false, kr=null;
@@ -3146,25 +3266,29 @@ function atualizarRendimentos(){
       if(r){r.valor+=v; if(dia>r.data)r.data=dia} else S.reservas.push({id:uid(),data:dia,de:"livre",para:cx,valor:v,conta:contaId,rend:ym});
     }
   }
-  function rodar(obj,taxa,saldoNoDia,destino,cx){
+  function rodar(obj,saldoNoDia,destino,cx){
     if(!obj.ate||obj.ate>hoje){obj.ate=hoje;mudou=true;return}
     if(obj.ate===hoje)return;
-    if(!(taxa>0)||!destino){obj.ate=hoje;mudou=true;return}
-    var f=fatorDia(taxa), d=obj.ate, extra=0, acc={}, ult={}, guarda=0;
+    if(!rendeAuto(obj)||!destino){obj.ate=hoje;mudou=true;return}
+    var d=obj.ate, fim=obj.ate, extra=0, acc={}, ult={}, guarda=0;
+    var aniv=obj.modo==="poup"?(function(){var a=+(obj.desde||obj.calc0||obj.ate).slice(8); return a>28?1:a})():0;
     while(d<hoje&&guarda++<4000){
-      d=addDias(d,1); if(!diaUtil(d))continue;
-      var r=(saldoNoDia(d)+extra)*f; if(!(r>0))continue;
-      extra+=r; var ym=d.slice(0,7); acc[ym]=(acc[ym]||0)+r; ult[ym]=d;
+      var d2=addDias(d,1), r=0;
+      if(obj.modo==="poup"){if(+d2.slice(8)===aniv)r=(saldoNoDia(d2)+extra)*taxaPoupMes(d2)}
+      else if(diaUtil(d2)){var f=fatorRend(obj,d2); if(f==null)break; r=(saldoNoDia(d2)+extra)*f}
+      d=d2; fim=d2;
+      if(!(r>0))continue;
+      extra+=r; var ym=d2.slice(0,7); acc[ym]=(acc[ym]||0)+r; ult[ym]=d2;
     }
     Object.keys(acc).sort().forEach(function(ym){lancar(destino,ym,Math.round(acc[ym]),ult[ym],cx)});
-    obj.ate=hoje; mudou=true;
+    if(fim!==obj.ate){obj.ate=fim; mudou=true}
   }
-  contasInvest().forEach(function(c){rodar(c.inv,c.inv.taxa,function(d){return saldoConta(c,d)},c.id,null)});
+  contasInvest().forEach(function(c){rodar(c.inv,function(d){return saldoConta(c,d)},c.id,null)});
   S.caixas.forEach(function(x){
-    if(!(x.taxa>0)){if(x.ate){delete x.ate;mudou=true}return}
+    if(!rendeAuto(x)){if(x.ate){delete x.ate;mudou=true}return}
     var bk=bucketsCaixa(x.id), cid=Object.keys(bk).filter(function(k){return bk[k]>0&&conta(k)}).sort(function(a,b){return bk[b]-bk[a]})[0]||null;
     var base=saldoCaixa(x.id);
-    rodar(x,x.taxa,function(){return base},cid,x.id);
+    rodar(x,function(){return base},cid,x.id);
   });
   return mudou;
 }
@@ -3174,15 +3298,15 @@ function rendNoPeriodo(prefixo,filtro){
 }
 function telaInvestir(){
   var cs=contasInvest(), hoje=hojeISO(), ym=hoje.slice(0,7), ano=hoje.slice(0,4), mes=MES[+ym.slice(5)-1];
-  var cxr=S.caixas.filter(function(x){return x.taxa>0});
+  var cxr=S.caixas.filter(rendeAuto);
   var h=capa("Dinheiro que trabalha para você","Investir")+
-    '<p class="sub lead">Poupança, CDB, Tesouro e fundos, rendendo sozinhos.'+ajuda('Informe a <b>taxa ao ano</b> (a.a.) que aparece no app do banco e eu calculo o rendimento a cada dia útil (sem fim de semana e feriado). Se der diferença, é só <b>conferir com o banco</b>. O dinheiro aplicado é seu, mas não conta como dinheiro para usar agora.')+'</p>';
+    '<p class="sub lead">Poupança, CDB, Tesouro e fundos, rendendo sozinhos.'+ajuda('Em cada aplicação, diga <b>como ela rende</b>, do jeito que aparece no app do banco: <b>% do CDI</b> (ex.: 115% do CDI), <b>taxa fixa ao ano</b>, <b>IPCA +</b>, <b>poupança</b> ou <b>varia</b> (fundos e ações). Eu calculo o rendimento a cada dia útil (sem fim de semana e feriado) com os índices oficiais do Banco Central e do IBGE, e mostro quanto você receberia se resgatasse hoje, já sem o Imposto de Renda. Se der diferença com o banco, é só <b>atualizar o valor</b>. O dinheiro aplicado é seu, mas não conta como dinheiro para usar agora.')+'</p>';
   h+='<div class="card inv-res"><div><span>Investido</span><b>'+esc(brl(investidoTotal()))+'</b></div><div><span>Rendeu em '+esc(mes)+'</span><b>+'+esc(brl(rendNoPeriodo(ym)))+'</b></div><div><span>Rendeu em '+esc(ano)+'</span><b>+'+esc(brl(rendNoPeriodo(ano)))+'</b></div></div>';
   h+='<h2>Minhas aplicações</h2>';
-  if(!cs.length)h+='<div class="card"><div class="vazio"><b>Nenhuma aplicação ainda</b>Cadastre a sua poupança, CDB ou Tesouro com quanto tem hoje e a taxa ao ano.</div></div>';
+  if(!cs.length)h+='<div class="card"><div class="vazio"><b>Nenhuma aplicação ainda</b>Cadastre a sua poupança, caixinha, CDB ou Tesouro com quanto tem hoje e como ela rende.</div></div>';
   cs.forEach(function(c){
     var b=c.inv.banco&&conta(c.inv.banco), rm=rendNoPeriodo(ym,function(l){return l.contaId===c.id&&!l.rendCx});
-    h+='<article class="card inv-c"><div class="inv-top"><div><b class="inv-n">'+esc(c.nome)+'</b><span class="inv-t">'+(c.inv.taxa>0?esc(taxaTxt(c.inv.taxa)):'<em>sem taxa: toque abaixo para informar</em>')+(b?' · '+esc(b.nome):'')+'</span></div><b class="inv-v">'+esc(brl(saldoConta(c)))+'</b></div>'+
+    h+='<article class="card inv-c"><div class="inv-top"><div><b class="inv-n">'+esc(c.nome)+'</b><span class="inv-t">'+(rendeTxt(c.inv)?esc(rendeTxt(c.inv)):'<em>sem taxa: toque abaixo para informar</em>')+(b?' · '+esc(b.nome):'')+'</span></div><b class="inv-v">'+esc(brl(saldoConta(c)))+'</b></div>'+
       '<p class="faint">Rendeu em '+esc(mes)+': <b style="color:var(--ink)">+'+esc(brl(rm))+'</b>'+(c.inv.ate?' · calculado até '+esc(dataBR(c.inv.ate)):'')+'</p>'+
       '<div class="inv-acoes"><button class="btn peq" data-a="aplicacao" data-id="'+c.id+'">Aplicar, resgatar ou conferir ›</button></div></article>';
   });
@@ -3190,48 +3314,82 @@ function telaInvestir(){
   h+='<h2>Caixinhas que rendem</h2>';
   h+=cxr.length?'<div class="card" style="padding:.2rem 1rem">'+cxr.map(function(x){
       var rm=rendNoPeriodo(ym,function(l){return l.rendCx===x.id});
-      return '<div class="inv-cx"><span><b>'+esc(x.nome)+'</b><i>'+esc(taxaTxt(x.taxa))+' · rendeu em '+esc(mes)+': +'+esc(brl(rm))+'</i></span><b>'+esc(brl(saldoCaixa(x.id)))+'</b></div>'}).join("")+'</div>'
-    :'<p class="faint">Uma caixinha também pode render: em Planejar &gt; Caixinhas, edite a caixinha e informe a taxa ao ano do banco onde o dinheiro está.</p>';
+      return '<div class="inv-cx"><span><b>'+esc(x.nome)+'</b><i>'+esc(rendeTxt(x))+' · rendeu em '+esc(mes)+': +'+esc(brl(rm))+'</i></span><b>'+esc(brl(saldoCaixa(x.id)))+'</b></div>'}).join("")+'</div>'
+    :'<p class="faint">Uma caixinha também pode render: em Planejar &gt; Caixinhas, edite a caixinha e diga como ela rende (por exemplo, 115% do CDI).</p>';
   return h;
 }
 var IV=null;
 function modalInvest(id){
-  var c=id?conta(id):null; IV={id:id||null,banco:c&&c.inv&&c.inv.banco||null};
+  var c=id?conta(id):null, o=c&&c.inv||{};
+  IV={id:id||null,banco:o.banco||null,modo:o.modo||(c?"fixa":"cdi"),ir:o.ir!==false,taxa:o.taxa||0};
   var bs=contasDinheiro().filter(function(x){return !x.carteira});
   abrirModal('<p class="q">'+(c?"Editar aplicação":"Nova aplicação")+'</p>'+
-    '<div class="campo"><label for="ivNome">Nome</label><input id="ivNome" maxlength="30" placeholder="Ex.: CDB Nubank, Tesouro Selic, Poupança" value="'+esc(c?c.nome:"")+'"></div>'+
+    '<div class="campo"><label for="ivNome">Nome</label><input id="ivNome" maxlength="30" placeholder="Ex.: Caixinha Nubank, CDB Inter, Tesouro Selic" value="'+esc(c?c.nome:"")+'"></div>'+
     (c?'':'<div class="campo"><label for="ivValor">Quanto tem nela hoje?</label><input id="ivValor" inputmode="numeric" placeholder="R$ 0,00"></div>')+
-    '<div class="campo"><label for="ivTaxa">Quanto rende ao ano? (%)</label><input id="ivTaxa" inputmode="decimal" placeholder="Ex.: 10,5" value="'+(c&&c.inv&&c.inv.taxa?esc(String(c.inv.taxa).replace(".",",")):"")+'"></div>'+
-    '<p class="faint" style="margin-top:-.3rem">Veja no app do banco: a taxa aparece "ao ano" (a.a.).'+ajuda('Se o banco mostrar "<b>% do CDI</b>" (ex.: 100% do CDI), multiplique pela taxa do CDI de hoje, que está em <b>Notícias</b>. Ex.: 100% do CDI com o CDI a 14,9% = 14,9 ao ano. Na dúvida, informe um valor aproximado e confira com o banco depois.')+'</p>'+
+    blocoComoRende("iv",IV,true)+
     (bs.length?'<span class="rot">Em qual banco ela está? (opcional)</span><div class="chips" id="ivBancos">'+bs.map(function(b){return '<button class="chip" data-a="ivBanco" data-id="'+b.id+'" aria-pressed="'+(IV.banco===b.id)+'">'+esc(b.nome)+'</button>'}).join("")+'</div>':'')+
+    maisDetalhes('<div class="campo"><label for="ivDesde">Desde quando o dinheiro está aplicado?</label><p class="faint">Serve para estimar o Imposto de Renda, que diminui com o tempo (22,5% até 6 meses; 15% depois de 2 anos).</p><input id="ivDesde" type="date" value="'+esc(o.desde||"")+'"></div>',!!o.desde,"Desde quando está aplicado (opcional)")+
     '<button class="btn" data-a="ivSalvar">Salvar</button>'+(c?'<button class="btn perigo" data-a="invApagar" data-id="'+c.id+'">Apagar aplicação</button>':'')+'<button class="btn sec" data-a="mFechar">Cancelar</button>');
   if(!c)ligarDinheiro($("#ivValor"),0);
+}
+/* "Como rende?" (aplicações e caixinhas): o jeito de render, o campo certo e o imposto */
+function blocoComoRende(pf,st,todos){
+  var modos=todos?MODOS_REND:[["nao","Não rende"],["cdi","% do CDI"],["fixa","Taxa fixa ao ano"]];
+  return '<span class="rot">Como rende?'+ajuda('Veja no app do banco: <b>% do CDI</b> (caixinhas, CDB, LCI, LCA; ex.: "115% do CDI"), <b>taxa fixa ao ano</b> (prefixado; ex.: "12% a.a."), <b>IPCA +</b> (Tesouro IPCA+; ex.: "IPCA + 6%"), <b>poupança</b> (regra oficial) ou <b>varia</b> (fundos e ações, que sobem e descem).')+'</span>'+
+    '<div class="chips" id="'+pf+'Modos">'+modos.map(function(m){return '<button class="chip" data-a="rendModo" data-p="'+pf+'" data-v="'+m[0]+'" aria-pressed="'+(st.modo===m[0])+'">'+m[1]+'</button>'}).join("")+'</div>'+
+    '<div id="'+pf+'Rende">'+camposRende(pf,st)+'</div>';
+}
+function camposRende(pf,st){
+  var cdi=idxEm("cdi",hojeISO()), v=st.taxa>0?esc(String(st.taxa).replace(".",",")):"", h="";
+  function campo(rot,ph,dica){return '<div class="campo"><label for="'+pf+'Taxa">'+rot+'</label><input id="'+pf+'Taxa" inputmode="decimal" placeholder="'+ph+'" value="'+v+'">'+(dica?'<p class="faint">'+dica+'</p>':'')+'</div>'}
+  if(st.modo==="cdi")h=campo("Quantos % do CDI?","Ex.: 100 ou 115",cdi!=null?'CDI de hoje: <b>'+esc(pc(cdi))+' ao ano</b> (Banco Central). O app usa o CDI de cada dia.':'O CDI de hoje chega com a internet (Notícias). Até lá, o rendimento espera.');
+  else if(st.modo==="fixa")h=campo("Taxa ao ano (%)","Ex.: 12",'Só para taxa <b>fixa</b>. Se o banco mostra "% do CDI", escolha "% do CDI".');
+  else if(st.modo==="ipca")h=campo("Quanto acima da inflação, ao ano (%)","Ex.: 6","Rende a inflação oficial (IPCA, do IBGE) mais essa taxa.");
+  else if(st.modo==="poup")return '<p class="faint">Segue a regra oficial: com a Selic acima de 8,5% ao ano, rende 0,5% ao mês (mais a TR, hoje perto de zero), sempre no dia do aniversário. Não paga Imposto de Renda.</p>';
+  else if(st.modo==="varia")h='<p class="faint">Fundos e ações sobem e descem: não dá para calcular. Atualize o valor de vez em quando (o app lembra toda semana).</p>';
+  else return "";
+  return h+'<span class="rot">Paga Imposto de Renda?</span><div class="opc" id="'+pf+'Irs"><button data-a="rendIr" data-p="'+pf+'" data-v="1" aria-pressed="'+(st.ir!==false)+'">Sim (CDB, caixinha, Tesouro)</button><button data-a="rendIr" data-p="'+pf+'" data-v="0" aria-pressed="'+(st.ir===false)+'">Não (LCI, LCA)</button></div>';
 }
 /* janela de uma aplicação: tudo o que dá para fazer com ela */
 function modalAplicacao(id){
   var c=conta(id); if(!c||!c.inv)return;
   var b=c.inv.banco&&conta(c.inv.banco), ym=hojeISO().slice(0,7), rm=rendNoPeriodo(ym,function(l){return l.contaId===c.id&&!l.rendCx});
   abrirModal('<p class="q">'+esc(c.nome)+'</p><p class="g-saldo">'+esc(brl(saldoConta(c)))+'</p>'+
-    '<p class="faint">'+(c.inv.taxa>0?esc(taxaTxt(c.inv.taxa)):'Sem taxa: toque em <b>Editar nome e taxa</b> para informar')+(b?' · '+esc(b.nome):'')+'</p>'+
+    '<p class="faint">'+(rendeTxt(c.inv)?esc(rendeTxt(c.inv)):'Sem taxa: toque em <b>Editar como rende</b> para informar')+(b?' · '+esc(b.nome):'')+'</p>'+
+    (textoResgate(c.inv,saldoConta(c),lucroDe(c.id),c.inv.desde||c.inv.calc0)?'<p class="faint">'+esc(textoResgate(c.inv,saldoConta(c),lucroDe(c.id),c.inv.desde||c.inv.calc0))+'</p>':'')+
     '<p class="faint">Rendeu em '+esc(MES[+ym.slice(5)-1])+': <b style="color:var(--ink)">+'+esc(brl(rm))+'</b>'+(c.inv.ate?' · calculado até '+esc(dataBR(c.inv.ate)):'')+'</p>'+
     '<button class="btn" data-a="invAplicar" data-id="'+c.id+'">Aplicar (pôr mais dinheiro)</button>'+
     '<button class="btn sec" data-a="invResgatar" data-id="'+c.id+'">Resgatar (tirar dinheiro)</button>'+
-    '<button class="btn sec" data-a="conferir" data-id="'+c.id+'">Conferir com o banco</button>'+
-    '<button class="btn sec" data-a="invEditar" data-id="'+c.id+'">Editar nome e taxa</button>'+
+    '<button class="btn sec" data-a="conferir" data-id="'+c.id+'">Atualizar o valor (conferir com o banco)</button>'+
+    '<button class="btn sec" data-a="invEditar" data-id="'+c.id+'">Editar nome e como rende</button>'+
     '<button class="btn perigo" data-a="invApagar" data-id="'+c.id+'">Apagar aplicação</button>'+
     '<button class="btn sec" data-a="mFechar">Cancelar</button>');
 }
 function salvarInvest(){
-  var nome=$("#ivNome").value.trim(), tx=lerTaxa($("#ivTaxa").value);
+  var nome=$("#ivNome").value.trim(), modo=IV.modo||"cdi";
+  var tx=(modo==="poup"||modo==="varia")?0:lerTaxa($("#ivTaxa")?$("#ivTaxa").value:"",modo==="cdi"?300:100);
+  var ir=modo==="poup"?false:IV.ir!==false, desde=$("#ivDesde")&&RE_DATA.test($("#ivDesde").value)?$("#ivDesde").value:null, valor=$("#ivValor")?cent($("#ivValor")):0, banco=IV.banco||null;
   if(!nome){toast("Dê um nome para a aplicação");return}
   if(repetido(nome,S.contas,IV.id)){toast("Já existe uma conta com esse nome");return}
   var c=IV.id?conta(IV.id):null, hoje=hojeISO();
-  if(c){
-    if(!c.inv)c.inv={taxa:0,banco:null,ate:hoje};
-    if(!(c.inv.taxa>0)&&tx>0)c.inv.ate=hoje;   /* só rende daqui para a frente */
-    c.nome=nome; c.inv.taxa=tx; c.inv.banco=IV.banco||null;
-  }else S.contas.push({id:uid(),nome:nome,tipo:"ativo",inicial:cent($("#ivValor")),inv:{taxa:tx,banco:IV.banco||null,ate:hoje}});
-  salvar(); fecharModal(); desenhar(); toast(tx>0?"Aplicação salva. Ela rende a cada dia útil.":"Aplicação salva. Informe a taxa para ela render no app.");
+  var mudouRegra=!!c&&(((c.inv&&c.inv.modo)||"fixa")!==modo||((c.inv&&c.inv.taxa)||0)!==tx);
+  var tinhaRend=!!c&&S.lancamentos.some(function(l){return l.rend&&l.contaId===c.id&&!l.rendCx});
+  function aplicar(refazer){
+    if(c){
+      if(!c.inv)c.inv={modo:"fixa",taxa:0,banco:null,ate:hoje};
+      var rendia=rendeAuto(c.inv);
+      c.nome=nome; c.inv.banco=banco; c.inv.ir=ir; if(desde)c.inv.desde=desde;
+      if(mudouRegra){c.inv.modo=modo; c.inv.taxa=tx; if(refazer)refazerRendimentos(c.inv,c.id,null); else if(!rendia){c.inv.ate=hoje; c.inv.calc0=hoje}}
+    }else S.contas.push({id:uid(),nome:nome,tipo:"ativo",inicial:valor,inv:{modo:modo,taxa:tx,ir:ir,banco:banco,ate:hoje,calc0:hoje,desde:desde||hoje}});
+    salvar(); fecharModal(); desenhar();
+    toast(refazer?"Pronto: rendimentos refeitos com a regra nova":rendeAuto({modo:modo,taxa:tx})?"Aplicação salva. Ela rende a cada dia útil.":modo==="varia"?"Aplicação salva. Atualize o valor de vez em quando.":"Aplicação salva. Diga como ela rende para render no app.");
+  }
+  function depoisDoAviso(){
+    if(mudouRegra&&tinhaRend)confirmar("Você mudou como "+nome+" rende ("+(rendeTxt({modo:modo,taxa:tx})||"sem rendimento")+"). Vou refazer os rendimentos que eu calculei desde "+dataBR(inicioRendimentos(c.inv,c.id,null))+" com a regra nova. O que você anotou ou conferiu com o banco não muda.","Sim, refazer",function(){aplicar(true)});
+    else aplicar(false);
+  }
+  var av=avisoTaxa(modo,tx);
+  if(av)confirmar(av,"Sim, está certo",depoisDoAviso); else depoisDoAviso();
 }
 
 /* =====================================================================
@@ -3763,7 +3921,8 @@ function telaCaixinhas(){
     h+='<div class="cartao"><div class="t"><b>'+esc(x.nome)+'</b><button class="link" data-a="caixa" data-id="'+x.id+'">Editar</button></div>'+
       '<div class="linha-cx">'+cofreSvg(cofreN(x),ix)+'<div><p class="serif" style="font-size:1.5rem;color:var(--ouro)">'+esc(brl(s))+'</p>'+(function(){var bk=bucketsCaixa(x.id), nomes=Object.keys(bk).filter(function(k){return bk[k]>0&&conta(k)}).map(function(k){return nomeConta(k)+" "+brl(bk[k])}); return nomes.length?'<p class="faint">Guardado em: '+esc(nomes.join(" · "))+'</p>':''})()+'</div></div>'+
       (x.alvo>0?'<div class="barra-lim" role="img" aria-label="'+Math.round(pc)+'% do alvo"><div style="width:'+pc.toFixed(1)+'%"></div></div><p class="faint">Alvo '+esc(brl(x.alvo))+(falta>0?" · faltam "+esc(brl(falta)):" · alvo batido")+'</p>'+(por?'<p class="faint">'+esc(por)+'</p>':''):'')+
-      '<button class="btn peq" data-a="cxMov" data-id="'+x.id+'" data-m="guardar">Guardar</button> <button class="btn peq sec" data-a="cxMov" data-id="'+x.id+'" data-m="tirar">Tirar</button></div>';
+      (rendeAuto(x)?'<p class="faint">Rende '+esc(rendeTxt(x))+(textoResgate(x,s,lucroDe(null,x.id),x.calc0)?'. '+esc(textoResgate(x,s,lucroDe(null,x.id),x.calc0)):'')+'</p>':'')+
+      '<button class="btn peq" data-a="cxMov" data-id="'+x.id+'" data-m="guardar">Guardar</button> <button class="btn peq sec" data-a="cxMov" data-id="'+x.id+'" data-m="tirar">Tirar</button> <button class="btn peq sec" data-a="cxConferir" data-id="'+x.id+'">Atualizar o valor</button></div>';
   });
   h+='<button class="btn" data-a="caixa" data-id="">+ Nova caixinha</button>';
   if(res>0&&!S.config.contador)h+='<button class="btn sec" data-a="tirarCx" style="margin-top:.8rem">Tirar de uma caixinha</button>';
@@ -3786,12 +3945,12 @@ function telaMetas(){
 }
 function modalCaixa(id,sobra,pre){
   var x=id?caixa(id):null; pre=pre||{};
-  CX={id:id||null,sobra:sobra||null};
+  CX={id:id||null,sobra:sobra||null,modo:x&&rendeAuto(x)?(x.modo||"fixa"):"nao",taxa:x&&x.taxa||0,ir:!(x&&x.ir===false)};
   abrirModal('<p class="q">'+(x?"Editar caixinha":"Nova caixinha")+'</p>'+
     '<div class="campo"><label for="cNome">Nome</label><input id="cNome" maxlength="30" placeholder="Ex.: Reserva, Viagem, IPVA" value="'+esc(x?x.nome:(pre.nome||""))+'"></div>'+
     maisDetalhes('<div class="campo"><label for="cAlvo">Alvo (opcional)</label><input id="cAlvo" inputmode="numeric" placeholder="R$ 0,00"></div>'+
     '<div class="campo"><label for="cPrazo">Até quando? (opcional)</label><input id="cPrazo" type="date" value="'+esc(x&&x.prazo||pre.prazo||"")+'"></div>'+
-    '<div class="campo"><label for="cTaxa">Ela rende? Taxa ao ano (%, opcional)</label><input id="cTaxa" inputmode="decimal" placeholder="Ex.: 10,5" value="'+(x&&x.taxa?esc(String(x.taxa).replace(".",",")):"")+'"></div>',!!(x&&(x.alvo||x.prazo||x.taxa)||pre.alvo||pre.prazo),"Alvo, prazo e rendimento (opcional)")+
+    blocoComoRende("cx",CX,false),!!(x&&(x.alvo||x.prazo||x.taxa)||pre.alvo||pre.prazo),"Alvo, prazo e como rende (opcional)")+
     '<button class="btn" data-a="cxSalvar">Salvar</button>'+(x&&saldoCaixa(x.id)===0?'<button class="btn perigo" data-a="cxApagar">Apagar caixinha</button>':'')+
     '<button class="btn sec" data-a="mFechar">Cancelar</button>');
   ligarDinheiro($("#cAlvo"),x&&x.alvo||pre.alvo||0);
@@ -3802,17 +3961,68 @@ function guardarNaCaixa(id,valor,de,para,conta){
 }
 function salvarCaixa(){
   var nome=$("#cNome").value.trim(), alvo=cent($("#cAlvo")), prazo=$("#cPrazo").value;
+  var modo=CX.modo||"nao", ctx=modo==="nao"?0:lerTaxa($("#cxTaxa")?$("#cxTaxa").value:"",modo==="cdi"?300:100), ir=CX.ir!==false;
   if(!nome){toast("Dê um nome para a caixinha");return}
   if(repetido(nome,S.caixas,CX.id)){toast("Já existe uma caixinha com esse nome");return}
-  var x=CX.id?caixa(CX.id):null;
-  if(!x){x={id:uid(),nome:nome,alvo:0};S.caixas.push(x)}
-  x.nome=nome; x.alvo=alvo; if(RE_DATA.test(prazo))x.prazo=prazo; else delete x.prazo;
-  var ctx=lerTaxa($("#cTaxa")?$("#cTaxa").value:""); if(ctx>0){if(!(x.taxa>0))x.ate=hojeISO(); x.taxa=ctx} else {delete x.taxa; delete x.ate}
-  if(CX.sobra){
-    var sob=sobraMesPassado(), mc=melhorConta(), liv=mc?livreConta(mc):0;
-    if(sob&&liv>0){guardarNaCaixa(x.id,Math.min(sob.valor,liv),"livre",x.id,mc.id);S.config.sobraRef=sob.ym}
+  var x0=CX.id?caixa(CX.id):null, novoModo=ctx>0?modo:null;
+  var mudouRegra=!!x0&&((rendeAuto(x0)?(x0.modo||"fixa"):null)!==novoModo||((rendeAuto(x0)?x0.taxa:0)||0)!==ctx);
+  var tinhaRend=!!x0&&S.lancamentos.some(function(l){return l.rendCx===x0.id});
+  function aplicar(refazer){
+    var x=x0;
+    if(!x){x={id:uid(),nome:nome,alvo:0};S.caixas.push(x)}
+    x.nome=nome; x.alvo=alvo; if(RE_DATA.test(prazo))x.prazo=prazo; else delete x.prazo;
+    if(ctx>0){var rendia=rendeAuto(x); x.modo=modo; x.taxa=ctx; x.ir=ir; if(refazer)refazerRendimentos(x,null,x.id); else if(!rendia){x.ate=hojeISO(); x.calc0=hojeISO()}}
+    else {if(refazer)refazerRendimentos(x,null,x.id); delete x.taxa; delete x.modo; delete x.ir; delete x.ate}
+    if(CX.sobra){
+      var sob=sobraMesPassado(), mc=melhorConta(), liv=mc?livreConta(mc):0;
+      if(sob&&liv>0){guardarNaCaixa(x.id,Math.min(sob.valor,liv),"livre",x.id,mc.id);S.config.sobraRef=sob.ym}
+    }
+    salvar(); fecharModal(); desenhar(); toast(refazer?"Pronto: rendimentos refeitos com a regra nova":"Caixinha salva");
   }
-  salvar(); fecharModal(); desenhar(); toast("Caixinha salva");
+  function depoisDoAviso(){
+    if(mudouRegra&&tinhaRend)confirmar("Você mudou como a caixinha "+nome+" rende ("+(rendeTxt({modo:modo,taxa:ctx})||"não rende")+"). Vou refazer os rendimentos que eu calculei para ela desde "+dataBR(inicioRendimentos(x0,null,x0.id))+" com a regra nova. O que você anotou não muda.","Sim, refazer",function(){aplicar(true)});
+    else aplicar(false);
+  }
+  var av=ctx>0?avisoTaxa(modo,ctx):"";
+  if(av)confirmar(av,"Sim, está certo",depoisDoAviso); else depoisDoAviso();
+}
+/* atualizar o valor de uma caixinha com o que o banco mostra (D65) */
+function modalConferirCaixa(id){
+  var x=caixa(id); if(!x)return; CF={cx:id};
+  abrirModal('<p class="q">Atualizar o valor de '+esc(x.nome)+'</p><p class="sub">Abra o app do banco e veja quanto tem nessa caixinha agora. Digite aqui o mesmo valor.</p>'+
+    '<p class="faint">No Balancete: <b style="color:var(--ink)">'+esc(brl(saldoCaixa(id)))+'</b>'+(x.conferido?' · última conferência em '+esc(dataBR(x.conferido)):'')+'</p>'+
+    '<div class="campo"><label for="cxcValor">Valor no banco agora</label><input id="cxcValor" inputmode="numeric" placeholder="R$ 0,00"></div><div id="cxcRes" aria-live="polite"></div>'+
+    '<button class="btn sec" data-a="mFechar">Cancelar</button>');
+  ligarDinheiro($("#cxcValor"),0); $("#cxcValor").addEventListener("input",pintarConferirCaixa);
+}
+function pintarConferirCaixa(){
+  var el=$("#cxcRes"), x=CF&&CF.cx&&caixa(CF.cx); if(!el||!x)return;
+  if(!/\d/.test($("#cxcValor").value)){el.innerHTML="";return}
+  var v=cent($("#cxcValor")), dif=v-saldoCaixa(x.id), d=Math.abs(dif); CF.banco=v; CF.dif=dif;
+  if(dif===0){el.innerHTML='<div class="cf-res cf-ok"><b>Bateu!</b> O Balancete e o banco mostram o mesmo valor.</div><button class="btn" data-a="cxcOk">Marcar como conferida</button>';return}
+  el.innerHTML='<div class="cf-res"><b>O banco mostra '+esc(brl(d))+(dif>0?' a mais':' a menos')+'</b><p>'+(dif>0?'Quase sempre é rendimento que eu ainda não tinha contado.':'Quase sempre é imposto ou taxa que o banco descontou.')+'</p></div>'+
+    '<button class="btn" data-a="cxcRend">'+(dif>0?'Foi rendimento: ajustar':'Foi imposto ou taxa: ajustar')+'</button>'+
+    '<button class="btn sec" data-a="cxcGuard">'+(dif>0?'Não: eu guardei mais dinheiro nela':'Não: eu tirei dinheiro dela')+'</button>';
+}
+function contaDaCaixa(id){var bk=bucketsCaixa(id); return Object.keys(bk).filter(function(k){return bk[k]>0&&conta(k)}).sort(function(a,b){return bk[b]-bk[a]})[0]||(melhorConta()||{}).id||null}
+/* lembrete semanal: conferir os valores com o banco (o app calcula sozinho, mas pode errar) */
+function paraConferir(){
+  var L=[];
+  contasInvest().forEach(function(c){L.push({t:"inv",id:c.id,nome:c.nome,valor:saldoConta(c),ult:c.conferido||c.inv.calc0||null})});
+  S.caixas.filter(rendeAuto).forEach(function(x){L.push({t:"cx",id:x.id,nome:x.nome,valor:saldoCaixa(x.id),ult:x.conferido||x.calc0||null})});
+  return L;
+}
+function semanaDe(d){var q=d.split("-").map(Number), w=new Date(q[0],q[1]-1,q[2]).getDay(); return addDias(d,-((w+6)%7))}
+function lembreteConferir(){
+  var L=paraConferir().filter(function(i){return !i.ult||diasAte(i.ult)<=-7}); if(!L.length)return "";
+  if(lsGet(KEY+":lembConf:"+semanaDe(hojeISO())))return "";
+  return '<button class="alerta" data-a="conferirTudo"><div><b>Hora de conferir seus investimentos</b><span>'+(L.length===1?esc(L[0].nome)+' não é conferido':L.length+' itens não são conferidos')+' com o banco há mais de 7 dias. O app calcula sozinho, mas pode errar.</span></div></button>';
+}
+function modalConferirTudo(){
+  var L=paraConferir(); if(!L.length){toast("Nenhuma aplicação ou caixinha que rende");return}
+  abrirModal('<p class="q">Conferir com o banco</p><p class="sub">Abra o app do banco e compare. Se algum valor estiver diferente, toque em <b>Atualizar</b>.</p>'+
+    '<div class="cf-lista">'+L.map(function(i){return '<div class="cf-item"><span><b>'+esc(i.nome)+'</b><i>No Balancete: '+esc(brl(i.valor))+(i.ult?' · conferido em '+esc(dataBR(i.ult)):'')+'</i></span><button class="btn peq sec" data-a="'+(i.t==="inv"?"conferir":"cxConferir")+'" data-id="'+i.id+'">Atualizar</button></div>'}).join("")+'</div>'+
+    '<button class="btn" data-a="confTudoOk">Tudo bateu com o banco</button><button class="btn sec" data-a="confSemana">Lembrar na semana que vem</button><button class="btn sec" data-a="mFechar">Cancelar</button>');
 }
 /* chips: de qual conta sai o dinheiro (guardar) */
 function blocoContasGuardar(){
@@ -4007,7 +4217,8 @@ function desenharOnb(){
             '<p class="sub">Diga quanto você tem em cada lugar. Se não tiver, deixe vazio.</p>'+
       [["oCarteira","Dinheiro vivo (só cédulas, sem moedas)"],["oBanco","Conta no banco"],["oPoup","Você tem dinheiro guardado ou investido? (poupança, CDB, Tesouro...)"]].map(function(x){
         return '<div class="campo"><label for="'+x[0]+'">'+x[1]+'</label><input id="'+x[0]+'" inputmode="numeric" placeholder="R$ 0,00"></div>'}).join("")+
-      '<div class="campo"><label for="oTaxa">Quanto ele rende ao ano? (%, opcional, veja no app do banco)</label><input id="oTaxa" inputmode="decimal" placeholder="Ex.: 10,5"></div>'+
+      '<span class="rot">Como ele rende? (opcional, veja no app do banco)</span><div class="chips" id="oModos"><button class="chip" data-a="oModoRend" data-v="cdi" aria-pressed="'+((O.modoRend||"cdi")==="cdi")+'">% do CDI</button><button class="chip" data-a="oModoRend" data-v="fixa" aria-pressed="'+(O.modoRend==="fixa")+'">% ao ano</button></div>'+
+      '<div class="campo"><label for="oTaxa">Quanto? (ex.: 115 para "115% do CDI", ou 12 para "12% ao ano")</label><input id="oTaxa" inputmode="decimal" placeholder="Ex.: 100"></div>'+
       '<button class="btn" data-a="oProx">Continuar</button>';
   }else{
     h='<div class="fino"><div style="width:100%"></div></div><h1>Você usa cartão de crédito?</h1>'+
@@ -4030,7 +4241,7 @@ function desenharOnb(){
 function finalizarOnb(){
   var contas=[];
   /* os valores do passo 2 foram guardados em O.guardados ao avançar */
-  (O.guardados||[]).forEach(function(g){var o={id:uid(),nome:g.nome,tipo:"ativo",inicial:g.c}; if(g.carteira)o.carteira=true; if(g.inv)o.inv={taxa:g.taxa||0,banco:null,ate:hojeISO()}; contas.push(o)});
+  (O.guardados||[]).forEach(function(g){var o={id:uid(),nome:g.nome,tipo:"ativo",inicial:g.c}; if(g.carteira)o.carteira=true; if(g.inv)o.inv={modo:g.modo||"cdi",taxa:g.taxa||0,ir:true,banco:null,ate:hojeISO(),calc0:hojeISO(),desde:hojeISO()}; contas.push(o)});
   if(!contas.some(function(c){return c.carteira}))contas.unshift({id:uid(),nome:"Dinheiro",tipo:"ativo",inicial:0,carteira:true});
   if(O.cartao){
     var nome=($("#oNome").value||"").trim()||"Cartão", f=parseInt($("#oFecha").value,10), vc=parseInt($("#oVence").value,10);
@@ -4063,6 +4274,31 @@ var ACOES={
   ir:function(d){ir(d.v)},
   ajuda:function(d,b){var t=b.nextElementSibling; if(!t||!t.classList.contains("ajuda-t"))return; var ab=t.hidden; t.hidden=!ab; b.setAttribute("aria-expanded",String(ab))},
   acertoIr:function(){ir("planejar");abrirAcerto()},
+  oModoRend:function(d){O.modoRend=d.v; document.querySelectorAll("#oModos button").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.v===d.v))})},
+  rendModo:function(d){var st=d.p==="iv"?IV:CX; if(!st)return; var i=$("#"+d.p+"Taxa"); if(i)st.taxa=lerTaxa(i.value,300); st.modo=d.v; if(d.v==="poup")st.ir=false; else if(d.v!=="poup"&&st.ir===false&&st.modoAnt==="poup")st.ir=true; st.modoAnt=d.v;
+    var r=$("#"+d.p+"Rende"); if(r)r.innerHTML=camposRende(d.p,st); document.querySelectorAll("#"+d.p+"Modos button").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.v===d.v))})},
+  rendIr:function(d){var st=d.p==="iv"?IV:CX; if(!st)return; st.ir=d.v==="1"; document.querySelectorAll("#"+d.p+"Irs button").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.v===d.v))})},
+  cxConferir:function(d){modalConferirCaixa(d.id)},
+  cxcOk:function(){var x=CF&&CF.cx&&caixa(CF.cx); if(!x)return; x.conferido=hojeISO(); salvar(); fecharModal(); desenhar(); toast("Conferida: tudo certo")},
+  cxcRend:function(){
+    var x=CF&&CF.cx&&caixa(CF.cx); if(!x||!CF.dif)return; var dif=CF.dif, d=Math.abs(dif), cid=contaDaCaixa(x.id); if(!cid){toast("Crie uma conta com dinheiro primeiro");return}
+    var k=dif>0?catSis("rend","Rendimentos","receita"):catSis("invtax","Impostos e taxas dos investimentos","despesa"), hoje=hojeISO();
+    S.lancamentos.push({id:uid(),tipo:dif>0?"entrada":"saida",valor:d,desc:(dif>0?"Ajuste do rendimento da caixinha ":"Imposto ou taxa da caixinha ")+x.nome+" (conferido com o banco)",contaId:cid,destinoId:null,catId:k.id,data:hoje,cxAj:x.id});
+    S.reservas.push({id:uid(),data:hoje,de:dif>0?"livre":x.id,para:dif>0?x.id:"livre",valor:d,conta:cid});
+    x.conferido=hoje; salvar(); fecharModal(); desenhar(); toast("Valor atualizado: agora bate com o banco");
+  },
+  cxcGuard:function(){
+    var x=CF&&CF.cx&&caixa(CF.cx); if(!x||!CF.dif)return; var dif=CF.dif, d=Math.abs(dif);
+    if(dif>0){
+      var c=contasDinheiro().filter(function(k){return livreConta(k)>=d}).sort(function(a,b){return livreConta(b)-livreConta(a)})[0];
+      if(!c){toast("Não há "+brl(d)+" livres nas contas para guardar. Se foi rendimento, use o outro botão.");return}
+      guardarNaCaixa(x.id,d,"livre",x.id,c.id);
+    }else guardarNaCaixa(x.id,d,x.id,"livre",contaDaCaixa(x.id));
+    x.conferido=hojeISO(); salvar(); fecharModal(); desenhar(); toast("Valor atualizado");
+  },
+  conferirTudo:modalConferirTudo,
+  confTudoOk:function(){var h=hojeISO(); contasInvest().forEach(function(c){c.conferido=h}); S.caixas.filter(rendeAuto).forEach(function(x){x.conferido=h}); salvar(); fecharModal(); desenhar(); toast("Conferido: tudo certo. Lembro de novo daqui a uma semana.")},
+  confSemana:function(){lsSet(KEY+":lembConf:"+semanaDe(hojeISO()),"1"); fecharModal(); desenhar(); toast("Combinado: lembro na semana que vem")},
   verMesAMes:function(){lsSet(KEY+":rec:mesAMes","1");ir("graficos");setTimeout(function(){var m=$("#cardMM"); if(m&&m.scrollIntoView)m.scrollIntoView({block:"center"})},50)},
   aplicacao:function(d){modalAplicacao(d.id)},
   invApagar:function(d){G={id:d.id}; ACOES.gApagar()},
@@ -4369,7 +4605,7 @@ var ACOES={
   oProx:function(){
     if(O.passo===2){
       O.guardados=[];
-      [["oCarteira","Dinheiro"],["oBanco","Conta no banco"],["oPoup","Investimento"]].forEach(function(x,i){var c=cent(document.getElementById(x[0]));if(c>0||i===0)O.guardados.push({nome:x[1],c:c,carteira:i===0,inv:i===2,taxa:i===2?lerTaxa((document.getElementById("oTaxa")||{}).value):0})});
+      [["oCarteira","Dinheiro"],["oBanco","Conta no banco"],["oPoup","Investimento"]].forEach(function(x,i){var c=cent(document.getElementById(x[0]));if(c>0||i===0)O.guardados.push({nome:x[1],c:c,carteira:i===0,inv:i===2,modo:O.modoRend||"cdi",taxa:i===2?lerTaxa((document.getElementById("oTaxa")||{}).value,(O.modoRend||"cdi")==="cdi"?300:100):0})});
     }
     O.passo++; desenharOnb();
   },

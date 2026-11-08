@@ -1,10 +1,10 @@
 # Arquitetura
 
-Como o app funciona por dentro. Estado descrito: **versão 1.23.1-beta.1** (a base de dados e o motor vêm da 1.0.0; as telas foram reorganizadas conforme `MAPA-DO-APP.md`).
+Como o app funciona por dentro. Estado descrito: **versão 1.24.0-beta.1** (a base de dados e o motor vêm da 1.0.0; as telas foram reorganizadas conforme `MAPA-DO-APP.md`).
 
 ## 1. Visão geral
 
-- **Um único arquivo**: `app/index.html` (~4.420 linhas: ~760 de CSS e ~3.600 de JavaScript, ~320 funções e ~113 ações). HTML + CSS + JS puro, **sem dependências**, sem build, sem fontes ou scripts externos.
+- **Um único arquivo**: `app/index.html` (~4.650 linhas: ~765 de CSS e ~3.820 de JavaScript, ~350 funções e ~125 ações). HTML + CSS + JS puro, **sem dependências**, sem build, sem fontes ou scripts externos.
 - Todo o JavaScript fica dentro de uma **IIFE** (`(function(){ ... })();`). Nada vaza para `window`.
 - **Estado em memória**: um objeto `S` (e algumas variáveis de tela). **Persistência**: `localStorage`, chave `caderneta:v2`.
 - **Renderização**: cada tela é uma função que devolve **uma string de HTML**; `desenhar()` coloca no `#tela`. Cliques são tratados por **delegação** (`data-a="nome"` → objeto `ACOES`).
@@ -16,7 +16,7 @@ app/
   sw.js                service worker (VERSAO = "caderneta-<versão>")
   manifest.webmanifest nome, cores, ícones
   icon.svg, icon-180/192/512.png, icon-maskable-512.png
-tests/                 preparar.js + rodar.js + 32 arquivos *.test.js (jsdom)
+tests/                 preparar.js + rodar.js + 33 arquivos *.test.js (jsdom)
 tools/                 servidor-local.js, brasao.js (desenho do logo), gerar-icones.js, noticias.js (robô das notícias), medir-desempenho.js
 ```
 
@@ -34,17 +34,18 @@ S = {
   reservas:    [ MovimentoDeCaixinha ],
   config:      { tamanho:"m|g|gg", tema:"auto|claro|escuro", contador:bool, ultimoBackup:data|null,
                  pronto:bool, movimento:"vivo|parado", renda:centavos, sobraRef:"AAAA-MM"|null,
-                 favoritas:[3 ids de conta], favCats:{despesa:[...],receita:[...]} }
+                 favoritas:[3 ids de conta], favCats:{despesa:[...],receita:[...]},
+                 idx:{cdi:[{d,v}], selic:[{d,v}], ipca:[{m,v}]} }   // índices oficiais guardados (D65)
 }
 ```
 
 | Entidade | Campos |
 |---|---|
-| **Conta** | `id, nome, tipo:"ativo"\|"passivo", inicial` (saldo **antes** da primeira anotação) + opcionais: `fecha, vence, limite` (cartão), `abertas:[{data\|null,valor}]` (dívida inicial por vencimento; `inicial` = soma), `pessoa:true, cobrar` (dinheiro com pessoas), `bem:true, taxa, desde, ajustadoAte` (bens), `carteira:true, cedulas, contagem` (conta Dinheiro), `inv:{taxa,banco,ate}` (aplicação), `conferido` (data do último Conferir com o banco) |
+| **Conta** | `id, nome, tipo:"ativo"\|"passivo", inicial` (saldo **antes** da primeira anotação) + opcionais: `fecha, vence, limite` (cartão), `abertas:[{data\|null,valor}]` (dívida inicial por vencimento; `inicial` = soma), `pessoa:true, cobrar` (dinheiro com pessoas), `bem:true, taxa, desde, ajustadoAte` (bens), `carteira:true, cedulas, contagem` (conta Dinheiro), `inv:{modo,taxa,ir,banco,ate,calc0,desde}` (aplicação: `modo` = cdi/fixa/ipca/poup/varia; `taxa` = % do CDI, % ao ano ou % acima do IPCA; `ir` = paga Imposto de Renda; `calc0` = início do cálculo; `desde` = data da aplicação, para o IR), `conferido` (data do último Conferir com o banco) |
 | **Categoria** | `id, nome, tipo:"despesa"\|"receita"`, `meta` (despesa; só planejamento), `sis` (categoria do sistema, achada pelo código e nunca pelo nome: `conf` diferença do Conferir, `rend` Rendimentos, `invtax` impostos e taxas dos investimentos, `juros` Juros e multas, `perdas` Dívidas não pagas) |
-| **Lançamento** | `id, tipo, valor, desc, contaId, destinoId, catId, data` + `parcelas:[{data,valor}]`, `caixaId`, `fixaId`+`ref`, `sinal`, `rend:"AAAA-MM"` (rendimento do mês de uma aplicação) e `rendCx` (id da caixinha que rendeu) |
+| **Lançamento** | `id, tipo, valor, desc, contaId, destinoId, catId, data` + `parcelas:[{data,valor}]`, `caixaId`, `fixaId`+`ref`, `sinal`, `rend:"AAAA-MM"` (rendimento do mês de uma aplicação), `rendCx` (id da caixinha que rendeu) e `cxAj` (ajuste de valor de uma caixinha, D65) |
 | **ContaFixa** | `id, nome, valor, dia, freq:"mensal"\|"anual", mes, contaId, catId, inicio, vezes?, puladas:["AAAA-MM"]` |
-| **Caixinha** | `id, nome, alvo, prazo?`, `taxa?` (% ao ano, se rende) e `ate` (até que dia o rendimento já foi calculado) |
+| **Caixinha** | `id, nome, alvo, prazo?`, `modo?` (cdi ou fixa) e `taxa?` (% do CDI ou % ao ano, se rende), `ir`, `ate`, `calc0` e `conferido` (até que dia o rendimento já foi calculado) |
 | **Movimento de caixinha** | `id, data, de, para, valor, conta?` (`de`/`para`: `"livre"` ou id da caixinha), `rend?` ("AAAA-MM": guarda o rendimento do mês na caixinha) |
 
 **Tipos de lançamento**: `saida` (gasto), `entrada` (ganho), `transferencia` (entre contas, inclui pagar dívida e emprestar), `bem` (compra de bem), `ajuste` (valor de um bem mudou; `sinal:"alta"|"baixa"`).
@@ -183,7 +184,7 @@ Ativo cresce a débito; passivo cresce a crédito. **Patrimônio líquido (PL) =
 
 - `npm test` → `tests/rodar.js`: **prepara uma cópia** do app em `tests/.tmp/app-teste.html` (com um gancho `window.__T` que expõe funções internas listadas em `tests/preparar.js`), confere a sintaxe do JS e roda cada `tests/*.test.js` em **jsdom**, simulando a pessoa: cliques, digitação, navegação.
 - Os testes ligam a classe `calmo` (sem esperas de animação). Animação, layout e toque **só se conferem no navegador/celular**.
-- Cobertura (845 verificações, 32 arquivos; inclui a simplificação da interface, item por item (`32-simplificacao`); inclui planejar com acerto de contas, anotar em dois toques, conta Dinheiro, gráficos e relatórios, mapa do app, funções contábeis, identidade, Mordomo, chat, travas, investimentos, notícias (inclusive as do IBGE buscadas pelo celular) e as correções da auditoria): fluxo básico, dívida por vencimento, pessoas/fixas/caixinhas/simulador, bens, juros, bem financiado, apagar, vocabulário (varre todas as telas atrás de jargão), "o que pagar no mês", caixinhas com dinheiro real, guardado por conta, cofres/setas, filtros de anotações, **segurança contra textos maliciosos (XSS)**. Os testes também conferem **invariantes** (partidas dobradas, ativo − passivo = PL, dinheiro = livre + guardado).
+- Cobertura (872 verificações, 33 arquivos; inclui a simplificação da interface, item por item (`32-simplificacao`); inclui planejar com acerto de contas, anotar em dois toques, conta Dinheiro, gráficos e relatórios, mapa do app, funções contábeis, identidade, Mordomo, chat, travas, investimentos, notícias (inclusive as do IBGE buscadas pelo celular) e as correções da auditoria): fluxo básico, dívida por vencimento, pessoas/fixas/caixinhas/simulador, bens, juros, bem financiado, apagar, vocabulário (varre todas as telas atrás de jargão), "o que pagar no mês", caixinhas com dinheiro real, guardado por conta, cofres/setas, filtros de anotações, **segurança contra textos maliciosos (XSS)**. Os testes também conferem **invariantes** (partidas dobradas, ativo − passivo = PL, dinheiro = livre + guardado).
 - **Escrever um teste novo**: copie um arquivo parecido, mude o `seed` (dados iniciais no `localStorage`) e os passos; use `eq(nome, obtido, esperado)`; termine com `console.log(ok?"TUDO OK":"HÁ FALHAS")`. O corredor reconhece "OK", "FAIL" e "TUDO OK".
 
 ## 9. Publicação
@@ -214,7 +215,8 @@ GitHub Actions (`.github/workflows/publicar.yml`): a cada envio para `main`, rod
 - **Dica de instalar**: `dicaInstalar()` no Início, só se `matchMedia` existe e o app não está instalado (`display-mode: standalone` ou `navigator.standalone`); guardada por aparelho em `localStorage` (`KEY+":dicaInstalar"`), fora dos dados da pessoa; `beforeinstallprompt` vira o botão **Instalar agora** (`instalar`).
 - **Planejar (cont.)**: `pagarNoMes()` agora devolve `cid`/`fid`/`ref` de cada item.
 - **Removido**: os jeitos Razão e Cofre (D39) não existem mais; não há `config.jeito`.
-- **Testes**: 32 arquivos, 845 verificações; o teste 03 conta 6 botões na `nav` (o `.fab` fica fora dela, direto no `body`) e 4 bolinhas no `#fabMenu`; os testes antigos abrem a folha por `abreFolha(tipo)` (toque no + e na bolinha).
+- **Testes**: 33 arquivos, 872 verificações; o teste 03 conta 6 botões na `nav` (o `.fab` fica fora dela, direto no `body`) e 4 bolinhas no `#fabMenu`; os testes antigos abrem a folha por `abreFolha(tipo)` (toque no + e na bolinha).
 - **Auditoria (1.21.1)**: `modalGaveta()` mostra, para conta `ativo` com anotações, o saldo de hoje só para ler (`.g-saldo`, sem `#gInicial`); `salvarGaveta()` mantém o `inicial` quando o campo não existe. No cartão com anotações, a lista de `abertas` diz "O que você já devia aqui antes de usar o app" e mostra o que deve hoje. `jurosCat()` e `perdasCat()` procuram `sis:"juros"`/`sis:"perdas"` (e `pagarNoMes` e o indicador de juros também); `higienizar()` aceita esses códigos e dá o código à categoria antiga com o nome de sempre (uma vez). CSS: data atrasada da agenda usa `var(--bg)` sobre `var(--out)`; regras repetidas do `.fab` e as do antigo `.seg3` saíram. `tools/noticias.js`: `tenta()` faz até 3 tentativas. `tools/medir-desempenho.js` voltou a funcionar (Relatórios na barra; salva pela pena).
 - **Simplificação da interface (1.23.0, D64)**: `avisos()` monta no máximo 3 avisos e junta as contas atrasadas num só (ação `acertoIr` abre o acerto); `cardFechou()`, `cardHojeBrasil()` e `objetivosInicio()` usam `recolhivel`; `fmtRoll` e os resumos mostram R$; `modalAplicacao(id)` é a janela da aplicação (ações `aplicacao`, `invApagar`); `modalGaveta(id,tipoNovo)` abre `modalAplicacao` para contas com `inv` e aceita `data-t="passivo"` ("+ Nova dívida"); o botão Conferir fica no topo; `pergReage` mostra o balão uma vez por aba por dia (`KEY+":balao:"+aba+":"+dia`); `TERMO_NOT` dá o "?" de Selic, CDI, IPCA e Focus; `pintarAnot` põe ordem e filtros em `recolhivel("anFiltros")`. Na folha, a coluna E de Gastei e Comprei um bem tem `semInv`: `contasRapidas(excl,semInv)` tira as aplicações da lista curta (salvo favoritas) e `listaColuna` as põe por último com "(resgatar)" (1.23.1). A aba Relatórios saiu da barra (`ABA.relatorios = ABA.relatorio = "graficos"`).
+- **Como cada investimento rende (1.24.0, D65)**: `MODOS_REND`; `registrarIndices(n)` guarda CDI, Selic (por data) e IPCA (por mês) das notícias em `S.config.idx` (chamada ao abrir e quando as notícias chegam, recalculando); `idxEm(k,d)` e `ipcaDoMes(ym)` leem o índice de um dia; `fatorRend(o,d)` dá o fator de um dia útil (cdi: `fatorDia(CDI do dia)×taxa/100`; ipca: taxa real mais o IPCA do mês dividido pelos dias úteis; null se falta o índice, e o cálculo espera); poupança: `taxaPoupMes` (0,5% ao mês com Selic > 8,5%, senão 70% da Selic; TR ignorada) no dia do aniversário; `rendeAuto`, `rendeTxt`, `taxaAnual` (equivalente ao ano, usado nas notícias e no chat); `lucroDe` + `estimaResgate`/`textoResgate` (IR regressivo e IOF `IOF_TAB`; sem data, 22,5% e sem IOF); `avisoTaxa` ("era isso?"); `refazerRendimentos(o,cid,cx)` apaga os lançamentos com `rend`/`rendCx` e as reservas `rend` e recalcula desde `calc0` (ou, em dados antigos, `inicioRendimentos`). Janelas: `modalInvest` com `blocoComoRende`/`camposRende` (ações `rendModo`, `rendIr`), `modalAplicacao`, `modalConferirCaixa` (ações `cxConferir`, `cxcOk`, `cxcRend`, `cxcGuard`), `modalConferirTudo` (lembrete semanal: `lembreteConferir` em `avisos()`, ações `conferirTudo`, `confTudoOk`, `confSemana`; dispensa por semana em `KEY+":lembConf:"+segunda-feira`). Primeiros passos: `oModoRend`.
 - **Versão**: 3 lugares sobem juntos (`package.json`, `VERSAO_APP`, `sw.js`).

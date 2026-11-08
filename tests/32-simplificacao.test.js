@@ -103,7 +103,7 @@ const ordem=$$("#tela h2, #tela [data-a='tirarCx']").map(e=>e.dataset.a||e.textC
 eq("Caixinhas: as caixinhas vêm antes de \"Tirar de uma caixinha\"; saldo por conta em \"Ver por conta\"",[ordem[0],ordem[ordem.length-1],!!$('#tela details[data-rec="cxContas"]'),tx('#tela [data-a="tirarCx"]')],["Minhas caixinhas","tirarCx",true,"Tirar de uma caixinha"]);
 eq("   o botão de cada caixinha diz só \"Tirar\"",tx('#tela [data-a="cxMov"][data-m="tirar"]'),"Tirar");
 click('#tela [data-a="caixa"][data-id="x1"]');
-eq("   alvo, prazo e rendimento em Mais detalhes (aberto porque a caixinha tem alvo)",[!!$("#modal details.md #cAlvo"),!!$("#modal details.md #cPrazo"),!!$("#modal details.md #cTaxa"),$("#modal details.md").open],[true,true,true,true]);
+eq("   alvo, prazo e rendimento em Mais detalhes (aberto porque a caixinha tem alvo)",[!!$("#modal details.md #cAlvo"),!!$("#modal details.md #cPrazo"),!!$("#modal details.md #cxModos"),$("#modal details.md").open],[true,true,true,true]);
 fecha();
 click('#tela [data-a="ir"][data-v="planejar"]'); click('#tela [data-a="ir"][data-v="metas"]');
 click('#tela [data-a="categoria"][data-id="k1"]');

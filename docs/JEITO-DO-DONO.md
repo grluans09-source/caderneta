@@ -1,7 +1,7 @@
 # O jeito do dono (como ele trabalha e o que espera)
 
 > **Documento vivo.** Quem trabalhar com o dono (pessoa, Claude ou outra IA) deve ler isto antes de começar e **acrescentar aqui o que aprender em cada conversa**: preferências novas, correções que ele fez, jeitos de responder que funcionaram ou não. Nunca apague: se algo mudou, escreva o que vale hoje e marque o antigo como "(antes)".
-> Última atualização: 8 nov 2026.
+> Última atualização: 8 nov 2026 (fim do dia).
 
 ## 1. Quem é
 - **Não é programador.** Entende de finanças e de contabilidade no uso do dia a dia, não de código.
@@ -22,8 +22,9 @@
 5. **Contabilidade de verdade por trás, linguagem comum na frente.** Termo técnico só com explicação ("?").
 6. **O app deve travar o que não faz sentido** ("se eu colocar que gastei mais no cartão do que o limite").
 7. **Só fontes oficiais** nas notícias, com link, e sem recomendar investimento.
-8. **Conta certa do GitHub**: a pessoal, `grluans09-source`. Nunca a da empresa (`lnfinanceiro9-commits`). Nunca guardar senha ou token no repositório.
-9. **Dizer sempre o que NÃO foi verificado** (principalmente: "não testado num celular de verdade").
+8. **Conferir com a vida real**: ele testa o app com o próprio dinheiro (ex.: a caixinha do Nubank a 115% do CDI) e quer que o app aceite as regras de verdade de cada produto, deixe corrigir o valor na mão e lembre de conferir, "caso o app alucine".
+9. **Conta certa do GitHub**: a pessoal, `grluans09-source`. Nunca a da empresa (`lnfinanceiro9-commits`). Nunca guardar senha ou token no repositório.
+10. **Dizer sempre o que NÃO foi verificado** (principalmente: "não testado num celular de verdade").
 
 ## 4. Como responder a ele
 - **Responda exatamente o que ele perguntou, primeiro.** Depois, se precisar, as opções. (Lição de 8 nov 2026: ele perguntou "quando publicarmos oficialmente, o erro do IBGE some?" e recebeu opções antes da resposta; ele precisou repetir a pergunta. A resposta certa começava com "Não, sozinho não some, porque...".)
@@ -47,3 +48,4 @@
 - **6–7 nov 2026**: pediu explicações com analogias; aprovou o plano de 9 passos e quis decidir cada passo; quis protótipos para nome, logo, mascote e botão de anotar; pediu travas de coerência; pediu Git sempre atualizado.
 - **7 nov 2026**: deixou a conversa sobre venda para depois.
 - **8 nov 2026**: pediu auditoria completa e aprovou tudo de uma vez ("Sim, tudo"); pediu que as bolinhas de anotar combinassem com o app de hoje; quis que a resposta sobre o IBGE viesse direto ao ponto; escolheu a opção que funciona agora e sem custo (o celular busca no IBGE) e deixou o servidor no Brasil para o lançamento; pediu a simplificação da interface com a regra "nada some", em duas etapas (relatório, depois implementação); perguntou o que falta e se tudo está documentado no GitHub; pediu que este documento existisse e fosse atualizado a cada conversa.
+- **8 nov 2026 (tarde)**: perguntou se, sem passar comandos por uma IA, outra IA conseguiria trabalhar sozinha (sim, começando por `AGENTS.md`); descobriu que a caixinha de 115% do CDI virava 100% ao ano e pediu que o app entendesse cada tipo de rendimento e imposto, **com uma opção de corrigir o valor atual na mão e um lembrete semanal de conferir**; aprovou as recomendações e acrescentou esses dois pedidos ("SIM APROVO MAIS DEIXE UMA OPÇÃO...").
