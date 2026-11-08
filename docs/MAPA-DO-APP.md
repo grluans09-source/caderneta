@@ -137,7 +137,7 @@ Entradas: **Anotações · Notícias · Ajustes** (Relatórios virou aba própri
 Busca, ordem por data, valor ou nome, filtros e 15 por vez. É a única lista completa.
 
 ### Notícias: "Hoje no Brasil" (Mais > Notícias, ou o cartão do Início)
-Dólar, Selic, CDI, inflação (e o que ficou mais caro ou mais barato), preço dos combustíveis, previsões do Boletim Focus e notícias oficiais do IBGE. Cada item tem o selo **CERTEZA** (dado publicado) ou **POSSIBILIDADE** (previsão), o **link do site oficial** e, quando dá, o **"para você"** calculado com os dados da pessoa. Atualiza ao meio-dia; sem internet, mostra a última cópia com a data.
+Dólar, Selic, CDI, inflação (e o que ficou mais caro ou mais barato), preço dos combustíveis, previsões do Boletim Focus e notícias oficiais do IBGE. Cada item tem o selo **CERTEZA** (dado publicado) ou **POSSIBILIDADE** (previsão), o **link do site oficial** e, quando dá, o **"para você"** calculado com os dados da pessoa. Atualiza ao meio-dia; as notícias do IBGE o próprio celular busca no site do IBGE (no máximo 1 vez por hora, sem enviar dado nenhum, D62). Sem internet, mostra a última cópia com a data.
 
 ### O chat (a pílula "Perguntar", canto esquerdo de baixo)
 Abre uma janela preta e dourada com **53 perguntas prontas** em 5 grupos (Meu dinheiro · Contas e dívidas · Planejar · Como usar o app · Aprender); o grupo da aba atual abre primeiro. Tem busca por palavras (mostra até 3 perguntas parecidas, nunca inventa) e, em cada resposta, **Ver no app**. Sem internet e sem inteligência artificial. Lista em `CHAT-PERGUNTAS.md`.

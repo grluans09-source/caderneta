@@ -2,7 +2,7 @@
    Os dados do usuário NÃO passam por aqui (ficam no localStorage). */
 /* Mudar este nome a cada versão nova: é o que faz o celular baixar a versão atualizada.
    Padrão: caderneta-<versão do app>. */
-const VERSAO = "caderneta-1.21.2-beta.1";
+const VERSAO = "caderneta-1.22.0-beta.1";
 const ARQUIVOS = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg", "./icon-180.png", "./icon-192.png", "./icon-512.png", "./icon-maskable-512.png"];
 
 self.addEventListener("install", (e) => {
@@ -16,6 +16,8 @@ self.addEventListener("activate", (e) => {
 /* abre do cache na hora e atualiza em segundo plano (na próxima abertura vem a versão nova) */
 self.addEventListener("fetch", (e) => {
   if (e.request.method !== "GET") return;
+  /* pedidos a outros sites (as notícias do IBGE, D62) não passam pelo cache do app */
+  if (new URL(e.request.url).origin !== self.location.origin) return;
   /* as notícias (D59) vêm sempre da internet; sem internet, o app usa a última cópia que guardou */
   if (new URL(e.request.url).pathname.endsWith("/noticias.json")) return;
   e.respondWith(

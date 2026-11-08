@@ -5,6 +5,13 @@
 Formato: versão semântica (`MAIOR.MENOR.CORREÇÃO`). Cada versão diz **o que mudou para a pessoa que usa**.
 Antes da 1.0.0 as versões eram numeradas só pelo nome do cache do app (v1 a v16); estão aqui como marcos de desenvolvimento.
 
+## [1.22.0-beta.1]: 8 de novembro de 2026 · notícias do IBGE chegando de verdade
+- **As notícias oficiais do IBGE agora aparecem** na tela de Notícias (ex.: "PIB cresce 3,4% e totaliza R$ 11,7 trilhões em 2024"). Antes nunca chegavam: o site de notícias do IBGE recusa conexões de fora do Brasil, e o robô que busca as notícias roda em computadores do GitHub fora do país.
+- **Como ficou**: o próprio celular pede as notícias ao IBGE (quem usa o app está no Brasil, então o IBGE responde). O pedido **não leva nenhum dado seu**: vai sem cookies e sem dizer de que site veio. No máximo uma vez por hora; sem internet, aparece a última cópia (D62).
+- O resto das notícias (dólar, Selic, CDI, inflação, combustíveis, Focus) continua vindo do robô do meio-dia, como antes.
+- Por dentro: o app só guarda no aparelho os seus próprios arquivos; pedidos a outros sites (o IBGE) passam direto, sem cópia velha.
+- Testes: 794 verificações em 31 arquivos (novo: notícias do IBGE no celular).
+
 ## [1.21.2-beta.1]: 7 de novembro de 2026 · bolinhas de anotar com a arte de hoje
 - **As 4 bolinhas da pena viraram medalhas douradas**, no mesmo estilo da pena e do Brasão: aro de ouro serrilhado, centro esmaltado na cor do tipo (bordô Gastei, azul Recebi, ardósia Transferi, cobre Comprei um bem) e o símbolo em ouro. O nome de cada uma fica numa etiqueta preta com borda dourada. Antes eram círculos chapados com borda branca, da interface antiga (D61).
 - O botão de trocar o tipo, dentro da folha de anotar, usa a mesma medalha.

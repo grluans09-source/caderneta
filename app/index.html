@@ -788,7 +788,7 @@ html[data-tam="g"] .fbl{max-width:4.8rem}
 /* ---------- utilidades ---------- */
 var KEY="caderneta:v2";
 /* versão do app (siga o CHANGELOG.md; subir junto com VERSAO em sw.js e "version" em package.json) */
-var VERSAO_APP="1.21.2-beta.1";
+var VERSAO_APP="1.22.0-beta.1";
 var RE_ID=/^[A-Za-z0-9_-]+$/, RE_DATA=/^\d{4}-\d{2}-\d{2}$/;
 var MES=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
 var MES3=["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
@@ -2846,7 +2846,8 @@ function previa(){
 /* =====================================================================
    NOTÍCIAS DE FONTES OFICIAIS (D59): o robô (tools/noticias.js) busca os
    números do Banco Central, IBGE e ANP ao meio-dia e publica noticias.json
-   junto com o app. O app só fala com o próprio endereço; guarda a última
+   junto com o app. O app pede o arquivo ao próprio endereço e, só para as notícias
+   do IBGE, ao site do IBGE (D62, ver buscarIbge); guarda a última
    cópia para funcionar sem internet; e monta as frases e o "para você"
    aqui no celular, com os dados da pessoa (nada sai do aparelho).
    CERTEZA = dado oficial já publicado. POSSIBILIDADE = previsão (Focus).
@@ -2869,8 +2870,42 @@ function noticiasValidas(j){
     var c=j.combustiveis, cb=function(x,max){return ehObj(x)&&n(x.v,0.5,max)?{v:+x.v,ant:n(x.ant,0.5,max)}:null};
     o.combustiveis={de:d(c.de),ate:d(c.ate),gasolina:cb(c.gasolina,50),etanol:cb(c.etanol,50),diesel:cb(c.diesel,50),glp:cb(c.glp,1000)};
   }
-  if(Array.isArray(j.ibge))o.ibge=j.ibge.filter(function(x){return ehObj(x)&&typeof x.titulo==="string"&&linkOficial(x.link)}).slice(0,3).map(function(x){return {titulo:x.titulo.slice(0,160),intro:String(x.intro||"").slice(0,300),link:x.link,data:d(x.data)}});
+  if(Array.isArray(j.ibge))o.ibge=ibgeItensValidos(j.ibge);
   return o;
+}
+function ibgeItensValidos(arr){
+  if(!Array.isArray(arr))return [];
+  return arr.filter(function(x){return ehObj(x)&&typeof x.titulo==="string"&&x.titulo.trim()&&linkOficial(x.link)}).slice(0,3).map(function(x){
+    return {titulo:x.titulo.slice(0,160),intro:String(x.intro||"").slice(0,300),link:x.link,data:typeof x.data==="string"&&/^\d{4}-\d{2}-\d{2}$/.test(x.data)?x.data:null};
+  });
+}
+/* Notícias do IBGE direto do celular (D62). O site de notícias do IBGE recusa o robô do GitHub (servidores fora do Brasil),
+   mas responde a quem está no Brasil. O celular só PEDE as notícias: não manda nenhum dado da pessoa
+   (sem cookies e sem dizer de que site veio o pedido). No máximo uma busca por hora; sem internet, fica a última cópia. */
+var IBGE_URL="https://servicodados.ibge.gov.br/api/v3/noticias/?qtd=3&tipo=release", IBGE_NOT=null, IBGE_TENT=0;
+function ibgeDaApi(items){
+  if(!Array.isArray(items))return [];
+  return ibgeItensValidos(items.map(function(x){
+    if(!ehObj(x))return null;
+    var m=String(x.data_publicacao||"").match(/^(\d{2})\/(\d{2})\/(\d{4})/);
+    return {titulo:x.titulo,intro:String(x.introducao||"").replace(/^\s*DESTAQUES\s*-\s*/i,""),link:String(x.link||"").replace(/^http:\/\//,"https://"),data:m?m[3]+"-"+m[2]+"-"+m[1]:null};
+  }));
+}
+function ibgeGuardadas(){
+  if(IBGE_NOT)return IBGE_NOT;
+  try{var g=JSON.parse(lsGet(KEY+":noticiasIbge")||"null"); if(ehObj(g)&&typeof g.em==="string"&&!isNaN(Date.parse(g.em))){var it=ibgeItensValidos(g.itens); if(it.length)IBGE_NOT={em:g.em,itens:it}}}catch(e){IBGE_NOT=null}
+  return IBGE_NOT;
+}
+function buscarIbge(){
+  if(typeof fetch!=="function"||!/^https?:$/.test(location.protocol))return;
+  var g=ibgeGuardadas(); if(g&&Date.now()-Date.parse(g.em)<60*60*1000)return;
+  if(Date.now()-IBGE_TENT<10*60*1000)return; IBGE_TENT=Date.now();
+  fetch(IBGE_URL,{cache:"no-store",credentials:"omit",referrerPolicy:"no-referrer",mode:"cors"}).then(function(r){return r.ok?r.json():null}).then(function(j){
+    var it=j?ibgeDaApi(j.items):[]; if(!it.length)return;
+    var antes=ibgeGuardadas(), novo={em:new Date().toISOString(),itens:it};
+    IBGE_NOT=novo; lsSet(KEY+":noticiasIbge",JSON.stringify(novo));
+    if((!antes||JSON.stringify(antes.itens)!==JSON.stringify(it))&&VIEW==="noticias")desenhar();
+  }).catch(function(){});
 }
 function noticiasGuardadas(){
   if(NOT)return NOT;
@@ -2878,6 +2913,7 @@ function noticiasGuardadas(){
   return NOT;
 }
 function buscarNoticias(){
+  buscarIbge();
   if(typeof fetch!=="function"||!/^https?:$/.test(location.protocol))return;
   if(Date.now()-NOT_BUSCA<10*60*1000)return; NOT_BUSCA=Date.now();
   fetch("noticias.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.json():null}).then(function(j){
@@ -2945,7 +2981,8 @@ function itensNoticias(n){
     it.push({id:"focus",sel:"possibilidade",tit:"O mercado espera inflação de "+pc(f.ipca)+" em "+f.ano,fato:"Boletim Focus"+(f.data?" de "+dataBR(f.data):"")+" (Banco Central), a mediana das previsões de economistas"+(f.selic!=null?": Selic de "+pc(f.selic)+" no fim do ano":"")+(f.cambio!=null?" e dólar a "+reais(f.cambio):"")+".",
       sig:"É uma previsão, não uma certeza: muda toda semana. Serve para planejar com cuidado.",fonte:"Banco Central",link:"https://www.bcb.gov.br/publicacoes/focus"});
   }
-  (n.ibge||[]).forEach(function(x,i){it.push({id:"ibge"+i,sel:"certeza",tit:x.titulo,fato:x.intro,sig:"Notícia oficial do IBGE"+(x.data?", de "+dataBR(x.data):"")+".",fonte:"IBGE",link:x.link})});
+  var ib=ibgeGuardadas();
+  ((ib&&ib.itens)||n.ibge||[]).forEach(function(x,i){it.push({id:"ibge"+i,sel:"certeza",tit:x.titulo,fato:x.intro,sig:"Notícia oficial do IBGE"+(x.data?", de "+dataBR(x.data):"")+".",fonte:"IBGE",link:x.link})});
   return it;
 }
 function seloNot(s){return '<span class="nt-selo '+(s==="certeza"?"nt-cert":"nt-poss")+'">'+(s==="certeza"?"Certeza":"Possibilidade")+'</span>'}
@@ -2960,7 +2997,8 @@ function cardHojeBrasil(){
 }
 function telaNoticias(){
   buscarNoticias();
-  var n=noticiasGuardadas();
+  var n=noticiasGuardadas(), ib0=ibgeGuardadas();
+  if(!n&&ib0)n={gerado:ib0.em};
   var h=capa("Fontes oficiais, todo dia ao meio-dia","Notícias","inicio")+
     '<p class="sub lead">O que mudou na economia e o que isso pode significar para você. <b>Certeza</b> é dado oficial já publicado; <b>Possibilidade</b> é previsão e pode mudar.</p>';
   if(!n)return h+'<div class="card"><div class="vazio"><b>As notícias ainda não chegaram</b>Elas chegam quando o celular está com internet. Tente de novo daqui a pouco.</div></div>';

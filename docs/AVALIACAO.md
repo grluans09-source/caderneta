@@ -19,7 +19,7 @@ Esta avaliação substitui a da 1.0.0 (6 nov 2026). Ela junta o **passo 9 do pla
 | Linhas | **4.242** no total: **~725 de CSS** e **~3.460 de JavaScript** |
 | Funções | ~311 · ações de tela: ~108 |
 | Dependências do app | **0** (nada de internet para funcionar; as notícias são opcionais) |
-| Testes automáticos | **30 arquivos, 778 verificações** na 1.21.1 (780 desde a 1.21.2, com as medalhas de anotar), ~80 segundos (`npm test`) |
+| Testes automáticos | **30 arquivos, 778 verificações** na 1.21.1 (780 na 1.21.2; 794 em 31 arquivos desde a 1.22.0), ~80 segundos (`npm test`) |
 | Desempenho (computador, 10.000 anotações) | abrir o app: **~250 ms**; telas: **5 a 90 ms** (Gráficos é a mais pesada); busca digitando: **~6 ms**; salvar uma anotação: **~50 ms** |
 | Espaço de dados | ~150 bytes por anotação simples ⇒ **10.000 anotações ≈ 1,4 MB**; limite típico do navegador ~5 MB ⇒ **~34 mil anotações** (quem anota 10 por dia tem ~9 anos de folga) |
 
@@ -109,7 +109,7 @@ Detalhe em `ANALISE-CONTABIL.md`.
 ## 8. Segurança e privacidade
 | Tema | Situação |
 |---|---|
-| Dados saem do aparelho? | **Não.** Sem servidor, login, análise de uso ou anúncios. As notícias só **chegam** (arquivo do próprio site) |
+| Dados saem do aparelho? | **Não.** Sem servidor, login, análise de uso ou anúncios. As notícias só **chegam**: o arquivo do próprio site e, desde a 1.22.0, as notícias do IBGE pedidas direto ao IBGE, sem cookies e sem nenhum dado da pessoa (D62) |
 | Texto malicioso (XSS) | Testado em todas as telas; nada executado |
 | Cópia adulterada | Itens inválidos descartados; ids perigosos rejeitados |
 | Dados em repouso | `localStorage` sem criptografia e sem senha |
@@ -132,7 +132,7 @@ Detalhe em `ANALISE-CONTABIL.md`.
 | 3 | Pessoa não entende algum conceito | Média | Médio | Chat, tour curto, dicas na primeira visita |
 | 4 | Arquivo único grande demais para mexer | Média | Médio | Dividir em módulos depois do teste de campo |
 | 5 | Mudança de endereço apaga dados | Certa (se migrar) | Alto | Plano de migração com aviso e cópia (`PUBLICACAO.md`) |
-| 6 | Uma fonte oficial muda o formato e a notícia some | Média | Baixo | O robô tenta 3 vezes e publica o resto; olhar a aba Actions |
+| 6 | Uma fonte oficial muda o formato e a notícia some | Média | Baixo | O robô tenta 3 vezes e publica o resto; olhar a aba Actions. O IBGE recusa o robô (fora do Brasil): desde a 1.22.0 o celular busca as notícias do IBGE (D62) |
 
 ## 11. Veredito
 O app está **completo para o que foi pedido** nos 9 passos do plano, e a auditoria mostrou que **as contas fecham**. Os problemas achados foram corrigidos e protegidos por teste. O que falta para "pronto para todo mundo" não é função nova: é **prova no mundo real**.
