@@ -8,7 +8,7 @@ Este documento diz **o que fazer a seguir, em que ordem e por quê**. Atualize-o
 2. Primeiro o que **protege os dados** das pessoas; depois o que **reduz confusão**; só então o que **acrescenta função**.
 3. Cada item só está "pronto" quando passa na **definição de pronto** (no fim deste documento).
 
-## Fase 0: agora (beta 1.21.x) · o próximo passo
+## Fase 0: agora (beta 1.23.x) · o próximo passo
 **Objetivo: descobrir o que as pessoas realmente sentem ao usar.**
 
 | # | Tarefa | Como saber que acabou |
