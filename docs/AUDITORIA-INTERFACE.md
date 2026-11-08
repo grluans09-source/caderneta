@@ -118,4 +118,6 @@ Cada aba é conferida no celular e no computador, com teste automático de que t
 
 **Telas vazias guiadas**: agenda vazia (botão "Cadastrar uma conta fixa") · anotações sem resultado (botão "Limpar filtros").
 
+**Depois (1.23.1)**: o ponto que tinha ficado de fora, as aplicações no "De onde saiu" da folha de anotar, recebeu a mesma regra do simulador, a pedido do dono.
+
 **Não mexido de propósito**: cálculos, dados, regras do motor contábil. A única regra nova é a pergunta da D63, aprovada pelo dono.

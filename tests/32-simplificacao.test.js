@@ -48,6 +48,14 @@ eq("a linha Falta pagar diz \"contas a pagar\"",/contas? a pagar/.test(tx("#tela
 click('[data-a="novo"]'); click('#fabMenu [data-a="novoT"][data-t="saida"]');
 const md=$("#folhaCorpo details.md");
 eq("folha: anotação e caixinha em \"Mais detalhes\" (fechado), valor e colunas à vista",[!!md,md&&md.open,!!(md&&md.querySelector("#fDesc")),!!(md&&md.querySelector('[data-a="fCaixa"]')),!!$("#fValor")],[true,false,true,true,true]);
+eq("Gastei: a aplicação não entra na lista curta de \"De onde saiu\" (1.23.1)",!!$('#lcE [data-a="fConta"][data-id="cdb"]'),false);
+$('.bcol[data-l="E"]').dispatchEvent(new w.Event("focus"));   /* tocar na busca abre a lista completa */
+const nomesE=[...d.querySelectorAll('#lcE [data-a="fConta"]')].map(x=>x.childNodes[0].textContent);
+eq("   na lista completa ela aparece por último, com \"(resgatar)\"",[nomesE.length>1,nomesE[nomesE.length-1]],[true,"CDB (resgatar)"]);
+click('[data-a="fFechar"]');
+click('[data-a="novo"]'); click('#fabMenu [data-a="novoT"][data-t="transferencia"]');
+const b2=$('.bcol[data-l="D"]'); b2.dispatchEvent(new w.Event("focus"));
+eq("   em \"Transferi entre contas\" a aplicação continua normal (é assim que se aplica e resgata)",[...d.querySelectorAll('#lcD [data-a="fDestino"]')].some(x=>x.childNodes[0].textContent==="CDB"),true);
 click('[data-a="fFechar"]');
 click('#tela [data-a="ir"][data-v="anotacoes"]');
 click('#tela [data-a="editar"][data-id="s1"]');

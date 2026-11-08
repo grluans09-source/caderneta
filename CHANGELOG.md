@@ -5,6 +5,11 @@
 Formato: versão semântica (`MAIOR.MENOR.CORREÇÃO`). Cada versão diz **o que mudou para a pessoa que usa**.
 Antes da 1.0.0 as versões eram numeradas só pelo nome do cache do app (v1 a v16); estão aqui como marcos de desenvolvimento.
 
+## [1.23.1-beta.1]: 8 de novembro de 2026 · aplicações por último também na hora de anotar
+- Em **Gastei** e **Comprei um bem**, a coluna "De onde saiu" não mostra mais as aplicações (CDB, Poupança...) na lista curta, porque dinheiro investido não é dinheiro para usar agora. Na lista completa (tocando na busca) elas aparecem **por último, com "(resgatar)"**, como no simulador. Se você marcar uma aplicação como favorita, ela continua aparecendo.
+- Em **Transferi entre contas** nada muda: é assim que se aplica e se resgata.
+- Testes: 845 verificações em 32 arquivos.
+
 ## [1.23.0-beta.1]: 8 de novembro de 2026 · interface mais simples, sem perder nada
 Pedido do dono: deixar o app compreensível para quem começa do zero. Primeiro uma auditoria de inconsistências (`docs/AUDITORIA-INTERFACE.md`), depois a simplificação, aprovada item a item. **Nenhuma função, campo ou informação foi removida**: o que saiu da frente está a um toque.
 - **Aba Saúde**: Gráficos e Relatórios viraram uma aba só (a barra agora tem 6 abas). Em cima, o panorama e os 4 indicadores principais; os outros 6 em "Ver mais indicadores"; depois "Mês a mês" e "Todos os relatórios em lista".

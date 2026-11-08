@@ -814,7 +814,7 @@ details.rec>summary:focus-visible{outline:3px solid var(--latao);outline-offset:
 /* ---------- utilidades ---------- */
 var KEY="caderneta:v2";
 /* versão do app (siga o CHANGELOG.md; subir junto com VERSAO em sw.js e "version" em package.json) */
-var VERSAO_APP="1.23.0-beta.1";
+var VERSAO_APP="1.23.1-beta.1";
 var RE_ID=/^[A-Za-z0-9_-]+$/, RE_DATA=/^\d{4}-\d{2}-\d{2}$/;
 var MES=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
 var MES3=["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
@@ -2121,11 +2121,11 @@ function favoritasValidas(){
   var cand=S.contas.filter(function(x){return !x.bem&&!x.carteira}).map(function(x){return x.id});
   return (S.config.favoritas||[]).filter(function(id){return cand.indexOf(id)>=0}).slice(0,3);
 }
-function contasRapidas(excl){
+function contasRapidas(excl,semInv){
   var cw=carteiraConta(), u=usoContas();
   var todas=S.contas.filter(function(x){return !x.bem&&!x.carteira&&x.id!==excl});
   var fav=favoritasValidas().filter(function(id){return id!==excl});
-  var outras=todas.filter(function(x){return fav.indexOf(x.id)<0&&!x.pessoa}).sort(function(a,b){return (u[b.id]||0)-(u[a.id]||0)});
+  var outras=todas.filter(function(x){return fav.indexOf(x.id)<0&&!x.pessoa&&!(semInv&&x.inv)}).sort(function(a,b){return (u[b.id]||0)-(u[a.id]||0)});
   var ids=fav.concat(outras.slice(0,Math.max(0,3-fav.length)).map(function(x){return x.id}));
   var lista=[]; if(cw&&cw.id!==excl)lista.push(cw);
   ids.forEach(function(id){lista.push(conta(id))});
@@ -2146,9 +2146,10 @@ function catsRapidas(want){
 function listaColuna(cfg,q,todas){
   var todos=cfg.k==="contas"?S.contas.filter(function(x){return !x.bem&&x.id!==cfg.ex})
     :cfg.k==="cats"?S.categorias.filter(function(k){return k.tipo===cfg.want}):bensLista();
-  if(q){var nq=norm(q); return todos.filter(function(x){return norm(x.nome).indexOf(nq)>=0})}
-  if(todas)return todos.slice().sort(function(a,b){return norm(a.nome)<norm(b.nome)?-1:norm(a.nome)>norm(b.nome)?1:0});
-  var curtos=cfg.k==="contas"?contasRapidas(cfg.ex):cfg.k==="cats"?catsRapidas(cfg.want):bensLista().slice(0,5);
+  var invFim=function(a,b){return cfg.semInv?(a.inv?1:0)-(b.inv?1:0):0};
+  if(q){var nq=norm(q); return todos.filter(function(x){return norm(x.nome).indexOf(nq)>=0}).sort(invFim)}
+  if(todas)return todos.slice().sort(function(a,b){return invFim(a,b)||(norm(a.nome)<norm(b.nome)?-1:norm(a.nome)>norm(b.nome)?1:0)});
+  var curtos=cfg.k==="contas"?contasRapidas(cfg.ex,cfg.semInv):cfg.k==="cats"?catsRapidas(cfg.want):bensLista().slice(0,5);
   if(cfg.sel&&!curtos.some(function(x){return x.id===cfg.sel})){var s=todos.filter(function(x){return x.id===cfg.sel})[0]; if(s)curtos.push(s)}
   return curtos;
 }
@@ -2156,7 +2157,7 @@ function itemColuna(cfg,x){
   var on=cfg.sel===x.id;
   if(cfg.k==="cats")return '<button class="opt" data-a="'+cfg.a+'" data-id="'+x.id+'" aria-pressed="'+on+'">'+esc(x.nome)+'</button>';
   if(cfg.k==="bens")return '<button class="opt" data-a="'+cfg.a+'" data-id="'+x.id+'" aria-pressed="'+on+'">'+esc(x.nome)+'<small>vale '+esc(brl(saldoConta(x)))+'</small></button>';
-  return '<button class="opt" data-a="'+cfg.a+'" data-id="'+x.id+'" aria-pressed="'+on+'">'+esc(x.nome)+
+  return '<button class="opt" data-a="'+cfg.a+'" data-id="'+x.id+'" aria-pressed="'+on+'">'+esc(x.nome)+(cfg.semInv&&x.inv?' (resgatar)':'')+
     '<small>'+(x.pessoa?(x.tipo==="ativo"?"te deve ":"você deve ")+brl(saldoConta(x)):x.tipo==="passivo"?"dívida · devo "+brl(saldoConta(x)):brl(saldoConta(x)))+'</small></button>';
 }
 function pintarColuna(lado){
@@ -2834,7 +2835,7 @@ function desenharFolha(){
   else if(F.tipo==="entrada"){tE="De onde veio";tD="Onde entrou";kE="cats";kD="contas";aE="fCat";aD="fConta";sE=F.catId;sD=F.contaId}
   else if(F.tipo==="bem"){tE="Paguei com";tD="Qual bem?";kE="contas";kD="bens";aE="fConta";aD="fDestino";sE=F.contaId;sD=F.destinoId}
   else{tE="De onde sai";tD="Para onde vai";kE="contas";kD="contas";aE="fConta";aD="fDestino";sE=F.contaId;sD=F.destinoId}
-  F.cols={E:{k:kE,a:aE,sel:sE,tit:tE,ex:null,want:want},D:{k:kD,a:aD,sel:sD,tit:tD,ex:(F.tipo==="transferencia"?F.contaId:null),want:want}};
+  F.cols={E:{k:kE,a:aE,sel:sE,tit:tE,ex:null,want:want,semInv:(F.tipo==="saida"||F.tipo==="bem")},D:{k:kD,a:aD,sel:sD,tit:tD,ex:(F.tipo==="transferencia"?F.contaId:null),want:want}};
   function colHTML(l,c){return '<div><p class="colrot">'+c.tit+'</p><input type="search" class="bcol" data-l="'+l+'" placeholder="'+(c.k==="contas"?"Buscar conta":c.k==="cats"?"Buscar categoria":"Buscar bem")+'" aria-label="'+(c.k==="contas"?"Buscar conta":c.k==="cats"?"Buscar categoria":"Buscar bem")+'" autocomplete="off" value="'+esc(F["q"+l]||"")+'"><div class="lc" id="lc'+l+'"></div></div>'}
   h+='<div class="tt" id="tt"><div class="th"><span>'+tE+'</span><span>'+tD+'</span></div>'+
     '<div class="tc">'+colHTML("E",F.cols.E)+colHTML("D",F.cols.D)+'</div>'+
