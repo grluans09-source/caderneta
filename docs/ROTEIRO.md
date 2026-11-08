@@ -1,6 +1,6 @@
 # Roteiro
 
-Onde estamos: **versão 1.21.1-beta.1**. **O plano de 9 passos combinado em 7 nov 2026 terminou** com a auditoria completa (resultado em `AVALIACAO.md`). **Ainda sem uso real por outras pessoas**: o que falta é pôr o app na mão de 3 a 5 pessoas (`GUIA-TESTADORES.md`).
+Onde estamos: **versão 1.21.2-beta.1**. **O plano de 9 passos combinado em 7 nov 2026 terminou** com a auditoria completa (resultado em `AVALIACAO.md`). **Ainda sem uso real por outras pessoas**: o que falta é pôr o app na mão de 3 a 5 pessoas (`GUIA-TESTADORES.md`).
 Este documento diz **o que fazer a seguir, em que ordem e por quê**. Atualize-o a cada versão.
 
 ## Como priorizar

@@ -41,7 +41,7 @@ Peça que a pessoa faça cada tarefa **sozinha, falando em voz alta o que pensa*
 
 | # | Tarefa | Onde costuma travar (hipótese) |
 |---|---|---|
-| 1 | Anotar um gasto do dia (ex.: mercado, R$ 45), **tocando na pena e depois na bolinha vermelha "Gastei"** | Perceber, sem ninguém explicar, que a pena é o botão de anotar e gera bolinhas e que elas são botões; achar a conta e a categoria nas listas curtas (ou na busca) |
+| 1 | Anotar um gasto do dia (ex.: mercado, R$ 45), **tocando na pena e depois na medalha de centro vermelho "Gastei"** | Perceber, sem ninguém explicar, que a pena é o botão de anotar e gera bolinhas e que elas são botões; achar a conta e a categoria nas listas curtas (ou na busca) |
 | 2 | Anotar uma compra parcelada no cartão | Escolher a conta do cartão e as parcelas |
 | 3 | Ver **quanto falta pagar neste mês** e **pagar uma conta pelo "Abrir o acerto de contas"** no Planejar | Achar o **Planejar** e usar as setas de mês do cartão "Falta pagar" |
 | 4 | **Guardar** um dinheiro numa caixinha e depois **usar** | Entender caixinha × meta, escolher a conta |

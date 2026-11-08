@@ -5,6 +5,12 @@
 Formato: versão semântica (`MAIOR.MENOR.CORREÇÃO`). Cada versão diz **o que mudou para a pessoa que usa**.
 Antes da 1.0.0 as versões eram numeradas só pelo nome do cache do app (v1 a v16); estão aqui como marcos de desenvolvimento.
 
+## [1.21.2-beta.1]: 7 de novembro de 2026 · bolinhas de anotar com a arte de hoje
+- **As 4 bolinhas da pena viraram medalhas douradas**, no mesmo estilo da pena e do Brasão: aro de ouro serrilhado, centro esmaltado na cor do tipo (bordô Gastei, azul Recebi, ardósia Transferi, cobre Comprei um bem) e o símbolo em ouro. O nome de cada uma fica numa etiqueta preta com borda dourada. Antes eram círculos chapados com borda branca, da interface antiga (D61).
+- O botão de trocar o tipo, dentro da folha de anotar, usa a mesma medalha.
+- A pílula **Perguntar** some enquanto as bolinhas estão abertas: ela tapava o nome "Gastei".
+- Testes: 780 verificações em 30 arquivos.
+
 ## [1.21.1-beta.1]: 7 de novembro de 2026 · auditoria completa
 Passo 9 do plano (o último): uma auditoria de tudo no app, aprovada item a item pelo dono. Relatório completo em `docs/AVALIACAO.md`.
 - **As contas fecham.** Um teste com dados aleatórios (6 rodadas, todas as telas e as 53 respostas do chat) conferiu as regras de contabilidade e não achou nenhuma diferença.

@@ -60,7 +60,9 @@ for(const [t,nome] of [["saida","Gastei"],["entrada","Recebi"],["transferencia",
 // ======== 2) folha: 3 bolinhas no lugar dos 4 botões ========
 abreFolha("saida");
 eq("a folha não tem mais os 4 botões de tipo no topo nem as 3 bolinhas no cabeçalho",[!$("#folhaCorpo .seg3"),!$("#folhaCorpo .trocar")],[true,true]);
-eq("o seletor de tipo é um botão fixo embaixo, que mostra o tipo atual",[!!$("#dockTipo"),$("#dockTipo").classList.contains("dk-gasto"),$("#dockTipo").textContent.includes("−")],[true,true,true]);
+eq("o seletor de tipo é um botão fixo embaixo, que mostra o tipo atual (a medalha de Gastei)",[!!$("#dockTipo"),$("#dockTipo").classList.contains("dk-gasto"),$("#dockTipo .medalha").dataset.m],[true,true,"gasto"]);
+eq("as 4 bolinhas são medalhas de ouro com o esmalte do tipo (arte de hoje, não os círculos antigos)",[...d.querySelectorAll("#fabMenu .fbc .medalha")].map(m=>m.dataset.m+":"+!!m.querySelector('circle[fill="url(#mg-e-'+m.dataset.m+')"]')),["gasto:true","ganho:true","transf:true","bem:true"]);
+eq("os esmaltes das medalhas existem na página",["gasto","ganho","transf","bem"].map(k=>!!d.getElementById("mg-e-"+k)),[true,true,true,true]);
 click("#dockTipo");
 eq("tocar no botão gera as 4 bolinhas, com a do tipo atual apagada",[aberto(),[...d.querySelectorAll("#fabMenu .fb")].map(b=>b.dataset.t+":"+b.classList.contains("atual")),$("#fabMenu").classList.contains("emfolha")],[true,["saida:true","entrada:false","transferencia:false","bem:false"],true]);
 eq("a bolinha do tipo atual fica bloqueada (aria-disabled) e as outras 3 ficam livres",[...d.querySelectorAll("#fabMenu .fb")].map(b=>b.getAttribute("aria-disabled")),["true","false","false","false"]);
