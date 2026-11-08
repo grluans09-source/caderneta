@@ -16,11 +16,11 @@ Esta avaliação substitui a da 1.0.0 (6 nov 2026). Ela junta o **passo 9 do pla
 | Item | Valor |
 |---|---|
 | Tamanho do app | **357 KB** em **1 arquivo** (`app/index.html`) |
-| Linhas | **4.242** no total: **~725 de CSS** e **~3.460 de JavaScript** |
+| Linhas | **4.242** no total na 1.21.1 (**~4.420** na 1.23.0): **~725 de CSS** e **~3.460 de JavaScript** |
 | Funções | ~311 · ações de tela: ~108 |
 | Dependências do app | **0** (nada de internet para funcionar; as notícias são opcionais) |
-| Testes automáticos | **30 arquivos, 778 verificações** na 1.21.1 (780 na 1.21.2; 794 em 31 arquivos desde a 1.22.0), ~80 segundos (`npm test`) |
-| Desempenho (computador, 10.000 anotações) | abrir o app: **~250 ms**; telas: **5 a 90 ms** (Gráficos é a mais pesada); busca digitando: **~6 ms**; salvar uma anotação: **~50 ms** |
+| Testes automáticos | **30 arquivos, 778 verificações** na 1.21.1 (780 na 1.21.2; 794 em 31 arquivos na 1.22.0; **842 em 32 desde a 1.23.0**), ~80 segundos (`npm test`) |
+| Desempenho (computador, 10.000 anotações) | abrir o app: **~250 ms**; telas: **5 a 90 ms** (Saúde é a mais pesada, ~100 ms); busca digitando: **~6 ms**; salvar uma anotação: **~50 ms** |
 | Espaço de dados | ~150 bytes por anotação simples ⇒ **10.000 anotações ≈ 1,4 MB**; limite típico do navegador ~5 MB ⇒ **~34 mil anotações** (quem anota 10 por dia tem ~9 anos de folga) |
 
 > No celular, espere de 3 a 6 vezes mais tempo que no computador: ainda abaixo de meio segundo no pior caso. Para repetir: `node tools/medir-desempenho.js`.
@@ -66,7 +66,7 @@ Legenda: ✅ completo · ◐ parcial · ❌ não existe
 | Investimentos | ✅ | Rendimento por dia útil, sem feriados; IR/IOF acertados pelo Conferir |
 | Bens | ✅ | Valorização/desvalorização por estimativa da pessoa |
 | Simulador "e se eu comprar" | ✅ | Referência, não conselho |
-| Gráficos e Relatórios (10 indicadores) e mês a mês | ✅ | Texto educativo automático |
+| Saúde: 10 indicadores, relatórios e mês a mês | ✅ | Texto educativo automático (Gráficos e Relatórios juntos desde a 1.23.0) |
 | Chat (53 perguntas prontas) | ✅ | Sem internet e sem inteligência artificial |
 | Notícias de fontes oficiais | ✅ | Banco Central, IBGE e ANP; atualiza ao meio-dia. Receita Federal: sem fonte em formato de dados |
 | Cópia de segurança | ◐ | **Manual** (arquivo `.json`), com lembrete |
@@ -104,7 +104,7 @@ Detalhe em `ANALISE-CONTABIL.md`.
 
 ## 7. Avaliação de uso (UX)
 **Fortes:** um assunto por tela; botões grandes; prévia em frase simples; Mordomo e chat explicam sem jargão; letra grande; travas que explicam o porquê.
-**Preocupações:** muitos conceitos para iniciantes (contas, bens, pessoas, caixinhas, metas, aplicações); 7 abas na barra; nunca visto num celular real (toque, teclado numérico, fluidez em aparelho simples).
+**Preocupações:** muitos conceitos para iniciantes (contas, bens, pessoas, caixinhas, metas, aplicações), em parte resolvido na 1.23.0 (interface em camadas, "?" nos termos, 6 abas; ver `AUDITORIA-INTERFACE.md`); nunca visto num celular real (toque, teclado numérico, fluidez em aparelho simples).
 
 ## 8. Segurança e privacidade
 | Tema | Situação |

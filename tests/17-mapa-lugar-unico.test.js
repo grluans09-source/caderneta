@@ -47,12 +47,12 @@ click('nav [data-v="planejar"]');click('#tela [data-a="ir"][data-v="fixas"]');
 eq("Contas fixas é só cadastro (sem 'Para pagar agora')",!/Para pagar agora/.test($("#tela").textContent),true);
 
 // ---- Relatórios sem repetição ----
-click('nav [data-v="relatorios"]');
+click('nav [data-v="graficos"]');click('#tela [data-a="ir"][data-v="relatorios"]');
 const rel=$("#tela").textContent;
 eq("Relatórios tem o panorama e um relatório para cada um dos 10 indicadores, sem repetir o que já mora em outras telas",/Seu panorama/.test(rel)&&d.querySelectorAll("#tela .rel-item").length===10&&!/O que pagar em/.test(rel)&&!/Contas a pagar/.test(rel)&&!/Anotações do mês/.test(rel),true);
 
 // ---- Ajustes em 3 grupos ----
 click('nav [data-v="mais"]');click('#tela [data-a="ir"][data-v="ajustes"]');
-eq("Ajustes tem os grupos Aparência, Dados e Ajuda, nessa ordem",[...d.querySelectorAll("#tela .grupo")].map(x=>x.textContent),["Aparência","Dados","Ajuda"]);
+eq("Ajustes tem as seções Aparência, Categorias, Seus dados e Ajuda, nessa ordem, que abrem e fecham (1.23.0)",[...d.querySelectorAll("#tela details.rec > summary .rec-t")].map(x=>x.childNodes[0].textContent),["Aparência","Categorias","Seus dados","Ajuda"]);
 eq("erros de script",errs,[]);
 console.log(ok?"TUDO OK":"HÁ FALHAS");process.exit(ok?0:1);

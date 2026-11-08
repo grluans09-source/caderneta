@@ -26,6 +26,7 @@ function digita(sel,txt){const el=$(sel);el.value=txt;el.dispatchEvent(new w.Eve
 const S=()=>T.S();
 d.documentElement.classList.add("calmo");
 function nav(v){
+  if(v==="relatorios"){click('nav [data-v="graficos"]');click('#tela [data-a="ir"][data-v="relatorios"]');return}   /* Relatórios mora na aba Saúde (1.23.0) */
   if(["caixinhas"].includes(v))click('nav [data-v="planejar"]');
   if(["ajustes"].includes(v))click('nav [data-v="mais"]');
   if(["caixinhas","ajustes"].includes(v))click('#tela [data-a="ir"][data-v="'+v+'"]');else click('nav [data-v="'+v+'"]');
@@ -59,6 +60,8 @@ eq("mas reduz o é meu",T.totais().pl,pl0-30000);
 
 // tirar dinheiro das contas além do livre deixa o livre negativo e avisa
 abreFolha("transferencia");click('[data-a="fConta"][data-id="c2"]');digita('.bcol[data-l="D"]',"João");click('[data-a="fDestino"][data-id="p1"]');digita("#fValor","50000");click('[data-a="fSalvar"]');
+eq("usar o dinheiro que está guardado numa caixinha pergunta antes (D63) e diz qual caixinha",[/estão guardados/.test($("#modal").textContent),/Reserva|x1|caixinha/.test($("#modal").textContent),!!$('#modal [data-a="fConfirma"]')],[true,true,true]);
+click('[data-a="fConfirma"]');
 eq("emprestar tirou 500 da conta",T.dinheiroEmConta(),50000);
 eq("livre ficou negativo (separou mais do que tem)",T.livreAgora(),-50000);
 nav("caixinhas");

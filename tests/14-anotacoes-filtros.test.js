@@ -51,7 +51,7 @@ click('[data-a="anVerMais"]');
 eq("mostrar mais traz mais 15",linhas().length,30);
 click('[data-a="anVerMais"]');
 eq("e mais: agora todas as do mês (e o botão some)",[linhas().length,!$('[data-a="anVerMais"]')],[doMes.length,true]);
-eq("o resumo soma o que entrou e o que saiu",/Entrou \+4\.500,00/.test(resumo())&&/Saiu −/.test(resumo()),true);
+eq("o resumo soma o que entrou e o que saiu",/Entrou \+R\$ 4\.500,00/.test(resumo())&&/Saiu −/.test(resumo()),true);
 
 // ---- ordenar por data, valor e nome ----
 const ordemData=doMes.slice().sort((a,b)=>a.data<b.data?1:a.data>b.data?-1:(a.id<b.id?1:-1));
@@ -122,7 +122,7 @@ click('nav [data-v="mais"]');
 eq("o menu Mais tem o atalho Anotações",!!$('#tela [data-a="ir"][data-v="anotacoes"]'),true);
 click('#tela [data-a="ir"][data-v="anotacoes"]');
 eq("voltando de Mais, o botão volta para Mais",$(".capa .volta2").dataset.v,"mais");
-click('nav [data-v="relatorios"]');
+click('nav [data-v="graficos"]');click('#tela [data-a="ir"][data-v="relatorios"]');
 eq("Relatórios NÃO repete a lista de anotações (ela mora em Mais > Anotações)",[!!$("#fBusca"),!!$('[data-a="anOrdem"]'),$("#anotLista")===null],[false,false,true]);
 // vocabulário
 eq("a tela nova não usa jargão",/gaveta|lançamento|projeção/i.test($("#tela").textContent),false);

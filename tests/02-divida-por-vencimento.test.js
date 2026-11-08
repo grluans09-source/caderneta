@@ -11,7 +11,7 @@ function click(sel){let el=typeof sel==="string"?$(sel):sel;
   if(!el)throw new Error("sem elemento "+sel);el.click()}
 function digita(el,txt){el.value=txt;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
 const S=()=>T.S();
-function irV(v){if(v==='caixinhas'||v==='fixas'||v==='simulador')click('[data-a="ir"][data-v="planejar"]');if(v==='ajustes')click('[data-a="ir"][data-v="mais"]');click('[data-a="ir"][data-v="'+v+'"]')}
+function irV(v){if(v==='relatorios'){click('nav [data-v="graficos"]');click('#tela [data-a="ir"][data-v="relatorios"]');return}if(v==='caixinhas'||v==='fixas'||v==='simulador')click('[data-a="ir"][data-v="planejar"]');if(v==='ajustes')click('[data-a="ir"][data-v="mais"]');click('[data-a="ir"][data-v="'+v+'"]')}
 d.documentElement.classList.add("calmo");
 
 // primeiro uso: cartão devendo 190 (vence 05/11) + 15 (vence 05/12)

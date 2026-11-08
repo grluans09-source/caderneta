@@ -65,7 +65,7 @@ eq("gráficos de tipos diferentes: curva, barras, régua, comparação e composi
   [!!$("#tela svg.grafico"),!!$("#tela .gauge"),!!$("#tela .duas"),!!$("#tela .emp")],[true,true,true,true]);
 
 // ======== 3) aba Relatórios ========
-click('nav [data-v="relatorios"]');
+click('nav [data-v="graficos"]');click('#tela [data-a="ir"][data-v="relatorios"]');
 eq("Relatórios abre com o panorama e uma lista de relatórios",[/Seu panorama/.test($("#tela").textContent),d.querySelectorAll("#tela .rel-item").length],[true,10]);
 eq("o panorama conta quantos estão saudáveis, em atenção e em alerta",/estão saudáveis/.test($("#tela .preto").textContent)&&/pedem atenção/.test($("#tela .preto").textContent),true);
 const ordem=[...d.querySelectorAll("#tela .rel-item .selo")].map(s=>s.className.match(/st-(\w+)/)[1]);
@@ -77,7 +77,7 @@ eq("o relatório tem as 5 partes de um consultor",[...d.querySelectorAll("#tela 
 eq("o relatório usa os números da pessoa e explica o estado",/R\$ 8\.000,00/.test(rel)&&/R\$ 3\.200,00/.test(rel)&&/40%/.test(rel),true);
 eq("o relatório traz a faixa de comparação e o aviso de que não substitui um profissional",/Até 30%: confortável/.test(rel)&&/não substitui a conversa com um profissional/.test(rel),true);
 eq("o relatório tem de 3 a 5 passos práticos, o botão de compartilhar e o de voltar",[d.querySelectorAll("#tela .rel-ul li").length>=3,!!$('#tela [data-a="relShare"]'),!!$('#tela [data-a="ir"][data-v="relatorios"]')],[true,true,true]);
-eq("a barra continua marcando Relatórios dentro do relatório",$("nav [aria-current]").dataset.v,"relatorios");
+eq("a barra continua marcando Saúde dentro do relatório",$("nav [aria-current]").dataset.v,"graficos");
 click('#tela [data-a="ir"][data-v="relatorios"]');
 eq("voltar leva à lista",d.querySelectorAll("#tela .rel-item").length,10);
 // cada relatório abre
@@ -95,7 +95,7 @@ I=ind();
 eq("sem lançamentos: reserva, poupança e destino ficam 'sem dados' e não quebram",[I.reserva.st,I.poupanca.st,I.destino.st],["sem","sem","sem"]);
 click('nav [data-v="graficos"]');
 eq("a aba Gráficos abre mesmo sem dados",d.querySelectorAll("#tela .ind-card").length,10);
-click('nav [data-v="relatorios"]');
+click('nav [data-v="graficos"]');click('#tela [data-a="ir"][data-v="relatorios"]');
 eq("o panorama sem dados convida a anotar ou mostra os que têm",/Seu panorama/.test($("#tela").textContent),true);
 eq("erros de script",errs,[]);
 console.log(ok?"TUDO OK":"HÁ FALHAS");process.exit(ok?0:1);

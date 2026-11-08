@@ -137,7 +137,7 @@ click('[data-a="fFechar"]');
 const cw=S().contas.find(c=>c.carteira);
 eq("a conta chamada Carteira/Dinheiro já vem marcada como a carteira",[cw&&cw.id,S().contas.filter(c=>c.carteira).length],["c1",1]);
 click('nav [data-v="contas"]');click('[data-a="dinAba"][data-v="contas"]');
-eq("na lista de contas a carteira pede a contagem de cédulas",/Toque para contar suas cédulas/.test($('#tela [data-id="c1"]').textContent),true);
+eq("na lista de contas a carteira pede a contagem de cédulas",/toque para contar as cédulas/.test($('#tela [data-id="c1"]').textContent),true);
 click('#tela [data-a="gaveta"][data-id="c1"]');
 eq("abrir a conta Dinheiro mostra a contagem de cédulas e NÃO tem botão de apagar",[d.querySelectorAll("#modal .ced").length,!$('#modal [data-a="gApagar"]'),/não pode ser apagada/.test($("#modal").textContent)],[7,true,true]);
 eq("as cédulas são 200, 100, 50, 20, 10, 5 e 2 (sem moedas)",[...d.querySelectorAll("#modal .ced-v")].map(x=>x.textContent),["R$ 200","R$ 100","R$ 50","R$ 20","R$ 10","R$ 5","R$ 2"]);

@@ -25,7 +25,7 @@ await espera(50);
 eq("a pílula Perguntar fica no canto, com o rostinho do Mordomo",[!!$("body > .perg"),!!$(".perg svg .pp-pup"),/Perguntar/.test($(".perg").textContent)],[true,true,true]);
 eq("ao abrir, ela cumprimenta e convida a perguntar",[$("#pergBal").classList.contains("on"),/Toque em mim para perguntar/.test($("#pergBal").textContent)],[true,true]);
 click('nav [data-v="graficos"]'); await espera(20);
-eq("ao trocar de aba ela fala a frase da aba e reage",[/Seus números, com clareza/.test($("#pergBal").textContent),$(".perg").classList.contains("r-le")],[true,true]);
+eq("ao trocar de aba ela fala a frase da aba e reage",[/como estão as suas finanças/.test($("#pergBal").textContent),$(".perg").classList.contains("r-le")],[true,true]);
 // ---- janela do chat ----
 click('nav [data-v="planejar"]'); await espera(20);
 click(".perg");

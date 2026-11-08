@@ -62,7 +62,7 @@ click('#modal [data-a="acFechar"]');
 eq("Fechar some com a janela e o cartão continua com a prévia",[jan(),d.querySelectorAll("#cardPagar .it").length],[false,3]);
 click('#cardPagar [data-a="acToggle"]');click('nav [data-v="inicio"]');click('nav [data-v="planejar"]');
 eq("trocar de aba fecha a janela",jan(),false);
-eq("o Planejar tem as 3 partes com título: Ferramentas, Acerto de contas e Agenda",[...d.querySelectorAll("#tela h2")].map(h=>h.textContent),["Ferramentas","Acerto de contas do mês","Agenda dos próximos dias"]);
+eq("o Planejar tem as 3 partes com título: Ferramentas, Acerto de contas e Agenda",[...d.querySelectorAll("#tela h2")].map(h=>h.childNodes[0].textContent.trim()),["Ferramentas","Acerto de contas do mês","Agenda dos próximos dias"]);
 eq("cada ferramenta tem ícone (para se parecer com um botão) e seta",[...d.querySelectorAll("#tela .ferr")].every(b=>b.querySelector(".fi svg")),true);
 eq("erros de script",errs,[]);
 console.log(ok?"TUDO OK":"HÁ FALHAS");process.exit(ok?0:1);

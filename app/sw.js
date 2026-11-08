@@ -2,7 +2,7 @@
    Os dados do usuário NÃO passam por aqui (ficam no localStorage). */
 /* Mudar este nome a cada versão nova: é o que faz o celular baixar a versão atualizada.
    Padrão: caderneta-<versão do app>. */
-const VERSAO = "caderneta-1.22.0-beta.1";
+const VERSAO = "caderneta-1.23.0-beta.1";
 const ARQUIVOS = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg", "./icon-180.png", "./icon-192.png", "./icon-512.png", "./icon-maskable-512.png"];
 
 self.addEventListener("install", (e) => {

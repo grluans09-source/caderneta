@@ -5,6 +5,20 @@
 Formato: versão semântica (`MAIOR.MENOR.CORREÇÃO`). Cada versão diz **o que mudou para a pessoa que usa**.
 Antes da 1.0.0 as versões eram numeradas só pelo nome do cache do app (v1 a v16); estão aqui como marcos de desenvolvimento.
 
+## [1.23.0-beta.1]: 8 de novembro de 2026 · interface mais simples, sem perder nada
+Pedido do dono: deixar o app compreensível para quem começa do zero. Primeiro uma auditoria de inconsistências (`docs/AUDITORIA-INTERFACE.md`), depois a simplificação, aprovada item a item. **Nenhuma função, campo ou informação foi removida**: o que saiu da frente está a um toque.
+- **Aba Saúde**: Gráficos e Relatórios viraram uma aba só (a barra agora tem 6 abas). Em cima, o panorama e os 4 indicadores principais; os outros 6 em "Ver mais indicadores"; depois "Mês a mês" e "Todos os relatórios em lista".
+- **Início mais curto** (de quase 4 telas para cerca de 2,4): as contas atrasadas viram **um aviso só** com o total, e o Início mostra **no máximo 3 avisos**; "Outubro fechou", "Hoje no Brasil" e "Seus objetivos" (caixinhas e metas) viram linhas que abrem.
+- **Seções que abrem e fecham** (o app lembra como você deixou), **"Mais detalhes"** nos formulários (só o essencial à vista) e **"?"** ao lado dos termos difíceis (Selic, CDI, IPCA, Focus, "% do CDI", patrimônio, Modo contador, movimento, legenda da agenda).
+- **Anotar**: a anotação (texto) e "pagar com uma caixinha" ficam em "Mais detalhes".
+- **Investir**: um botão por aplicação, que abre a janela dela com Aplicar, Resgatar, Conferir, Editar e **Apagar aplicação**. Antes, o "Mais opções" levava a uma janela que deixava transformar a aplicação em dívida de cartão por engano.
+- **Dinheiro**: "Conferir com o banco" no topo da janela da conta; "+ Nova dívida" já abre como dívida; a carteira aparece como "Dinheiro vivo (carteira)"; na pessoa, as ações vêm primeiro.
+- **Caixinhas**: as caixinhas primeiro; o saldo por conta em "Ver por conta"; "Tirar" com o mesmo nome em todo lugar.
+- **Notícias, Anotações e Ajustes** mais curtos: notícia com "Entenda a notícia"; anotações com "Ordenar e filtrar"; Ajustes em 4 seções (Aparência, Categorias, Seus dados, Ajuda). Notícias volta para onde você estava.
+- **Nova pergunta "era isso?"**: anotar um gasto que usa o dinheiro guardado numa caixinha avisa e diz qual caixinha (D63).
+- **Correções da auditoria**: "conta a pagar" quando é boleto; resumo do mês com R$; o panorama da Saúde fecha a conta (conta também os indicadores só informativos); a meta do mês não "vira caixinha"; botões com o mesmo nome em todas as janelas; boas-vindas dizem "ele" (o Balancete); simulador mostra as aplicações por último, com "(resgatar)"; o balão do Perguntar fala uma vez por aba por dia; com letra Grande, as ferramentas do Planejar não saem da tela.
+- Testes: 842 verificações em 32 arquivos (novo: simplificação, item por item).
+
 ## [1.22.0-beta.1]: 8 de novembro de 2026 · notícias do IBGE chegando de verdade
 - **As notícias oficiais do IBGE agora aparecem** na tela de Notícias (ex.: "PIB cresce 3,4% e totaliza R$ 11,7 trilhões em 2024"). Antes nunca chegavam: o site de notícias do IBGE recusa conexões de fora do Brasil, e o robô que busca as notícias roda em computadores do GitHub fora do país.
 - **Como ficou**: o próprio celular pede as notícias ao IBGE (quem usa o app está no Brasil, então o IBGE responde). O pedido **não leva nenhum dado seu**: vai sem cookies e sem dizer de que site veio. No máximo uma vez por hora; sem internet, aparece a última cópia (D62).

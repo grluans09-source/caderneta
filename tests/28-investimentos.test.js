@@ -49,26 +49,27 @@ eq("caixinha que rende: o rendimento entra na conta (Banco) e fica guardado na c
 // ---- aba Investir ----
 click('nav [data-v="investir"]');
 eq("a aba Investir fica logo depois de Dinheiro e mostra investido, rendeu no mês e no ano",[[...d.querySelectorAll("nav button[data-v]")].map(b=>b.dataset.v).slice(0,3),/Investido/.test($("#tela").textContent),/Rendeu em/.test($("#tela").textContent)],[["inicio","contas","investir"],true,true]);
-eq("cada aplicação mostra taxa, banco e os botões Aplicar, Resgatar, Conferir e Editar",[/12% ao ano · Banco/.test($("#tela").textContent),!!$('[data-a="invAplicar"][data-id="cdb"]'),!!$('[data-a="invResgatar"][data-id="cdb"]'),!!$('[data-a="conferir"][data-id="cdb"]'),!!$('[data-a="invEditar"][data-id="cdb"]')],[true,true,true,true,true]);
-eq("a Poupança sem taxa pede para informar a taxa",/sem taxa: toque em Editar/.test($("#tela").textContent),true);
+eq("cada aplicação mostra taxa e banco e um botão só; a janela dela tem Aplicar, Resgatar, Conferir, Editar e Apagar (1.23.0)",[/12% ao ano · Banco/.test($("#tela").textContent),$('#tela [data-a="aplicacao"][data-id="cdb"]')&&($('#tela [data-a="aplicacao"][data-id="cdb"]').click(),true),!!$('#modal [data-a="invAplicar"][data-id="cdb"]'),!!$('#modal [data-a="invResgatar"][data-id="cdb"]'),!!$('#modal [data-a="conferir"][data-id="cdb"]'),!!$('#modal [data-a="invEditar"][data-id="cdb"]'),!!$('#modal [data-a="invApagar"][data-id="cdb"]')],[true,true,true,true,true,true,true]);
+$('#modal [data-a="mFechar"]').click();
+eq("a Poupança sem taxa pede para informar a taxa",/sem taxa: toque abaixo para informar/.test($("#tela").textContent),true);
 eq("a caixinha que rende aparece com a taxa",/Reserva/.test($("#tela").textContent)&&/10% ao ano/.test($("#tela").textContent),true);
 // aplicar: transferência do banco ligado para a aplicação
-click('[data-a="invAplicar"][data-id="cdb"]');
+click('#tela [data-a="aplicacao"][data-id="cdb"]');click('[data-a="invAplicar"][data-id="cdb"]');
 eq("Aplicar abre a folha de transferência do Banco para o CDB",[$("#folha").classList.contains("on"),$("#folhaCorpo .capa h1").textContent],[true,"Transferi entre contas"]);
 click('[data-a="fFechar"]');
 // resgatar mais do que tem: trava
 const saldoCdb=T.saldoConta(cdb);
-click('[data-a="invResgatar"][data-id="cdb"]'); digita("#fValor",String(saldoCdb+100000)); click('[data-a="fSalvar"]');
+click('#tela [data-a="aplicacao"][data-id="cdb"]');click('[data-a="invResgatar"][data-id="cdb"]'); digita("#fValor",String(saldoCdb+100000)); click('[data-a="fSalvar"]');
 eq("resgatar mais do que há na aplicação: não deixa",[$("#modal").classList.contains("trava-j"),/Na aplicação/.test($("#modal").textContent)],[true,true]);
 click('#modal [data-a="mFechar"]'); click('[data-a="fFechar"]');
 // conferir com o banco: a diferença vira rendimento
-click('[data-a="conferir"][data-id="cdb"]'); digita("#cfSaldo",String(saldoCdb+500));
+click('#tela [data-a="aplicacao"][data-id="cdb"]');click('[data-a="conferir"][data-id="cdb"]'); digita("#cfSaldo",String(saldoCdb+500));
 eq("na aplicação, sobrar no banco é rendimento que ainda não foi contado",[/a mais/.test($("#cfRes").textContent),/Ajustar o rendimento/.test($("#cfRes").textContent),!$('[data-a="cfAnotar"]')],[true,true,true]);
 click('[data-a="cfCorrigir"]'); click('#modal [data-a="mOk"]');
 const aj=S().lancamentos[S().lancamentos.length-1];
 eq("ajustar cria um rendimento de R$ 5 e o saldo bate com o banco",[aj.tipo,aj.valor,aj.catId===kr.id,T.saldoConta(cdb)],["entrada",500,true,saldoCdb+500]);
 // editar: informar a taxa da poupança (rende daqui para a frente)
-click('nav [data-v="investir"]'); click('[data-a="invEditar"][data-id="po"]'); digita("#ivTaxa","6,17"); click('[data-a="ivSalvar"]');
+click('nav [data-v="investir"]'); click('#tela [data-a="aplicacao"][data-id="po"]'); click('[data-a="invEditar"][data-id="po"]'); digita("#ivTaxa","6,17"); click('[data-a="ivSalvar"]');
 eq("informar a taxa da Poupança: passa a render a partir de hoje",[po.inv.taxa,po.inv.ate],[6.17,hoje]);
 // nova aplicação
 click('[data-a="invEditar"][data-id=""]'); digita("#ivNome","Tesouro Selic"); digita("#ivValor","300000"); digita("#ivTaxa","11"); click('[data-a="ivSalvar"]');

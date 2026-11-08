@@ -52,7 +52,7 @@ Depois, pergunte: **"Com suas palavras, o que é essa balança da tela inicial?"
 
 Depois, peça que ela **pague algo em dinheiro vivo com centavos** (ex.: R$ 3,25) e veja se entende a sugestão de **arredondar para reais inteiros**; e que **conte as cédulas** em Dinheiro > conta Dinheiro.
 
-Depois, peça que ela **abra a aba Gráficos**, escolha um indicador, **leia o relatório** e diga, com as palavras dela, **o que entendeu** e **se a explicação faz sentido** para a vida dela.
+Depois, peça que ela **abra a aba Saúde**, escolha um indicador, **leia o relatório** e diga, com as palavras dela, **o que entendeu** e **se a explicação faz sentido** para a vida dela.
 
 Peça também que a pessoa **anote um gasto e, no meio, troque para "Recebi" pelo botão redondo de baixo** (e veja se se localiza sabendo que o tipo atual fica apagado), e que **procure uma categoria tocando em "Buscar categoria"** sem digitar nada.
 

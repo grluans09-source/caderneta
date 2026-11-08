@@ -27,6 +27,7 @@ function digita(sel,txt){const el=$(sel);el.value=txt;el.dispatchEvent(new w.Eve
 const S=()=>T.S();
 d.documentElement.classList.add("calmo");
 function nav(v){
+  if(v==="relatorios"){click('nav [data-v="graficos"]');click('#tela [data-a="ir"][data-v="relatorios"]');return}   /* Relatórios mora na aba Saúde (1.23.0) */
   if(["caixinhas","fixas","simulador"].includes(v))click('nav [data-v="planejar"]');
   if(["ajustes"].includes(v))click('nav [data-v="mais"]');
   if(["caixinhas","fixas","simulador","ajustes"].includes(v))click(`#tela [data-a="ir"][data-v="${v}"]`);else click(`nav [data-v="${v}"]`);
@@ -37,10 +38,10 @@ function invariante(n){
 }
 
 // ---- menu e R$ ----
-eq("7 abas na barra de baixo (com Investir), o botão de anotar fica solto no canto e abre as 4 bolinhas de tipo",[d.querySelectorAll("nav button").length,!!d.querySelector("body > .fab"),!d.querySelector("nav .fab"),d.querySelectorAll("#fabMenu .fb").length],[7,true,true,4]);
-eq("menu: início, dinheiro, investir, planejar, gráficos, relatórios, mais",[...d.querySelectorAll("nav button[data-v]")].map(b=>b.dataset.v),["inicio","contas","investir","planejar","graficos","relatorios","mais"]);
+eq("6 abas na barra de baixo (Gráficos e Relatórios juntos na aba Saúde, 1.23.0), o botão de anotar fica solto no canto e abre as 4 bolinhas de tipo",[d.querySelectorAll("nav button").length,!!d.querySelector("body > .fab"),!d.querySelector("nav .fab"),d.querySelectorAll("#fabMenu .fb").length],[6,true,true,4]);
+eq("menu: início, dinheiro, investir, planejar, saúde, mais",[...d.querySelectorAll("nav button[data-v]")].map(b=>b.dataset.v),["inicio","contas","investir","planejar","graficos","mais"]);
 nav("caixinhas");eq("caixinhas marca Planejar",$("nav [aria-current]").dataset.v,"planejar");
-nav("relatorios");eq("relatórios tem a sua própria aba",$("nav [aria-current]").dataset.v,"relatorios");
+nav("relatorios");eq("os relatórios ficam dentro da aba Saúde (a barra marca Saúde)",$("nav [aria-current]").dataset.v,"graficos");
 nav("inicio");
 abreFolha();digita("#fValor","4500");eq("campo de valor mostra R$",$("#fValor").value,"R$ 45,00");
 eq("Salvar não é fixo (sem .acoes sticky)",w.getComputedStyle($(".acoes")).position!=="sticky"&&w.getComputedStyle($(".acoes")).position!=="fixed",true);

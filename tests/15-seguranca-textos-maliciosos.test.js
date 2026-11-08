@@ -37,6 +37,7 @@ function varre(rot){
   if(el.length)achados.push(rot+" -> "+[...el].map(e=>e.tagName).join(","));
 }
 function nav(v){
+  if(v==="relatorios"){click('nav [data-v="graficos"]');click('#tela [data-a="ir"][data-v="relatorios"]');return}   /* Relatórios mora na aba Saúde (1.23.0) */
   if(["caixinhas","metas","fixas","simulador"].includes(v))click('nav [data-v="planejar"]');
   if(["ajustes","anotacoes"].includes(v))click('nav [data-v="mais"]');
   if(["caixinhas","metas","fixas","simulador","ajustes","anotacoes"].includes(v))click('#tela [data-a="ir"][data-v="'+v+'"]');else click('nav [data-v="'+v+'"]');

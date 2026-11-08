@@ -22,6 +22,7 @@ function digita(sel,txt){const el=$(sel);el.value=txt;el.dispatchEvent(new w.Eve
 const S=()=>T.S();
 d.documentElement.classList.add("calmo");
 function nav(v){
+  if(v==="relatorios"){click('nav [data-v="graficos"]');click('#tela [data-a="ir"][data-v="relatorios"]');return}   /* Relatórios mora na aba Saúde (1.23.0) */
   if(["caixinhas","fixas","simulador"].includes(v))click('nav [data-v="planejar"]');
   if(["ajustes"].includes(v))click('nav [data-v="mais"]');
   if(["caixinhas","fixas","simulador","ajustes"].includes(v))click('#tela [data-a="ir"][data-v="'+v+'"]');else click('nav [data-v="'+v+'"]');
@@ -86,7 +87,7 @@ eq("desvalorização reduz o é meu",T.totais().pl,plB-20000);
 eq("desvalorização não é 'Saiu' do mês",T.resumoMes(hojeYM).sai,saiA);
 eq("mas aparece como mudança de valor dos bens",T.resumoMes(hojeYM).aj,-20000);
 eq("partidas do ajuste: D desvalorização / C bem",T.partidas(aj).map(p=>p.lado+":"+p.id),["D:__desvaloriza","C:"+tv.id]);
-click('nav [data-v="relatorios"]');click('[data-a="relInd"][data-id="patrimonio"]');eq("o relatório do patrimônio avisa que o valor dos bens mudou",/valor dos seus bens mudou/.test($("#tela").textContent),true);
+click('nav [data-v="graficos"]');click('#tela [data-a="ir"][data-v="relatorios"]');click('[data-a="relInd"][data-id="patrimonio"]');eq("o relatório do patrimônio avisa que o valor dos bens mudou",/valor dos seus bens mudou/.test($("#tela").textContent),true);
 tudoFecha("após ajuste");
 
 // ---- vender a TV por menos (perda) ----

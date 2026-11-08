@@ -54,7 +54,7 @@ click('#cardPagar [data-a="pagMes"][data-n="1"]');
 eq("seta para o mês seguinte mostra 'Vai vencer em' com o total previsto (1.050)",/Vai vencer em/.test($("#cardPagar").textContent)&&/R\$ 1.050,00/.test($("#cardPagar").textContent),true);
 for(let i=0;i<3;i++)click('#cardPagar [data-a="pagMes"][data-n="-1"]');
 eq("mês antigo sem nada mostra 'Nada para pagar'",/Nada para pagar/.test($("#cardPagar").textContent),true);
-click('nav [data-v="relatorios"]');
+click('nav [data-v="graficos"]');click('#tela [data-a="ir"][data-v="relatorios"]');
 eq("Relatórios NÃO repete o 'O que pagar'",/O que pagar em/.test($("#tela").textContent)||/Contas a pagar/.test($("#tela").textContent),false);
 
 // ---- pagar muda o número ----

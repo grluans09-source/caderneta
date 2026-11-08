@@ -6,7 +6,7 @@
 App de celular (instalável, funciona sem internet), em português, pensado para qualquer pessoa: do idoso ao jovem e ao adulto na correria.
 
 - **App no ar:** https://grluans09-source.github.io/caderneta/
-- **Versão atual:** 1.22.0-beta.1 (beta para testadores) (veja o [CHANGELOG](CHANGELOG.md))
+- **Versão atual:** 1.23.0-beta.1 (beta para testadores) (veja o [CHANGELOG](CHANGELOG.md))
 - **Seus dados ficam só no celular de cada pessoa.** Não existe servidor, conta nem banco de dados.
 
 > Em uma frase: a pessoa anota o que gasta e recebe, e o app mostra **quanto é dela de verdade**, para onde o dinheiro está indo e o que vem pela frente. A partida dobrada fica escondida no "motor"; a tela fala como a gente fala.
@@ -15,7 +15,7 @@ App de celular (instalável, funciona sem internet), em português, pensado para
 
 | Parte | Para que serve |
 |---|---|
-| **Início** | O **Mordomo**, a balança-personagem que mostra "o que eu tenho = o que eu devo + o que é meu" e muda a cara conforme a situação, resumo do mês, "o mês passado fechou" (nos 10 primeiros dias), uma linha "Falta pagar" (leva ao Planejar), avisos urgentes, caixinhas e metas (se existirem) e as 3 últimas anotações |
+| **Início** | O **Mordomo**, a balança-personagem que mostra "o que eu tenho = o que eu devo + o que é meu" e muda a cara conforme a situação, resumo do mês, "o mês passado fechou" (nos 10 primeiros dias, numa linha que abre), uma linha "Falta pagar" (leva ao Planejar), até 3 avisos (as atrasadas juntas num só), "Hoje no Brasil" e "Seus objetivos" (caixinhas e metas), que abrem, e as 3 últimas anotações |
 | **Notícias** | "Hoje no Brasil" no Início e tela própria: dólar, Selic, CDI, inflação, o que ficou mais caro, combustíveis, previsões do Focus e notícias do IBGE, **só de fontes oficiais** com link, selo CERTEZA ou POSSIBILIDADE e o efeito na sua vida. Atualiza ao meio-dia O celular busca as notícias do IBGE direto no site do IBGE, sem enviar nenhum dado seu |
 | **Perguntar (chat)** | A pílula do Mordomo, no canto esquerdo: 53 perguntas prontas em linguagem comum, muitas respondidas com os seus próprios números, com busca e atalho para a tela certa. Sem internet e sem IA |
 | **Travas de coerência** | Antes de salvar, o app confere a anotação: **não deixa** passar do limite do cartão nem a carteira ficar negativa, e **pergunta** quando algo é estranho (banco negativo, pagar a mais, data distante, valor muito acima do costume) |
@@ -23,8 +23,7 @@ App de celular (instalável, funciona sem internet), em português, pensado para
 | **Dinheiro** | Quatro abas: Contas (com o guardado, o "para usar" e **Conferir com o banco**), Dívidas (cartões e empréstimos), Bens e Pessoas (emprestei / devo) |
 | **Investir** | Poupança, CDB, Tesouro e fundos com a taxa ao ano do banco: o app calcula o rendimento a cada dia útil (sem feriados), lança um rendimento por mês e confere com o banco. Caixinhas também podem render |
 | **Planejar** | Ferramentas no topo (Metas do mês, Caixinhas, Contas fixas com **Contas do ano**, Simulador), **Acerto de contas do mês** (abre numa janela preta e dourada por cima da tela, com todas as dívidas, o prazo de cada uma em palavras e o botão Pagar) e a agenda do que vence |
-| **Gráficos** | Cartão **Mês a mês** (um mês comparado com o anterior) e 10 indicadores de finanças pessoais em imagem (patrimônio, folga de caixa, reserva de emergência, taxa de poupança, peso das dívidas, renda já reservada, **custo fixo de vida**, para onde vai o dinheiro, composição do patrimônio, custo dos juros), cada um com selo Saudável/Atenção/Alerta |
-| **Relatórios** | Um relatório por indicador, explicado como um consultor: o que é, como você está, para comparar, o que quer dizer e por onde começar. Abre com um panorama |
+| **Saúde** | Antes eram as abas Gráficos e Relatórios. Mostra o **panorama** e os 4 indicadores principais (o que é seu de verdade, folga para 30 dias, reserva de emergência, taxa de poupança); os outros 6 (peso das dívidas, renda já reservada, **custo fixo de vida**, para onde vai o dinheiro, composição do patrimônio, custo dos juros) ficam em "Ver mais indicadores". Também o **Mês a mês** e um **relatório por indicador**, explicado como um consultor: o que é, como você está, para comparar, o que quer dizer e por onde começar |
 | **Mais** | Anotações (buscar e ordenar por data, valor ou nome), Notícias e Ajustes (letra, cores, movimento, categorias, cópia dos dados, ajuda) |
 
 ## Para quem vai mexer no projeto
@@ -47,7 +46,7 @@ caderneta/
 │   ├── index.html    O app inteiro: HTML + CSS + JavaScript, sem dependências
 │   ├── sw.js         Faz o app abrir sem internet (cache)
 │   ├── manifest.webmanifest, icon-*.png, icon.svg   Instalação na tela inicial
-├── tests/          Testes automáticos: 794 verificações que simulam uma pessoa usando o app
+├── tests/          Testes automáticos: 842 verificações que simulam uma pessoa usando o app
 ├── tools/          Ferramentas: servidor local e gerador de ícones
 ├── docs/           Documentação (leia a partir de docs/README.md)
 ├── .github/workflows/publicar.yml   Testa e publica sozinho a cada envio para o GitHub

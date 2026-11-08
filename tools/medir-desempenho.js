@@ -54,8 +54,8 @@ function medir(nLanc) {
   r["tela Dinheiro"] = tempo("c", () => d.querySelector('nav [data-v="contas"]').click());
   r["tela Investir"] = tempo("v", () => d.querySelector('nav [data-v="investir"]').click());
   r["tela Planejar"] = tempo("p", () => d.querySelector('nav [data-v="planejar"]').click());
-  r["tela Gráficos"] = tempo("g", () => d.querySelector('nav [data-v="graficos"]').click());
-  r["tela Relatórios"] = tempo("r", () => d.querySelector('nav [data-v="relatorios"]').click());
+  r["tela Saúde"] = tempo("g", () => d.querySelector('nav [data-v="graficos"]').click());
+  r["Saúde > relatórios em lista"] = tempo("r", () => d.querySelector('#tela [data-a="ir"][data-v="relatorios"]').click());
   d.querySelector('nav [data-v="mais"]').click();
   r["tela Anotações"] = tempo("a", () => d.querySelector('#tela [data-v="anotacoes"]').click());
   const busca = d.querySelector("#fBusca");
