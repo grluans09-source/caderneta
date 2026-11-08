@@ -5,6 +5,12 @@
 Formato: versão semântica (`MAIOR.MENOR.CORREÇÃO`). Cada versão diz **o que mudou para a pessoa que usa**.
 Antes da 1.0.0 as versões eram numeradas só pelo nome do cache do app (v1 a v16); estão aqui como marcos de desenvolvimento.
 
+## [1.24.1-beta.1]: 8 de novembro de 2026 · chat em dia e "Ver no app" no lugar exato
+- **O "Ver no app" leva à função exata, não só à aba.** Ele abre a seção certa (ex.: "Ver mais indicadores"), a janela certa (ex.: a da aplicação ou "Conferir com o banco") ou a folha certa (ex.: Gastei) e **destaca o lugar** com uma borda dourada que pisca.
+- **10 perguntas novas** (agora são 63): quanto recebo se resgatar hoje, quanto meu dinheiro rende por mês, como digo quanto rende (ex.: 115% do CDI), o valor não bate com o banco, onde estão os gráficos e os relatórios, não acho uma informação, o que é CDI, como funciona o Imposto de Renda dos investimentos, diferença entre poupança, CDB, LCI e Tesouro, e se a inflação está comendo o meu dinheiro.
+- **Respostas atualizadas** para o app de hoje: caminhos de Ajustes (Seus dados, Aparência), como cada caixinha e aplicação rende, "Atualizar o valor" e as travas novas.
+- Testes: 886 verificações em 34 arquivos (novo: "Ver no app" de cada pergunta).
+
 ## [1.24.0-beta.1]: 8 de novembro de 2026 · cada investimento rende do seu jeito
 O dono percebeu: a caixinha que rende **115% do CDI** virava "100% ao ano" no app (o campo só entendia taxa ao ano e cortava em 100). O rendimento anotado ficava cerca de 5 vezes maior que o real. Agora (D65):
 - **"Como rende?"** em cada aplicação e caixinha, do jeito que aparece no app do banco: **% do CDI** (caixinhas, CDB, LCI, LCA), **taxa fixa ao ano**, **IPCA + taxa** (Tesouro IPCA+), **poupança** (regra oficial: 0,5% ao mês com a Selic acima de 8,5%, no dia do aniversário) ou **varia** (fundos e ações: atualize o valor).

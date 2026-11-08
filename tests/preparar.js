@@ -15,7 +15,7 @@ const EXPOSTAS = [
   "resumoMes", "conta", "saldoConta", "ocorrencias", "fixasPendentes", "agenda", "saldoCaixa", "totalReservado",
   "livreAgora", "rendaMedia", "comprometidoMeses", "taxaMensal", "sobraMesPassado", "aReceber", "ymMais",
   "atualizarBens", "bensTotal", "bensLista", "pagarNoMes", "dinheiroEmConta", "guardadoConta", "livreConta",
-  "bucketsCaixa", "contasDinheiro", "melhorConta", "higienizarConfig", "indicadores", "relatorioTexto", "contasDoAno", "compMes", "contasDinheiro", "PERGS", "buscaPerg", "diaUtil", "feriados", "pascoa", "atualizarRendimentos", "investidoTotal", "contasInvest", "rendNoPeriodo", "fatorDia", "noticiasValidas","ibgeDaApi","ibgeGuardadas","buscarIbge", "itensNoticias", "noticiasGuardadas", "registrarIndices", "idxEm", "rendeTxt", "taxaAnual", "estimaResgate", "textoResgate", "avisoTaxa", "lembreteConferir", "semanaDe", "lucroDe", "saldoCaixa"
+  "bucketsCaixa", "contasDinheiro", "melhorConta", "higienizarConfig", "indicadores", "relatorioTexto", "contasDoAno", "compMes", "contasDinheiro", "PERGS", "buscaPerg", "diaUtil", "feriados", "pascoa", "atualizarRendimentos", "investidoTotal", "contasInvest", "rendNoPeriodo", "fatorDia", "noticiasValidas","ibgeDaApi","ibgeGuardadas","buscarIbge", "itensNoticias", "noticiasGuardadas", "registrarIndices", "idxEm", "rendeTxt", "taxaAnual", "estimaResgate", "textoResgate", "avisoTaxa", "lembreteConferir", "semanaDe", "lucroDe", "fecharModal", "saldoCaixa"
 ];
 
 function preparar() {

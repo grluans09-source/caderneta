@@ -766,6 +766,10 @@ details.rec>summary:focus-visible{outline:3px solid var(--latao);outline-offset:
 /* ferramentas do Planejar: com letra Grande, o texto quebra em vez de sair da tela */
 .ferrs{grid-template-columns:repeat(2,minmax(0,1fr))}
 .ferr .ft{min-width:0}.ferr .ft span{overflow-wrap:anywhere}
+/* "Ver no app": o lugar exato pisca em dourado (1.24.1) */
+.destaque{outline:3px solid var(--latao);outline-offset:4px;border-radius:.8rem;animation:destaca 1.2s ease 2}
+@keyframes destaca{50%{outline-color:transparent}}
+html.calmo .destaque{animation:none}
 /* lista "Conferir com o banco" (lembrete semanal, D65) */
 .cf-lista{margin:.6rem 0}
 .cf-item{display:flex;align-items:center;justify-content:space-between;gap:.6rem;padding:.6rem 0;border-bottom:1px solid var(--rule)}
@@ -818,7 +822,7 @@ details.rec>summary:focus-visible{outline:3px solid var(--latao);outline-offset:
 /* ---------- utilidades ---------- */
 var KEY="caderneta:v2";
 /* versão do app (siga o CHANGELOG.md; subir junto com VERSAO em sw.js e "version" em package.json) */
-var VERSAO_APP="1.24.0-beta.1";
+var VERSAO_APP="1.24.1-beta.1";
 var RE_ID=/^[A-Za-z0-9_-]+$/, RE_DATA=/^\d{4}-\d{2}-\d{2}$/;
 var MES=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
 var MES3=["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
@@ -1615,14 +1619,14 @@ var PERGS=[
    return 'Em '+esc(nomeMes(ym))+' entraram '+B(c.ent)+', saíram '+B(c.sai)+' e '+(c.sob>=0?'sobraram '+B(c.sob):'faltaram '+B(-c.sob))+'.';}},
  {g:"dinheiro",q:"Quanto tenho guardado nas caixinhas?",kw:"caixinha caixinhas guardado reserva poupanca",ir:"caixinhas",r:function(){
    if(!S.caixas.length)return 'Você ainda não tem caixinhas. Elas separam dinheiro para um objetivo sem tirar da conta.';
-   return 'Guardado ao todo: '+B(totalReservado())+'.'+listaHTML(S.caixas.map(function(x){return esc(x.nome)+': '+esc(brl(saldoCaixa(x.id)))+(x.alvo?' de '+esc(brl(x.alvo)):'')}));}},
+   return 'Guardado ao todo: '+B(totalReservado())+'. Continua seu e na sua conta: só sai do que você pode usar agora.'+listaHTML(S.caixas.map(function(x){return esc(x.nome)+': '+esc(brl(saldoCaixa(x.id)))+(x.alvo?' de '+esc(brl(x.alvo)):'')+(rendeAuto(x)?' · rende '+esc(rendeTxt(x)):'')}));}},
  {g:"dinheiro",q:"Quanto meus investimentos renderam?",kw:"investimentos investimento rendeu rendimento renderam aplicacao cdb poupanca tesouro juros",ir:"investir",r:function(){
    var cs=contasInvest(), ym=hojeISO().slice(0,7);
    if(!cs.length&&!S.caixas.some(rendeAuto))return 'Você ainda não tem aplicações. Na aba <b>Investir</b>, cadastre a poupança, a caixinha, o CDB ou o Tesouro e diga como rende (por exemplo, 115% do CDI), e eu calculo o rendimento a cada dia útil.';
-   return 'Você tem '+B(investidoTotal())+' investido. Rendeu '+B(rendNoPeriodo(ym))+' em '+esc(nomeMes(ym))+' e '+B(rendNoPeriodo(ym.slice(0,4)))+' no ano.'+listaHTML(cs.map(function(c){return '<b>'+esc(c.nome)+'</b>: '+esc(brl(saldoConta(c)))+(rendeTxt(c.inv)?' ('+esc(rendeTxt(c.inv))+')':' (sem taxa informada)')}));}},
+   return 'Você tem '+B(investidoTotal())+' investido. Rendeu '+B(rendNoPeriodo(ym))+' em '+esc(nomeMes(ym))+' e '+B(rendNoPeriodo(ym.slice(0,4)))+' no ano.'+listaHTML(cs.map(function(c){return '<b>'+esc(c.nome)+'</b>: '+esc(brl(saldoConta(c)))+(rendeTxt(c.inv)?' ('+esc(rendeTxt(c.inv))+')':' (sem taxa informada)')}))+'Para saber quanto receberia se resgatasse hoje, já sem o imposto, pergunte <b>"Quanto eu recebo se resgatar meus investimentos hoje?"</b>';}},
  {g:"dinheiro",q:"Quanto tenho em cada conta?",kw:"cada conta banco contas saldo carteira",ir:"contas",r:function(){
    var cs=contasDinheiro(); if(!cs.length)return 'Você ainda não tem contas cadastradas.';
-   return listaHTML(cs.map(function(c){return '<b>'+esc(c.nome)+'</b>: '+esc(brl(saldoConta(c)))+(c.conferido?' <i>(conferido em '+esc(dataBR(c.conferido))+')</i>':'')}));}},
+   return listaHTML(cs.map(function(c){return '<b>'+esc(c.nome)+'</b>: '+esc(brl(saldoConta(c)))+(c.conferido?' <i>(conferido em '+esc(dataBR(c.conferido))+')</i>':'')}))+(contasInvest().length?'Nas aplicações (aba <b>Investir</b>): '+B(investidoTotal())+'.':'');}},
  /* ---------- Contas e dívidas ---------- */
  {g:"dividas",q:"Quanto eu devo ao todo?",kw:"devo divida dividas total cartao emprestimo",ir:"contas",aba:"dividas",r:function(){
    var ds=S.contas.filter(function(c){return c.tipo==="passivo"&&saldoConta(c)>0});
@@ -1700,13 +1704,13 @@ var PERGS=[
  {g:"app",q:"Anotei errado. Como corrijo ou apago?",kw:"errado corrigir apagar excluir editar desfazer erro",ir:"anotacoes",r:function(){return 'Toque na anotação (no Início ou em Mais > Anotações) para <b>alterar</b> ou <b>apagar</b>. Logo depois de apagar, aparece o botão <b>Desfazer</b>, caso tenha sido sem querer.'}},
  {g:"app",q:"Como guardo dinheiro numa caixinha?",kw:"guardar caixinha separar juntar objetivo",ir:"caixinhas",r:function(){return 'Em <b>Planejar > Caixinhas</b>, escolha a caixinha e toque em <b>Guardar</b>. O dinheiro <b>continua na sua conta e continua seu</b>: ele só sai do que você pode usar agora.'}},
  {g:"app",q:"Como cadastro uma conta fixa (aluguel, internet)?",kw:"conta fixa aluguel internet assinatura luz agua cadastrar",ir:"fixas",r:function(){return 'Em <b>Planejar > Contas fixas</b>, toque em <b>Nova conta fixa</b>. Escolha se repete <b>todo mês</b> ou <b>todo ano</b> (IPVA, IPTU). O app avisa quando vencer.'}},
- {g:"app",q:"Como confiro o saldo com o banco?",kw:"conferir banco saldo bater conciliar diferenca",ir:"contas",r:function(){return 'Em <b>Dinheiro</b>, toque na conta e em <b>Conferir com o banco</b>. Digite o saldo que aparece no app do banco: se não bater, eu ajudo a anotar o que faltou ou a corrigir.'}},
+ {g:"app",q:"Como confiro o saldo com o banco?",kw:"conferir banco saldo bater conciliar diferenca",ir:"contas",r:function(){return 'Em <b>Dinheiro</b>, toque na conta: <b>Conferir com o banco</b> fica no topo da janela. Digite o saldo que aparece no app do banco: se não bater, eu ajudo a anotar o que faltou ou a corrigir. Nas aplicações e caixinhas, use <b>Atualizar o valor</b>.'}},
  {g:"app",q:"Como cadastro meu carro ou minha casa?",kw:"bem bens carro casa moto imovel cadastrar comprei",ir:"contas",aba:"bens",r:function(){return 'Em <b>Dinheiro > Bens</b>, ou na pena > <b>Comprei um bem</b> se a compra for agora. O bem entra no que você tem e pode perder ou ganhar valor com o tempo.'}},
  {g:"app",q:"Como anoto dinheiro que emprestei ou que devo a alguém?",kw:"emprestei emprestimo pessoa amigo devo alguem parente",ir:"contas",aba:"pessoas",r:function(){return 'Em <b>Dinheiro > Pessoas</b>. Cadastre a pessoa e anote se você emprestou ou se pegou emprestado. Dá até para marcar a data combinada.'}},
- {g:"app",q:"Como faço uma cópia dos meus dados?",kw:"copia backup salvar dados guardar seguranca",ir:"ajustes",r:function(){return 'Em <b>Mais > Ajustes > Guardar uma cópia</b>. Faça <b>toda semana</b>: seus dados ficam só neste celular, e a cópia é o que salva tudo se ele quebrar ou for perdido.'}},
- {g:"app",q:"Troquei de celular. Como levo meus dados?",kw:"trocar celular novo levar dados passar recuperar",ir:"ajustes",r:function(){return 'No celular <b>antigo</b>, guarde uma cópia (Mais > Ajustes) e mande para você mesmo. No <b>novo</b>, abra o app e use <b>Recuperar de uma cópia</b> com esse arquivo.'}},
- {g:"app",q:"Por que o app não deixou eu salvar?",kw:"nao deixou salvar bloqueou travou impediu limite carteira aviso erro",r:function(){return 'Eu confiro cada anotação antes de salvar. Eu <b>não deixo</b> quando não pode acontecer de verdade: a <b>carteira</b> ficar negativa (não existe nota negativa) ou um gasto <b>passar do limite do cartão</b>. E eu <b>pergunto</b> quando é possível mas estranho: banco negativo (cheque especial), pagar mais do que deve, data muito distante ou valor muito acima do costume. Aí é só confirmar.'}},
- {g:"app",q:"Como deixo a letra maior ou a tela escura?",kw:"letra maior grande tamanho tela escura tema cores",ir:"ajustes",r:function(){return 'Em <b>Mais > Ajustes</b>: escolha o <b>tamanho da letra</b> (até Enorme) e as <b>cores</b> (claro ou escuro). Lá também dá para deixar o app parado, sem animações.'}},
+ {g:"app",q:"Como faço uma cópia dos meus dados?",kw:"copia backup salvar dados guardar seguranca",ir:"ajustes",r:function(){return 'Em <b>Mais > Ajustes > Seus dados > Guardar uma cópia</b>. Faça <b>toda semana</b>: seus dados ficam só neste celular, e a cópia é o que salva tudo se ele quebrar ou for perdido.'}},
+ {g:"app",q:"Troquei de celular. Como levo meus dados?",kw:"trocar celular novo levar dados passar recuperar",ir:"ajustes",r:function(){return 'No celular <b>antigo</b>, guarde uma cópia (Mais > Ajustes > Seus dados) e mande para você mesmo. No <b>novo</b>, abra o app e use <b>Recuperar de uma cópia</b> com esse arquivo.'}},
+ {g:"app",q:"Por que o app não deixou eu salvar?",kw:"nao deixou salvar bloqueou travou impediu limite carteira aviso erro",r:function(){return 'Eu confiro cada anotação antes de salvar. Eu <b>não deixo</b> quando não pode acontecer de verdade: a <b>carteira</b> ficar negativa (não existe nota negativa) ou um gasto <b>passar do limite do cartão</b>. E eu <b>pergunto</b> quando é possível mas estranho: banco negativo (cheque especial), pagar mais do que deve, data muito distante, valor muito acima do costume, usar o dinheiro que está guardado numa caixinha ou uma taxa de rendimento fora do comum (como 115% "ao ano" quando era 115% do CDI). Aí é só confirmar.'}},
+ {g:"app",q:"Como deixo a letra maior ou a tela escura?",kw:"letra maior grande tamanho tela escura tema cores",ir:"ajustes",r:function(){return 'Em <b>Mais > Ajustes > Aparência</b>: escolha o <b>tamanho da letra</b> (até Enorme) e as <b>cores</b> (claro ou escuro). Lá também dá para deixar o app parado, sem animações.'}},
  /* ---------- Aprender ---------- */
  {g:"aprender",q:"O que mudou na economia que me afeta?",kw:"economia noticias dolar inflacao gasolina juros selic mudou hoje afeta",ir:"noticias",r:function(){
    var n=noticiasGuardadas(); if(!n)return 'As notícias oficiais ainda não chegaram neste celular. Elas chegam quando há internet; tente de novo daqui a pouco.';
@@ -1721,8 +1725,112 @@ var PERGS=[
  {g:"aprender",q:"Vale a pena pagar só o mínimo da fatura?",kw:"minimo fatura rotativo pagar so",r:function(){return 'Não. O que fica sem pagar entra nos <b>juros do rotativo</b>, dos mais caros que existem. Se não der para pagar tudo, costuma sair mais barato <b>parcelar a fatura</b> ou trocar por um empréstimo de juros menores.'}},
  {g:"aprender",q:"O que são juros compostos?",kw:"juros compostos sobre juros o que sao",r:function(){return 'São <b>juros sobre juros</b>: a cada mês, os juros entram na conta e o próximo mês cobra juros também sobre eles. Contra você (numa dívida), a conta cresce rápido. A seu favor (guardando), o dinheiro cresce sozinho com o tempo.'}},
  {g:"aprender",q:"Como começo a guardar ganhando pouco?",kw:"guardar pouco comecar economizar poupar ganhando",ir:"caixinhas",r:function(){return 'Guarde <b>primeiro</b>, assim que receber, e não o que sobrar no fim do mês. Comece pequeno (até 5% já vale) e dê um <b>objetivo</b> ao dinheiro numa caixinha. O hábito vale mais que o valor.'}},
- {g:"aprender",q:"Meus dados ficam seguros? Alguém vê?",kw:"dados seguros seguranca privacidade alguem ve",ir:"ajustes",r:function(){return 'Seus dados ficam <b>só neste celular</b>. Não vão para internet nenhuma, e ninguém vê, nem quem fez o Balancete. Por isso a <b>cópia</b> é importante: sem ela, se o celular se perder, os dados vão junto.'}}
+ {g:"aprender",q:"Meus dados ficam seguros? Alguém vê?",kw:"dados seguros seguranca privacidade alguem ve",ir:"ajustes",r:function(){return 'Seus dados ficam <b>só neste celular</b>. Não vão para internet nenhuma, e ninguém vê, nem quem fez o Balancete. Por isso a <b>cópia</b> é importante: sem ela, se o celular se perder, os dados vão junto.'}},
+ /* ---------- novas na 1.24.1 ---------- */
+ {g:"dinheiro",q:"Quanto eu recebo se resgatar meus investimentos hoje?",kw:"resgatar resgate sacar tirar investimento liquido imposto renda receber hoje",ir:"investir",r:function(){
+   var L=[], tot=0;
+   contasInvest().forEach(function(c){var sd=saldoConta(c), e=estimaResgate(c.inv,sd,lucroDe(c.id),c.inv.desde||c.inv.calc0); tot+=e.liq; L.push('<b>'+esc(c.nome)+'</b>: cerca de '+esc(brl(e.liq))+(e.ir||e.iof?' (o imposto leva '+esc(brl(e.ir+e.iof))+')':' (sem imposto)'))});
+   S.caixas.filter(rendeAuto).forEach(function(x){var sd=saldoCaixa(x.id), e=estimaResgate(x,sd,lucroDe(null,x.id),x.calc0); tot+=e.liq; L.push('<b>'+esc(x.nome)+'</b> (caixinha): cerca de '+esc(brl(e.liq))+(e.ir||e.iof?' (o imposto leva '+esc(brl(e.ir+e.iof))+')':' (sem imposto)'))});
+   if(!L.length)return 'Você ainda não tem aplicações nem caixinhas que rendem. Cadastre na aba <b>Investir</b>.';
+   return 'Se resgatasse tudo hoje, receberia cerca de '+B(tot)+'.'+listaHTML(L)+'É uma estimativa: o Imposto de Renda é cobrado só sobre o que rendeu e diminui com o tempo (22,5% até 6 meses; 15% depois de 2 anos). O banco faz a conta exata no resgate.';}},
+ {g:"dinheiro",q:"Quanto meu dinheiro rende por mês?",kw:"rende mes mensal quanto rende rendimento por mes juros ganho",ir:"investir",r:function(){
+   var L=[], tot=0;
+   function mes(o,sd,nome){var a=taxaAnual(o); if(a==null||!(sd>0))return; var m=Math.round(sd*(Math.pow(1+a/100,1/12)-1)); tot+=m; L.push('<b>'+esc(nome)+'</b>: cerca de '+esc(brl(m))+' por mês ('+esc(rendeTxt(o))+')')}
+   contasInvest().forEach(function(c){mes(c.inv,saldoConta(c),c.nome)});
+   S.caixas.filter(rendeAuto).forEach(function(x){mes(x,saldoCaixa(x.id),x.nome)});
+   if(!L.length)return 'Hoje nada do seu dinheiro rende no app. Cadastre suas aplicações e caixinhas na aba <b>Investir</b> dizendo como rendem (por exemplo, 115% do CDI).';
+   return 'Com as taxas de hoje, seu dinheiro rende cerca de '+B(tot)+' por mês, antes do imposto.'+listaHTML(L)+'O dinheiro parado nas contas comuns não rende.';}},
+ {g:"app",q:"Como digo quanto minha aplicação ou caixinha rende?",kw:"115 cdi taxa como rende cadastrar caixinha aplicacao ao ano percentual porcento informar",ir:"investir",r:function(){return 'Ao criar ou editar a aplicação (aba <b>Investir</b>) ou a caixinha (<b>Planejar > Caixinhas > Editar > Mais detalhes</b>), escolha em <b>Como rende?</b> o mesmo que o app do banco mostra: <b>% do CDI</b> (ex.: 115), <b>Taxa fixa ao ano</b> (ex.: 12), <b>IPCA + taxa</b>, <b>Poupança</b> ou <b>Varia</b>. Se antes estava de outro jeito, eu refaço os rendimentos que calculei.'}},
+ {g:"app",q:"O valor de um investimento não bate com o banco. E agora?",kw:"bate diferente valor investimento caixinha banco errado atualizar corrigir alucinou",ir:"investir",r:function(){return 'Use <b>Atualizar o valor</b> (na janela da aplicação ou no cartão da caixinha) e digite o que o banco mostra. Depois diga se a diferença foi <b>rendimento</b>, <b>imposto</b> ou dinheiro que você <b>guardou ou tirou</b>. Eu calculo sozinho, mas posso errar (o banco pode cobrar taxa ou contar de outro jeito): por isso, toda semana, eu lembro você de conferir.'}},
+ {g:"app",q:"Onde estão os gráficos e os relatórios?",kw:"graficos grafico relatorios relatorio indicadores saude onde",ir:"graficos",r:function(){return 'Na aba <b>Saúde</b>, na barra de baixo. Em cima, o panorama e os 4 indicadores principais; os outros 6 ficam em <b>Ver mais indicadores</b>. Depois vêm o <b>Mês a mês</b> e <b>Todos os relatórios em lista</b>. Em cada indicador, <b>Ler o relatório</b> explica o que ele quer dizer.'}},
+ {g:"app",q:"Não acho uma informação que estava na tela. Onde foi?",kw:"sumiu nao acho onde foi parar escondido sumir tela informacao procurar",ir:"inicio",r:function(){return 'Nada foi removido: para a tela ficar mais limpa, algumas coisas ficam guardadas a um toque. Procure as <b>seções com a seta ›</b> (tocando, elas abrem), <b>Mais detalhes</b> nos formulários e o botão <b>?</b> ao lado das palavras difíceis. Se ainda não achar, escreva aqui o que procura.'}},
+ {g:"aprender",q:"O que é CDI e o que quer dizer “% do CDI”?",kw:"cdi o que e porcento percentual 100 115 taxa di",ir:"noticias",r:function(){
+   var c=idxEm("cdi",hojeISO()), t115=c==null?null:(Math.pow(1+fatorDia(c)*1.15,252)-1)*100;
+   return 'O <b>CDI</b> é a taxa que os bancos usam para emprestar dinheiro entre si. Ela fica quase igual à Selic, os juros básicos do país.'+(c!=null?' Hoje está em <b>'+esc(pc(c))+' ao ano</b>.':' Quando as notícias chegarem (com internet), eu mostro o valor de hoje.')+' Uma aplicação que rende <b>100% do CDI</b> rende isso; <b>115% do CDI</b> rende 15% a mais'+(t115!=null?' (cerca de '+esc(pc(t115))+' ao ano)':'')+'. Quando a Selic muda, o rendimento muda junto.';}},
+ {g:"aprender",q:"Como funciona o Imposto de Renda dos investimentos?",kw:"imposto renda ir investimento iof desconto tabela regressiva isento resgate",ir:"investir",r:function(){return 'Na maioria das aplicações (CDB, caixinhas, Tesouro), o imposto é cobrado <b>só sobre o que rendeu</b> e <b>só no resgate</b>, e diminui com o tempo:'+listaHTML(['até 6 meses: <b>22,5%</b>','de 6 meses a 1 ano: <b>20%</b>','de 1 a 2 anos: <b>17,5%</b>','depois de 2 anos: <b>15%</b>'])+'Nos primeiros 30 dias ainda há o <b>IOF</b>, que começa alto e zera no 30º dia. <b>Poupança, LCI e LCA</b> não pagam Imposto de Renda. Eu mostro uma estimativa; o banco faz a conta exata.'}},
+ {g:"aprender",q:"Qual a diferença entre poupança, CDB, LCI e Tesouro?",kw:"diferenca poupanca cdb lci lca tesouro caixinha qual melhor tipos investimento",ir:"investir",r:function(){return listaHTML(['<b>Poupança</b>: rende 0,5% ao mês (mais a TR) quando a Selic está acima de 8,5%, só no dia do aniversário. Não paga imposto.','<b>CDB e caixinhas de banco</b>: costumam render uma porcentagem do CDI, todo dia útil. Pagam imposto.','<b>LCI e LCA</b>: parecidas com o CDB, mas sem Imposto de Renda; muitas só deixam tirar depois de um prazo.','<b>Tesouro Direto</b>: você empresta para o governo. Pode ser ligado à Selic, a uma taxa fixa ou à inflação (IPCA +). Paga imposto.'])+'Isto não é uma recomendação: a escolha depende do seu objetivo e de quando você vai precisar do dinheiro.'}},
+ {g:"aprender",q:"A inflação está comendo meu dinheiro?",kw:"inflacao comendo perde valor poder compra dinheiro parado ipca",ir:"noticias",r:function(){
+   var n=noticiasGuardadas(), i12=n&&n.ipca?n.ipca.doze:null;
+   if(i12==null)return 'Ainda não tenho a inflação oficial neste celular. Ela chega com as notícias, quando houver internet.';
+   var livre=livreAgora(), L=[];
+   contasInvest().forEach(function(c){var a=taxaAnual(c.inv); if(a!=null)L.push('<b>'+esc(c.nome)+'</b>: '+(a>i12?'rende acima da inflação':'rende <b>menos</b> que a inflação')+' ('+esc(pc(a))+' contra '+esc(pc(i12))+' ao ano)')});
+   S.caixas.filter(rendeAuto).forEach(function(x){var a=taxaAnual(x); if(a!=null)L.push('<b>'+esc(x.nome)+'</b> (caixinha): '+(a>i12?'rende acima da inflação':'rende <b>menos</b> que a inflação'))});
+   return 'Em 12 meses, os preços subiram <b>'+esc(pc(i12))+'</b> (IPCA, do IBGE).'+(livre>0?' Os seus '+B(livre)+' parados nas contas perdem esse tanto de poder de compra num ano.':'')+listaHTML(L);}}
 ];
+/* destino de cada pergunta: a tela (v), a aba de Dinheiro (aba), o lugar exato a destacar (foco)
+   ou uma ação que abre a função certa (acao). Seções fechadas abrem sozinhas (1.24.1). */
+var ALVOS={
+ "Quanto dinheiro eu tenho agora?":{v:"contas",aba:"contas",foco:"#tela .card"},
+ "Quanto é meu de verdade?":{v:"inicio",foco:"#tela .hero"},
+ "O que é \"é meu de verdade\"?":{v:"inicio",foco:"#tela .hero"},
+ "Quanto posso gastar por dia até o fim do mês?":{v:"planejar",foco:"#cardPagar"},
+ "Quanto eu gastei este mês?":{v:"graficos",foco:"#ind-destino"},
+ "Com o que eu mais gasto?":{v:"graficos",foco:"#ind-destino"},
+ "Gastei mais ou menos que no mês passado?":{v:"graficos",foco:"#cardMM"},
+ "Quanto entrou de dinheiro este mês?":{v:"inicio",foco:"#tela .tri"},
+ "Quanto sobrou no mês passado?":{v:"graficos",foco:"#cardMM"},
+ "Quanto tenho guardado nas caixinhas?":{v:"caixinhas",foco:"#tela .cartao"},
+ "Quanto meus investimentos renderam?":{v:"investir",foco:"#tela .inv-res"},
+ "Quanto tenho em cada conta?":{v:"contas",aba:"contas",foco:"#tela .card"},
+ "Quanto eu devo ao todo?":{v:"contas",aba:"dividas",foco:"#tela .cartao"},
+ "O que vence esta semana?":{v:"planejar",foco:"#cardAgenda"},
+ "Quando vence a fatura do cartão?":{v:"contas",aba:"dividas",foco:"#tela .cartao"},
+ "Quanto do limite do cartão eu já usei?":{v:"contas",aba:"dividas",foco:"#tela .cartao"},
+ "Quanto paguei de juros e multas?":{v:"graficos",foco:"#ind-juros"},
+ "Quem me deve dinheiro?":{v:"contas",aba:"pessoas",foco:"#tela .card"},
+ "Quanto custa minha vida básica por mês?":{v:"graficos",foco:"#ind-custo"},
+ "Quanto preciso guardar para o IPVA, IPTU e outras contas do ano?":{v:"fixas",foco:"#contasDoAno"},
+ "Minha reserva de emergência é suficiente?":{v:"graficos",foco:"#ind-reserva"},
+ "Estou dentro das metas do mês?":{v:"metas",foco:"#tela .card"},
+ "Quanto da minha renda já tem destino?":{v:"graficos",foco:"#ind-renda"},
+ "Se eu comprar algo parcelado, cabe no meu bolso?":{v:"simulador",foco:"#sValor"},
+ "Quanto falta para completar minha caixinha?":{v:"caixinhas",foco:"#tela .cartao"},
+ "Minhas finanças estão saudáveis?":{v:"graficos",foco:"#tela .card.preto"},
+ "Como eu anoto um gasto?":{acao:function(){fabMenu(true)}},
+ "Como anoto uma compra parcelada?":{acao:function(){novaFolha({tipo:"saida"})}},
+ "Como passo dinheiro de uma conta para outra?":{acao:function(){novaFolha({tipo:"transferencia"})}},
+ "Anotei errado. Como corrijo ou apago?":{v:"anotacoes",foco:"#anotLista"},
+ "Como guardo dinheiro numa caixinha?":{v:"caixinhas",foco:'#tela [data-a="cxMov"][data-m="guardar"]'},
+ "Como cadastro uma conta fixa (aluguel, internet)?":{v:"fixas",foco:'#tela .btn[data-a="fixa"]'},
+ "Como confiro o saldo com o banco?":{v:"contas",aba:"contas",acao:function(){var c=contasDinheiro().filter(function(x){return !x.carteira})[0]; if(c)modalGaveta(c.id); else destacar("#tela .card")}},
+ "Como cadastro meu carro ou minha casa?":{v:"contas",aba:"bens",foco:'#tela [data-a="bemNovo"]'},
+ "Como anoto dinheiro que emprestei ou que devo a alguém?":{v:"contas",aba:"pessoas",foco:'#tela [data-a="pessoaNova"]'},
+ "Como faço uma cópia dos meus dados?":{v:"ajustes",foco:'#tela [data-a="backup"]'},
+ "Troquei de celular. Como levo meus dados?":{v:"ajustes",foco:'#tela [data-a="restaurar"]'},
+ "Como deixo a letra maior ou a tela escura?":{v:"ajustes",foco:'#tela [data-g="tamanho"]'},
+ "O que mudou na economia que me afeta?":{v:"noticias",foco:"#tela .nt-card"},
+ "Como começo a guardar ganhando pouco?":{v:"caixinhas",foco:'#tela .btn[data-a="caixa"]'},
+ "Meus dados ficam seguros? Alguém vê?":{v:"ajustes",foco:'#tela details[data-rec="ajDados"]'},
+ "Quanto eu recebo se resgatar meus investimentos hoje?":{v:"investir",acao:function(){var c=contasInvest()[0]; if(c)modalAplicacao(c.id); else destacar("#tela .inv-res")}},
+ "Quanto meu dinheiro rende por mês?":{v:"investir",foco:"#tela .inv-res"},
+ "Como digo quanto minha aplicação ou caixinha rende?":{v:"investir",acao:function(){var c=contasInvest()[0]; modalInvest(c?c.id:null)}},
+ "O valor de um investimento não bate com o banco. E agora?":{v:"investir",acao:function(){if(paraConferir().length)modalConferirTudo(); else destacar("#tela .inv-res")}},
+ "Onde estão os gráficos e os relatórios?":{v:"graficos",foco:"#tela .card.preto"},
+ "Não acho uma informação que estava na tela. Onde foi?":{v:"inicio",foco:"#tela details.rec"},
+ "O que é CDI e o que quer dizer “% do CDI”?":{v:"noticias",foco:"#nt-cdi"},
+ "Como funciona o Imposto de Renda dos investimentos?":{v:"investir",acao:function(){var c=contasInvest()[0]; if(c)modalAplicacao(c.id); else destacar("#tela .lead")}},
+ "Qual a diferença entre poupança, CDB, LCI e Tesouro?":{v:"investir",foco:"#tela .lead"},
+ "A inflação está comendo meu dinheiro?":{v:"noticias",foco:"#nt-ipca"}
+};
+PERGS.forEach(function(p){if(ALVOS[p.q])p.alvo=ALVOS[p.q]});
+/* destaca um lugar da tela: abre a seção onde ele está, rola até ele e pisca a borda dourada */
+function destacar(sel){
+  var el=typeof sel==="string"?$(sel):sel; if(!el)return false;
+  for(var x=el.parentElement;x;x=x.parentElement){if(x.tagName==="DETAILS"&&!x.open){x.open=true; if(x.dataset.rec)lsSet(KEY+":rec:"+x.dataset.rec,"1")}}
+  if(el.tagName==="DETAILS"&&!el.open){el.open=true; if(el.dataset.rec)lsSet(KEY+":rec:"+el.dataset.rec,"1")}
+  try{el.scrollIntoView({block:"center",behavior:calmo()?"auto":"smooth"})}catch(e){}
+  el.classList.remove("destaque"); void el.offsetWidth; el.classList.add("destaque");
+  setTimeout(function(){el.classList.remove("destaque")},2600);
+  return true;
+}
+/* leva a pessoa à função exata de que a resposta fala */
+function irPara(a){
+  if(!a)return;
+  if(a.v==="acerto"){ir("planejar");abrirAcerto();return}
+  if(a.aba)DIN_ABA=a.aba;
+  if(a.v)ir(a.v);
+  setTimeout(function(){if(a.acao)a.acao(); else if(a.foco)destacar(a.foco)},60);
+}
 var ABA_GRUPO={inicio:"dinheiro",investir:"dinheiro",contas:"dividas",planejar:"planejar",graficos:"planejar",relatorios:"planejar",mais:"app"};
 var CH={g:"dinheiro"};
 function buscaPerg(txt){
@@ -1768,7 +1876,7 @@ function responder(i){
   var p=PERGS[i]; if(!p)return;
   addMsg(esc(p.q),"eu");
   var r; try{r=p.r()}catch(e){r='Desculpe, não consegui calcular isso agora.'}
-  addMsg(r+(p.ir?'<button class="ch-ir" data-a="chIr" data-v="'+p.ir+'"'+(p.aba?' data-aba="'+p.aba+'"':'')+'>Ver no app ›</button>':''),"ele");
+  addMsg(r+(p.ir||p.alvo?'<button class="ch-ir" data-a="chIr" data-i="'+i+'" data-v="'+(p.ir||"")+'"'+(p.aba?' data-aba="'+p.aba+'"':'')+'>Ver no app ›</button>':''),"ele");
 }
 /* a pílula reage à aba e fala uma frase curta */
 var PERG_ABA=null;
@@ -2546,7 +2654,7 @@ function relatorioTexto(i){
 
 /* ---------- telas ---------- */
 function cardIndicador(i){
-  return '<article class="ind-card st-'+i.st+'"><div class="ind-top"><div><h3>'+esc(i.nome)+'</h3><p class="ind-sub">'+esc(i.pergunta)+'</p></div>'+selo(i.st)+'</div>'+
+  return '<article class="ind-card st-'+i.st+'" id="ind-'+i.id+'"><div class="ind-top"><div><h3>'+esc(i.nome)+'</h3><p class="ind-sub">'+esc(i.pergunta)+'</p></div>'+selo(i.st)+'</div>'+
     '<div class="ind-val">'+esc(i.valor)+'</div><div class="ind-graf">'+i.graf+'</div><p class="ind-leit">'+esc(i.leitura)+'</p>'+
     '<button class="btn sec peq" data-a="relInd" data-id="'+i.id+'">Ler o relatório ›</button></article>';
 }
@@ -3104,7 +3212,7 @@ function telaNoticias(){
   if(!n)return h+'<div class="card"><div class="vazio"><b>As notícias ainda não chegaram</b>Elas chegam quando o celular está com internet. Tente de novo daqui a pouco.</div></div>';
   h+='<p class="faint">'+esc(quandoNot(n))+'</p>';
   h+=itensNoticias(n).map(function(x){
-    return '<article class="card nt-card">'+seloNot(x.sel)+'<h3>'+esc(x.tit)+(TERMO_NOT[x.id]?ajuda(TERMO_NOT[x.id]):'')+'</h3>'+(x.pv?'<p class="nt-pv"><b>Para você:</b> '+esc(x.pv)+'</p>':'')+
+    return '<article class="card nt-card" id="nt-'+x.id+'">'+seloNot(x.sel)+'<h3>'+esc(x.tit)+(TERMO_NOT[x.id]?ajuda(TERMO_NOT[x.id]):'')+'</h3>'+(x.pv?'<p class="nt-pv"><b>Para você:</b> '+esc(x.pv)+'</p>':'')+
       maisDetalhes('<p>'+esc(x.fato)+'</p><p class="nt-sig"><b>O que isso significa:</b> '+esc(x.sig)+'</p>',false,"Entenda a notícia")+
       (linkOficial(x.link)?'<a class="link nt-link" href="'+esc(x.link)+'" target="_blank" rel="noopener noreferrer">Ver no site oficial ('+esc(x.fonte)+') ›</a>':'')+'</article>';
   }).join("");
@@ -3858,7 +3966,7 @@ function telaPlanejar(){
       ferr("fixas","Contas fixas",S.fixas.length?S.fixas.length+" · "+brl(mensal)+"/mês":"Assinaturas e planos")+
       ferr("simulador","Simulador","E se eu comprar...?")+'</div>'+
     '<h2>Acerto de contas do mês</h2><div id="cardPagar">'+cartaoPagarInicio()+'</div>'+
-    '<h2>Agenda dos próximos dias'+(ag.length?ajuda('<span class="legenda-ag"><span class="lg k-divida">Dívida</span><span class="lg k-fixa">Conta fixa</span><span class="lg k-receber">A receber</span></span>A cor da faixa mostra o tipo. <b>Data pintada</b>: vence hoje ou já passou. <b>Data clara</b>: vence em até 3 dias.'):'')+'</h2><div class="card" style="padding:.3rem 1rem">'+
+    '<h2>Agenda dos próximos dias'+(ag.length?ajuda('<span class="legenda-ag"><span class="lg k-divida">Dívida</span><span class="lg k-fixa">Conta fixa</span><span class="lg k-receber">A receber</span></span>A cor da faixa mostra o tipo. <b>Data pintada</b>: vence hoje ou já passou. <b>Data clara</b>: vence em até 3 dias.'):'')+'</h2><div class="card" id="cardAgenda" style="padding:.3rem 1rem">'+
     (ag.length?mostra.map(linhaAgenda).join(""):vazio("Nada para os próximos dias","Contas do cartão, contas fixas e cobranças aparecem aqui.",'<button class="btn peq sec" data-a="ir" data-v="fixas">Cadastrar uma conta fixa</button>'))+'</div>'+
     (ag.length>4?'<button class="link" data-a="agMais">'+(AG_TODAS?"Mostrar menos":"Ver todas ("+ag.length+")")+'</button>':'');
 
@@ -3878,7 +3986,7 @@ function contasDoAno(){
 }
 function blocoContasDoAno(){
   var l=contasDoAno();
-  var h='<h2>Contas do ano</h2>';
+  var h='<h2 id="contasDoAno">Contas do ano</h2>';
   if(!l.length)return h+'<p class="faint">IPVA, IPTU, matrícula, seguro do carro: cadastre como conta fixa que <b>repete todo ano</b> e o app mostra quanto separar por mês para pagar sem aperto.</p>';
   var tot=l.reduce(function(s,x){return s+(x.meses>0?x.porMes:0)},0);
   h+='<p class="sub">Para não ser pego de surpresa: quanto separar por mês até cada uma vencer.</p><div class="card ano-lista">'+l.map(function(x){
@@ -4368,7 +4476,7 @@ var ACOES={
   chat:abrirChat,
   chGrupo:function(d){CH.g=d.g; var b=$("#chBusca"); if(b)b.value=""; pintarGrupos()},
   chPerg:function(d){responder(+d.i)},
-  chIr:function(d){fecharModal(); var p=$(".perg"); if(p)p.setAttribute("aria-expanded","false"); if(d.v==="acerto"){ir("planejar");abrirAcerto();return} if(d.aba)DIN_ABA=d.aba; ir(d.v)},
+  chIr:function(d){fecharModal(); var p=$(".perg"); if(p)p.setAttribute("aria-expanded","false"); var q=PERGS[+d.i]; irPara(q&&q.alvo?q.alvo:{v:d.v,aba:d.aba})},
   mordomo:function(){
     var b=$("#bal"); if(!b)return;
     if(!calmo()){b.classList.remove("rev"); void b.getBoundingClientRect(); b.classList.add("rev"); setTimeout(function(){b.classList.remove("rev")},1500)}

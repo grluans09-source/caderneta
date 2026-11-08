@@ -1,6 +1,6 @@
 # Chat do Balancete: as perguntas prontas
 
-Passo 5 do plano: **aprovado pelo dono em 7 nov 2026 e no app desde a versão 1.18.0** (D56). Mudou uma pergunta ou resposta? Atualize aqui e em `PERGS` no `app/index.html`. O chat é o Mordomo respondendo. Tudo funciona **sem internet e sem inteligência artificial**: são perguntas prontas, e o app calcula as respostas com os dados que a própria pessoa anotou.
+Passo 5 do plano: **aprovado pelo dono em 7 nov 2026 e no app desde a versão 1.18.0** (D56). **Revisado na 1.24.1** (pedido do dono, 8 nov 2026): respostas atualizadas para o app de hoje (aba Saúde, seções de Ajustes, como cada investimento rende, atualizar o valor, novas travas), **10 perguntas novas** (agora são 63) e o **"Ver no app" leva ao lugar exato** (tabela no fim). Mudou uma pergunta ou resposta? Atualize aqui e em `PERGS` no `app/index.html`. O chat é o Mordomo respondendo. Tudo funciona **sem internet e sem inteligência artificial**: são perguntas prontas, e o app calcula as respostas com os dados que a própria pessoa anotou.
 
 ## Como vai funcionar
 
@@ -16,7 +16,7 @@ Passo 5 do plano: **aprovado pelo dono em 7 nov 2026 e no app desde a versão 1.
   - **[aprender]**: educação financeira simples.
 - **O que o chat não faz:** não recomenda investimento específico (não é consultor licenciado), não manda dados para lugar nenhum e não finge entender o que não está na lista.
 
-## As 53 perguntas
+## As perguntas (53 originais; as 10 novas estão logo depois)
 
 ### Meu dinheiro (11)
 
@@ -96,8 +96,95 @@ Passo 5 do plano: **aprovado pelo dono em 7 nov 2026 e no app desde a versão 1.
 | 50 | Meus dados ficam seguros? Alguém vê? | aprender | Ficam só neste celular; ninguém (nem o Balancete) vê; por isso a cópia é importante |
 | 53 | O que mudou na economia que me afeta? | dados + aprender | As notícias oficiais mais importantes do dia, com o "para você" (D59). Acrescentada na 1.21.0 |
 
+## As 10 perguntas novas (1.24.1)
+
+| Grupo | Pergunta | Tipo | Como responde |
+|---|---|---|---|
+| Meu dinheiro | Quanto eu recebo se resgatar meus investimentos hoje? | dados | Soma o líquido de cada aplicação e caixinha que rende, já sem o Imposto de Renda (tabela que diminui com o tempo) e o IOF; diz que é estimativa |
+| Meu dinheiro | Quanto meu dinheiro rende por mês? | dados | Com as taxas de hoje (CDI do dia, poupança, taxa fixa), quanto cada uma rende por mês, antes do imposto |
+| Como usar o app | Como digo quanto minha aplicação ou caixinha rende? | app | Onde fica "Como rende?" e as 5 escolhas (ex.: 115% do CDI) |
+| Como usar o app | O valor de um investimento não bate com o banco. E agora? | app | "Atualizar o valor" e o lembrete semanal |
+| Como usar o app | Onde estão os gráficos e os relatórios? | app | Aba Saúde: panorama, 4 indicadores, "Ver mais", Mês a mês e a lista |
+| Como usar o app | Não acho uma informação que estava na tela. Onde foi? | app | Nada foi removido: seções com ›, "Mais detalhes" e "?" |
+| Aprender | O que é CDI e o que quer dizer “% do CDI”? | dados + aprender | O CDI de hoje e quanto dá 115% do CDI ao ano |
+| Aprender | Como funciona o Imposto de Renda dos investimentos? | aprender | Tabela 22,5% a 15%, IOF nos primeiros 30 dias, isentos (poupança, LCI, LCA) |
+| Aprender | Qual a diferença entre poupança, CDB, LCI e Tesouro? | aprender | Uma linha para cada, sem recomendar nenhum |
+| Aprender | A inflação está comendo meu dinheiro? | dados + aprender | IPCA de 12 meses contra cada aplicação e o dinheiro parado |
+
+**Respostas revisadas na 1.24.1**: caixinhas (diz como cada uma rende), investimentos (aponta a estimativa de resgate), cada conta (inclui o total aplicado), conferir com o banco (Conferir no topo; "Atualizar o valor" nas aplicações e caixinhas), cópia e troca de celular (Ajustes > Seus dados), letra e cores (Ajustes > Aparência), "por que o app não deixou salvar" (inclui o dinheiro guardado em caixinha e a taxa fora do comum).
+
 ## Decisões para o dono
 
 1. Aprovar, tirar ou trocar perguntas da lista.
 2. O campo **"Escreva sua dúvida"** (procura a pergunta mais parecida) entra?
 3. As respostas **[dados]** têm o botão **"Ver no app"**?
+
+## Para onde leva o "Ver no app" (1.24.1)
+
+O botão não leva só à aba: abre a seção, a janela ou a folha certa e **destaca o lugar exato** com uma borda dourada que pisca (sem piscar com "Movimento: Parado"). O teste `34-chat-ver-no-app` confere cada uma.
+
+| # | Pergunta | Aonde leva |
+|---|---|---|
+| 1 | Quanto dinheiro eu tenho agora? | Dinheiro > Contas: destaca a lista |
+| 2 | Quanto é meu de verdade? | Início: destaca o Mordomo e o "é meu de verdade" |
+| 3 | Quanto posso gastar por dia até o fim do mês? | Planejar: destaca o acerto de contas do mês |
+| 4 | Quanto eu gastei este mês? | Saúde: destaca o indicador "Para onde vai o dinheiro" |
+| 5 | Com o que eu mais gasto? | Saúde: destaca o indicador "Para onde vai o dinheiro" |
+| 6 | Gastei mais ou menos que no mês passado? | Saúde: destaca o Mês a mês (abre a seção) |
+| 7 | Quanto entrou de dinheiro este mês? | Início: destaca Entrou · Saiu · Sobrou |
+| 8 | Quanto sobrou no mês passado? | Saúde: destaca o Mês a mês (abre a seção) |
+| 9 | Quanto tenho guardado nas caixinhas? | Planejar > Caixinhas: destaca o cartão |
+| 10 | Quanto meus investimentos renderam? | Investir: destaca Investido e quanto rendeu |
+| 11 | Quanto tenho em cada conta? | Dinheiro > Contas: destaca a lista |
+| 12 | Quanto eu devo ao todo? | Dinheiro > Dívidas: destaca o cartão |
+| 13 | O que vence esta semana? | Planejar: destaca a agenda |
+| 14 | Tenho alguma conta atrasada? | Planejar > janela do acerto de contas |
+| 15 | Quanto falta pagar este mês? | Planejar > janela do acerto de contas |
+| 16 | Qual dívida eu pago primeiro? | Planejar > janela do acerto de contas |
+| 17 | Quando vence a fatura do cartão? | Dinheiro > Dívidas: destaca o cartão |
+| 18 | Quanto do limite do cartão eu já usei? | Dinheiro > Dívidas: destaca o cartão |
+| 19 | Quanto paguei de juros e multas? | Saúde: destaca o indicador de juros (abre "Ver mais indicadores") |
+| 20 | Quem me deve dinheiro? | Dinheiro > Pessoas: destaca a lista |
+| 21 | Quanto custa minha vida básica por mês? | Saúde: destaca o Custo fixo de vida (abre "Ver mais indicadores") |
+| 22 | Quanto preciso guardar para o IPVA, IPTU e outras contas do ano? | Planejar > Contas fixas: destaca Contas do ano |
+| 23 | Minha reserva de emergência é suficiente? | Saúde: destaca a Reserva de emergência |
+| 24 | Estou dentro das metas do mês? | Planejar > Metas: destaca a lista |
+| 25 | Quanto da minha renda já tem destino? | Saúde: destaca "Quanto da renda já tem dono" (abre "Ver mais indicadores") |
+| 26 | Se eu comprar algo parcelado, cabe no meu bolso? | Planejar > Simulador: destaca o campo do valor |
+| 27 | Quanto falta para completar minha caixinha? | Planejar > Caixinhas: destaca o cartão |
+| 28 | Minhas finanças estão saudáveis? | Saúde: destaca o panorama |
+| 29 | Como eu anoto um gasto? | abre as 4 medalhas da pena |
+| 30 | Como anoto uma compra parcelada? | abre a folha Gastei |
+| 31 | Como pago uma conta ou a fatura? | Planejar > janela do acerto de contas |
+| 32 | Como passo dinheiro de uma conta para outra? | abre a folha Transferi entre contas |
+| 33 | Anotei errado. Como corrijo ou apago? | Mais > Anotações: destaca a lista de anotações |
+| 34 | Como guardo dinheiro numa caixinha? | Planejar > Caixinhas: destaca o botão Guardar |
+| 35 | Como cadastro uma conta fixa (aluguel, internet)? | Planejar > Contas fixas: destaca "+ Nova conta fixa" |
+| 36 | Como confiro o saldo com o banco? | Dinheiro: abre a janela da primeira conta de banco, com Conferir no topo |
+| 37 | Como cadastro meu carro ou minha casa? | Dinheiro > Bens: destaca "+ Já tenho um bem" |
+| 38 | Como anoto dinheiro que emprestei ou que devo a alguém? | Dinheiro > Pessoas: destaca "+ Emprestei" |
+| 39 | Como faço uma cópia dos meus dados? | Mais > Ajustes: destaca Guardar uma cópia (abre "Seus dados") |
+| 40 | Troquei de celular. Como levo meus dados? | Mais > Ajustes: destaca Recuperar de uma cópia |
+| 41 | Por que o app não deixou eu salvar? | – (só a resposta) |
+| 42 | Como deixo a letra maior ou a tela escura? | Mais > Ajustes: destaca Tamanho da letra (abre "Aparência") |
+| 43 | O que mudou na economia que me afeta? | Notícias: destaca a primeira notícia |
+| 44 | O que é reserva de emergência e quanto devo ter? | – (só a resposta) |
+| 45 | Por que "sobrou" no mês é diferente do que tenho no banco? | – (só a resposta) |
+| 46 | O que é "é meu de verdade"? | Início: destaca o Mordomo e o "é meu de verdade" |
+| 47 | O gasto no cartão conta na compra ou no pagamento? | – (só a resposta) |
+| 48 | Comprar um carro é gasto? | – (só a resposta) |
+| 49 | Como eu saio das dívidas? | Planejar > janela do acerto de contas |
+| 50 | Vale a pena pagar só o mínimo da fatura? | – (só a resposta) |
+| 51 | O que são juros compostos? | – (só a resposta) |
+| 52 | Como começo a guardar ganhando pouco? | Planejar > Caixinhas: destaca "+ Nova caixinha" |
+| 53 | Meus dados ficam seguros? Alguém vê? | Mais > Ajustes: destaca a seção Seus dados |
+| 54 | Quanto eu recebo se resgatar meus investimentos hoje? | Investir: abre a janela da primeira aplicação, com o "Se resgatar hoje" |
+| 55 | Quanto meu dinheiro rende por mês? | Investir: destaca Investido e quanto rendeu |
+| 56 | Como digo quanto minha aplicação ou caixinha rende? | Investir: abre "Editar" da primeira aplicação, em "Como rende?" |
+| 57 | O valor de um investimento não bate com o banco. E agora? | Investir: abre a lista "Conferir com o banco" |
+| 58 | Onde estão os gráficos e os relatórios? | Saúde: destaca o panorama |
+| 59 | Não acho uma informação que estava na tela. Onde foi? | Início: destaca a primeira seção que abre |
+| 60 | O que é CDI e o que quer dizer “% do CDI”? | Notícias: destaca a notícia do CDI |
+| 61 | Como funciona o Imposto de Renda dos investimentos? | Investir: abre a janela da primeira aplicação, com a estimativa do imposto |
+| 62 | Qual a diferença entre poupança, CDB, LCI e Tesouro? | Investir: destaca a explicação do topo ("?") |
+| 63 | A inflação está comendo meu dinheiro? | Notícias: destaca a notícia da inflação |

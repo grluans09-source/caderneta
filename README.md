@@ -6,7 +6,7 @@
 App de celular (instalável, funciona sem internet), em português, pensado para qualquer pessoa: do idoso ao jovem e ao adulto na correria.
 
 - **App no ar:** https://grluans09-source.github.io/caderneta/
-- **Versão atual:** 1.24.0-beta.1 (beta para testadores) (veja o [CHANGELOG](CHANGELOG.md))
+- **Versão atual:** 1.24.1-beta.1 (beta para testadores) (veja o [CHANGELOG](CHANGELOG.md))
 - **Seus dados ficam só no celular de cada pessoa.** Não existe servidor, conta nem banco de dados.
 
 > Em uma frase: a pessoa anota o que gasta e recebe, e o app mostra **quanto é dela de verdade**, para onde o dinheiro está indo e o que vem pela frente. A partida dobrada fica escondida no "motor"; a tela fala como a gente fala.
@@ -17,7 +17,7 @@ App de celular (instalável, funciona sem internet), em português, pensado para
 |---|---|
 | **Início** | O **Mordomo**, a balança-personagem que mostra "o que eu tenho = o que eu devo + o que é meu" e muda a cara conforme a situação, resumo do mês, "o mês passado fechou" (nos 10 primeiros dias, numa linha que abre), uma linha "Falta pagar" (leva ao Planejar), até 3 avisos (as atrasadas juntas num só), "Hoje no Brasil" e "Seus objetivos" (caixinhas e metas), que abrem, e as 3 últimas anotações |
 | **Notícias** | "Hoje no Brasil" no Início e tela própria: dólar, Selic, CDI, inflação, o que ficou mais caro, combustíveis, previsões do Focus e notícias do IBGE, **só de fontes oficiais** com link, selo CERTEZA ou POSSIBILIDADE e o efeito na sua vida. Atualiza ao meio-dia O celular busca as notícias do IBGE direto no site do IBGE, sem enviar nenhum dado seu |
-| **Perguntar (chat)** | A pílula do Mordomo, no canto esquerdo: 53 perguntas prontas em linguagem comum, muitas respondidas com os seus próprios números, com busca e atalho para a tela certa. Sem internet e sem IA |
+| **Perguntar (chat)** | A pílula do Mordomo, no canto esquerdo: 63 perguntas prontas em linguagem comum, muitas respondidas com os seus próprios números, com busca e um "Ver no app" que leva direto ao lugar exato. Sem internet e sem IA |
 | **Travas de coerência** | Antes de salvar, o app confere a anotação: **não deixa** passar do limite do cartão nem a carteira ficar negativa, e **pergunta** quando algo é estranho (banco negativo, pagar a mais, data distante, valor muito acima do costume) |
 | **Anotar** | O botão da **pena dourada**, no **canto direito de baixo**, **gera 4 medalhas douradas em quarto de círculo, com animação, cada uma com o centro na cor do tipo** (Gastei, Recebi, Transferi entre contas, Comprei um bem): um toque gera, outro escolhe. Na folha, um botão redondo fixo no mesmo canto troca o tipo (o atual fica apagado). As listas são curtas (Dinheiro + 3 contas favoritas, 5 categorias favoritas); tocar na busca abre a lista com tudo. A conta **Dinheiro** é a carteira (não se apaga, e quem já usava o app ganha ela sozinha) e conta cédulas |
 | **Dinheiro** | Quatro abas: Contas (com o guardado, o "para usar" e **Conferir com o banco**), Dívidas (cartões e empréstimos), Bens e Pessoas (emprestei / devo) |
@@ -48,7 +48,7 @@ caderneta/
 │   ├── index.html    O app inteiro: HTML + CSS + JavaScript, sem dependências
 │   ├── sw.js         Faz o app abrir sem internet (cache)
 │   ├── manifest.webmanifest, icon-*.png, icon.svg   Instalação na tela inicial
-├── tests/          Testes automáticos: 872 verificações que simulam uma pessoa usando o app
+├── tests/          Testes automáticos: 886 verificações que simulam uma pessoa usando o app
 ├── tools/          Ferramentas: servidor local e gerador de ícones
 ├── docs/           Documentação (leia a partir de docs/README.md)
 ├── .github/workflows/publicar.yml   Testa e publica sozinho a cada envio para o GitHub

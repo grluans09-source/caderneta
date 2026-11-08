@@ -31,7 +31,7 @@ O app **de hoje** (versão 1.23.0, depois da simplificação da interface: ver `
 | Valor de verdade (balança: o **Mordomo**) | Início | – |
 | **Notícias de fontes oficiais** (dólar, juros, inflação, combustíveis, Focus, IBGE) | **Notícias** (tela própria) | Início ("Hoje no Brasil", 3 notícias), Mais (atalho), chat |
 | **Travas de coerência** (não deixa / pergunta "era isso?") | Ao salvar uma anotação, um cartão ou ao apagar | Chat: "Por que o app não deixou eu salvar?" |
-| **Chat do Balancete** (53 perguntas prontas) | Pílula **"Perguntar"**, canto esquerdo de baixo, em todas as abas | Cada resposta com "Ver no app" leva à casa do assunto |
+| **Chat do Balancete** (63 perguntas prontas) | Pílula **"Perguntar"**, canto esquerdo de baixo, em todas as abas | Cada resposta com "Ver no app" leva à casa do assunto |
 | Mascotes dos momentos (Moedinha ao receber, Selo "PAGO" ao pagar, Pesinho ao guardar, Pesão quando há conta atrasada) | Aparecem por cima da tela, só nesses momentos | Pesão: só no Início, 1 vez por dia |
 | Custo fixo de vida | Saúde > Ver mais indicadores | Relatório do indicador |
 | Resumo do mês (entrou, saiu, sobrou) | Início | – |
@@ -143,7 +143,7 @@ Busca à vista; ordem por data, valor ou nome e os filtros ficam em **"Ordenar e
 Dólar, Selic, CDI, inflação (e o que ficou mais caro ou mais barato), preço dos combustíveis, previsões do Boletim Focus e notícias oficiais do IBGE. Cada item mostra o selo **CERTEZA** (dado publicado) ou **POSSIBILIDADE** (previsão), o título, o **"para você"** (quando dá) e o **link do site oficial**; o fato e "O que isso significa" ficam em **"Entenda a notícia"**. Selic, CDI, IPCA e Focus têm "?". A seta de voltar leva para onde a pessoa estava (Início ou Mais). Atualiza ao meio-dia; as notícias do IBGE o próprio celular busca no site do IBGE (no máximo 1 vez por hora, sem enviar dado nenhum, D62). Sem internet, mostra a última cópia com a data.
 
 ### O chat (a pílula "Perguntar", canto esquerdo de baixo)
-Abre uma janela preta e dourada com **53 perguntas prontas** em 5 grupos (Meu dinheiro · Contas e dívidas · Planejar · Como usar o app · Aprender); o grupo da aba atual abre primeiro. Tem busca por palavras (mostra até 3 perguntas parecidas, nunca inventa) e, em cada resposta, **Ver no app**. Sem internet e sem inteligência artificial. Lista em `CHAT-PERGUNTAS.md`.
+Abre uma janela preta e dourada com **63 perguntas prontas** em 5 grupos (Meu dinheiro · Contas e dívidas · Planejar · Como usar o app · Aprender); o grupo da aba atual abre primeiro. Tem busca por palavras (mostra até 3 perguntas parecidas, nunca inventa) e, em cada resposta, **Ver no app**, que leva ao **lugar exato** (abre a seção, a janela ou a folha certa e destaca o lugar com uma borda dourada). Sem internet e sem inteligência artificial. Lista em `CHAT-PERGUNTAS.md`.
 
 ### Mais > Ajustes: quatro seções que abrem
 - **Aparência:** letra, cores, movimento (com "?"), Modo contador (com "?" explicando ativo, passivo, DRE e balancete)
