@@ -27,7 +27,7 @@ A contabilidade (partida dobrada) é **o mecânico debaixo do capô**: trabalha 
 - **Um arquivo só** para o app (simples de copiar, publicar e guardar).
 - Funciona **sem internet** depois de aberto uma vez.
 - Idioma: **português do Brasil** (interface e conversa).
-- Estilo de conversa com o dono: **analogias**, **linguagem comum**, resposta direta e honesta sobre o que foi ou não verificado.
+- Estilo de conversa com o dono: **analogias**, **linguagem comum**, resposta direta e honesta sobre o que foi ou não verificado. O jeito completo dele (como decide, o que exige) está em `JEITO-DO-DONO.md`, atualizado a cada conversa.
 
 ## 4. O que o dono pediu (em ordem) e como virou código
 

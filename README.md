@@ -28,6 +28,8 @@ App de celular (instalável, funciona sem internet), em português, pensado para
 
 ## Para quem vai mexer no projeto
 
+**Pessoa ou IA: comece por [`AGENTS.md`](AGENTS.md)** (o que ler primeiro e as regras que não podem ser esquecidas). Tarefas passadas de uma IA para outra seguem [`docs/MODELO-COMANDO.md`](docs/MODELO-COMANDO.md); o jeito de trabalhar com o dono está em [`docs/JEITO-DO-DONO.md`](docs/JEITO-DO-DONO.md).
+
 Precisa só de **Git** e **Node.js 20 ou mais novo**.
 
 ```bash

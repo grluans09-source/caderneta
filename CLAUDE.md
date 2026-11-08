@@ -1,6 +1,6 @@
 # Balancete (antes Caderneta): regras e contexto para trabalhar no projeto
 
-> Este arquivo é lido primeiro por quem (pessoa ou Claude) for mexer no projeto. É curto de propósito:
+> Este arquivo é lido primeiro por quem (pessoa, Claude ou outra IA) for mexer no projeto. Outras IAs chegam por `AGENTS.md`, que manda ler este. É curto de propósito:
 > aqui estão **as regras e o jeito de trabalhar**. O resto está em `docs/` (veja a tabela no fim).
 
 ## Em que pé estamos
@@ -10,6 +10,7 @@
 - Próximos passos em `docs/ROTEIRO.md`. Estado, riscos e dívidas em `docs/AVALIACAO.md`.
 
 ## Quem é o dono e como falar com ele
+- **Leia `docs/JEITO-DO-DONO.md`**: como ele decide, o que sempre exige e como responder. **Atualize esse documento ao fim de cada conversa** com o que aprendeu (preferência nova, correção que ele fez); é pedido dele (8 nov 2026).
 - O dono **não é programador**. Idioma: **português do Brasil**, sempre.
 - Ele pediu: explicar com **analogias** e **linguagem comum**. Evitar jargão; se usar um termo técnico, explicar em uma frase.
 - Responder com: o que mudou, o que foi testado, o que **não** foi verificado (ex.: celular real), e uma decisão clara quando houver. Nada de enrolação.
@@ -53,7 +54,7 @@
 2. **Mudar** em `app/index.html` (e só nela, salvo ícones/manifest/sw).
 3. **Testar**: `npm test` (tem que dar "TUDO CERTO"). Mudança de comportamento ⇒ **escrever ou ajustar um teste** em `tests/`. Bug encontrado ⇒ teste que o reproduz **antes** da correção.
 4. **Ver no navegador** em 375×812 (`npm start`), inclusive letra "Enorme" e tema escuro quando mexer em layout. Animação só se confere com o painel visível.
-5. **Documentar (obrigatório, no mesmo envio)**: ver "Git sempre em dia" abaixo.
+5. **Documentar (obrigatório, no mesmo envio)**: ver "Git sempre em dia" abaixo. Inclui `docs/JEITO-DO-DONO.md` quando o dono mostrar uma preferência nova.
 6. **Versionar** (ver "Versão e publicação") e **enviar ao GitHub**. O GitHub roda os testes e publica sozinho.
 7. **Reportar** ao dono em português simples, dizendo o que **não** foi verificado.
 
@@ -105,6 +106,9 @@ node tools/noticias.js app/noticias.json   # busca as notícias oficiais agora (
 | `docs/ANALISE-CONTABIL.md` | O que é contabilidade de verdade, o que é finanças pessoais e o que é ideia do dono; sugestões de funções contábeis |
 | `docs/CHAT-PERGUNTAS.md` | As 53 perguntas do chat e como cada uma é respondida |
 | `docs/MAPA-DO-APP.md` | Onde mora cada assunto, mapa de cores, fluxo de uso (o app de hoje) |
+| `AGENTS.md` | Porta de entrada para qualquer IA: o que ler primeiro e as regras que mais causam estrago |
+| `docs/JEITO-DO-DONO.md` | O jeito do dono: como decide, o que exige, como responder (documento vivo) |
+| `docs/MODELO-COMANDO.md` | Modelo de comando para passar uma tarefa a outra IA programar (com exemplo) |
 | `docs/AUDITORIA-INTERFACE.md` | Auditoria de inconsistências da interface (8 nov 2026) e o resultado da simplificação |
 | `docs/GUIA-TESTADORES.md` | Como mandar o app a testadores e o que observar |
 | `docs/design/balancete-identidade.html` | Protótipo aprovado do Brasão, do Mordomo, da abertura, do botão do chat, dos secundários e da letra (abra no navegador) |
