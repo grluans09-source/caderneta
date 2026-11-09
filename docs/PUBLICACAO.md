@@ -65,6 +65,17 @@ git push                       # o GitHub testa e publica a versão anterior
 ```
 Para voltar o **código inteiro** a uma versão marcada: `git checkout vX.Y.Z` (só para olhar) ou crie uma ramificação a partir dela. O histórico nunca é apagado.
 
+### Voltar para a versão salva antes do redesign (1.24.1)
+O dono pediu (9 nov 2026) que a versão de antes do redesign ficasse guardada. Ela está em dois lugares no GitHub: a marca **`v1.24.1-beta.1`** e o ramo **`salvo/1.24.1-antes-do-redesign`**. Para pôr essa versão no ar de novo (só com o pedido do dono):
+```bash
+git checkout main
+git checkout -b volta-1.24.1
+git checkout salvo/1.24.1-antes-do-redesign -- app tests package.json   # o app e os testes como eram
+# suba a versão nos 3 lugares (ex.: 1.24.2-beta.1), para os celulares atualizarem
+npm test && git commit -am "volta para o visual da 1.24.1" && git checkout main && git merge volta-1.24.1 && git push
+```
+**Os dados das pessoas continuam**: o redesign não muda o formato dos dados nem da cópia de segurança.
+
 ## 5. Guardar tudo e recuperar o projeto (computador perdido, roubado ou quebrado)
 
 ### O que está seguro no GitHub

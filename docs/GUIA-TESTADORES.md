@@ -2,6 +2,8 @@
 
 Use este guia para **mandar o app a quem vai testar** e para **observar o que acontece**. Tem três partes: a mensagem pronta, o passo a passo para a pessoa, e a ficha para você anotar o que viu.
 
+> **Novidade (1.25.0):** o app está passando por um redesign em fases. A animação de abertura aparece só na primeira vez e quando o app atualiza; na aba Saúde, os indicadores só ficam "Saudável" depois de 30 dias de anotações (antes disso, "Aguardando dados"). Isso é de propósito.
+
 > **Fase atual:** teste gratuito. O app é o mesmo que será vendido depois (venda única). O objetivo do teste é descobrir **onde as pessoas travam**, não elogios.
 
 ## 1. Mensagem pronta (copie e envie)

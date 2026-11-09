@@ -23,9 +23,12 @@ const espera=ms=>new Promise(r=>setTimeout(r,ms));
 await espera(50);
 // ---- pílula ----
 eq("a pílula Perguntar fica no canto, com o rostinho do Mordomo",[!!$("body > .perg"),!!$(".perg svg .pp-pup"),/Perguntar/.test($(".perg").textContent)],[true,true,true]);
-eq("ao abrir, ela cumprimenta e convida a perguntar",[$("#pergBal").classList.contains("on"),/Toque em mim para perguntar/.test($("#pergBal").textContent)],[true,true]);
+eq("ao abrir com conta atrasada, o aviso dela aparece e o balão espera (redesign R-04: nunca um por cima do outro)",[!!$("#pesao"),$("#pergBal").classList.contains("on")],[true,false]);
+click('[data-a="pesaoFecha"]');
 click('nav [data-v="graficos"]'); await espera(20);
 eq("ao trocar de aba ela fala a frase da aba e reage",[/como estão as suas finanças/.test($("#pergBal").textContent),$(".perg").classList.contains("r-le")],[true,true]);
+$("#pergBal").classList.remove("on"); click('nav [data-v="contas"]'); await espera(20);
+eq("o balão fala só uma vez neste aparelho: na aba seguinte, não fala de novo (a pílula continua reagindo)",[$("#pergBal").classList.contains("on"),$(".perg").classList.contains("r-baixo")],[false,true]);
 // ---- janela do chat ----
 click('nav [data-v="planejar"]'); await espera(20);
 click(".perg");

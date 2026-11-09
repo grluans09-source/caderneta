@@ -1,0 +1,588 @@
+{
+ "totais": {
+  "ativo": 2710915,
+  "passivo": 73240,
+  "pl": 2637675
+ },
+ "paraUsarAgora": 383450,
+ "guardado": 50127,
+ "investido": 802237,
+ "dinheiroNasContas": 433577,
+ "saldos": {
+  "d1": 32170,
+  "b1": 401407,
+  "cdb": 802237,
+  "cc": 73240,
+  "moto": 1080101,
+  "nb": 380000,
+  "p1": 15000
+ },
+ "caixinhas": {
+  "x1": 50127
+ },
+ "meses": {
+  "2026-09": {
+   "entrou": 0,
+   "saiu": 0,
+   "sobrou": 0,
+   "ajustes": -23470
+  },
+  "2026-10": {
+   "entrou": 0,
+   "saiu": 36990,
+   "sobrou": -36990,
+   "ajustes": -22981
+  },
+  "2026-11": {
+   "entrou": 557364,
+   "saiu": 52610,
+   "sobrou": 504754,
+   "ajustes": 0
+  }
+ },
+ "faltaPagarNovembro": {
+  "total": 523210,
+  "itens": [
+   [
+    "Aluguel",
+    150000,
+    "2026-09-10",
+    true
+   ],
+   [
+    "Internet",
+    11990,
+    "2026-09-15",
+    true
+   ],
+   [
+    "Aluguel",
+    150000,
+    "2026-10-10",
+    true
+   ],
+   [
+    "Internet",
+    11990,
+    "2026-10-15",
+    true
+   ],
+   [
+    "Nubank",
+    37240,
+    "2026-11-10",
+    false
+   ],
+   [
+    "Aluguel",
+    150000,
+    "2026-11-10",
+    false
+   ],
+   [
+    "Internet",
+    11990,
+    "2026-11-15",
+    false
+   ]
+  ],
+  "pago": [
+   [
+    "Pagamento: Nubank",
+    24000
+   ]
+  ]
+ },
+ "faturasNubank": [
+  [
+   "2026-11-10",
+   37240
+  ],
+  [
+   "2026-12-10",
+   24000
+  ],
+  [
+   "2026-12-10",
+   12000
+  ]
+ ],
+ "agenda": [
+  [
+   "fixa",
+   "Aluguel",
+   150000,
+   "2026-09-10"
+  ],
+  [
+   "fixa",
+   "Internet",
+   11990,
+   "2026-09-15"
+  ],
+  [
+   "fixa",
+   "Aluguel",
+   150000,
+   "2026-10-10"
+  ],
+  [
+   "fixa",
+   "Internet",
+   11990,
+   "2026-10-15"
+  ],
+  [
+   "divida",
+   "Nubank",
+   37240,
+   "2026-11-10"
+  ],
+  [
+   "fixa",
+   "Aluguel",
+   150000,
+   "2026-11-10"
+  ],
+  [
+   "fixa",
+   "Internet",
+   11990,
+   "2026-11-15"
+  ],
+  [
+   "receber",
+   "João",
+   15000,
+   "2026-11-20"
+  ],
+  [
+   "divida",
+   "Nubank",
+   36000,
+   "2026-12-10"
+  ],
+  [
+   "fixa",
+   "Aluguel",
+   150000,
+   "2026-12-10"
+  ]
+ ],
+ "indicadores": [
+  {
+   "id": "patrimonio",
+   "valor": "R$ 26.376,75",
+   "st": "ok",
+   "leitura": "Subiu R$ 5.047,54 desde o mês passado."
+  },
+  {
+   "id": "liquidez",
+   "valor": "2,4x",
+   "st": "ok",
+   "leitura": "Seu dinheiro cobre 2,4 vez(es) as contas."
+  },
+  {
+   "id": "reserva",
+   "valor": "27,6 meses",
+   "st": "ok",
+   "leitura": "Você aguenta 27,6 meses."
+  },
+  {
+   "id": "poupanca",
+   "valor": "84%",
+   "st": "ok",
+   "leitura": "Sobra 84% do que entra."
+  },
+  {
+   "id": "endividamento",
+   "valor": "3%",
+   "st": "ok",
+   "leitura": "De cada R$ 100 que você tem, R$ 3 são de dívida."
+  },
+  {
+   "id": "renda",
+   "valor": "33%",
+   "st": "atencao",
+   "leitura": "Cerca de 33% da renda já tem destino."
+  },
+  {
+   "id": "custo",
+   "valor": "R$ 2.014,03",
+   "st": "ok",
+   "leitura": "O seu básico custa R$ 2.014,03 por mês, 36% da renda."
+  },
+  {
+   "id": "destino",
+   "valor": "R$ 526,10",
+   "st": "atencao",
+   "leitura": "Mercado é a maior fatia: 68% dos gastos."
+  },
+  {
+   "id": "composicao",
+   "valor": "46% em dinheiro",
+   "st": "ok",
+   "leitura": "46% do que você tem é dinheiro de fácil acesso."
+  },
+  {
+   "id": "juros",
+   "valor": "R$ 0,00",
+   "st": "ok",
+   "leitura": "Nenhum juro ou multa nos últimos 6 meses."
+  }
+ ],
+ "relatorios": [
+  [
+   "patrimonio",
+   "É o placar da sua vida financeira: tudo o que você tem (dinheiro, bens e o que te devem) menos tudo o que você deve. Se esse número sobe com o tempo, você está ficando mais forte; se desce, mais frágil, mesmo que o saldo do banco pareça o mesmo.",
+   "Hoje o seu patrimônio é de R$ 26.376,75 (você tem R$ 27.109,15 e deve R$ 732,40). Desde o fim do mês passado ele subiu R$ 5.047,54 : você está construindo.",
+   "Não existe um valor certo: o que vale é a direção. Subindo mês a mês, o plano funciona. Caindo por três meses seguidos, é hora de rever gastos e dívidas.",
+   "Você está no caminho certo. O desafio agora é manter o ritmo e proteger o que construiu, com uma reserva e seguros.",
+   [
+    "Anote tudo por 30 dias: o que você enxerga, você consegue controlar.",
+    "Separe um valor fixo para guardar assim que receber, antes de gastar.",
+    "Evite comprar a prazo com juros coisas que perdem valor rápido."
+   ]
+  ],
+  [
+   "liquidez",
+   "Responde: se todas as contas dos próximos 30 dias chegassem juntas, o meu dinheiro cobre? É como olhar o tanque antes de uma viagem.",
+   "Você tem R$ 12.358,14 em dinheiro (contando o que está guardado) e R$ 5.232,10 de contas até 30 dias. Isso cobre as contas 2,4 vez(es) .",
+   "2 vezes ou mais: folgado. Entre 1 e 2 vezes: apertado, qualquer imprevisto pesa. Abaixo de 1: o dinheiro não cobre tudo e alguma conta vai atrasar.",
+   "Você paga tudo em dia e ainda sobra. Boa hora para mandar o excedente para a reserva ou para uma dívida com juros.",
+   [
+    "Abra o acerto de contas em Planejar e pague uma a uma, por ordem de vencimento.",
+    "Se faltar, procure o credor antes de atrasar: renegociar custa menos que a multa.",
+    "Use a agenda para ver o que vence primeiro."
+   ]
+  ],
+  [
+   "reserva",
+   "É por quantos meses você viveria sem nenhuma renda, só com o dinheiro que tem. É o colchão contra imprevistos: perder o emprego, uma doença, um conserto grande.",
+   "Você gasta em média R$ 448,00 por mês e tem R$ 12.358,14 em dinheiro. Isso dura 27,6 meses .",
+   "O costume em educação financeira é ter de 3 a 6 meses de gastos guardados (quem tem renda instável, mais). Menos de 3: alerta. De 3 a 6: atenção. 6 ou mais: saudável.",
+   "Seu colchão é sólido. Daqui para a frente, cada real guardado pode ir para objetivos maiores.",
+   [
+    "Monte a reserva numa caixinha só dela, para não misturar com o dinheiro do dia a dia.",
+    "Comece pequeno: o valor de uma semana de gastos já muda o jogo.",
+    "Reserva primeiro, investimento depois."
+   ]
+  ],
+  [
+   "poupanca",
+   "Mostra que fatia do que você ganha sobra no fim do mês. É o motor do patrimônio: quem guarda de forma constante cresce, mesmo ganhando pouco.",
+   "Nos últimos meses você recebeu em média R$ 2.786,82 e gastou R$ 448,00 por mês. Sobrou 84% do que entrou.",
+   "20% ou mais: ótimo. Entre 10% e 20%: razoável. Abaixo de 10%: pouco espaço para imprevistos e metas. Negativo: o patrimônio está encolhendo.",
+   "Excelente hábito. Garanta que o que sobra está indo para a reserva e para os seus objetivos, e não ficando parado.",
+   [
+    "Guarde assim que receber (pague-se primeiro) em vez de guardar o que sobrar.",
+    "Veja em 'Para onde vai o dinheiro' qual categoria pode ceder um pouco.",
+    "Defina metas do mês para as categorias que mais pesam."
+   ]
+  ],
+  [
+   "endividamento",
+   "Mostra quanto do que você tem está tomado por dívidas. Pense numa casa: financiar uma parte pequena é tranquilo; dever quase o valor inteiro deixa qualquer imprevisto perigoso.",
+   "Você tem R$ 27.109,15 e deve R$ 732,40 : para cada R$ 100 que possui, R$ 3 são de dívida ( 3% ).",
+   "Até 30%: confortável. De 30% a 50%: atenção, as dívidas já pesam. Acima de 50%: alerta, mais da metade do que você tem já tem dono. São referências comuns de educação financeira, não regras.",
+   "As dívidas estão sob controle. Continue pagando em dia e evite novas parcelas desnecessárias.",
+   [
+    "Liste as dívidas pelo juro e pague primeiro as mais caras (cartão rotativo, cheque especial).",
+    "Evite criar dívida nova enquanto estiver acima de 30%.",
+    "Pergunte ao credor sobre quitar à vista com desconto."
+   ]
+  ],
+  [
+   "renda",
+   "Mostra quanto da sua renda já está reservado para contas que vão chegar: parcelas, dívidas e contas fixas. É a parte do dinheiro que não é mais sua para decidir.",
+   "A sua renda é de cerca de R$ 5.573,64 por mês e as contas dos próximos meses somam em média R$ 1.864,03 : 33% da renda.",
+   "Até 30%: confortável. De 30% a 50%: apertado. Acima de 50%: a maior parte da renda já tem destino antes de o mês começar, e sobra pouco para viver e guardar.",
+   "Está apertado. Um imprevisto pode forçar atraso; segure novos compromissos.",
+   [
+    "Antes de parcelar, some a nova parcela a este percentual: ela cabe abaixo de 30%?",
+    "Reveja assinaturas e planos: cada um é um pedaço fixo da renda.",
+    "Prefira prazos curtos: parcelas longas amarram a renda por muito tempo."
+   ]
+  ],
+  [
+   "custo",
+   "É quanto custa manter a sua vida básica por mês: contas fixas (aluguel, luz, internet, assinaturas), a parte de cada mês das contas do ano (IPVA, IPTU) e as parcelas das dívidas. É o valor mínimo que precisa entrar todo mês, antes de comida e lazer.",
+   "O seu básico custa R$ 2.014,03 por mês: R$ 1.619,90 de contas fixas, R$ 150,00 das contas do ano divididas por 12 e R$ 244,13 de parcelas e dívidas (média dos próximos 3 meses). Isso é 36% da sua renda de cerca de R$ 5.573,64.",
+   "Até 50% da renda: o básico cabe com folga para comida, imprevistos e guardar. De 50% a 70%: apertado. Acima de 70%: qualquer imprevisto vira dívida. Diferente de \"Quanto da renda já tem dono\", que olha só as contas que já vão chegar, aqui entra também a parte de cada mês das contas do ano.",
+   "O seu básico cabe bem na renda. Use a folga para guardar e para as contas do ano.",
+   [
+    "Separe todo mês a parte das contas do ano (Planejar > Contas fixas > Contas do ano).",
+    "Reveja as assinaturas: some as pequenas, elas viram uma conta grande.",
+    "Quando uma dívida acabar, mande o valor da parcela para a reserva."
+   ]
+  ],
+  [
+   "destino",
+   "Mostra para onde o seu dinheiro foi neste mês. Quase todo mundo se surpreende: gastos pequenos e frequentes costumam pesar mais que a grande compra.",
+   "Neste mês você gastou R$ 526,10 . A maior fatia foi Mercado ( R$ 360,30 , 68% dos gastos) e as 3 maiores juntas somam 100% . Entrou no mês: R$ 5.573,64.",
+   "Não há porcentagem certa: cada vida é diferente. Um alerta comum é uma categoria sozinha passar de 50% dos gastos; vale olhar com atenção. Compare com os seus objetivos e com as metas do mês.",
+   "Uma categoria concentra mais da metade dos gastos. Veja se é necessário mesmo ou se dá para reduzir.",
+   [
+    "Defina uma meta mensal para a categoria que mais pesa (Planejar > Metas do mês).",
+    "Procure gastos recorrentes pequenos: assinaturas esquecidas e taxas.",
+    "Anote todos os gastos, inclusive os pequenos."
+   ]
+  ],
+  [
+   "composicao",
+   "Mostra de que o seu patrimônio é feito: dinheiro disponível, dinheiro guardado, bens (casa, carro) e valores a receber. O que importa é quanto disso vira dinheiro rápido se você precisar.",
+   "Do total de R$ 27.109,15 : R$ 3.834,50 para usar, R$ 8.523,64 guardado, R$ 14.601,01 em bens e R$ 150,00 a receber. Em dinheiro (usar mais guardado) estão 46% .",
+   "Muita coisa em bens e pouco em dinheiro é um patrimônio engessado: vale muito no papel, mas não paga a conta de luz. Acima de 30% em dinheiro é um bom sinal; abaixo de 10% pede atenção.",
+   "Boa liquidez: você consegue lidar com imprevistos sem vender bens.",
+   [
+    "Aumente o dinheiro de fácil acesso antes de comprar novos bens.",
+    "Cobre quem te deve: valores a receber só viram dinheiro quando entram.",
+    "Mantenha parte do guardado numa caixinha de emergência."
+   ]
+  ],
+  [
+   "juros",
+   "É quanto você pagou nos últimos 6 meses só de juros e multas. Esse dinheiro não compra nada: é o preço de atrasar ou de parcelar. Costuma ser o primeiro vazamento a tapar.",
+   "Você não registrou juros nem multas nos últimos 6 meses. Excelente.",
+   "Zero é o ideal. Até 3% da renda é atenção; acima disso os juros consomem o seu esforço. Só aparece aqui o que você anotou como juros ou multa ao pagar uma dívida.",
+   "Sem custo de juros. Continue pagando em dia.",
+   [
+    "Pague as contas em dia: a multa de um atraso costuma custar mais que o valor da conta.",
+    "Troque dívida cara por dívida mais barata, quando possível.",
+    "Ao pagar uma dívida, informe quanto foi de juros para este indicador ficar fiel."
+   ]
+  ]
+ ],
+ "contasDoAno": [
+  [
+   "IPVA",
+   "2027-02-20",
+   60000,
+   180000
+  ]
+ ],
+ "metas": [
+  [
+   "Mercado",
+   80000,
+   36030
+  ],
+  [
+   "Lazer",
+   30000,
+   12000
+  ],
+  [
+   "Transporte",
+   40000,
+   4580
+  ]
+ ],
+ "rendeu": {
+  "novembro": 2364,
+  "ano": 2364
+ },
+ "resgate": {
+  "cdb": {
+   "liq": 801734,
+   "ir": 503,
+   "iof": 0,
+   "aliq": 22.5,
+   "dias": 100
+  }
+ },
+ "perguntas": {
+  "Quanto dinheiro eu tenho agora?": "Você tem R$ 4.335,77 nas suas contas: R$ 3.834,50 para usar agora e R$ 501,27 guardado nas caixinhas, que continua seu. Além disso, R$ 8.022,37 investidos (aba Investir).",
+  "Quanto é meu de verdade?": "É seu de verdade: R$ 26.376,75 . É tudo o que você tem ( R$ 27.109,15 ) menos tudo o que deve ( R$ 732,40 ). Se pagasse todas as dívidas hoje, isso sobraria.",
+  "Quanto posso gastar por dia até o fim do mês?": "Este mês o dinheiro para usar agora ( R$ 3.834,50 ) não cobre o que ainda falta pagar ( R$ 5.232,10 ). O melhor é segurar os gastos que podem esperar e olhar o acerto de contas.",
+  "Quanto eu gastei este mês?": "Este mês você gastou R$ 526,10 . A maior parte foi em Mercado ( R$ 360,30 ).",
+  "Com o que eu mais gasto?": "Neste mês, o que mais pesa: Mercado : R$ 360,30 (68%) Lazer : R$ 120,00 (23%) Transporte : R$ 45,80 (9%)",
+  "Gastei mais ou menos que no mês passado?": "Comparado com outubro, até agora você gastou R$ 156,20 a mais. O que mais mudou: Casa: −R$ 159,90 Mercado: +R$ 150,30 Lazer: +R$ 120,00",
+  "Quanto entrou de dinheiro este mês?": "Este mês entraram R$ 5.573,64 . Salário: R$ 5.200,00 Freela: R$ 350,00 Rendimentos: R$ 23,64",
+  "Quanto sobrou no mês passado?": "Em outubro entraram R$ 0,00 , saíram R$ 369,90 e faltaram R$ 369,90 .",
+  "Quanto tenho guardado nas caixinhas?": "Guardado ao todo: R$ 501,27 . Continua seu e na sua conta: só sai do que você pode usar agora. Reserva: R$ 501,27 de R$ 5.000,00 · rende 100% do CDI",
+  "Quanto meus investimentos renderam?": "Você tem R$ 8.022,37 investido. Rendeu R$ 23,64 em novembro e R$ 23,64 no ano. CDB Inter : R$ 8.022,37 (110% do CDI) Para saber quanto receberia se resgatasse hoje, já sem o imposto, pergunte \"Quanto eu recebo se resgatar meus investimentos hoje?\"",
+  "Quanto tenho em cada conta?": "Dinheiro : R$ 321,70 Conta no banco : R$ 4.014,07 Nas aplicações (aba Investir ): R$ 8.022,37 .",
+  "Quanto eu devo ao todo?": "Você deve R$ 732,40 ao todo. Nubank: R$ 732,40",
+  "O que vence esta semana?": "Nos próximos 7 dias: 10/11 · Nubank: R$ 372,40 10/11 · Aluguel: R$ 1.500,00 15/11 · Internet: R$ 119,90",
+  "Tenho alguma conta atrasada?": "Sim, 4 contas: Aluguel: R$ 1.500,00 (atrasada há 60 dias) Internet: R$ 119,90 (atrasada há 55 dias) Aluguel: R$ 1.500,00 (atrasada há 30 dias) Internet: R$ 119,90 (atrasada há 25 dias) Vamos resolver no acerto de contas?",
+  "Quanto falta pagar este mês?": "Falta pagar R$ 5.232,10 este mês. Você já pagou R$ 240,00 .",
+  "Qual dívida eu pago primeiro?": "Uma ordem que costuma funcionar: Primeiro, as atrasadas : multa e juros correm todo dia (você tem 4). Depois, a de juros mais caros : cartão e cheque especial costumam ser os piores. Se os juros forem parecidos, quite a menor primeiro : ver uma dívida sumir dá ânimo. Suas dívidas, da menor para a maior: Nubank: R$ 732,40",
+  "Quando vence a fatura do cartão?": "Nubank : fecha dia 3, vence dia 10. Próximo a pagar: R$ 372,40 em 10/11",
+  "Quanto do limite do cartão eu já usei?": "Nubank : usou R$ 732,40 de R$ 4.000,00 (18%). Disponível: R$ 3.267,60",
+  "Quanto paguei de juros e multas?": "Você não anotou juros nem multas nos últimos 6 meses. Excelente.",
+  "Quem me deve dinheiro?": "João : R$ 150,00 (combinado para 20/11/2026)",
+  "Quanto custa minha vida básica por mês?": "O seu básico custa R$ 2.014,03 por mês: Contas fixas: R$ 1.619,90 Contas do ano, por mês: R$ 150,00 Parcelas e dívidas: R$ 244,13 Isso é 36% da sua renda.",
+  "Quanto preciso guardar para o IPVA, IPTU e outras contas do ano?": "IPVA (20/02/2027): R$ 600,00 por mês Separando R$ 600,00 por mês, elas chegam pagas.",
+  "Minha reserva de emergência é suficiente?": "Hoje você aguentaria cerca de 27,6 meses sem renda. Está ótimo.",
+  "Estou dentro das metas do mês?": "Mercado : R$ 360,30 de R$ 800,00 (cabem mais R$ 439,70) Lazer : R$ 120,00 de R$ 300,00 (cabem mais R$ 180,00) Transporte : R$ 45,80 de R$ 400,00 (cabem mais R$ 354,20)",
+  "Quanto da minha renda já tem destino?": "Cerca de 33% da sua renda já tem destino: contas e parcelas que vão chegar ( R$ 1.864,03 por mês, de uma renda de R$ 5.573,64 ). Até 30% é confortável.",
+  "Se eu comprar algo parcelado, cabe no meu bolso?": "Use o Simulador : informe o valor e o número de parcelas e ele mostra mês a mês se cabe, contando as contas que você já tem.",
+  "Quanto falta para completar minha caixinha?": "Reserva : faltam R$ 4.498,73",
+  "Minhas finanças estão saudáveis?": "Dos 10 sinais que eu acompanho: 8 saudáveis , 2 em atenção e 0 em alerta. O que mais pede cuidado agora: Quanto da renda já tem dono . Cerca de 33% da renda já tem destino.",
+  "Como eu anoto um gasto?": "Toque na pena dourada , embaixo à direita, e depois em Gastei . Digite o valor, escolha de onde saiu e para onde foi e toque em Salvar.",
+  "Como anoto uma compra parcelada?": "Anote como um gasto (pena > Gastei), escolha o cartão em \"de onde saiu\" e informe o número de parcelas . O app distribui as parcelas nas faturas certas.",
+  "Como pago uma conta ou a fatura?": "Vá em Planejar > Acerto de contas e toque em Pagar (dívidas e faturas) ou Paguei (contas fixas). O app já preenche o valor; é só confirmar de qual conta saiu.",
+  "Como passo dinheiro de uma conta para outra?": "Toque na pena e escolha Transferi entre contas . Escolha de onde saiu e para onde foi. Isso não é gasto: o dinheiro só mudou de lugar.",
+  "Anotei errado. Como corrijo ou apago?": "Toque na anotação (no Início ou em Mais > Anotações) para alterar ou apagar . Logo depois de apagar, aparece o botão Desfazer , caso tenha sido sem querer.",
+  "Como guardo dinheiro numa caixinha?": "Em Planejar > Caixinhas , escolha a caixinha e toque em Guardar . O dinheiro continua na sua conta e continua seu : ele só sai do que você pode usar agora.",
+  "Como cadastro uma conta fixa (aluguel, internet)?": "Em Planejar > Contas fixas , toque em Nova conta fixa . Escolha se repete todo mês ou todo ano (IPVA, IPTU). O app avisa quando vencer.",
+  "Como confiro o saldo com o banco?": "Em Dinheiro , toque na conta: Conferir com o banco fica no topo da janela. Digite o saldo que aparece no app do banco: se não bater, eu ajudo a anotar o que faltou ou a corrigir. Nas aplicações e caixinhas, use Atualizar o valor .",
+  "Como cadastro meu carro ou minha casa?": "Em Dinheiro > Bens , ou na pena > Comprei um bem se a compra for agora. O bem entra no que você tem e pode perder ou ganhar valor com o tempo.",
+  "Como anoto dinheiro que emprestei ou que devo a alguém?": "Em Dinheiro > Pessoas . Cadastre a pessoa e anote se você emprestou ou se pegou emprestado. Dá até para marcar a data combinada.",
+  "Como faço uma cópia dos meus dados?": "Em Mais > Ajustes > Seus dados > Guardar uma cópia . Faça toda semana : seus dados ficam só neste celular, e a cópia é o que salva tudo se ele quebrar ou for perdido.",
+  "Troquei de celular. Como levo meus dados?": "No celular antigo , guarde uma cópia (Mais > Ajustes > Seus dados) e mande para você mesmo. No novo , abra o app e use Recuperar de uma cópia com esse arquivo.",
+  "Por que o app não deixou eu salvar?": "Eu confiro cada anotação antes de salvar. Eu não deixo quando não pode acontecer de verdade: a carteira ficar negativa (não existe nota negativa) ou um gasto passar do limite do cartão . E eu pergunto quando é possível mas estranho: banco negativo (cheque especial), pagar mais do que deve, data muito distante, valor muito acima do costume, usar o dinheiro que está guardado numa caixinha ou uma taxa de rendimento fora do comum (como 115% \"ao ano\" quando era 115% do CDI). Aí é só confirmar.",
+  "Como deixo a letra maior ou a tela escura?": "Em Mais > Ajustes > Aparência : escolha o tamanho da letra (até Enorme) e as cores (claro ou escuro). Lá também dá para deixar o app parado, sem animações.",
+  "O que mudou na economia que me afeta?": "O mais importante agora, de fontes oficiais (atualizado em 09/11 às 12h00): Dólar a R$ 5,40 Gasolina a R$ 6,20 o litro (média Brasil) Inflação de setembro: 0,09% : Seus R$ 3.834,50 para usar agora perdem cerca de R$ 3,00 de poder de compra num mês como esse, se ficarem parados. Suas aplicações rendem acima da inflação de 12 meses: o dinheiro investido está crescendo de verdade. O que ficou mais caro e mais barato em setembro",
+  "O que é reserva de emergência e quanto devo ter?": "É um dinheiro guardado só para imprevistos: perder o emprego, uma doença, um conserto. O ideal é ter de 3 a 6 meses do seu custo básico, num lugar fácil de tirar. Comece com pouco: o importante é começar.",
+  "Por que \"sobrou\" no mês é diferente do que tenho no banco?": "Porque o gasto no cartão conta no dia da compra , e não no dia em que a fatura é paga. Então pode sobrar R$ 500 no mês e o banco cair, se você pagou a fatura de compras do mês anterior. As duas coisas estão certas.",
+  "O que é \"é meu de verdade\"?": "É o seu patrimônio : tudo o que você tem (dinheiro, bens, o que te devem) menos tudo o que você deve. É o que sobraria se você pagasse todas as dívidas hoje. É esse número que mostra se você está ficando mais rico ou mais pobre.",
+  "O gasto no cartão conta na compra ou no pagamento?": "Na compra . Assim cada mês mostra o que você realmente consumiu nele. O pagamento da fatura é só o dinheiro saindo da conta para quitar a dívida do cartão.",
+  "Comprar um carro é gasto?": "Não. É trocar dinheiro (ou uma dívida) por um bem , que continua seu. Por isso use Comprei um bem . O que vira gasto, com o tempo, é a perda de valor do carro, além de combustível, seguro e manutenção.",
+  "Como eu saio das dívidas?": "Um passo de cada vez: Pare de aumentar : nada de novas parcelas por um tempo. Liste tudo o que deve (o app já faz isso). Negocie : credores costumam dar desconto à vista ou juros menores. Ataque uma dívida por vez : a de juros mais caros ou a menor. Guarde um pouquinho mesmo assim, para um imprevisto não virar dívida nova.",
+  "Vale a pena pagar só o mínimo da fatura?": "Não. O que fica sem pagar entra nos juros do rotativo , dos mais caros que existem. Se não der para pagar tudo, costuma sair mais barato parcelar a fatura ou trocar por um empréstimo de juros menores.",
+  "O que são juros compostos?": "São juros sobre juros : a cada mês, os juros entram na conta e o próximo mês cobra juros também sobre eles. Contra você (numa dívida), a conta cresce rápido. A seu favor (guardando), o dinheiro cresce sozinho com o tempo.",
+  "Como começo a guardar ganhando pouco?": "Guarde primeiro , assim que receber, e não o que sobrar no fim do mês. Comece pequeno (até 5% já vale) e dê um objetivo ao dinheiro numa caixinha. O hábito vale mais que o valor.",
+  "Meus dados ficam seguros? Alguém vê?": "Seus dados ficam só neste celular . Não vão para internet nenhuma, e ninguém vê, nem quem fez o Balancete. Por isso a cópia é importante: sem ela, se o celular se perder, os dados vão junto.",
+  "Quanto eu recebo se resgatar meus investimentos hoje?": "Se resgatasse tudo hoje, receberia cerca de R$ 8.517,57 . CDB Inter : cerca de R$ 8.017,34 (o imposto leva R$ 5,03) Reserva (caixinha): cerca de R$ 500,23 (o imposto leva R$ 1,04) É uma estimativa: o Imposto de Renda é cobrado só sobre o que rendeu e diminui com o tempo (22,5% até 6 meses; 15% depois de 2 anos). O banco faz a conta exata no resgate.",
+  "Quanto meu dinheiro rende por mês?": "Com as taxas de hoje, seu dinheiro rende cerca de R$ 100,02 por mês, antes do imposto. CDB Inter : cerca de R$ 94,65 por mês (110% do CDI) Reserva : cerca de R$ 5,37 por mês (100% do CDI) O dinheiro parado nas contas comuns não rende.",
+  "Como digo quanto minha aplicação ou caixinha rende?": "Ao criar ou editar a aplicação (aba Investir ) ou a caixinha ( Planejar > Caixinhas > Editar > Mais detalhes ), escolha em Como rende? o mesmo que o app do banco mostra: % do CDI (ex.: 115), Taxa fixa ao ano (ex.: 12), IPCA + taxa , Poupança ou Varia . Se antes estava de outro jeito, eu refaço os rendimentos que calculei.",
+  "O valor de um investimento não bate com o banco. E agora?": "Use Atualizar o valor (na janela da aplicação ou no cartão da caixinha) e digite o que o banco mostra. Depois diga se a diferença foi rendimento , imposto ou dinheiro que você guardou ou tirou . Eu calculo sozinho, mas posso errar (o banco pode cobrar taxa ou contar de outro jeito): por isso, toda semana, eu lembro você de conferir.",
+  "Onde estão os gráficos e os relatórios?": "Na aba Saúde , na barra de baixo. Em cima, o panorama e os 4 indicadores principais; os outros 6 ficam em Ver mais indicadores . Depois vêm o Mês a mês e Todos os relatórios em lista . Em cada indicador, Ler o relatório explica o que ele quer dizer.",
+  "Não acho uma informação que estava na tela. Onde foi?": "Nada foi removido: para a tela ficar mais limpa, algumas coisas ficam guardadas a um toque. Procure as seções com a seta › (tocando, elas abrem), Mais detalhes nos formulários e o botão ? ao lado das palavras difíceis. Se ainda não achar, escreva aqui o que procura.",
+  "O que é CDI e o que quer dizer “% do CDI”?": "O CDI é a taxa que os bancos usam para emprestar dinheiro entre si. Ela fica quase igual à Selic, os juros básicos do país. Hoje está em 13,65% ao ano . Uma aplicação que rende 100% do CDI rende isso; 115% do CDI rende 15% a mais (cerca de 15,85% ao ano). Quando a Selic muda, o rendimento muda junto.",
+  "Como funciona o Imposto de Renda dos investimentos?": "Na maioria das aplicações (CDB, caixinhas, Tesouro), o imposto é cobrado só sobre o que rendeu e só no resgate , e diminui com o tempo: até 6 meses: 22,5% de 6 meses a 1 ano: 20% de 1 a 2 anos: 17,5% depois de 2 anos: 15% Nos primeiros 30 dias ainda há o IOF , que começa alto e zera no 30º dia. Poupança, LCI e LCA não pagam Imposto de Renda. Eu mostro uma estimativa; o banco faz a conta exata.",
+  "Qual a diferença entre poupança, CDB, LCI e Tesouro?": "Poupança : rende 0,5% ao mês (mais a TR) quando a Selic está acima de 8,5%, só no dia do aniversário. Não paga imposto. CDB e caixinhas de banco : costumam render uma porcentagem do CDI, todo dia útil. Pagam imposto. LCI e LCA : parecidas com o CDB, mas sem Imposto de Renda; muitas só deixam tirar depois de um prazo. Tesouro Direto : você empresta para o governo. Pode ser ligado à Selic, a uma taxa fixa ou à inflação (IPCA +). Paga imposto. Isto não é uma recomendação: a escolha depende do seu objetivo e de quando você vai precisar do dinheiro.",
+  "A inflação está comendo meu dinheiro?": "Em 12 meses, os preços subiram 4,68% (IPCA, do IBGE). Os seus R$ 3.834,50 parados nas contas perdem esse tanto de poder de compra num ano. CDB Inter : rende acima da inflação (15,11% contra 4,68% ao ano) Reserva (caixinha): rende acima da inflação"
+ },
+ "anotacoes": {
+  "todos": {
+   "n": 18,
+   "ids": [
+    "a06",
+    "a11",
+    "entrada:2026-11-09:127",
+    "entrada:2026-11-09:2237",
+    "a02",
+    "a05",
+    "a03",
+    "a04",
+    "a01",
+    "a09",
+    "a10",
+    "ajuste:2026-10-31:22981",
+    "a07",
+    "a08",
+    "ajuste:2026-09-30:23470",
+    "ajuste:2026-08-31:23969",
+    "ajuste:2026-07-31:24479",
+    "ajuste:2026-06-30:25000"
+   ]
+  },
+  "saida": {
+   "n": 6,
+   "ids": [
+    "a06",
+    "a05",
+    "a03",
+    "a04",
+    "a07",
+    "a08"
+   ]
+  },
+  "entrada": {
+   "n": 4,
+   "ids": [
+    "entrada:2026-11-09:127",
+    "entrada:2026-11-09:2237",
+    "a02",
+    "a01"
+   ]
+  },
+  "transferencia": {
+   "n": 2,
+   "ids": [
+    "a09",
+    "a10"
+   ]
+  },
+  "bens": {
+   "n": 6,
+   "ids": [
+    "a11",
+    "ajuste:2026-10-31:22981",
+    "ajuste:2026-09-30:23470",
+    "ajuste:2026-08-31:23969",
+    "ajuste:2026-07-31:24479",
+    "ajuste:2026-06-30:25000"
+   ]
+  },
+  "ordem-data": [
+   "a06",
+   "a11",
+   "entrada:2026-11-09:127",
+   "entrada:2026-11-09:2237",
+   "a02",
+   "a05",
+   "a03",
+   "a04",
+   "a01",
+   "a09",
+   "a10",
+   "ajuste:2026-10-31:22981",
+   "a07",
+   "a08",
+   "ajuste:2026-09-30:23470",
+   "ajuste:2026-08-31:23969",
+   "ajuste:2026-07-31:24479",
+   "ajuste:2026-06-30:25000"
+  ],
+  "ordem-valor": [
+   "a01",
+   "a11",
+   "a02",
+   "a03",
+   "ajuste:2026-06-30:25000",
+   "ajuste:2026-07-31:24479",
+   "a10",
+   "ajuste:2026-08-31:23969",
+   "ajuste:2026-09-30:23470",
+   "ajuste:2026-10-31:22981",
+   "a07",
+   "a09",
+   "a08",
+   "a04",
+   "a05",
+   "entrada:2026-11-09:2237",
+   "a06",
+   "entrada:2026-11-09:127"
+  ],
+  "ordem-nome": [
+   "a09",
+   "a01",
+   "entrada:2026-11-09:2237",
+   "entrada:2026-11-09:127",
+   "ajuste:2026-06-30:25000",
+   "ajuste:2026-07-31:24479",
+   "ajuste:2026-08-31:23969",
+   "ajuste:2026-09-30:23470",
+   "ajuste:2026-10-31:22981",
+   "a10",
+   "a06",
+   "a05",
+   "a11",
+   "a03",
+   "a07",
+   "a02",
+   "a08",
+   "a04"
+  ],
+  "mesAtual": 11,
+  "busca_mercado": [
+   "a06",
+   "a03",
+   "a07"
+  ]
+ }
+}

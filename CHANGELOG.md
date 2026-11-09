@@ -5,6 +5,20 @@
 Formato: versão semântica (`MAIOR.MENOR.CORREÇÃO`). Cada versão diz **o que mudou para a pessoa que usa**.
 Antes da 1.0.0 as versões eram numeradas só pelo nome do cache do app (v1 a v16); estão aqui como marcos de desenvolvimento.
 
+## [1.25.0-beta.1]: 9 de novembro de 2026 · redesign, fases A e B (correções rápidas)
+O dono aprovou o redesign "Tinta & Latão" (D67), em fases, cada uma testada. **A versão de antes ficou guardada** (marca `v1.24.1-beta.1` e ramo `salvo/1.24.1-antes-do-redesign`; como voltar em `docs/PUBLICACAO.md`). Nada muda nos seus dados nem nas contas.
+- **Abertura curta**: a animação do Brasão aparece só no primeiro uso e quando o app atualiza, em 1,2 segundo (antes, 4,1 s toda vez). Tocar pula.
+- **Avisos sem bagunça**: um aviso por vez, no mesmo lugar. O balão do "Perguntar" fala só no primeiro acesso, nunca por cima de outro aviso (antes falava em cada aba, todo dia). O aviso com "Desfazer" não é mais cortado por outro antes de 3 segundos.
+- **Saúde honesta**: o panorama mostra os contadores **Saudáveis · Atenção · Alerta** e **"Aguardando dados"**. Só chama de saudável quem tem base: **30 dias de anotações** ou a **renda informada em Ajustes**. Os cartões e a resposta do chat dizem o mesmo. Os números e os relatórios não mudaram.
+- **ⓘ no lugar do "?"** ao lado dos títulos (o título não parece mais uma pergunta). Os textos de ajuda são os mesmos.
+- **Janelas mais fáceis para quem usa teclado ou leitor de tela**: o foco vai para o título, o Tab não escapa para trás, Esc fecha, o foco volta ao botão que abriu e o resto da tela fica "parado". Link "Pular para o conteúdo". **Enter num campo salva**.
+- **Bordas dos campos mais visíveis** (contraste de pelo menos 3 para 1). Com mouse, botões e linhas reagem ao passar por cima.
+- **Meta estourada** aparece como pote **cheio, vermelho e transbordando**, com "R$ X acima" (antes, pote vazio). O pote agora enche conforme você gasta.
+- **Textos**: "Limite ultrapassado em R$ X" (antes dizia "quase no fim" mesmo acima do limite); "Escolha ou crie o bem para ver o resumo" (antes aparecia um "?" solto); o campo do Perguntar virou "Procure uma pergunta".
+- **Dica de instalar conforme o aparelho**: iPhone, Android ou computador. No computador o cartão só aparece se o navegador oferece instalar; o passo a passo de todos fica em **Ajustes > Ajuda**.
+- Para quem programa: "golden master" (`tests/35-golden-master.test.js`) prova que nenhum valor calculado mudou; fotos antes/depois em `docs/redesign/capturas/`; situação em `docs/redesign/IMPLEMENTACAO_STATUS.md`.
+- Testes: 947 verificações em 36 arquivos (novos: golden master e fase B).
+
 ## [1.24.1-beta.1]: 8 de novembro de 2026 · chat em dia e "Ver no app" no lugar exato
 - **O "Ver no app" leva à função exata, não só à aba.** Ele abre a seção certa (ex.: "Ver mais indicadores"), a janela certa (ex.: a da aplicação ou "Conferir com o banco") ou a folha certa (ex.: Gastei) e **destaca o lugar** com uma borda dourada que pisca.
 - **10 perguntas novas** (agora são 63): quanto recebo se resgatar hoje, quanto meu dinheiro rende por mês, como digo quanto rende (ex.: 115% do CDI), o valor não bate com o banco, onde estão os gráficos e os relatórios, não acho uma informação, o que é CDI, como funciona o Imposto de Renda dos investimentos, diferença entre poupança, CDB, LCI e Tesouro, e se a inflação está comendo o meu dinheiro.

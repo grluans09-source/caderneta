@@ -67,7 +67,8 @@ eq("gráficos de tipos diferentes: curva, barras, régua, comparação e composi
 // ======== 3) aba Relatórios ========
 click('nav [data-v="graficos"]');click('#tela [data-a="ir"][data-v="relatorios"]');
 eq("Relatórios abre com o panorama e uma lista de relatórios",[/Seu panorama/.test($("#tela").textContent),d.querySelectorAll("#tela .rel-item").length],[true,10]);
-eq("o panorama conta quantos estão saudáveis, em atenção e em alerta",/estão saudáveis/.test($("#tela .preto").textContent)&&/pedem atenção/.test($("#tela .preto").textContent),true);
+eq("o panorama mostra os contadores Saudáveis, Atenção, Alerta e Aguardando dados (redesign R-06)",[d.querySelectorAll("#tela .preto .pano-c div").length,/Aguardando dados/.test($("#tela .preto").textContent)],[3,true]);
+{const c=T.contagemPanorama(T.indicadores()); eq("   e a conta fecha: saudáveis + atenção + alerta + informativos + aguardando = 10",c.ok+c.atencao+c.critico+c.info+c.aguardando,10);}
 const ordem=[...d.querySelectorAll("#tela .rel-item .selo")].map(s=>s.className.match(/st-(\w+)/)[1]);
 const rank={critico:0,atencao:1,info:2,ok:3,sem:4};
 eq("a lista mostra primeiro o que está em alerta",ordem.every((x,i)=>i===0||rank[ordem[i-1]]<=rank[x]),true);

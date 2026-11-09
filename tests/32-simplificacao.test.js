@@ -122,7 +122,7 @@ click('nav [data-v="graficos"]');
 const fora=$$('#tela > .ind-card').map(c=>c.querySelector("[data-a='relInd']").dataset.id), dentro=$$('#tela details[data-rec="maisInd"] .ind-card').length;
 eq("Saúde: 4 indicadores à vista, os outros 6 em \"Ver mais indicadores\"",[fora,dentro],[["patrimonio","liquidez","reserva","poupanca"],6]);
 eq("   panorama no topo, Mês a mês e a lista de relatórios continuam lá",[!!$("#tela .card.preto"),!!$('#tela details[data-rec="mesAMes"] #cardMM'),!!$('#tela [data-a="ir"][data-v="relatorios"]')],[true,true,true]);
-eq("   o panorama fecha a conta (saudáveis + atenção + alerta + informativos = com dados)",(()=>{const t=tx("#tela .card.preto");const n=[...t.matchAll(/(\d+)/g)].map(m=>+m[1]);const com=n[0],soma=n.slice(1,5).reduce((a,b)=>a+b,0);return com===soma})(),true);
+eq("   o panorama fecha a conta (saudáveis + atenção + alerta + aguardando + informativos = 10)",[...d.querySelectorAll("#tela .card.preto .pano-c b, #tela .card.preto .pano-ag b")].map(b=>+b.textContent).reduce((a,b)=>a+b,0),10);
 eq("   a pergunta diz \"o que é meu\", sem \"patrimônio\"",/O que é meu está crescendo\?/.test(tx("#tela")),true);
 click('#tela [data-a="relInd"][data-id="reserva"]');
 eq("   o relatório aberto pela Saúde volta para a Saúde",[$('#tela .volta2').dataset.v,$("nav [aria-current]").dataset.v],["graficos","graficos"]);
@@ -158,11 +158,14 @@ eq("boas-vindas: \"ele mostra\" (o Balancete), não \"ela\"",/e ele mostra quant
 // ---- balão do Perguntar: uma vez por aba por dia ----
 const w3=abre(seed); const d3=w3.document; const espera=ms=>new Promise(r=>setTimeout(r,ms));
 (async()=>{
+  await espera(20); const pes=d3.querySelector('[data-a="pesaoFecha"]'); if(pes)pes.click();
   d3.querySelector('nav [data-v="planejar"]').click(); await espera(20);
   const b1=d3.querySelector("#pergBal").classList.contains("on");
-  d3.querySelector('nav [data-v="inicio"]').click(); await espera(20); d3.querySelector("#pergBal").classList.remove("on");
+  d3.querySelector("#pergBal").classList.remove("on");
+  d3.querySelector('nav [data-v="inicio"]').click(); await espera(20);
+  const b2=d3.querySelector("#pergBal").classList.contains("on");
   d3.querySelector('nav [data-v="planejar"]').click(); await espera(20);
-  eq("o balão do Perguntar fala na primeira visita da aba e não repete no mesmo dia",[b1,d3.querySelector("#pergBal").classList.contains("on")],[true,false]);
+  eq("o balão do Perguntar fala uma vez só, no primeiro acesso (redesign R-04), e não volta a cada troca de aba",[b1,b2,d3.querySelector("#pergBal").classList.contains("on")],[true,false,false]);
   eq("erros de script",errs,[]);
   console.log(ok?"TUDO OK":"HÁ FALHAS");process.exit(ok?0:1);
 })();

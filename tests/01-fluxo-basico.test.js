@@ -139,6 +139,7 @@ const inp=$("#arquivo");Object.defineProperty(inp,"files",{value:[new w.File([co
 setTimeout(()=>{
   click('[data-a="mOk"]');
   eq("restaurou lançamentos",JSON.stringify(S().lancamentos),antes);
+  T.AVISOS.length=0; T.fimAviso(); /* redesign R-04: avisos esperam na fila atrás do "Desfazer"; aqui limpamos a fila */
   irV('ajustes');const inp2=$("#arquivo");Object.defineProperty(inp2,"files",{value:[new w.File(['{"contas":[]}'],"x.json")],configurable:true});inp2.dispatchEvent(new w.Event("change",{bubbles:true}));
   setTimeout(()=>{
     eq("rejeita formato estranho",$("#toast").textContent,"Esse arquivo não é uma cópia do Balancete");

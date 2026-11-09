@@ -126,12 +126,12 @@ Primeiro as **caixinhas** (cofres animados, "Guardar" e "Tirar"); em cima, o tot
 Valor, com o que vai pagar (as aplicações aparecem por último, com "(resgatar)") e em quantas vezes; "Minha renda por mês" fica em "Mais detalhes".
 
 ### Saúde: "Como vão as suas finanças" (antes as abas Gráficos e Relatórios; juntas desde a 1.23.0, D64)
-1. O **panorama** (quantos indicadores estão saudáveis, em atenção, em alerta ou só informativos, e qual é o mais urgente)
+1. O **panorama**: contadores **Saudáveis · Atenção · Alerta** e **Aguardando dados** (desde a 1.25.0, D67/D1: só conta como saudável com 30 dias de anotações ou com a renda informada em Ajustes; sem essa base, o cartão mostra "— Aguardando dados"), e qual é o mais urgente
 2. **4 indicadores à vista**: O que é seu de verdade · Folga para os próximos 30 dias · Reserva de emergência · Taxa de poupança (selo, valor, gráfico, leitura em uma frase e **Ler o relatório**)
 3. **Ver mais indicadores** (abre): Peso das dívidas · Quanto da renda já tem dono · Custo fixo de vida · Para onde vai o dinheiro · De que é feito o que você tem · Custo dos juros e multas
 4. **Mês a mês** (abre): este mês contra o anterior, com setas para voltar até 12 meses
 5. **Todos os relatórios em lista** (do mais urgente ao mais tranquilo). Cada relatório tem 5 partes (O que é · Como você está · Para comparar · O que isso quer dizer · Por onde começar) e um botão para compartilhar; volta para onde a pessoa estava
-No Modo contador, o balancete aparece no fim. "Patrimônio" e o jeito de ler os indicadores ficam no "?" do topo. Selos: ✓ Saudável (preto), ! Atenção (ouro), ▲ Alerta (bordô).
+No Modo contador, o balancete aparece no fim. "Patrimônio" e o jeito de ler os indicadores ficam no "?" do topo. Selos: ✓ Saudável (preto), ! Atenção (ouro), ▲ Alerta (bordô), — Aguardando dados.
 
 ### Mais: "Tudo o resto"
 Entradas: **Anotações · Notícias · Ajustes**
@@ -191,3 +191,6 @@ Abre uma janela preta e dourada com **63 perguntas prontas** em 5 grupos (Meu di
 - Nenhuma função foi removida na reorganização.
 - Os 3 modelos de interface testados depois (Balança, Razão e Cofre) viraram um só: a Balança (D39), que hoje é o Mordomo (D54).
 - Notificações: continuam fora (o app não tem servidor).
+
+## Redesign em andamento (D67, desde a 1.25.0)
+O que já mudou na tela (fases A e B): a **ajuda dos termos é um ⓘ** no fim da linha do título (antes "?"); a **abertura** aparece só no primeiro uso e ao atualizar; **um aviso por vez** no rodapé, e o balão do Perguntar fala uma vez só; **meta estourada** = pote cheio e vermelho com "R$ X acima" (o pote enche conforme o gasto); **bordas de campo** mais escuras; a **dica de instalar** muda conforme o aparelho (em Ajustes > Ajuda fica o passo a passo). O resto deste mapa continua valendo até as fases C e D (cores, barra de baixo e lugares novos); cada mudança será anotada aqui.

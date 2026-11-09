@@ -9,7 +9,9 @@ const seed={contas:[{id:"d1",nome:"Dinheiro",tipo:"ativo",inicial:10000,carteira
   {id:"lj",nome:"Carnê",tipo:"passivo",inicial:0,abertas:[{data:dd(-4),valor:12000}]},{id:"cc",nome:"Cartão",tipo:"passivo",inicial:0,abertas:[{data:dd(10),valor:30000}]}],
   categorias:[{id:"k1",nome:"Mercado",tipo:"despesa"}],lancamentos:[],
   config:{tamanho:"m",tema:"auto",contador:false,ultimoBackup:null,pronto:true,movimento:"parado"}};
-function abre(mm){return new JSDOM(html,{runScripts:"dangerously",url:"http://localhost/",virtualConsole:vc,pretendToBeVisual:true,beforeParse(w){w.localStorage.setItem("caderneta:v2",JSON.stringify(seed));if(mm)w.matchMedia=q=>({matches:mm==="instalado",addListener(){},removeListener(){}})}}).window}
+function abre(mm){return new JSDOM(html,{runScripts:"dangerously",url:"http://localhost/",virtualConsole:vc,pretendToBeVisual:true,beforeParse(w){w.localStorage.setItem("caderneta:v2",JSON.stringify(seed));if(mm)w.matchMedia=q=>({matches:mm==="instalado",addListener(){},removeListener(){}});
+  if(mm==="navegador")Object.defineProperty(w.navigator,"userAgent",{value:"Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 Chrome/130 Mobile Safari/537.36",configurable:true})}}).window}
+function abrePC(){return new JSDOM(html,{runScripts:"dangerously",url:"http://localhost/",virtualConsole:vc,pretendToBeVisual:true,beforeParse(w){w.localStorage.setItem("caderneta:v2",JSON.stringify(seed));w.matchMedia=q=>({matches:false,addListener(){},removeListener(){}})}}).window}
 let w=abre(),d=w.document,T=w.__T,$=s=>d.querySelector(s);
 d.documentElement.classList.add("calmo");
 // ---- atrasada: o acerto e a agenda dizem a mesma coisa ----
@@ -36,6 +38,15 @@ w2.document.querySelector('[data-a="dicaOk"]').click();
 eq("'Entendi' some com a dica",!!w2.document.querySelector("#dicaInst"),false);
 w2.document.querySelector('nav [data-v="contas"]').click();w2.document.querySelector('nav [data-v="inicio"]').click();
 eq("e ela não volta mais neste aparelho",!!w2.document.querySelector("#dicaInst"),false);
+// redesign RD-12 / DF-10: no computador, nada de instrução de Android
+const w4=abrePC();
+eq("no computador sem a opção de instalar do navegador: nenhuma dica no Início",[w4.__T.plataforma(),!!w4.document.querySelector("#dicaInst")],["computador",false]);
+w4.document.querySelector('nav [data-v="mais"]').click();w4.document.querySelector('#tela [data-a="ir"][data-v="ajustes"]').click();
+eq("   as instruções ficam em Ajustes > Ajuda, com o caminho do computador",/No computador/.test(w4.document.querySelector("#tela").textContent),true);
+const ev=new w4.Event("beforeinstallprompt"); ev.prompt=()=>{}; ev.userChoice=Promise.resolve({outcome:"dismissed"}); w4.dispatchEvent(ev);
+w4.document.querySelector('nav [data-v="inicio"]').click();
+const di=w4.document.querySelector("#dicaInst");
+eq("   com a opção do navegador: \"Instalar no computador\", sem falar de Android",[!!di&&/Instalar no computador/.test(di.textContent),!!di&&/Android/.test(di.textContent)],[true,false]);
 const w3=abre("instalado");
 eq("já instalado: nenhuma dica",!!w3.document.querySelector("#dicaInst"),false);
 eq("erros de script",errs,[]);

@@ -30,6 +30,9 @@ sd=base(); sd.caixas=[{id:"x1",nome:"Caixinha Turbo",alvo:0,taxa:115,ate:dd(-10)
 sd.reservas=[{id:"r1",data:dd(-20),de:"livre",para:"x1",valor:100000,conta:"b1"}];
 w=abre(sd); T=w.__T; d=w.document; $=s=>d.querySelector(s);
 const errado=T.S().lancamentos.filter(l=>l.rendCx==="x1").reduce((s,l)=>s+l.valor,0);
+/* refazer começa no 1º mês em que o app calculou rendimento (ou no 1º dinheiro guardado, se for depois):
+   perto da virada do mês, o 1º rendimento pode cair no mês seguinte (fim de semana, feriado de 2/11) */
+const mes1=T.S().lancamentos.filter(l=>l.rendCx==="x1").map(l=>l.rend).sort()[0], iniEsperado=(mes1+"-01")>dd(-20)?mes1+"-01":dd(-20);
 eq("2. dado antigo: a caixinha com 115 era lida como taxa fixa (cortada em 100% ao ano)",[T.S().caixas[0].modo,T.S().caixas[0].taxa,errado>0],["fixa",100,true]);
 T.ir("caixinhas"); $('#tela [data-a="caixa"][data-id="x1"]').click();
 $('#modal [data-a="rendModo"][data-v="cdi"]').click();
@@ -39,7 +42,7 @@ eq("   ao trocar para \"115% do CDI\", o app avisa que vai refazer os rendimento
 $('#modal [data-a="mOk"]').click();
 const certo=T.S().lancamentos.filter(l=>l.rendCx==="x1").reduce((s,l)=>s+l.valor,0);
 const ini=T.S().caixas[0].calc0, porDiaCerto=certo/uteis(ini,hoje,T), porDiaErrado=errado/uteis(dd(-10),hoje,T);
-eq("   depois de refazer (desde o primeiro dinheiro guardado nela): rende 115% do CDI, bem menos por dia que o valor errado",[T.S().caixas[0].modo,T.S().caixas[0].taxa,ini,porDiaCerto<porDiaErrado/3,certo>0],["cdi",115,dd(-20),true,true]);
+eq("   depois de refazer (desde o primeiro rendimento calculado, ou o primeiro dinheiro guardado nela): rende 115% do CDI, bem menos por dia que o valor errado",[T.S().caixas[0].modo,T.S().caixas[0].taxa,ini,porDiaCerto<porDiaErrado/3,certo>0],["cdi",115,iniEsperado,true,true]);
 eq("   e o que ficou bate com a conta de 115% do CDI desde aquele dia",Math.abs(certo-Math.round(100000*(Math.pow(1+T.fatorDia(13.65)*1.15,uteis(ini,hoje,T))-1)))<=uteis(ini,hoje,T),true);
 eq("   o saldo da caixinha também foi corrigido",T.saldoCaixa("x1"),100000+certo);
 

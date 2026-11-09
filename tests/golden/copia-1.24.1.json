@@ -1,0 +1,422 @@
+{
+ "app": "caderneta",
+ "versao": 2,
+ "appVersao": "1.24.1-beta.1",
+ "dados": {
+  "contas": [
+   {
+    "id": "d1",
+    "nome": "Dinheiro",
+    "tipo": "ativo",
+    "inicial": 18000,
+    "carteira": true
+   },
+   {
+    "id": "b1",
+    "nome": "Conta no banco",
+    "tipo": "ativo",
+    "inicial": 342050
+   },
+   {
+    "id": "cdb",
+    "nome": "CDB Inter",
+    "tipo": "ativo",
+    "inicial": 800000,
+    "inv": {
+     "modo": "cdi",
+     "taxa": 110,
+     "ir": true,
+     "banco": "b1",
+     "ate": "2026-11-09",
+     "desde": "2026-08-01",
+     "calc0": "2026-11-02"
+    }
+   },
+   {
+    "id": "cc",
+    "nome": "Nubank",
+    "tipo": "passivo",
+    "inicial": 85240,
+    "fecha": 3,
+    "vence": 10,
+    "limite": 400000,
+    "abertas": [
+     {
+      "data": "2026-11-10",
+      "valor": 61240
+     },
+     {
+      "data": "2026-12-10",
+      "valor": 24000
+     }
+    ]
+   },
+   {
+    "id": "moto",
+    "nome": "Moto",
+    "tipo": "ativo",
+    "inicial": 1200000,
+    "bem": true,
+    "taxa": -25,
+    "desde": "2026-05",
+    "ajustadoAte": "2026-10"
+   },
+   {
+    "id": "nb",
+    "nome": "Notebook",
+    "tipo": "ativo",
+    "inicial": 0,
+    "bem": true,
+    "taxa": -20,
+    "desde": "2026-11",
+    "ajustadoAte": "2026-11"
+   },
+   {
+    "id": "p1",
+    "nome": "João",
+    "tipo": "ativo",
+    "inicial": 15000,
+    "pessoa": true,
+    "cobrar": "2026-11-20"
+   }
+  ],
+  "categorias": [
+   {
+    "id": "k1",
+    "nome": "Mercado",
+    "tipo": "despesa",
+    "meta": 80000
+   },
+   {
+    "id": "k2",
+    "nome": "Lazer",
+    "tipo": "despesa",
+    "meta": 30000
+   },
+   {
+    "id": "k3",
+    "nome": "Transporte",
+    "tipo": "despesa",
+    "meta": 40000
+   },
+   {
+    "id": "k4",
+    "nome": "Casa",
+    "tipo": "despesa"
+   },
+   {
+    "id": "r1",
+    "nome": "Salário",
+    "tipo": "receita"
+   },
+   {
+    "id": "r2",
+    "nome": "Freela",
+    "tipo": "receita"
+   },
+   {
+    "id": "mw9e0yo0a8llmi",
+    "nome": "Rendimentos",
+    "tipo": "receita",
+    "sis": "rend"
+   }
+  ],
+  "lancamentos": [
+   {
+    "id": "a01",
+    "tipo": "entrada",
+    "valor": 520000,
+    "desc": "Salário",
+    "contaId": "b1",
+    "destinoId": null,
+    "catId": "r1",
+    "data": "2026-11-05"
+   },
+   {
+    "id": "a02",
+    "tipo": "entrada",
+    "valor": 35000,
+    "desc": "Freela",
+    "contaId": "b1",
+    "destinoId": null,
+    "catId": "r2",
+    "data": "2026-11-08"
+   },
+   {
+    "id": "a03",
+    "tipo": "saida",
+    "valor": 34780,
+    "desc": "mercado do mês",
+    "contaId": "b1",
+    "destinoId": null,
+    "catId": "k1",
+    "data": "2026-11-07"
+   },
+   {
+    "id": "a04",
+    "tipo": "saida",
+    "valor": 12000,
+    "desc": "cinema",
+    "contaId": "cc",
+    "destinoId": null,
+    "catId": "k2",
+    "data": "2026-11-06",
+    "parcelas": [
+     {
+      "data": "2026-12-10",
+      "valor": 12000
+     }
+    ]
+   },
+   {
+    "id": "a05",
+    "tipo": "saida",
+    "valor": 4580,
+    "desc": "ônibus",
+    "contaId": "d1",
+    "destinoId": null,
+    "catId": "k3",
+    "data": "2026-11-08"
+   },
+   {
+    "id": "a06",
+    "tipo": "saida",
+    "valor": 1250,
+    "desc": "padaria",
+    "contaId": "d1",
+    "destinoId": null,
+    "catId": "k1",
+    "data": "2026-11-09"
+   },
+   {
+    "id": "a07",
+    "tipo": "saida",
+    "valor": 21000,
+    "desc": "mercado",
+    "contaId": "b1",
+    "destinoId": null,
+    "catId": "k1",
+    "data": "2026-10-20"
+   },
+   {
+    "id": "a08",
+    "tipo": "saida",
+    "valor": 15990,
+    "desc": "conserto",
+    "contaId": "b1",
+    "destinoId": null,
+    "catId": "k4",
+    "data": "2026-10-15"
+   },
+   {
+    "id": "a09",
+    "tipo": "transferencia",
+    "valor": 20000,
+    "desc": "saque",
+    "contaId": "b1",
+    "destinoId": "d1",
+    "catId": null,
+    "data": "2026-11-04"
+   },
+   {
+    "id": "a10",
+    "tipo": "transferencia",
+    "valor": 24000,
+    "desc": "pagamento parcial do Nubank",
+    "contaId": "b1",
+    "destinoId": "cc",
+    "catId": null,
+    "data": "2026-11-03"
+   },
+   {
+    "id": "a11",
+    "tipo": "bem",
+    "valor": 380000,
+    "desc": "Notebook novo",
+    "contaId": "b1",
+    "destinoId": "nb",
+    "catId": null,
+    "data": "2026-11-09"
+   },
+   {
+    "id": "mw9e0yo00t4lck",
+    "tipo": "entrada",
+    "valor": 2237,
+    "desc": "Rendimento de novembro",
+    "contaId": "cdb",
+    "destinoId": null,
+    "catId": "mw9e0yo0a8llmi",
+    "data": "2026-11-09",
+    "rend": "2026-11"
+   },
+   {
+    "id": "mw9e0yo0pud8jg",
+    "tipo": "entrada",
+    "valor": 127,
+    "desc": "Rendimento da caixinha Reserva de novembro",
+    "contaId": "b1",
+    "destinoId": null,
+    "catId": "mw9e0yo0a8llmi",
+    "data": "2026-11-09",
+    "rend": "2026-11",
+    "rendCx": "x1"
+   },
+   {
+    "id": "mw9e0yo02hdbhy",
+    "tipo": "ajuste",
+    "valor": 25000,
+    "sinal": "baixa",
+    "desc": "Perdeu valor: Moto",
+    "contaId": "moto",
+    "destinoId": null,
+    "catId": null,
+    "data": "2026-06-30"
+   },
+   {
+    "id": "mw9e0yo0f14aoi",
+    "tipo": "ajuste",
+    "valor": 24479,
+    "sinal": "baixa",
+    "desc": "Perdeu valor: Moto",
+    "contaId": "moto",
+    "destinoId": null,
+    "catId": null,
+    "data": "2026-07-31"
+   },
+   {
+    "id": "mw9e0yo0j0j2ld",
+    "tipo": "ajuste",
+    "valor": 23969,
+    "sinal": "baixa",
+    "desc": "Perdeu valor: Moto",
+    "contaId": "moto",
+    "destinoId": null,
+    "catId": null,
+    "data": "2026-08-31"
+   },
+   {
+    "id": "mw9e0yo0zob74k",
+    "tipo": "ajuste",
+    "valor": 23470,
+    "sinal": "baixa",
+    "desc": "Perdeu valor: Moto",
+    "contaId": "moto",
+    "destinoId": null,
+    "catId": null,
+    "data": "2026-09-30"
+   },
+   {
+    "id": "mw9e0yo0wkhd68",
+    "tipo": "ajuste",
+    "valor": 22981,
+    "sinal": "baixa",
+    "desc": "Perdeu valor: Moto",
+    "contaId": "moto",
+    "destinoId": null,
+    "catId": null,
+    "data": "2026-10-31"
+   }
+  ],
+  "fixas": [
+   {
+    "id": "f1",
+    "nome": "Aluguel",
+    "valor": 150000,
+    "dia": 10,
+    "freq": "mensal",
+    "mes": 0,
+    "contaId": "b1",
+    "catId": "k4",
+    "inicio": "2026-08-01",
+    "puladas": []
+   },
+   {
+    "id": "f2",
+    "nome": "Internet",
+    "valor": 11990,
+    "dia": 15,
+    "freq": "mensal",
+    "mes": 0,
+    "contaId": "b1",
+    "catId": "k4",
+    "inicio": "2026-08-01",
+    "puladas": []
+   },
+   {
+    "id": "f3",
+    "nome": "IPVA",
+    "valor": 180000,
+    "dia": 20,
+    "freq": "anual",
+    "mes": 1,
+    "contaId": "b1",
+    "catId": "k3",
+    "inicio": "2026-08-01",
+    "puladas": []
+   }
+  ],
+  "caixas": [
+   {
+    "id": "x1",
+    "nome": "Reserva",
+    "alvo": 500000,
+    "taxa": 100,
+    "modo": "cdi",
+    "ir": true,
+    "ate": "2026-11-09",
+    "calc0": "2026-11-02"
+   }
+  ],
+  "reservas": [
+   {
+    "id": "r1",
+    "data": "2026-10-20",
+    "de": "livre",
+    "para": "x1",
+    "valor": 50000,
+    "conta": "b1"
+   },
+   {
+    "id": "mw9e0yo0yct1qa",
+    "data": "2026-11-09",
+    "de": "livre",
+    "para": "x1",
+    "valor": 127,
+    "conta": "b1",
+    "rend": "2026-11"
+   }
+  ],
+  "config": {
+   "tamanho": "m",
+   "tema": "claro",
+   "contador": false,
+   "ultimoBackup": "2026-11-01",
+   "pronto": true,
+   "movimento": "parado",
+   "renda": 0,
+   "sobraRef": null,
+   "favoritas": [],
+   "favCats": [],
+   "idx": {
+    "cdi": [
+     {
+      "d": "2026-09-01",
+      "v": 13.65
+     }
+    ],
+    "selic": [
+     {
+      "d": "2026-09-01",
+      "v": 13.75
+     }
+    ],
+    "ipca": [
+     {
+      "m": "2026-09",
+      "v": 0.09
+     }
+    ]
+   }
+  }
+ }
+}
