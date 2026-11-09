@@ -26,7 +26,8 @@ sp.click();
 eq("tocar na abertura pula direto para o app",!!d.querySelector("#splash"),false);
 
 // ---- fonte contábil ----
-eq("a letra serifada é a de balanço (Times New Roman; Noto Serif no Android), sem Georgia",[/--serif:'Times New Roman',Times,'Noto Serif'/.test(original),/Georgia/.test(original)],[true,false]);
+/* redesign D67, fase C: a letra de títulos e valores é a Fraunces e a do texto, a Atkinson Hyperlegible Next, as duas dentro do app */
+eq("a letra dos títulos e valores é a Fraunces (com Times de reserva) e a do texto a Atkinson Hyperlegible Next, sem Georgia",[/--font-display:'Fraunces','Times New Roman'/.test(original),/--font-ui:'Atkinson Hyperlegible Next'/.test(original),/--serif:var\(--font-display\)/.test(original),/Georgia/.test(original)],[true,true,true,false]);
 eq("todos os números usam algarismos alinhados (padrão contábil)",/body\{font-variant-numeric:lining-nums tabular-nums/.test(original),true);
 eq("erros de script",errs,[]);
 console.log(ok?"TUDO OK":"HÁ FALHAS");process.exit(ok?0:1);

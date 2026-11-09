@@ -30,6 +30,7 @@ eq("D1: com 25 dias de anotações e sem renda informada, nada é chamado de sau
 eq("   o painel mostra os 3 contadores + Aguardando dados e explica o porquê",[$$("#tela .card.preto .pano-c div").map(x=>x.textContent.replace(/\d+/,"").trim()),/Aguardando dados: 8/.test($("#tela .card.preto").textContent),/30 dias de anotações/.test($("#tela .card.preto").textContent)],[["✓ Saudáveis","! Atenção","✕ Alerta"],true,true]);
 eq("   os indicadores e os relatórios não mudam (os 8 continuam com o estado calculado)",T.indicadores().filter(i=>i.st==="ok").length,8);
 eq("   e os cartões dizem o mesmo que o panorama: nenhum selo \"Saudável\", 8 \"Aguardando dados\"",[$$("#tela .ind-card .selo").filter(x=>/Saudável/.test(x.textContent)).length,$$("#tela .ind-card .selo").filter(x=>/Aguardando dados/.test(x.textContent)).length],[0,8]);
+eq("   e a faixa do cartão segue o selo (nenhum cartão com a cor de saudável sem base)",$$("#tela .ind-card.st-ok").length,0);
 T.S().config.renda=500000;
 const c2=T.contagemPanorama(T.indicadores());
 eq("   com a renda informada em Ajustes (valor de referência), os que estão bem passam a contar",[T.baseMinima(),c2.ok,c2.aguardando],[true,8,0]);
@@ -99,7 +100,7 @@ eq("   e nas outras aberturas não aparece (o app abre direto)",(()=>{const w3=n
 // ---- contraste dos limites de campo (MF-11 / DF-13) ----
 function lum(h){const c=[1,3,5].map(i=>parseInt(h.slice(i,i+2),16)/255).map(v=>v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4));return .2126*c[0]+.7152*c[1]+.0722*c[2]}
 function ctr(a,b){const x=lum(a),y=lum(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05)}
-eq("bordas de campo: #8C8473 (claro) e #7C7566 (escuro), contraste ≥ 3:1 com o fundo",[/--campo:#8C8473/.test(css),/--campo:#7C7566/.test(css),ctr("#8C8473","#FFFFFF")>=3,ctr("#8C8473","#F8F5EE")>=3,ctr("#7C7566","#131313")>=3],[true,true,true,true,true]);
+eq("bordas de campo: #8C8473 (claro) e #7C7566 (escuro), contraste ≥ 3:1 com o fundo",[/--color-border-field:#8C8473/.test(css),/--color-border-field:#7C7566/.test(css),ctr("#8C8473","#FFFFFF")>=3,ctr("#8C8473","#F8F5EE")>=3,ctr("#7C7566","#131313")>=3],[true,true,true,true,true]);
 eq("   campos, chips e botões secundários usam a borda nova",[/\.campo input,\.campo select\{[^}]*var\(--campo\)/.test(css),/\.chip\{[^}]*var\(--campo\)/.test(css),/\.btn\.sec\{[^}]*var\(--campo\)/.test(css)],[true,true,true]);
 eq("hover básico, só com mouse (DF-03)",/@media \(hover:hover\) and \(pointer:fine\)\{[\s\S]*?\.btn:not\(:disabled\):hover/.test(css),true);
 

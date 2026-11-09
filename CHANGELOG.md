@@ -5,6 +5,17 @@
 Formato: versão semântica (`MAIOR.MENOR.CORREÇÃO`). Cada versão diz **o que mudou para a pessoa que usa**.
 Antes da 1.0.0 as versões eram numeradas só pelo nome do cache do app (v1 a v16); estão aqui como marcos de desenvolvimento.
 
+## [1.26.0-beta.1]: 9 de novembro de 2026 · redesign, fase C: cores e letras novas
+A "cara" nova do Balancete, "Tinta & Latão" (D67). Nada muda nas contas nem nos seus dados (o golden master confere).
+- **Letras novas, dentro do app** (funcionam sem internet): **Fraunces** nos títulos e valores e **Atkinson Hyperlegible Next** no texto, uma letra feita para leitura fácil (diferencia I, l e 1; O e 0). Antes, a letra dependia do celular (Times, Noto...).
+- **Tinta = ação; latão = marca.** O botão principal é **tinta** (azul-escuro quase preto), liso, sem o dourado em relevo; o secundário tem contorno de tinta; o que está selecionado fica em tinta. O **latão** (dourado) fica para a marca, o "É meu de verdade", as conquistas e a aba ativa. No tema escuro, a ação vira **latão claro**.
+- **Selos de estado com cor e ícone**: ✓ Saudável em verde-musgo, ! Atenção em âmbar, ✕ Alerta em vermelho, — Aguardando dados neutro. Na Saúde, a faixa de cada cartão segue o selo.
+- **Tamanhos de letra em escala** (títulos, texto, rótulos, números pequenos), que crescem juntos com "Grande" e "Enorme". No computador, títulos um pouco maiores.
+- **Aviso** no rodapé em faixa de tinta com a ação "Desfazer" em latão claro; janelas com o fundo escurecido no tom certo; campos e cartões com cantos e bordas novos.
+- **Nada passa da largura da tela**, nem em celulares pequenos (320 px) com letra Grande ou Enorme, nos dois temas (antes, Planejar, Saúde e Relatórios passavam um pouco).
+- A cor da barra do navegador acompanha a tinta.
+- Testes: 968 verificações em 37 arquivos (novo: fase C, com contraste dos dois temas). Conferência de largura no Chrome: `node tools/conferir-larguras.js` (84 combinações).
+
 ## [1.25.0-beta.1]: 9 de novembro de 2026 · redesign, fases A e B (correções rápidas)
 O dono aprovou o redesign "Tinta & Latão" (D67), em fases, cada uma testada. **A versão de antes ficou guardada** (marca `v1.24.1-beta.1` e ramo `salvo/1.24.1-antes-do-redesign`; como voltar em `docs/PUBLICACAO.md`). Nada muda nos seus dados nem nas contas.
 - **Abertura curta**: a animação do Brasão aparece só no primeiro uso e quando o app atualiza, em 1,2 segundo (antes, 4,1 s toda vez). Tocar pula.

@@ -15,7 +15,7 @@
 |---|---|---|
 | A | Linha de base: massa de teste, "golden master", fotos "antes", cópia .json | **Concluída** (9 nov 2026), publicada na **1.25.0-beta.1** |
 | B | Correções rápidas (avisos, abertura, panorama, diálogos, contraste, textos, formulário) | **Concluída** (9 nov 2026), publicada na **1.25.0-beta.1** |
-| C | Fundação: cores (tokens), letras Fraunces + Atkinson locais, componentes base | A fazer |
+| C | Fundação: cores (tokens), letras Fraunces + Atkinson locais, componentes base | **Concluída** (9 nov 2026), versão **1.26.0-beta.1** |
 | D | Estrutura do celular: barra Início · Dinheiro · [Anotar] · Planejar · Saúde; Perguntar e Ajustes no cabeçalho | A fazer |
 | E | Componentes e telas do celular (folha de anotar, valor, Planejar, metas, gráficos, 320 px) | A fazer |
 | F | Movimento (animações MM e MD) | A fazer |
@@ -53,6 +53,16 @@ No celular as telas que rolam aparecem inteiras (até 4.200 px); no computador, 
 - **Testes:** 36 arquivos, **947 verificações, todos verdes**. Novo: `tests/36-redesign-fase-b.test.js`. Golden master igual, menos a resposta "Minhas finanças estão saudáveis?" (mudança aprovada por D1, em `tests/golden/mudancas-aprovadas.json`). Fotos depois: `docs/redesign/capturas/fase-b/`.
 - **Não verificado:** celular de verdade, leitor de tela de verdade (só simulado).
 
+## Fase C: o que foi feito
+- **Tokens** da seção 6.1 em `:root`, com o tema escuro nos mesmos seletores de hoje; os nomes antigos apontam para os novos. **Nenhuma cor solta nas regras** do estilo (eram 89 linhas com cores escritas direto).
+- **Letras locais**: Fraunces (variável, 36 KB) e Atkinson Hyperlegible Next (variável, 34 KB), dos pacotes oficiais Fontsource (OFL 1.1), em `app/fontes/` e no cache do service worker. Baixadas com autorização do dono.
+- **Escala de letra** (celular e computador) e **espaçamento** em tokens; "Normal/Grande/Enorme" multiplicam por 1 / 1,1875 / 1,375 (o app já usava 16/19/22 px).
+- **Componentes base**: botão tinta (primário) e com contorno (secundário), campos com borda de 1,5 px, chips e escolhas selecionados em tinta, foco com anel de 2 px, selos de estado (✓ ! ✕ —), aviso em faixa de tinta, diálogo e folha com o fundo `--color-scrim`, cartões arredondados.
+- **Testes**: 37 arquivos, **968 verificações, todos verdes** (novo: `tests/37-redesign-fase-c.test.js`: valores dos tokens, 22 pares de contraste em cada tema, nenhuma cor solta, letras locais no cache, escala). Golden master igual (as contas não mudaram).
+- **320 px**: `tools/conferir-larguras.js` no Chrome, 14 telas × Normal/Grande/Enorme × claro/escuro = 84 combinações, **nenhuma passa da largura** (antes da fase C, Planejar com letra Grande e Saúde com letra Enorme já passavam; corrigido).
+- Fotos depois (claro, escuro e computador): `docs/redesign/capturas/fase-c/`.
+- **Não verificado:** celular de verdade (as letras e o tema escuro foram vistos só no Chrome do computador).
+
 ## Itens dos relatórios
 
 Situação: **A fazer** · **Feito** · **Parcial** · **Descartado** (com motivo). A coluna "Fase" diz quando cada item entra.
@@ -72,8 +82,8 @@ Situação: **A fazer** · **Feito** · **Parcial** · **Descartado** (com motiv
 | MF-10 | P2 | Diálogos não gerenciam foco; anúncio de tela inteira | B | Feito (fase B) |
 | MF-11 | P2 | Contraste insuficiente em bordas de campos e controles | B | Feito (fase B) |
 | MF-12 | P2 | Repetição de valores no Início e no Planejar | D/E | A fazer |
-| MF-13 | P2 | Dourado usado para tudo dilui o sinal | C/E | A fazer |
-| MF-14 | P2 | Tipografia serifada depende do sistema | C | A fazer |
+| MF-13 | P2 | Dourado usado para tudo dilui o sinal | C/E | Feito (fase C: latão só para marca e valor; ação em tinta) |
+| MF-14 | P2 | Tipografia serifada depende do sistema | C | Feito (fase C) |
 | MF-15 | P2 | Gráficos e projeções com pouca base de dados | E (D3) | A fazer |
 | MF-16 | P2 | Meta estourada aparece como pote vazio | B | Feito (fase B) |
 | MF-17 | P3 | Textos com lacuna e inconsistência | B | Feito (fase B) |
@@ -98,8 +108,8 @@ Situação: **A fazer** · **Feito** · **Parcial** · **Descartado** (com motiv
 | R-10 | Estados das metas e caixinhas | MF-16 | B/E | Parcial (B: metas; caixinhas e movimento na E/F) |
 | R-11 | Componentes de seleção unificados | MF-09 | E | A fazer |
 | R-12 | Diálogos e leitores de tela | MF-10 | B | Feito (fase B) |
-| R-13 | Papel do dourado e limites visíveis | MF-11, MF-13 | C/E | A fazer |
-| R-14 | Sistema tipográfico próprio | MF-14 | C | A fazer |
+| R-13 | Papel do dourado e limites visíveis | MF-11, MF-13 | C/E | Feito (fase C) |
+| R-14 | Sistema tipográfico próprio | MF-14 | C | Feito (fase C) |
 | R-15 | Gráficos com base mínima | MF-15 | E | A fazer |
 | R-16 | Ajustes para 320 px | MF-19 | E | A fazer |
 
@@ -139,7 +149,7 @@ Situação: **A fazer** · **Feito** · **Parcial** · **Descartado** (com motiv
 | DF-11 | P2 | Gráficos estreitos e sem interação de mouse | G/H | A fazer |
 | DF-12 | P2 | Abertura de 4,1 s também no computador | B | Feito (fase B) |
 | DF-13 | P2 | Contraste insuficiente de limites de controle | B | Feito (fase B) |
-| DF-14 | P3 | Escala tipográfica idêntica à do telefone | C/G | A fazer |
+| DF-14 | P3 | Escala tipográfica idêntica à do telefone | C/G | Parcial (C: escala do computador nos tokens; layout na G) |
 | DF-15 | P3 | Repetição de valores e lista duplicada | G | A fazer |
 
 ### Relatório 02 (computador): recomendações (RD)
@@ -158,7 +168,7 @@ Situação: **A fazer** · **Feito** · **Parcial** · **Descartado** (com motiv
 | RD-11 | Diálogos centralizados | DF-08 | G | A fazer |
 | RD-12 | Conteúdo sensível à plataforma | DF-10 | B | Feito (fase B) |
 | RD-13 | Gráficos para mouse e telas largas | DF-11 | H | A fazer |
-| RD-14 | Escala tipográfica do computador | DF-14 | C/G | A fazer |
+| RD-14 | Escala tipográfica do computador | DF-14 | C/G | Parcial (C: escala do computador nos tokens; layout na G) |
 
 ### Relatório 02 (computador): movimento (MD)
 | ID | Elemento | Fase | Situação |

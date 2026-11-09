@@ -97,7 +97,7 @@ O tipo vem do **menu de bolinhas** do botão da pena (2 toques). A folha mostra 
 2. **Acerto de contas do mês** (cartão preto com ouro: total que falta, 3 contas de prévia e o botão **Abrir o acerto de contas**, que sobe uma **janela preta e dourada por cima da tela** com **todas** as dívidas e contas fixas do mês, cada uma com o prazo em palavras ("vence em…", "atrasada há…") e **Pagar**/**Paguei**, o já pago embaixo e as setas de mês; depois de pagar, a janela volta) ← casa oficial
 3. **Agenda dos próximos dias** (visão rápida: mostra 4; "Ver todas" abre o resto). A legenda das cores e o significado das datas ficam no **"?"** do título
 
-**Regra geral de cores (paleta preto, dourado e branco):** **dourado = clicável** (botões cheios, o +; botões secundários têm contorno dourado; links em ouro sublinhado; linhas que abrem algo têm seta ›); **preto = selecionado** (fundo preto com texto dourado; no tema escuro, creme); **branco** = fundo e cartões. Só o **preto** marca seleção.
+**Regra geral de cores ("Tinta & Latão", D67, desde a 1.26.0):** **tinta = ação** (botão principal liso em tinta; secundário com contorno de tinta; o que está selecionado fica em tinta; no tema escuro a ação é latão claro); **latão = marca** (Brasão, cabeçalho, "É meu de verdade", conquistas, aba ativa); linhas que abrem algo têm seta › cinza. Estados: ✓ verde-musgo (saudável), ! âmbar (atenção), ✕ vermelho (alerta), — neutro (aguardando dados). *(Até a 1.25.0 a regra era "dourado = clicável, preto = selecionado", D44.)*
 
 **Mapa de cores do Planejar** (uma cor, um significado; vale para as outras telas também):
 
@@ -108,8 +108,8 @@ O tipo vem do **menu de bolinhas** do botão da pena (2 toques). A folha mostra 
 | Azul safira | Cobranças "A receber" na agenda | Dinheiro que **entra** |
 | Ametista | Ferramenta Caixinhas | Dinheiro **guardado** |
 | Cobre | Ferramenta Simulador | Compra de **bem** |
-| Ouro | Botões Pagar/Paguei, o + e contornos | **Clicável** |
-| Preto | Cartão do acerto de contas, itens selecionados | Destaque e **selecionado** |
+| Tinta | Botões, itens selecionados, cartão do acerto de contas | **Ação** e **selecionado** |
+| Latão | Pena de anotar, aba ativa, valor "É meu de verdade" | **Marca** e valor |
 
 Urgência na data de cada conta: **pintada** = vence hoje ou já passou; **clara** = vence em até 3 dias; sem destaque = mais longe.
 
@@ -131,7 +131,7 @@ Valor, com o que vai pagar (as aplicações aparecem por último, com "(resgatar
 3. **Ver mais indicadores** (abre): Peso das dívidas · Quanto da renda já tem dono · Custo fixo de vida · Para onde vai o dinheiro · De que é feito o que você tem · Custo dos juros e multas
 4. **Mês a mês** (abre): este mês contra o anterior, com setas para voltar até 12 meses
 5. **Todos os relatórios em lista** (do mais urgente ao mais tranquilo). Cada relatório tem 5 partes (O que é · Como você está · Para comparar · O que isso quer dizer · Por onde começar) e um botão para compartilhar; volta para onde a pessoa estava
-No Modo contador, o balancete aparece no fim. "Patrimônio" e o jeito de ler os indicadores ficam no "?" do topo. Selos: ✓ Saudável (preto), ! Atenção (ouro), ▲ Alerta (bordô), — Aguardando dados.
+No Modo contador, o balancete aparece no fim. "Patrimônio" e o jeito de ler os indicadores ficam no "?" do topo. Selos: ✓ Saudável (verde-musgo), ! Atenção (âmbar), ✕ Alerta (vermelho), — Aguardando dados (neutro); a faixa no topo de cada cartão segue o selo.
 
 ### Mais: "Tudo o resto"
 Entradas: **Anotações · Notícias · Ajustes**
@@ -193,4 +193,4 @@ Abre uma janela preta e dourada com **63 perguntas prontas** em 5 grupos (Meu di
 - Notificações: continuam fora (o app não tem servidor).
 
 ## Redesign em andamento (D67, desde a 1.25.0)
-O que já mudou na tela (fases A e B): a **ajuda dos termos é um ⓘ** no fim da linha do título (antes "?"); a **abertura** aparece só no primeiro uso e ao atualizar; **um aviso por vez** no rodapé, e o balão do Perguntar fala uma vez só; **meta estourada** = pote cheio e vermelho com "R$ X acima" (o pote enche conforme o gasto); **bordas de campo** mais escuras; a **dica de instalar** muda conforme o aparelho (em Ajustes > Ajuda fica o passo a passo). O resto deste mapa continua valendo até as fases C e D (cores, barra de baixo e lugares novos); cada mudança será anotada aqui.
+O que já mudou na tela (fases A e B): a **ajuda dos termos é um ⓘ** no fim da linha do título (antes "?"); a **abertura** aparece só no primeiro uso e ao atualizar; **um aviso por vez** no rodapé, e o balão do Perguntar fala uma vez só; **meta estourada** = pote cheio e vermelho com "R$ X acima" (o pote enche conforme o gasto); **bordas de campo** mais escuras; a **dica de instalar** muda conforme o aparelho (em Ajustes > Ajuda fica o passo a passo). Na fase C (1.26.0): **cores e letras novas** (veja "Regra geral de cores" acima; letras Fraunces e Atkinson). O resto deste mapa continua valendo até a fase D (barra de baixo e lugares novos); cada mudança será anotada aqui.

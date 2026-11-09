@@ -39,7 +39,9 @@ const TELAS=[
   ["24-chat",[clique('[data-a="chat"]')]],
   ["25-primeiros-passos",[],true]
 ];
-const VIEWS=[["celular",{width:390,height:844,deviceScaleFactor:1,isMobile:true,hasTouch:true},true],["computador",{width:1440,height:900,deviceScaleFactor:1},false]];
+const CEL={width:390,height:844,deviceScaleFactor:1,isMobile:true,hasTouch:true}, UA_CEL="Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Mobile Safari/537.36";
+/* [nome, tamanho, página inteira, tema]; com CAPTURA_ESCURO=1 também fotografa o celular no tema escuro */
+const VIEWS=[["celular",CEL,true,"claro"],["computador",{width:1440,height:900,deviceScaleFactor:1},false,"claro"]].concat(process.env.CAPTURA_ESCURO?[["celular-escuro",CEL,true,"escuro"]]:[]);
 function espera(ms){return new Promise(r=>setTimeout(r,ms))}
 (async()=>{
   if(!NAV)throw new Error("Chrome ou Edge não encontrado");
@@ -49,16 +51,16 @@ function espera(ms){return new Promise(r=>setTimeout(r,ms))}
   const abrir=()=>puppeteer.launch({executablePath:NAV,headless:true,args:["--no-first-run","--no-default-browser-check","--disable-gpu","--user-data-dir="+path.join(require("os").tmpdir(),"balancete-captura-"+Date.now())]});
   let nav0=null;
   try{
-    for(const [vnome,vp,inteira] of VIEWS){
+    for(const [vnome,vp,inteira,tema] of VIEWS){
       for(const [nome,passos,vazio] of TELAS){
         if(nav0)await nav0.close().catch(()=>{}); nav0=await abrir(); /* um navegador por tela: o Chrome sem janela cai em telas muito altas */
-        const pg=await nav0.newPage(); await pg.setViewport(vp); await pg.setBypassServiceWorker(true);
+        const pg=await nav0.newPage(); await pg.setViewport(vp); await pg.setBypassServiceWorker(true); if(vp.isMobile)await pg.setUserAgent(UA_CEL);
         await pg.setRequestInterception(true);
         pg.on("request",r=>{const u=r.url(); if(u.startsWith("http://localhost:"+PORTA)&&!/noticias\.json/.test(u))r.continue(); else if(/noticias\.json/.test(u))r.respond({status:200,contentType:"application/json",body:JSON.stringify(NOTICIAS)}); else r.abort()});
         await pg.evaluateOnNewDocument((fixo,seed,noticias,vazio)=>{
           const D=Date; class Fixa extends D{constructor(...a){if(a.length===0)super(fixo);else super(...a)} static now(){return fixo}} window.Date=Fixa;
           try{localStorage.clear(); if(!vazio){localStorage.setItem("caderneta:v2",JSON.stringify(seed)); localStorage.setItem("caderneta:v2:noticias",JSON.stringify(noticias))}}catch(e){}
-        },FIXO,SEED,NOTICIAS,!!vazio);
+        },FIXO,Object.assign({},SEED,{config:Object.assign({},SEED.config,{tema:tema})}),NOTICIAS,!!vazio);
         await pg.goto("http://localhost:"+PORTA+"/",{waitUntil:"load"});
         await espera(400);
         await pg.evaluate(()=>{var s=document.getElementById("splash"); if(s)s.click(); var p=document.querySelector('[data-a="pesaoFecha"]'); if(p)p.click()});

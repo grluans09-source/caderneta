@@ -2,8 +2,9 @@
    Os dados do usuário NÃO passam por aqui (ficam no localStorage). */
 /* Mudar este nome a cada versão nova: é o que faz o celular baixar a versão atualizada.
    Padrão: caderneta-<versão do app>. */
-const VERSAO = "caderneta-1.25.0-beta.1";
-const ARQUIVOS = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg", "./icon-180.png", "./icon-192.png", "./icon-512.png", "./icon-maskable-512.png"];
+const VERSAO = "caderneta-1.26.0-beta.1";
+const ARQUIVOS = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg", "./icon-180.png", "./icon-192.png", "./icon-512.png", "./icon-maskable-512.png",
+  "./fontes/fraunces-wght.woff2", "./fontes/atkinson-hyperlegible-next-wght.woff2"];   /* letras do redesign (D67): locais, funcionam sem internet */
 
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(VERSAO).then((c) => c.addAll(ARQUIVOS)).then(() => self.skipWaiting()));
