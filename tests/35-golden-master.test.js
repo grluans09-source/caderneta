@@ -12,6 +12,8 @@ const aprov=JSON.parse(fs.readFileSync(path.join(__dirname,"golden","mudancas-ap
 function semAprovadas(g){
   const c=JSON.parse(JSON.stringify(g));
   aprov.forEach(m=>{const partes=m.caminho.split("."); let o=c; for(let i=0;i<partes.length-1;i++){o=o&&o[partes[i]]} if(o)delete o[partes[partes.length-1]]});
+  /* a hora das notícias aparece no fuso de quem usa ("às 12h00" no Brasil, "15h00" no robô do GitHub, que roda em UTC) */
+  if(c.perguntas)Object.keys(c.perguntas).forEach(q=>{c.perguntas[q]=c.perguntas[q].replace(/às \d\dh\d\d/g,"às (hora local)")});
   return c;
 }
 const erros=[], w=abrirFixture(html,erros), atual=capturar(w.__T);
