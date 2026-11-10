@@ -19,7 +19,7 @@ Esta avaliação substitui a da 1.0.0 (6 nov 2026). Ela junta o **passo 9 do pla
 | Linhas | **4.242** no total na 1.21.1 (**~4.420** na 1.23.0): **~725 de CSS** e **~3.460 de JavaScript** |
 | Funções | ~311 · ações de tela: ~108 |
 | Dependências do app | **0** (nada de internet para funcionar; as notícias são opcionais) |
-| Testes automáticos | **30 arquivos, 778 verificações** na 1.21.1 (780 na 1.21.2; 794 em 31 arquivos na 1.22.0; **842 em 32 na 1.23.0; 845 na 1.23.1; 872 em 33 na 1.24.0; 886 em 34 na 1.24.1; 947 em 36 na 1.25.0; 968 em 37 na 1.26.0; 1019 em 38 na 1.27.0; 1042 em 39 desde a 1.28.0**), ~80 segundos (`npm test`) |
+| Testes automáticos | **30 arquivos, 778 verificações** na 1.21.1 (780 na 1.21.2; 794 em 31 arquivos na 1.22.0; **842 em 32 na 1.23.0; 845 na 1.23.1; 872 em 33 na 1.24.0; 886 em 34 na 1.24.1; 947 em 36 na 1.25.0; 968 em 37 na 1.26.0; 1019 em 38 na 1.27.0; 1042 em 39 na 1.28.0; 1068 em 40 desde a 1.29.0**), ~80 segundos (`npm test`) |
 | Desempenho (computador, 10.000 anotações) | abrir o app: **~250 ms**; telas: **5 a 90 ms** (Saúde é a mais pesada, ~100 ms); busca digitando: **~6 ms**; salvar uma anotação: **~50 ms** |
 | Espaço de dados | ~150 bytes por anotação simples ⇒ **10.000 anotações ≈ 1,4 MB**; limite típico do navegador ~5 MB ⇒ **~34 mil anotações** (quem anota 10 por dia tem ~9 anos de folga) |
 

@@ -5,6 +5,20 @@
 Formato: versão semântica (`MAIOR.MENOR.CORREÇÃO`). Cada versão diz **o que mudou para a pessoa que usa**.
 Antes da 1.0.0 as versões eram numeradas só pelo nome do cache do app (v1 a v16); estão aqui como marcos de desenvolvimento.
 
+## [1.29.0-beta.1]: 10 de novembro de 2026 · redesign, fase F: movimento com propósito
+Cada animação agora mostra **causa e efeito** e nunca segura a pessoa (D67, seção de movimento do relatório).
+- A **folha de anotar sobe** de baixo (0,3 s) e **desce** ao fechar; o fundo escurece junto.
+- No topo da folha, o **indicador do tipo desliza** de Gastei para Recebi, e a **cor do tipo** vai para a categoria escolhida e o botão Salvar (vermelho, azul, ardósia ou cobre).
+- **Valor vazio**: o campo treme de leve e o celular vibra rapidinho.
+- Depois de salvar, a **linha nova** entra e fica dourada por 1,2 s; o **"É meu de verdade" conta** até o valor novo, sem passar do número.
+- O **aviso** sobe do rodapé e sai rápido; com **Desfazer**, uma barrinha mostra o tempo que falta.
+- **Gráficos** crescem da base e a linha do patrimônio se desenha, **só na primeira vez** que você abre a Saúde; nas outras, aparecem prontos.
+- O **pote da meta enche** de baixo para cima; passou da meta, a **gota cai**. Os nomes das metas aparecem inteiros.
+- Janelas, seções que abrem e a resposta do Perguntar entram suaves; o destaque do "Ver no app" pisca 2 vezes.
+- **Nada "quica"** em números e gráficos, e **nada fica se mexendo à toa** (os cofres e o selo de alerta pararam de pulsar sem parar). Os momentos do Mordomo (Moedinha, Selo PAGO), o menu das medalhas e a abertura continuam.
+- **Movimento: Parado** (ou "reduzir movimento" no celular): nada se desloca; só um esmaecer de até 0,12 s.
+- Testes: 1068 verificações em 40 arquivos (novo: fase F, que confere no estilo que tudo usa só mover e esmaecer, sem "quique" e sem loop).
+
 ## [1.28.0-beta.1]: 9 de novembro de 2026 · redesign, fase E: anotar em 2 toques e valor com vírgula
 Anotar ficou mais rápido e o valor, à prova de engano (D67). As contas não mudaram (golden master).
 - **Valor com vírgula (D2)**: o teclado do valor agora tem vírgula, e o app entende do jeito que a pessoa pensa: **"50" é R$ 50,00** (antes virava R$ 0,50), "50,5" é R$ 50,50, "1.234,56" é R$ 1.234,56. A partir de R$ 1.000 aparece o valor **por extenso** embaixo ("mil e duzentos reais"), para conferir. Vale para todos os campos de dinheiro.

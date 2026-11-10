@@ -1,6 +1,6 @@
 # Mapa do app
 
-O app **de hoje** (versão 1.28.0, com o redesign "Tinta & Latão" até a fase E, D67; antes, a simplificação da 1.23.0: ver `AUDITORIA-INTERFACE.md`): onde mora cada assunto, o que tem em cada tela e o mapa de cores. Nasceu no passo 3 do plano da beta (decisões Q1 a Q7 da [auditoria de funções](AUDITORIA-FUNCOES.md), aceitas pelo dono em 6 nov 2026) e foi completado com Investir, Notícias e o chat.
+O app **de hoje** (versão 1.29.0, com o redesign "Tinta & Latão" até a fase F, D67; antes, a simplificação da 1.23.0: ver `AUDITORIA-INTERFACE.md`): onde mora cada assunto, o que tem em cada tela e o mapa de cores. Nasceu no passo 3 do plano da beta (decisões Q1 a Q7 da [auditoria de funções](AUDITORIA-FUNCOES.md), aceitas pelo dono em 6 nov 2026) e foi completado com Investir, Notícias e o chat.
 
 **Regras do mapa**
 1. **Cada assunto mora em um único lugar.** Nos outros lugares só existe um **atalho** (uma linha que leva até a casa dele).
@@ -23,7 +23,7 @@ O app **de hoje** (versão 1.28.0, com o redesign "Tinta & Latão" até a fase E
 
 Os nomes da barra aparecem **sempre**, também com letra Enorme. **Nada fica flutuando por cima do conteúdo** (só a barra e avisos de poucos segundos). *(Até a 1.26.0 a barra tinha 6 abas, Início · Dinheiro · Investir · Planejar · Saúde · Mais, com a pena e o Perguntar flutuando nos cantos.)*
 
-**Linguagem visual "viva"**: formas **grossas, redondas e cheias** (ícones preenchidos, botões em pílula, cartões arredondados) e **movimento com propósito**: abertura do app com o **Brasão** (a moeda-logo) que cai girando, abre os olhos e pisca (D54), aba que quica e ganha bolha dourada, blocos que sobem em sequência, gráficos que crescem, bolinhas do + em círculo. Tudo isso some com "Movimento: Parado".
+**Linguagem visual "viva"**: formas **grossas, redondas e cheias** (ícones preenchidos, botões em pílula, cartões arredondados) e **movimento com propósito**: abertura do app com o **Brasão** (a moeda-logo) que cai girando, abre os olhos e pisca (D54), aba que quica e ganha bolha dourada, blocos que sobem em sequência, gráficos que crescem, bolinhas do + em círculo. Tudo isso some com "Movimento: Parado". *(Desde a 1.29.0, D67, o movimento segue a regra "causa e efeito": a folha sobe e desce, o indicador do tipo desliza, a linha nova fica dourada por 1,2 s, gráficos crescem só na 1ª vez, o pote enche; nada fica se mexendo à toa, e números e gráficos não "quicam". Os momentos do Mordomo e o menu das medalhas continuam.)*
 
 ## 2. Onde mora cada assunto
 

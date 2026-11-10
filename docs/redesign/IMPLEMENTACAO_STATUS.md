@@ -18,7 +18,7 @@
 | C | Fundação: cores (tokens), letras Fraunces + Atkinson locais, componentes base | **Concluída** (9 nov 2026), versão **1.26.0-beta.1** |
 | D | Estrutura do celular: barra Início · Dinheiro · [Anotar] · Planejar · Saúde; Perguntar e Ajustes no cabeçalho | **Concluída** (9 nov 2026), versão **1.27.0-beta.1** |
 | E | Componentes e telas do celular (folha de anotar, valor, Planejar, metas, gráficos, 320 px) | **Concluída** (9 nov 2026), versão **1.28.0-beta.1** |
-| F | Movimento (animações MM e MD) | A fazer |
+| F | Movimento (animações MM e MD) | **Concluída** (10 nov 2026), versão **1.29.0-beta.1** |
 | G | Layout do computador (barra lateral, colunas) | A fazer |
 | H | Mouse e teclado no computador (atalhos, hover, tabela) | A fazer |
 | I | Validação final, matriz de preservação, documentação | A fazer |
@@ -86,6 +86,14 @@ No celular as telas que rolam aparecem inteiras (até 4.200 px); no computador, 
 - **Testes**: 39 arquivos, **1042 verificações, todos verdes** (novo: `tests/39-redesign-fase-e.test.js`). Fotos: `docs/redesign/capturas/fase-e/`.
 - **Não verificado:** celular de verdade (o teclado real do Android e do iPhone).
 
+## Fase F: o que foi feito
+- **Regras** (seção de movimento do relatório): só `transform` e `opacity` (mais o desenho da linha, o contorno do destaque e a cor do tipo); tokens `--dur-*` e `--ease-*`; números e gráficos sem curva que passa do ponto; nada em loop fora dos momentos de deleite; "Movimento: Parado" = só esmaecer de até 0,12 s.
+- **Limpeza**: 7 curvas que "quicavam" trocadas pela curva padrão, 5 loops tirados, e as animações de largura (barras) e posição (pote, chave) trocadas por `transform`.
+- **Novos**: folha que sobe e desce (MM-03), indicador do tipo que desliza e cor do tipo no Salvar e na categoria (MM-04), campo que treme (MM-07), linha nova em destaque e contagem do valor (MM-06/MM-10), aviso que sobe com barra de tempo do Desfazer (MM-08/MM-14), barras e linha do gráfico só na 1ª vez (MM-11), janela que entra com escala .96 → 1 (MM-13), resposta do Perguntar e destaque do "Ver no app" (MM-15), pote que enche e gota (MM-16).
+- **Ajuste**: os nomes das metas aparecem inteiros (hifenização em português) e os potes dividem a largura.
+- **Testes**: 40 arquivos, **1068 verificações, todos verdes** (novo: `tests/40-redesign-fase-f.test.js`: lê as 56 animações do estilo e confere as regras, e testa cada movimento no app). Chrome: aceite das fases D e E e 320 px continuam OK. Fotos: `docs/redesign/capturas/fase-f/` (fotos mostram o estado final; o movimento em si só se vê no aparelho).
+- **Não verificado:** a sensação do movimento num celular de verdade (fluidez e se "mexe demais").
+
 ## Itens dos relatórios
 
 Situação: **A fazer** · **Feito** · **Parcial** · **Descartado** (com motivo). A coluna "Fase" diz quando cada item entra.
@@ -139,22 +147,22 @@ Situação: **A fazer** · **Feito** · **Parcial** · **Descartado** (com motiv
 ### Relatório 01 (celular): movimento (MM)
 | ID | Elemento · onde | Fase | Situação |
 |---|---|---|---|
-| MM-01 | Marca (moeda) e conteúdo · Abertura | F | A fazer |
-| MM-02 | Conteúdo da aba · Barra inferior | F | A fazer |
-| MM-03 | Folha "Nova anotação" · Global | F | A fazer |
-| MM-04 | (não existe no relatório: a numeração pula de MM-03 para MM-05) | n/a | Descartado: item inexistente |
-| MM-05 | Chip de conta / categoria · Folha Anotar | F | A fazer |
-| MM-06 | Saldo animado e linha nova ao salvar ("Gasto anotado · Desfazer") | F | A fazer |
-| MM-07 | Campo com erro · Formulários | F | A fazer |
-| MM-08 | Linha excluída + aviso · Listas | F | A fazer |
-| MM-09 | Item da agenda pago · Planejar / Início | F | A fazer |
-| MM-10 | Números principais · Início / Saúde | F | A fazer |
-| MM-11 | Barras e linhas dos gráficos · Saúde | F | A fazer |
-| MM-12 | Seções recolhíveis · Global | F | A fazer |
-| MM-13 | Diálogo de confirmação · Global | F | A fazer |
-| MM-14 | Avisos (fila única) · Global | F | A fazer |
-| MM-15 | Resposta e "Ver no app" · Perguntar | F | A fazer |
-| MM-16 | Pote da meta · Metas | F | A fazer |
+| MM-01 | Marca (moeda) e conteúdo · Abertura | F | Feito (B: abertura curta; F: conteúdo entra em 0,22 s) |
+| MM-02 | Conteúdo da aba · Barra inferior | F | Parcial (a tela nova entra; a saída da anterior não, para a tela ficar livre na hora) |
+| MM-03 | Folha "Nova anotação" · Global | F | Feito (fase F) |
+| MM-04 | Controle de tipo (Gastei/Recebi/Transferi/Bem) · Folha Anotar | F | Feito (fase F) |
+| MM-05 | Chip de conta / categoria · Folha Anotar | F | Parcial (cor do tipo e leve escala ao tocar; sem o ícone de check) |
+| MM-06 | Saldo animado e linha nova ao salvar ("Gasto anotado · Desfazer") | F | Parcial (contagem, linha nova em destaque, aviso com Desfazer; sem o ✓ no botão e sem a linha abrir de altura 0) |
+| MM-07 | Campo com erro · Formulários | F | Feito (fase F) |
+| MM-08 | Linha excluída + aviso · Listas | F | Parcial (barra do tempo do Desfazer; a linha apagada não recolhe antes de sumir; 8 s em vez de 5 s, R-04) |
+| MM-09 | Item da agenda pago · Planejar / Início | F | Parcial (as barras crescem; check desenhado e valor riscado ficam para depois) |
+| MM-10 | Números principais · Início / Saúde | F | Feito (fase F) |
+| MM-11 | Barras e linhas dos gráficos · Saúde | F | Feito (fase F; 1 vez por sessão, sem IntersectionObserver) |
+| MM-12 | Seções recolhíveis · Global | F | Parcial (o conteúdo esmaece ao abrir; sem animar a altura) |
+| MM-13 | Diálogo de confirmação · Global | F | Feito (fase F) |
+| MM-14 | Avisos (fila única) · Global | F | Feito (fase F) |
+| MM-15 | Resposta e "Ver no app" · Perguntar | F | Feito (fase F) |
+| MM-16 | Pote da meta · Metas | F | Feito (fase F) |
 
 ### Relatório 02 (computador): problemas (DF)
 | ID | Prioridade | Problema | Fase | Situação |
@@ -201,15 +209,15 @@ Situação: **A fazer** · **Feito** · **Parcial** · **Descartado** (com motiv
 | MD-03 | Painel lateral "Nova anotação" (460 px) | F/G | A fazer |
 | MD-04 | Indicador da seção ativa | F/G | A fazer |
 | MD-05 | Dica ao passar o mouse (tooltip) | H | A fazer |
-| MD-06 | Nova linha + valores | F | A fazer |
+| MD-06 | Nova linha + valores | F | Feito (fase F, igual ao MM-06) |
 | MD-07 | Linhas ao ordenar | H | A fazer |
 | MD-08 | Filtros | H | A fazer |
 | MD-09 | Painel de detalhe (mestre-detalhe) | G | A fazer |
 | MD-10 | Diálogo centralizado | G | A fazer |
 | MD-11 | Gráficos (barras/linhas) + dica | H | A fazer |
-| MD-12 | Aviso (fila única) | F | A fazer |
-| MD-13 | Item "Precisa de você" pago | F | A fazer |
-| MD-14 | Abertura do aplicativo | F | A fazer |
+| MD-12 | Aviso (fila única) | F | Feito (fase F, igual ao MM-14) |
+| MD-13 | Item "Precisa de você" pago | F | Parcial (as barras crescem; igual ao MM-09) |
+| MD-14 | Abertura do aplicativo | F | Feito (B e F: abertura curta e entrada do conteúdo) |
 | MD-15 | Recolher / expandir a barra lateral (1024 a 1279 px) | G | A fazer |
 
 ## Matriz de preservação

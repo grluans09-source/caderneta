@@ -5,7 +5,7 @@
 
 | # | Fase | ID | Trecho do relatório / prompt | O que foi feito | Motivo |
 |---|---|---|---|---|---|
-| 1 | A | MM-04 | A tabela de movimento do celular vai de MM-03 para MM-05 | Registrado como "item inexistente" | Não há o que implementar; evita alguém procurar um MM-04 perdido |
+| 1 | A | MM-04 | Na leitura da Fase A, a tabela de movimento parecia pular de MM-03 para MM-05 | **Corrigido na fase F**: o MM-04 existe (controle de tipo da folha de anotar); o texto do PDF quebrava o número em duas linhas ("MM-" / "04"). Implementado na fase F | Registro mantido para mostrar o engano e a correção |
 | 2 | A | Fase A, item 3 | "Capture telas 'antes' ... de todas as telas do inventário" | 25 telas em JPEG (qualidade 60); no celular, página inteira até 4.200 px; no computador, só o que se vê sem rolar | Manter o repositório leve (2,7 MB as 50 fotos). A página inteira do computador repete o layout de celular (DF-01) e não acrescenta informação |
 | 3 | A | Fase A, item 2 | "golden master" com data fixa | Ids que o app sorteia (rendimentos, ajustes de bens) são comparados por tipo, data e valor; empates são postos em ordem fixa | Sem isso a comparação falharia de forma aleatória sem nenhum valor ter mudado |
 | 4 | B | R-04 / MM-14 | "FIFO, 1 visível, 4 s (8 s com ação)" | Um visível; o aviso novo entra na hora; "Desfazer" nunca é cortado antes de 3 s (quem chega espera na fila) | FIFO estrito atrasaria em até 4 s a resposta de erro do Salvar ("Diga quanto foi"); é a opção mais próxima do comportamento atual |
@@ -29,3 +29,8 @@
 | 22 | E | R-07 | "Alertas de plausibilidade: limite < dívida, gasto > 10× a média" | Mantidas as travas de coerência que já existiam (D57: valor fora do costume, cartão acima do limite) | O app já pergunta "era isso?" nesses casos; uma regra nova de "10×" mudaria uma decisão do dono |
 | 23 | E | R-15 | "Tocar na barra mostra o valor (tooltip acessível)" | Cada barra tem um título com o mês e o valor (aparece ao passar o mouse e é lido pelo leitor de tela) | Um balão por toque fica para a fase H (gráficos para mouse e toque, RD-13) |
 | 24 | E | R-16 | "Container queries por cartão" | Media query abaixo de 360 px + valores que nunca quebram | Mesmo resultado, com suporte mais amplo nos celulares antigos |
+| 25 | F | MM-02 | "A sai (90 ms) · B entra (200 ms)" | Só a entrada (0,22 s) | Esperar a saída atrasaria a tela nova em 90 ms; a regra 3 do relatório pede a tela livre na hora |
+| 26 | F | MM-06 / MM-08 / MM-09 / MM-12 | Linha que abre de altura 0, linha apagada que recolhe, check desenhado, seção que anima a altura | Ficaram de fora; entraram a linha nova em destaque, a barra do tempo, as barras que crescem e o esmaecer da seção | Animar altura e itens que somem exige atrasar o redesenho da tela; o app redesenha tudo de uma vez (`desenhar()`). Fica para depois, se o dono quiser |
+| 27 | F | MM-08 | "Desfazer disponível por 5 s" | 8 s (com a barra de tempo de 8 s) | R-04 e o prompt (seção 6) pedem 8 s para aviso com ação; prevalece o maior, mais seguro para quem lê devagar |
+| 28 | F | Princípio 8 ("moeda e balança só em 1º uso e conquistas") | A balança do Mordomo continua respirando e piscando | Só dentro do "Como ler?" (a pessoa abriu de propósito) | É o personagem aprovado pelo dono (D54); fora do Início, não distrai |
+| 29 | F | MM-11 | "Só gráficos visíveis (IntersectionObserver)" | Anima uma vez por sessão, quando a Saúde abre | Mesmo efeito prático, sem código novo de observação |

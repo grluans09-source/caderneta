@@ -54,3 +54,4 @@
 - **9 nov 2026 (noite)**: aprovou a fase C com "Sim, fase C" e autorizou baixar as duas letras pelo cartão de pergunta (nome, tamanho, origem e licença à vista). Lição: para baixar algo, mostrar **o quê, quanto pesa, de onde vem e a licença** numa pergunta só; ele decide rápido assim.
 - **9 nov 2026 (noite)**: aprovou a fase D com "Sim, fase D". Ele segue o relatório fase a fase e confia nas decisões já marcadas no prompt; o que ele precisa ver em cada fase é **o que mudou na tela, o que foi testado e o que não foi** (celular real).
 - **9 nov 2026 (noite)**: aprovou a fase E ("Sim, fase E"). Mantém o ritmo de uma fase por vez, com envio só depois do "Sim, enviar".
+- **9 nov 2026 (noite)**: aprovou a fase F ("Sim, fase F") logo depois de publicar a E. Segue confiante no ritmo: uma fase, os testes, as fotos, "Envio?", "Sim, enviar".

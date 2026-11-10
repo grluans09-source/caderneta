@@ -149,7 +149,7 @@ html[data-tam="gg"] .inv-top{flex-direction:column}
 .perg.r-cima .pp-pup{transform:translate(2px,-2.8px)}
 .perg.r-le .pp-pup{animation:ppLe 1.6s ease-in-out}
 @keyframes ppLe{0%,100%{transform:none}25%,65%{transform:translateX(-2.6px)}45%,85%{transform:translateX(2.6px)}}
-.perg-bal{position:fixed;left:1rem;bottom:calc(8.9rem + env(safe-area-inset-bottom));z-index:21;max-width:min(15rem,70vw);background:var(--tinta);color:var(--tinta-ink);border:2px solid var(--latao);border-radius:1rem 1rem 1rem .3rem;padding:.45rem .8rem;font-family:var(--serif);font-size:.95rem;font-weight:700;opacity:0;transform:translateY(6px) scale(.9);transform-origin:0 100%;transition:opacity .25s,transform .35s cubic-bezier(.3,1.4,.5,1);pointer-events:none}
+.perg-bal{position:fixed;left:1rem;bottom:calc(8.9rem + env(safe-area-inset-bottom));z-index:21;max-width:min(15rem,70vw);background:var(--tinta);color:var(--tinta-ink);border:2px solid var(--latao);border-radius:1rem 1rem 1rem .3rem;padding:.45rem .8rem;font-family:var(--serif);font-size:.95rem;font-weight:700;opacity:0;transform:translateY(6px) scale(.9);transform-origin:0 100%;transition:opacity .25s,transform .35s var(--ease-standard);pointer-events:none}
 .perg-bal.on{opacity:1;transform:none}
 html[data-tam="gg"] .perg .perg-t{display:none}html[data-tam="gg"] .perg{padding:.2rem}
 /* janela do chat (preta e dourada, como o acerto de contas) */
@@ -232,7 +232,7 @@ html[data-tam="gg"] .pesao{grid-template-columns:1fr}html[data-tam="gg"] .pesao 
 .bal:not(.wob) .pA,.bal:not(.wob) .pB{animation:sw2 7s ease-in-out infinite alternate}
 @keyframes sw{from{transform:rotate(-.9deg)}to{transform:rotate(.9deg)}}
 @keyframes sw2{from{transform:rotate(.9deg)}to{transform:rotate(-.9deg)}}
-.moed{animation:cai .6s cubic-bezier(.3,1.4,.5,1) both}
+.moed{animation:cai .6s var(--ease-standard) both}
 @keyframes cai{from{transform:translateY(-46px);opacity:0}to{transform:none;opacity:1}}
 .wob .beam{animation:bw 2.4s ease-out}.wob .pA,.wob .pB{animation:pa 2.4s ease-out}
 @keyframes bw{0%{transform:rotate(-7deg)}25%{transform:rotate(5deg)}50%{transform:rotate(-2.5deg)}75%{transform:rotate(1deg)}100%{transform:rotate(0)}}
@@ -400,7 +400,7 @@ html[data-tam="gg"] .lnk{display:none}
 .cartao .t{display:flex;justify-content:space-between;gap:.5rem;align-items:baseline}
 .cartao .t b{font-size:1.05rem;font-family:var(--serif)}
 .barra-lim{height:.7rem;background:var(--rule);border-radius:.2rem;overflow:hidden;margin:.6rem 0 .3rem}
-.barra-lim div{height:100%;background:var(--tr);transition:width .8s cubic-bezier(.3,1.2,.5,1)}
+.barra-lim div{height:100%;background:var(--tr)}
 .barra-lim div.alto{background:var(--out)}
 .linhas3{display:flex;justify-content:space-between;font-size:.85rem;color:var(--ink2)}
 .linhas3 b{display:block;color:var(--ink);font-size:.98rem;font-family:var(--serif)}
@@ -416,8 +416,8 @@ html[data-tam="gg"] .lnk{display:none}
 .barra{margin:.7rem 0}
 .barra .top{display:flex;justify-content:space-between;gap:.5rem;font-size:.95rem}
 .trilho{height:.6rem;background:var(--rule);border-radius:.15rem;margin-top:.3rem;overflow:hidden}
-.trilho div{height:100%;transition:width .8s cubic-bezier(.3,1.2,.5,1);animation:enche .9s ease-out}
-@keyframes enche{from{width:0!important}}
+.trilho div{height:100%}
+
 .barra.s .trilho div{background:var(--out)} .barra.e .trilho div{background:var(--in)}
 table{width:100%;border-collapse:collapse;font-size:.92rem}
 th,td{padding:.45rem .2rem;border-bottom:1px solid var(--rule)}
@@ -434,9 +434,9 @@ svg.grafico{width:100%;height:auto;display:block}
 .opc button[aria-pressed="true"]{background:var(--sel);color:var(--ink);border-color:var(--latao);box-shadow:inset 0 0 0 1px var(--latao);font-weight:700}
 .linha-sw{display:flex;align-items:center;gap:1rem;justify-content:space-between;min-height:3.2rem}
 .sw{position:relative;width:3.4rem;height:2rem;border-radius:2rem;background:var(--campo);flex:none;border:0}
-.sw::after{content:"";position:absolute;top:.2rem;left:.2rem;width:1.6rem;height:1.6rem;border-radius:50%;background:var(--tinta-forte);transition:left .15s}
+.sw::after{content:"";position:absolute;top:.2rem;left:.2rem;width:1.6rem;height:1.6rem;border-radius:50%;background:var(--tinta-forte);transition:transform var(--dur-fast) var(--ease-standard)}
 .sw[aria-pressed="true"]{background:var(--latao)}
-.sw[aria-pressed="true"]::after{left:1.6rem}
+.sw[aria-pressed="true"]::after{transform:translateX(1.4rem)}
 .item{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:3.2rem;padding:.4rem 0;border-bottom:1px solid var(--rule)}
 .item:last-child{border-bottom:0}
 .item small{color:var(--ink3)}
@@ -450,7 +450,7 @@ svg.grafico{width:100%;height:auto;display:block}
 .modal{background:var(--bg);width:100%;max-width:32rem;border-radius:1rem 1rem 0 0;padding:1.2rem 1rem calc(1.2rem + env(safe-area-inset-bottom));max-height:92vh;overflow-y:auto;border-top:3px solid var(--latao);animation:sobe .22s ease-out}
 @keyframes sobe{from{transform:translateY(40px);opacity:.4}to{transform:none;opacity:1}}
 .modal p.q{font-size:1.1rem;font-weight:700;margin-bottom:.5rem;font-family:var(--serif)}
-.toast{position:fixed;left:50%;bottom:calc(5.7rem + env(safe-area-inset-bottom));transform:translate(-50%,20px);background:var(--capa);color:var(--capa-ink);padding:.75rem 1.1rem;border-radius:.6rem;font-weight:600;opacity:0;pointer-events:none;transition:.2s;z-index:80;max-width:90vw;text-align:center;border:1px solid var(--latao)}
+.toast{position:fixed;left:50%;bottom:calc(5.7rem + env(safe-area-inset-bottom));transform:translate(-50%,20px);background:var(--capa);color:var(--capa-ink);padding:.75rem 1.1rem;border-radius:.6rem;font-weight:600;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:80;max-width:90vw;text-align:center;border:1px solid var(--latao)}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 .beta{font-size:.55em;letter-spacing:.08em;text-transform:uppercase;border:1px solid currentColor;border-radius:.4rem;padding:.05rem .35rem;vertical-align:middle;opacity:.85}
 .toast.com-botao{pointer-events:auto}
@@ -458,7 +458,7 @@ svg.grafico{width:100%;height:auto;display:block}
 .onb{position:fixed;inset:0;background:var(--bg);z-index:70;overflow-y:auto;display:none;padding-bottom:3rem}
 .onb.on{display:block}
 .fino{height:.35rem;background:var(--rule);border-radius:.2rem;margin:1rem 0;overflow:hidden}
-.fino div{height:100%;background:var(--latao);transition:width .4s}
+.fino div{height:100%;background:var(--latao)}
 /* frase na capa */
 .capa.grande{display:block}
 .capa .topo-capa{display:flex;justify-content:space-between;align-items:baseline;gap:1rem}
@@ -479,7 +479,7 @@ svg.grafico{width:100%;height:auto;display:block}
 .jarw{width:calc(25% - .4rem);min-width:4.6rem;text-align:center;font-size:.78rem;color:var(--ink2);min-height:2.75rem}
 .jarw b{display:block;color:var(--ink);font-size:.84rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .jar{width:3.4rem;height:4.4rem;margin:0 auto .25rem;border:2px solid var(--ink);border-radius:.4rem .4rem 1.1rem 1.1rem;overflow:hidden;position:relative;background:var(--card)}
-.jar .w{position:absolute;left:-60%;width:220%;height:220%;border-radius:38%;background:var(--dv-in);opacity:.88;animation:giro 7s linear infinite;transition:top .9s cubic-bezier(.3,1.4,.5,1)}
+.jar .w{position:absolute;left:-60%;width:220%;height:220%;border-radius:38%;background:var(--dv-in);opacity:.88}
 .jar .w.am{background:var(--dv-am)}.jar .w.vm{background:var(--dv-out)}.jar .w.az{background:var(--dv-az)}
 @keyframes giro{to{transform:rotate(360deg)}}
 /* agenda e atalhos */
@@ -492,7 +492,7 @@ svg.grafico{width:100%;height:auto;display:block}
 .atalho span{display:block;font-size:.86rem;color:var(--ink2)}
 .atalho i{font-style:normal;font-size:1.6rem;color:var(--latao)}
 .barra2{display:flex;height:.8rem;border-radius:.2rem;overflow:hidden;background:var(--rule);margin:.5rem 0}
-.barra2 div{height:100%;transition:width .8s cubic-bezier(.3,1.2,.5,1)}
+.barra2 div{height:100%}
 .semaforo{display:flex;align-items:center;gap:.6rem;border-radius:.6rem;padding:.7rem .8rem;margin:.7rem 0;font-weight:600}
 .semaforo.ok{background:var(--tr-bg);color:var(--tr)}.semaforo.at{background:var(--ouro-bg);color:var(--ouro)}.semaforo.ru{background:var(--out-bg);color:var(--out)}
 .res li{margin:.35rem 0 .35rem 1.1rem;font-size:.95rem}
@@ -507,11 +507,11 @@ svg.grafico{width:100%;height:auto;display:block}
 .pagar .it b{white-space:nowrap;font-family:var(--serif)}
 .pagar .it em{font-style:normal;color:var(--out);font-size:.8rem;font-weight:700}
 .pt.q{background:var(--dv-q)}
-.cofre{width:4.4rem;height:3.9rem;display:block;margin:0 auto .25rem;animation:flutua 3.4s ease-in-out infinite alternate;overflow:visible}
+.cofre{width:4.4rem;height:3.9rem;display:block;margin:0 auto .25rem;animation:flutua 3.4s ease-in-out alternate;overflow:visible}
 @keyframes flutua{from{transform:translateY(0)}to{transform:translateY(-3px)}}
-.cofre .cai{animation:caiMoeda 4.2s ease-in infinite}
+.cofre .cai{animation:caiMoeda 4.2s ease-in}
 @keyframes caiMoeda{0%{transform:translateY(-24px);opacity:0}14%{opacity:1}40%{transform:translateY(6px);opacity:1}48%{opacity:0}100%{transform:translateY(6px);opacity:0}}
-.cofre .brilho{animation:pisca 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.cofre .brilho{animation:pisca 2.6s ease-in-out;transform-box:fill-box;transform-origin:center}
 @keyframes pisca{0%,100%{opacity:.1;transform:scale(.5)}50%{opacity:1;transform:scale(1.15)}}
 .linha-cx{display:flex;align-items:center;gap:.8rem}
 .mesnav{display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin:-.2rem 0 .5rem}
@@ -526,7 +526,7 @@ svg.grafico{width:100%;height:auto;display:block}
 .filtros select{width:100%;min-height:3rem;border:2px solid var(--campo);border-radius:.6rem;padding:.4rem .7rem;background:var(--card);margin-bottom:.6rem}
 .filtros label{display:block;font-weight:700;margin:.2rem 0 .3rem;font-size:.92rem}
 @media (prefers-reduced-motion:reduce){*,*:before{animation:none!important;transition:none!important}}
-html.calmo *,html.calmo *:before{animation:none!important;transition:none!important}
+html.calmo *,html.calmo *:before,html.calmo *:after{animation:none!important;transition:none!important}
 /* ===== Jeitos de usar ===== */
 
 /* ===== Preto, dourado e branco: o que é clicável aparece em ouro ou com contorno de ouro; o que está selecionado fica preto ===== */
@@ -670,13 +670,13 @@ body.menu-tipo .perg,body.menu-tipo .perg-bal{opacity:0;pointer-events:none}
 /* --- barra de baixo: ícones cheios, com bolha dourada na aba aberta --- */
 nav svg{width:1.6rem;height:1.6rem;fill:currentColor;stroke:none}
 nav svg .cut{fill:var(--capa)}nav svg .acc{opacity:.5}
-nav .ic{display:grid;place-items:center;width:min(2.9rem,92%);height:2.05rem;border-radius:1.1rem;transition:background .3s,transform .3s cubic-bezier(.3,1.6,.5,1)}
+nav .ic{display:grid;place-items:center;width:min(2.9rem,92%);height:2.05rem;border-radius:1.1rem;transition:background .3s,transform .3s var(--ease-standard)}
 nav button[aria-current="page"] .ic{background:rgba(201,162,39,.26);transform:translateY(-3px)}
 html[data-tam="g"] nav svg,html[data-tam="gg"] nav svg{width:1.35rem;height:1.35rem}
-nav button.pop .ic svg{animation:pop .55s cubic-bezier(.3,1.6,.5,1)}
+nav button.pop .ic svg{animation:pop .55s var(--ease-standard)}
 @keyframes pop{0%{transform:scale(.55) rotate(-16deg)}55%{transform:scale(1.28) rotate(7deg)}100%{transform:none}}
-.fab span.b{animation:respira 3.8s ease-in-out infinite;border-width:4px;box-shadow:0 5px 0 rgba(0,0,0,.35),0 8px 16px rgba(0,0,0,.35)}
-@keyframes respira{0%,70%,100%{box-shadow:0 5px 0 rgba(0,0,0,.35),0 0 0 0 rgba(201,162,39,.0)}82%{box-shadow:0 5px 0 rgba(0,0,0,.35),0 0 0 .8rem rgba(201,162,39,.28)}}
+
+
 /* --- formas mais grossas e redondas --- */
 .wrap:before{display:none}
 .card,.ind-card,.ferr,.rel-item,.alerta,.atalho,.ac-lista{border-radius:1.25rem}
@@ -694,7 +694,7 @@ h2{border-bottom:0;position:relative;padding-bottom:.6rem}
 h2:after{content:"";position:absolute;left:0;bottom:0;width:2.8rem;height:.32rem;border-radius:.32rem;background:var(--latao)}
 .gaveta,.lanc,.item{border-bottom:2px dotted var(--rule2)}
 .selo{border-radius:999px;padding:.25rem .7rem}
-.st-critico.selo{animation:alerta 2.6s ease-in-out infinite}
+.st-critico.selo{animation:alerta 2.6s ease-in-out}
 @keyframes alerta{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
 .ferr .fi{border-width:3px}
 .ferr .fi svg{fill:var(--latao-claro);stroke:none}.ferr .fi svg .cut{fill:var(--tinta)}
@@ -706,11 +706,11 @@ h2:after{content:"";position:absolute;left:0;bottom:0;width:2.8rem;height:.32rem
 #tela.entra>*{animation:sobe .5s cubic-bezier(.2,.9,.3,1) both}
 #tela.entra>*:nth-child(2){animation-delay:.04s}#tela.entra>*:nth-child(3){animation-delay:.08s}#tela.entra>*:nth-child(4){animation-delay:.12s}#tela.entra>*:nth-child(5){animation-delay:.16s}#tela.entra>*:nth-child(6){animation-delay:.2s}#tela.entra>*:nth-child(7){animation-delay:.24s}#tela.entra>*:nth-child(n+8){animation-delay:.28s}
 @keyframes sobe{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:none}}
-.du-t i,.emp-b i,.g-b i{transform-origin:left center;animation:cresceX .9s cubic-bezier(.3,1.2,.5,1) both}
-.g-m{animation:marca 1s cubic-bezier(.3,1.5,.5,1) both}
+.du-t i,.emp-b i,.g-b i{transform-origin:left center;animation:cresceX .9s var(--ease-standard) both}
+.g-m{animation:marca 1s var(--ease-standard) both}
 @keyframes cresceX{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 @keyframes marca{from{opacity:0;transform:translateX(-50%) translateY(-1rem) scale(.6)}to{opacity:1;transform:translateX(-50%)}}
-.grafico rect{transform-box:fill-box;transform-origin:center bottom;animation:cresceY .75s cubic-bezier(.3,1.3,.5,1) both}
+.grafico rect{transform-box:fill-box;transform-origin:center bottom;animation:cresceY .75s var(--ease-standard) both}
 @keyframes cresceY{from{transform:scaleY(0)}to{transform:scaleY(1)}}
 .ind-card{animation:sobe .5s cubic-bezier(.2,.9,.3,1) both}
 /* --- abertura do app --- */
@@ -838,7 +838,7 @@ details.rec>summary:focus-visible{outline:3px solid var(--latao);outline-offset:
 .ferrs{grid-template-columns:repeat(2,minmax(0,1fr))}
 .ferr .ft{min-width:0}.ferr .ft span{overflow-wrap:anywhere}
 /* "Ver no app": o lugar exato pisca em dourado (1.24.1) */
-.destaque{outline:3px solid var(--latao);outline-offset:4px;border-radius:.8rem;animation:destaca 1.2s ease 2}
+.destaque{outline:3px solid var(--latao);outline-offset:4px;border-radius:.8rem;animation:destaca .6s ease-in-out 2}
 @keyframes destaca{50%{outline-color:transparent}}
 html.calmo .destaque{animation:none}
 /* lista "Conferir com o banco" (lembrete semanal, D65) */
@@ -1021,7 +1021,8 @@ body.folha-aberta::after{content:"";position:fixed;inset:0;background:var(--colo
 .esc-chips .chip{min-height:48px}
 /* metas (R-10): pote 56 × 72, nome em até 2 linhas */
 .jar{width:3.5rem;height:4.5rem}
-.jarw b{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.jarw b{display:block;white-space:normal;overflow:visible;text-overflow:clip;font-size:var(--fs-peq);line-height:var(--lh-peq);overflow-wrap:break-word;-webkit-hyphens:auto;hyphens:auto}
+.jarras .jarw{width:auto;flex:1 1 4.6rem;max-width:7rem}
 /* 320 px (R-16): ferramentas em 1 coluna abaixo de 360 px; valores nunca quebram */
 @media (max-width:359px){
   html[data-tam="gg"] .tri{grid-template-columns:1fr}
@@ -1032,6 +1033,99 @@ body.folha-aberta::after{content:"";position:fixed;inset:0;background:var(--colo
   .ferr .ft span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 }
 .vl,.ac-v,.inv-v,.cartao .linhas3 b,.legenda b,.bb-l b,.pagar-l .gr,.hero .grande,.gaveta .vl,.lanc .v,.jarw small,.nb{white-space:nowrap}
+
+/* ===== Redesign, fase F (D67): movimento como causa e efeito, nunca enfeite =====
+   Só transform e opacity (exceção: a cor do tipo e o contorno do destaque); a tela fica livre em até 0,22 s;
+   números e gráficos sem "quicar"; com Movimento: Parado ou "reduzir movimento" no celular, só um esmaecer de até 0,12 s. */
+:root{--dur-instant:90ms;--dur-fast:160ms;--dur-base:220ms;--dur-slow:300ms;--dur-emph:560ms;
+  --ease-standard:cubic-bezier(.2,0,0,1);--ease-enter:cubic-bezier(.05,.7,.1,1);--ease-exit:cubic-bezier(.3,0,1,1)}
+@keyframes fSobe{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes fFade{from{opacity:0}to{opacity:1}}
+@keyframes fFolha{from{transform:translateY(100%)}to{transform:none}}
+@keyframes fFolhaSai{from{transform:none}to{transform:translateY(100%)}}
+@keyframes fDialogo{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+@keyframes fCresceX{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes fCresceY{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes fNivel{from{transform:translateY(100%)}to{transform:none}}
+@keyframes fGota{from{opacity:0;transform:translateY(-6px)}to{opacity:.9;transform:none}}
+@keyframes fTreme{0%,100%{transform:none}25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
+@keyframes fEsvazia{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+@keyframes fDestaque{from{opacity:1}to{opacity:0}}
+@keyframes fDesenha{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes fPop{from{transform:scale(.9)}to{transform:none}}
+@keyframes fVd{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:none}}
+@keyframes fVe{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:none}}
+@keyframes spT{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+/* MM-01 / MM-02: a tela nova entra (sem fila de blocos) */
+#tela.entra{animation:fSobe var(--dur-base) var(--ease-enter)}
+#tela.entra>*,#tela.entra>*:nth-child(n){animation:none}
+.vira-d{animation:fVd var(--dur-base) var(--ease-enter)}.vira-e{animation:fVe var(--dur-base) var(--ease-enter)}
+nav .ic{transition:background-color var(--dur-fast) var(--ease-standard)}
+nav button.pop .ic svg{animation:fPop var(--dur-fast) var(--ease-standard)}
+/* MM-03: a folha sobe (0,3 s) e desce (0,22 s); o fundo escurece junto */
+.folha{transition:none}
+.folha.on{animation:fFolha var(--dur-slow) var(--ease-enter)}
+.folha.fecha{display:block;pointer-events:none;animation:fFolhaSai var(--dur-base) var(--ease-exit) forwards}
+body.folha-aberta::after{animation:fFade var(--dur-fast) var(--ease-standard)}
+/* MM-04: indicador do tipo que desliza; a cor do tipo no valor, na categoria escolhida e no Salvar */
+#folhaCorpo[data-tipo="gasto"]{--cor-tipo:var(--color-out)}#folhaCorpo[data-tipo="ganho"]{--cor-tipo:var(--color-in)}
+#folhaCorpo[data-tipo="transf"]{--cor-tipo:var(--color-transfer)}#folhaCorpo[data-tipo="bem"]{--cor-tipo:var(--color-asset)}
+#folhaCorpo{--cor-tipo-ink:var(--color-on-action)}   /* branco no claro, quase preto no escuro */
+.f-seg{position:relative}
+.f-seg::before{content:"";position:absolute;top:.25rem;bottom:.25rem;left:.25rem;width:calc((100% - .5rem - .9rem)/4);border-radius:.6rem;background:var(--color-surface);box-shadow:inset 0 -3px 0 var(--cor-tipo);transform:translateX(calc(var(--i,0) * (100% + .3rem)));transition:transform 200ms var(--ease-standard)}
+.f-seg .seg{position:relative;z-index:1;transition:color 200ms var(--ease-standard)}
+.f-seg .seg[aria-checked="true"]{background:none;box-shadow:none}
+.folha .lc-cats .opt[aria-pressed="true"],.f-barra .btn{background:var(--cor-tipo);border-color:var(--cor-tipo);color:var(--cor-tipo-ink)}
+.f-barra .btn,.folha .opt,.folha .chip{transition:background-color 200ms var(--ease-standard),border-color 200ms var(--ease-standard),color 200ms var(--ease-standard)}
+/* MM-05: escolher um botão responde na hora */
+.opt:active,.chip:active,.btn:active{transform:scale(.98)}
+/* MM-06: a linha nova entra e fica em destaque por 1,2 s; a contagem do valor fica no JavaScript */
+.novo-lin{position:relative;isolation:isolate;animation:fSobe var(--dur-base) var(--ease-enter)}
+.novo-lin::before{content:"";position:absolute;inset:0 -.5rem;border-radius:.6rem;background:var(--color-brand-bg);z-index:-1;opacity:0;animation:fDestaque 1.2s ease-out}
+.chip-var{animation:fFade var(--dur-fast) var(--ease-standard) .2s both}
+/* MM-07: o campo com erro treme 3 px, duas vezes */
+.treme{animation:fTreme 90ms linear 2}
+.f-erro{animation:fSobe var(--dur-fast) var(--ease-enter)}
+/* MM-08 / MM-14: o aviso sobe 12 px, fica 4 s (8 s com Desfazer, com a barra do tempo) e sai rápido */
+.toast{transform:translateY(12px);transition:opacity 140ms var(--ease-exit),transform 140ms var(--ease-exit)}
+.toast.on{transform:none;transition:opacity 180ms var(--ease-enter),transform 180ms var(--ease-enter)}
+.toast.com-botao{overflow:hidden}
+.toast.com-botao::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--latao-claro);transform-origin:left;animation:fEsvazia 8s linear forwards}
+/* MM-09: barras que mostram quanto já foi (pago, usado, guardado) crescem da esquerda, sem passar do ponto */
+.barra-lim div,.trilho div,.barra2 div,.fino div{transform-origin:left;animation:fCresceX var(--dur-emph) var(--ease-standard) both}
+/* MM-11: gráficos crescem da base e a linha se desenha, só na primeira vez da sessão e sem "quicar" */
+.grafico rect{transform-box:fill-box;transform-origin:center bottom;animation:fCresceY 400ms var(--ease-standard) both}
+.grafico rect:nth-of-type(2){animation-delay:40ms}.grafico rect:nth-of-type(3){animation-delay:80ms}.grafico rect:nth-of-type(4){animation-delay:120ms}
+.grafico rect:nth-of-type(5){animation-delay:160ms}.grafico rect:nth-of-type(6){animation-delay:200ms}.grafico rect:nth-of-type(n+7){animation-delay:240ms}
+.linha-real{stroke-dasharray:1;stroke-dashoffset:0;animation:fDesenha 600ms var(--ease-standard) both}
+.du-t i,.emp-b i,.g-b i{transform-origin:left;animation:fCresceX var(--dur-emph) var(--ease-standard) both}
+.g-m{animation:fFade var(--dur-base) var(--ease-standard) both}
+.ind-card{animation:fSobe var(--dur-base) var(--ease-enter) both}
+#tela.graf-visto .grafico rect,#tela.graf-visto .linha-real,#tela.graf-visto .ind-card,#tela.graf-visto .du-t i,#tela.graf-visto .emp-b i,#tela.graf-visto .g-b i,#tela.graf-visto .g-m{animation:none}
+.st-critico.selo{animation:none}
+/* MM-12: a seção que abre mostra o conteúdo com um esmaecer curto */
+details.rec[open]>.rec-c{animation:fSobe var(--dur-fast) var(--ease-enter)}
+details.rec>summary .rec-s{transition:transform 180ms var(--ease-standard)}
+/* MM-13: janela e véu */
+.modal-fundo.on{animation:fFade 140ms var(--ease-standard)}
+.modal{animation:fDialogo var(--dur-fast) var(--ease-enter)}
+/* MM-15: a resposta do Perguntar entra */
+.ch-m{animation:fSobe 180ms var(--ease-enter)}
+.perg-bal{transition:opacity var(--dur-fast) var(--ease-standard),transform var(--dur-fast) var(--ease-enter)}
+/* MM-16: o nível do pote sobe; passando da meta, a gota cai */
+.jar .nivel{position:absolute;inset:0;animation:fNivel var(--dur-emph) var(--ease-standard) both}
+.jarw .transb{animation:fGota 300ms var(--ease-standard) 500ms both}
+/* deleite com orçamento: nada de movimento em loop sem motivo (os cofres e as moedas caem uma vez) */
+.cofre{animation:none}.cofre .cai,.cofre .brilho{animation-iteration-count:1}
+.moed{animation-timing-function:var(--ease-standard)}
+.pesao{animation:fSobe var(--dur-base) var(--ease-enter) both}
+.frase.troca{animation:fFade var(--dur-base) var(--ease-standard)}
+/* Movimento: Parado (ou "reduzir movimento" no celular): sem deslocamento; só um esmaecer de até 0,12 s */
+html.calmo .toast{transition:opacity 120ms linear!important}
+html.calmo .toast,html.calmo .toast.on{transform:none}
+html.calmo #tela.entra,html.calmo .modal,html.calmo .modal-fundo.on,html.calmo .folha.on{animation:fFade 120ms linear!important}
+html.calmo .folha.fecha{display:none}
+html.calmo .linha-real{stroke-dashoffset:0}
 </style>
 </head>
 <body>
@@ -1078,7 +1172,7 @@ body.folha-aberta::after{content:"";position:fixed;inset:0;background:var(--colo
 /* ---------- utilidades ---------- */
 var KEY="caderneta:v2";
 /* versão do app (siga o CHANGELOG.md; subir junto com VERSAO em sw.js e "version" em package.json) */
-var VERSAO_APP="1.28.0-beta.1";
+var VERSAO_APP="1.29.0-beta.1";
 var RE_ID=/^[A-Za-z0-9_-]+$/, RE_DATA=/^\d{4}-\d{2}-\d{2}$/;
 var MES=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
 var MES3=["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
@@ -1785,6 +1879,7 @@ function ir(vw){
 }
 function desenhar(){
   var t=$("#tela");
+  var ehGraf=VIEW==="graficos"||VIEW==="relatorio"||VIEW==="relatorios"; t.classList.toggle("graf-visto",ehGraf&&GRAF_VISTO); if(ehGraf)GRAF_VISTO=true;
   var tela={inicio:telaInicio,contas:telaContas,investir:telaInvestir,noticias:telaNoticias,planejar:telaPlanejar,caixinhas:telaCaixinhas,metas:telaMetas,fixas:telaFixas,simulador:telaSimulador,graficos:telaGraficos,relatorios:telaRel,relatorio:telaRelatorio,ajustes:telaAjustes,anotacoes:telaAnotacoes}[VIEW]||telaInicio;
   t.innerHTML = tela();
   ULTIMO=null;
@@ -1795,7 +1890,7 @@ function desenhar(){
 }
 
 /* ---------- visual vivo: capa, balança, números que rolam, carimbo ---------- */
-var ULTIMO=null, WOB=false, ULT={};
+var ULTIMO=null, WOB=false, ULT={}, GRAF_VISTO=false;
 function calmo(){return document.documentElement.classList.contains("calmo")}
 /* cabeçalho de toda tela (redesign R-01): título, e à direita o Perguntar e os Ajustes (44 × 44) */
 var ENGRENAGEM='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.5 5.5l1.85 1.85M16.65 16.65l1.85 1.85M5.5 18.5l1.85-1.85M16.65 7.35l1.85-1.85"/><circle cx="12" cy="12" r="6.4"/></svg>';
@@ -1928,8 +2023,9 @@ function rolarNum(el,k,de,para){
   var t0=null;
   function p(t){
     if(!t0)t0=t;
-    var x=Math.min(1,(t-t0)/800), e=1-Math.pow(1-x,3);
-    el.textContent=fmtRoll(k,Math.round(de+(para-de)*e));
+    var x=Math.min(1,(t-t0)/560), e=1-Math.pow(1-x,3);
+    if(x<1&&p.ult&&t-p.ult<18){requestAnimationFrame(p);return}   /* no máximo ~30 quadros */
+    p.ult=t; el.textContent=fmtRoll(k,Math.round(de+(para-de)*e));
     if(x<1&&el.isConnected)requestAnimationFrame(p);
   }
   requestAnimationFrame(p);
@@ -2527,7 +2623,7 @@ function cofre(x,i){
 }
 function jarra(pct,cls,nome,sub,acao,id,est,rotulo){
   var topo=pct>0?(100-(6+0.86*Math.min(100,pct))):112;
-  return '<button class="jarw'+(est?" estourou":"")+'" data-a="'+acao+'" data-id="'+id+'" aria-label="'+esc(nome+": "+(rotulo||sub))+'">'+(est?'<i class="transb" aria-hidden="true"></i>':'')+'<div class="jar"><div class="w '+cls+'" style="top:'+topo.toFixed(1)+'%"></div></div><b>'+esc(nome)+'</b>'+(est?'<small>'+esc(sub)+'</small>':esc(sub))+'</button>';
+  return '<button class="jarw'+(est?" estourou":"")+'" data-a="'+acao+'" data-id="'+id+'" aria-label="'+esc(nome+": "+(rotulo||sub))+'">'+(est?'<i class="transb" aria-hidden="true"></i>':'')+'<div class="jar"><div class="nivel"><div class="w '+cls+'" style="top:'+topo.toFixed(1)+'%"></div></div></div><b>'+esc(nome)+'</b>'+(est?'<small>'+esc(sub)+'</small>':esc(sub))+'</button>';
 }
 /* pote da meta (redesign R-10): enche conforme você gasta. Até 79%: azul; de 80% a 100%: âmbar;
    passou da meta: cheio, vermelho, transbordando, com o valor acima. A regra da meta não mudou. */
@@ -3286,7 +3382,7 @@ function graficoEvolucao(){
   var s='<line x1="'+pL+'" x2="'+(W-pR)+'" y1="'+Y(0).toFixed(1)+'" y2="'+Y(0).toFixed(1)+'" stroke="var(--rule2)" stroke-dasharray="3,3"/>'+
     '<line x1="'+X(k0).toFixed(1)+'" x2="'+X(k0).toFixed(1)+'" y1="'+(pT-6)+'" y2="'+(H-pB)+'" stroke="var(--latao)" stroke-width="1" stroke-dasharray="2,3"/>'+
     '<text x="'+(X(k0)+(k0<2?5:0)).toFixed(1)+'" y="'+(pT-10)+'" font-size="10" text-anchor="'+(k0<2?"start":"middle")+'" fill="var(--ouro)" font-weight="700">hoje: '+esc(brl(plH))+'</text>';
-  if(real.length>1)s+='<path d="M'+real.join(" L")+'" fill="none" stroke="var(--ouro)" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>';
+  if(real.length>1)s+='<path class="linha-real" pathLength="1" d="M'+real.join(" L")+'" fill="none" stroke="var(--ouro)" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>';
   if(prev)s+='<path d="M'+proj.join(" L")+'" fill="none" stroke="var(--ouro)" stroke-width="4" stroke-dasharray="1,8" stroke-linecap="round" opacity=".9"/>';
   pts.forEach(function(q,k){
     s+='<circle cx="'+X(k).toFixed(1)+'" cy="'+Y(q.pl).toFixed(1)+'" r="'+(q.i===0?5:3.4)+'" fill="'+(q.fut?"var(--card)":"var(--ouro)")+'" stroke="var(--ouro)" stroke-width="2"/>'+
@@ -3369,18 +3465,21 @@ var F=null, FOLHA_ABERTA=false, ANOT_LONGO=false;
 
 function abrirFolha(){
   if(!FOLHA_ABERTA)FOLHA_VOLTA=lembrarGatilho();
-  $("#folha").classList.add("on"); document.body.style.overflow="hidden"; document.body.classList.add("folha-aberta");
+  $("#folha").classList.remove("fecha"); $("#folha").classList.add("on"); document.body.style.overflow="hidden"; document.body.classList.add("folha-aberta");
   if(!FOLHA_ABERTA){FOLHA_ABERTA=true; try{history.pushState({f:1},"")}catch(e){} fundoInerte(); setTimeout(function(){var fv=$("#fValor")||$("#folhaTit"); if(fv&&FOLHA_ABERTA)try{fv.focus({preventScroll:true})}catch(e){}},0)}
 }
 /* fechar arrastando a alça: se já tem algo digitado numa anotação nova, pergunta antes */
 function fecharFolhaComCuidado(){
   if(F&&!F.id&&(F.cent>0||(F.desc||"").trim()))confirmar("Descartar o que você digitou?","Descartar",fecharFolha); else fecharFolha();
 }
+/* MM-03: a folha desce em 0,22 s; ela já não segura a tela (sem cliques) enquanto desce */
+function folhaDesce(){var fo=$("#folha"); if(!fo||calmo())return; fo.classList.add("fecha"); clearTimeout(fo._t); fo._t=setTimeout(function(){fo.classList.remove("fecha")},230)}
 function folhaFechou(){fundoInerte(); var g=FOLHA_VOLTA; FOLHA_VOLTA=null; devolverFoco(g)}
 function fecharFolha(){
   if(!FOLHA_ABERTA)return;
   FOLHA_ABERTA=false; F=null;
   $("#folha").classList.remove("on"); document.body.style.overflow=""; document.body.classList.remove("folha-aberta");
+  folhaDesce();
   try{if(history.state&&history.state.f)history.back()}catch(e){}
   folhaFechou();
   voltaAcerto();
@@ -3483,7 +3582,11 @@ function desenharFolha(){
   if(F.id)h+='<button class="btn perigo" data-a="fApagar">Apagar esta anotação</button>';
   /* barra fixa embaixo, acima do teclado: o resumo curto e o Salvar sempre à vista */
   h+='<div class="f-barra"><span class="f-resumo" id="fResumo"></span><button class="btn" data-a="fSalvar">'+(F.id?"Salvar alterações":"Salvar")+'</button></div>';
-  $("#folhaCorpo").innerHTML=h;
+  var fc=$("#folhaCorpo"); fc.innerHTML=h;
+  var tp=TIPOS.filter(function(x){return x[0]===F.tipo})[0]; fc.dataset.tipo=tp?tp[3]:"gasto";
+  var sg=fc.querySelector(".f-seg"); if(sg){var ix=TIPOS.map(function(x){return x[0]}).indexOf(F.tipo);
+    if(F.segAnt!=null&&F.segAnt!==ix&&!calmo()){sg.style.setProperty("--i",F.segAnt); void sg.offsetWidth}
+    sg.style.setProperty("--i",ix); F.segAnt=ix}
 
   ligarDinheiro($("#fValor"),F.cent,function(c){F.cent=c;erroValor("");previa()});
   if($("#fJuros"))ligarDinheiro($("#fJuros"),F.juros||0,function(c){F.juros=c;previa()});
@@ -3510,7 +3613,7 @@ window.addEventListener("resize",function(){if(F)ligarFio()});
 /* erro do valor no próprio campo (R-03 / MM-07), sem aviso solto */
 function erroValor(t){
   var e=$("#fValorErro"), i=$("#fValor"); if(!e||!i)return;
-  e.textContent=t; e.hidden=!t; if(t){i.setAttribute("aria-invalid","true"); i.classList.add("com-erro")} else {i.removeAttribute("aria-invalid"); i.classList.remove("com-erro")}
+  e.textContent=t; e.hidden=!t; if(t){i.setAttribute("aria-invalid","true"); i.classList.add("com-erro"); if(!calmo()){i.classList.remove("treme"); void i.offsetWidth; i.classList.add("treme")} try{if(navigator.vibrate)navigator.vibrate(10)}catch(x){}} else {i.removeAttribute("aria-invalid"); i.classList.remove("com-erro","treme")}
 }
 function resumoFolha(){
   var rs=$("#fResumo"); if(!rs||!F)return;
