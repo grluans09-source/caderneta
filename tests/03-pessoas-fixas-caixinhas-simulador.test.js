@@ -38,7 +38,7 @@ function invariante(n){
 }
 
 // ---- menu e R$ ----
-eq("barra de baixo com 4 destinos e o Anotar no centro (redesign R-01), que abre as 4 bolinhas de tipo",[d.querySelectorAll("nav button").length,!!d.querySelector("nav .nav-anotar"),!d.querySelector("body > .fab"),d.querySelectorAll("#fabMenu .fb").length],[5,true,true,4]);
+eq("barra de baixo com 4 destinos e o Anotar no centro (redesign R-01), que abre as 4 bolinhas de tipo",[d.querySelectorAll("nav .in button").length,!!d.querySelector("nav .nav-anotar"),!d.querySelector("body > .fab"),d.querySelectorAll("#fabMenu .fb").length],[5,true,true,4]);
 eq("menu: início, dinheiro, planejar, saúde (Investir em Dinheiro; Ajustes e Perguntar no cabeçalho)",[...d.querySelectorAll("nav button[data-v]")].map(b=>b.dataset.v),["inicio","contas","planejar","graficos"]);
 nav("caixinhas");eq("caixinhas marca Planejar",$("nav [aria-current]").dataset.v,"planejar");
 nav("relatorios");eq("os relatórios ficam dentro da aba Saúde (a barra marca Saúde)",$("nav [aria-current]").dataset.v,"graficos");

@@ -19,7 +19,7 @@
 | D | Estrutura do celular: barra Início · Dinheiro · [Anotar] · Planejar · Saúde; Perguntar e Ajustes no cabeçalho | **Concluída** (9 nov 2026), versão **1.27.0-beta.1** |
 | E | Componentes e telas do celular (folha de anotar, valor, Planejar, metas, gráficos, 320 px) | **Concluída** (9 nov 2026), versão **1.28.0-beta.1** |
 | F | Movimento (animações MM e MD) | **Concluída** (10 nov 2026), versão **1.29.0-beta.1** |
-| G | Layout do computador (barra lateral, colunas) | A fazer |
+| G | Layout do computador (barra lateral, colunas) | **Concluída** (10 nov 2026), versão **1.30.0-beta.1** |
 | H | Mouse e teclado no computador (atalhos, hover, tabela) | A fazer |
 | I | Validação final, matriz de preservação, documentação | A fazer |
 
@@ -94,6 +94,18 @@ No celular as telas que rolam aparecem inteiras (até 4.200 px); no computador, 
 - **Testes**: 40 arquivos, **1068 verificações, todos verdes** (novo: `tests/40-redesign-fase-f.test.js`: lê as 56 animações do estilo e confere as regras, e testa cada movimento no app). Chrome: aceite das fases D e E e 320 px continuam OK. Fotos: `docs/redesign/capturas/fase-f/` (fotos mostram o estado final; o movimento em si só se vê no aparelho).
 - **Não verificado:** a sensação do movimento num celular de verdade (fluidez e se "mexe demais").
 
+## Fase G: o que foi feito
+- **Regra**: tudo vale **só a partir de 1.024 px** de largura; no celular nada muda (as fotos `*-celular.jpg` da fase G são iguais às da F, salvo duas correções abaixo). No código, `ehPC()` decide pelo tamanho real da janela e a tela se redesenha quando a janela cruza 1.024 px.
+- **RD-01 / RD-02 (barra lateral)**: marca e «, **+ Nova anotação** em latão claro com a tecla N à vista, 4 destinos, Atalhos (Anotações, Hoje no Brasil), e embaixo Perguntar, Ajustes e a data da última cópia. Larguras da matriz: 72 px (1024–1279, só ícones com dica do mouse), 232 px (1280–1439), 248 px (≥ 1440). Recolher fica guardado.
+- **RD-03 (Início)**: duas colunas: valor + 5 últimas anotações + Hoje no Brasil | Precisa de você + mês + "fechou" + objetivos. Em 1024: valor em cima, Precisa e mês lado a lado (6/6), o resto embaixo.
+- **RD-05 (Dinheiro)**: em Contas e Dívidas, lista (4/12) + detalhe (8/12) com valor, Conferir com o banco, Editar e o extrato (15 mais recentes); 3/9 em 1920; um embaixo do outro em 1024.
+- **RD-07 (Saúde)**: panorama em faixa (números | texto) e os 10 indicadores em grade de 2, 3 ou 4 colunas, do mais grave ao mais tranquilo, "Aguardando dados" por último.
+- **RD-08 (Planejar)**: acerto e agenda (7/12) | ferramentas (5/12).
+- **RD-14 e matriz**: conteúdo até 1.200 px (1.440 em 1920), relatório com 720 px, janelas no centro até 560 px (RD-11), folha de anotar como painel de 460 px à direita com véu de 18% (RD-04, parte de layout).
+- **Correções que valem no celular também**: o selo "▲ R$ … desde o mês passado" tinha perdido o espaço antes de "desde", e a linha de baixo das ferramentas do Planejar quebrava a cada palavra (efeito da proteção dos valores da fase E).
+- **Testes**: 41 arquivos, **1114 verificações, todos verdes** (novo: `tests/41-fase-g-computador.test.js`, que finge uma janela de computador com um `matchMedia` de mentira e confere celular e computador). Chrome: `tools/conferir-computador.js` (1024, 1280, 1440, 1920: barra, colunas, nada passa da largura, Início sem rolar em 1440 × 900, painel de anotar), `conferir-larguras` (320 px) e `conferir-primeira-tela` continuam OK. Fotos: `docs/redesign/capturas/fase-g/` (26 telas × celular e computador) e `fase-g/larguras/` (8 telas × 4 larguras).
+- **Não verificado:** num computador de verdade com mouse (as fotos são do Chrome sem janela); telas com zoom do navegador; Safari no Mac.
+
 ## Itens dos relatórios
 
 Situação: **A fazer** · **Feito** · **Parcial** · **Descartado** (com motivo). A coluna "Fase" diz quando cada item entra.
@@ -167,39 +179,39 @@ Situação: **A fazer** · **Feito** · **Parcial** · **Descartado** (com motiv
 ### Relatório 02 (computador): problemas (DF)
 | ID | Prioridade | Problema | Fase | Situação |
 |---|---|---|---|---|
-| DF-01 | P1 | Layout de telefone esticado na tela do computador | G | A fazer |
-| DF-02 | P1 | Ações globais nos cantos da janela, longe do conteúdo | G | A fazer |
+| DF-01 | P1 | Layout de telefone esticado na tela do computador | G | Feito (fase G) |
+| DF-02 | P1 | Ações globais nos cantos da janela, longe do conteúdo | G | Feito (fase G: Nova anotação, Perguntar, Ajustes e cópia na barra lateral) |
 | DF-03 | P1 | Nenhum estado de hover | B (básico) / H | Parcial (B: hover básico; completo na H) |
-| DF-04 | P1 | Rolagem excessiva e ação importante fora da dobra | G | A fazer |
+| DF-04 | P1 | Rolagem excessiva e ação importante fora da dobra | G | Feito (fase G: em 1440 × 900 o Início mostra valor, Precisa de você, anotações e mês sem rolar) |
 | DF-05 | P1 | Panorama da Saúde declara "saudável" sem dados | B (D1) | Feito (fase B) |
-| DF-06 | P2 | Barra de navegação inferior (padrão de telefone) | G | A fazer |
+| DF-06 | P2 | Barra de navegação inferior (padrão de telefone) | G | Feito (fase G) |
 | DF-07 | P2 | Teclado: foco visível, mas fluxo lento e diálogos sem contenção | B (diálogos) / H | Parcial (B: diálogos; atalhos na H) |
-| DF-08 | P2 | Diálogos e formulário em formato de telefone | G | A fazer |
-| DF-09 | P2 | Listas sem estrutura de tabela | G/H | A fazer |
+| DF-08 | P2 | Diálogos e formulário em formato de telefone | G | Parcial (G: painel de anotar de 460 px e janelas no centro; teclado na H) |
+| DF-09 | P2 | Listas sem estrutura de tabela | G/H | Parcial (G: extrato ao lado da conta; tabela de anotações na H) |
 | DF-10 | P2 | Instruções de instalação de Android mostradas no computador | B | Feito (fase B) |
-| DF-11 | P2 | Gráficos estreitos e sem interação de mouse | G/H | A fazer |
+| DF-11 | P2 | Gráficos estreitos e sem interação de mouse | G/H | Parcial (G: grade de 2 a 4 colunas; mouse nos gráficos na H) |
 | DF-12 | P2 | Abertura de 4,1 s também no computador | B | Feito (fase B) |
 | DF-13 | P2 | Contraste insuficiente de limites de controle | B | Feito (fase B) |
-| DF-14 | P3 | Escala tipográfica idêntica à do telefone | C/G | Parcial (C: escala do computador nos tokens; layout na G) |
-| DF-15 | P3 | Repetição de valores e lista duplicada | G | A fazer |
+| DF-14 | P3 | Escala tipográfica idêntica à do telefone | C/G | Feito (C: escala do computador; G: layout) |
+| DF-15 | P3 | Repetição de valores e lista duplicada | G | Feito (D/E: menos repetição; G: colunas sem lista duplicada) |
 
 ### Relatório 02 (computador): recomendações (RD)
 | ID | Recomendação | Resolve | Fase | Situação |
 |---|---|---|---|---|
-| RD-01 | Layout de aplicação com barra lateral e grade de 12 colunas | DF-01, DF-06 | G | A fazer |
-| RD-02 | Ações globais na barra lateral | DF-02 | G | A fazer |
-| RD-03 | Início em painel de duas colunas | DF-04, DF-15 | G | A fazer |
-| RD-04 | Painel lateral de anotação (não modal) | DF-08, DF-07 | G | A fazer |
-| RD-05 | Dinheiro em mestre-detalhe (com Investimentos) | DF-01, DF-09 | G | A fazer |
+| RD-01 | Layout de aplicação com barra lateral e grade de 12 colunas | DF-01, DF-06 | G | Feito (fase G) |
+| RD-02 | Ações globais na barra lateral | DF-02 | G | Feito (fase G; a tecla N funciona na H) |
+| RD-03 | Início em painel de duas colunas | DF-04, DF-15 | G | Feito (fase G; desvio 30) |
+| RD-04 | Painel lateral de anotação (não modal) | DF-08, DF-07 | G | Parcial (G: painel de 460 px com véu leve; Enter, Shift+Enter e 1–4 na H) |
+| RD-05 | Dinheiro em mestre-detalhe (com Investimentos) | DF-01, DF-09 | G | Parcial (G: Contas e Dívidas com detalhe e extrato; desvios 31 e 32) |
 | RD-06 | Anotações como tabela ordenável | DF-09 | H | A fazer |
-| RD-07 | Saúde em grade com panorama horizontal | DF-04, DF-05, DF-11 | G | A fazer |
-| RD-08 | Planejar em duas colunas | DF-04, DF-15 | G | A fazer |
+| RD-07 | Saúde em grade com panorama horizontal | DF-04, DF-05, DF-11 | G | Feito (fase G) |
+| RD-08 | Planejar em duas colunas | DF-04, DF-15 | G | Feito (fase G) |
 | RD-09 | Estados de interação para mouse | DF-03 | H | A fazer |
 | RD-10 | Teclado de primeira classe (atalhos completos, D5) | DF-07 | H | A fazer |
-| RD-11 | Diálogos centralizados | DF-08 | G | A fazer |
+| RD-11 | Diálogos centralizados | DF-08 | G | Feito (fase G: no centro, até 560 px) |
 | RD-12 | Conteúdo sensível à plataforma | DF-10 | B | Feito (fase B) |
 | RD-13 | Gráficos para mouse e telas largas | DF-11 | H | A fazer |
-| RD-14 | Escala tipográfica do computador | DF-14 | C/G | Parcial (C: escala do computador nos tokens; layout na G) |
+| RD-14 | Escala tipográfica do computador | DF-14 | C/G | Feito (C: escala; G: larguras e relatório com 720 px) |
 
 ### Relatório 02 (computador): movimento (MD)
 | ID | Elemento | Fase | Situação |

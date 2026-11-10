@@ -18,7 +18,8 @@ const TELAS=[
   ["03-dinheiro-dividas",[nav("contas"),clique('[data-a="dinAba"][data-v="dividas"]')]],
   ["04-dinheiro-bens",[nav("contas"),clique('[data-a="dinAba"][data-v="bens"]')]],
   ["05-dinheiro-pessoas",[nav("contas"),clique('[data-a="dinAba"][data-v="pessoas"]')]],
-  ["06-conta-editar",[nav("contas"),clique('[data-a="gaveta"][data-id="b1"]')]],
+  /* no computador (fase G), clicar na conta mostra o detalhe ao lado; a janela de editar abre pelo botão Editar do detalhe */
+  ["06-conta-editar",[nav("contas"),clique('[data-a="gaveta"][data-id="b1"]'),`(function(){var e=document.querySelector('.din-det [data-a="gavetaEditar"]'); if(e)e.click(); return true})()`]],
   ["07-investir",[nav("contas"),clique('[data-a="dinAba"][data-v="investir"]')]],
   ["08-investir-aplicacao",[nav("contas"),clique('[data-a="dinAba"][data-v="investir"]'),clique('#tela [data-a="aplicacao"]')]],
   ["09-planejar",[nav("planejar")]],

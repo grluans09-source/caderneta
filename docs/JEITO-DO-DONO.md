@@ -55,3 +55,4 @@
 - **9 nov 2026 (noite)**: aprovou a fase D com "Sim, fase D". Ele segue o relatório fase a fase e confia nas decisões já marcadas no prompt; o que ele precisa ver em cada fase é **o que mudou na tela, o que foi testado e o que não foi** (celular real).
 - **9 nov 2026 (noite)**: aprovou a fase E ("Sim, fase E"). Mantém o ritmo de uma fase por vez, com envio só depois do "Sim, enviar".
 - **9 nov 2026 (noite)**: aprovou a fase F ("Sim, fase F") logo depois de publicar a E. Segue confiante no ritmo: uma fase, os testes, as fotos, "Envio?", "Sim, enviar".
+- **10 nov 2026**: aprovou a fase G ("Sim, fase G"), a do computador. Lição para esta fase: **conferir pelas fotos, não só pelos números** (as medidas passaram, mas as fotos mostraram um buraco no Início e textos sobrepostos na Saúde; foram corrigidos antes de mostrar a ele). E deixar claro que **o celular não muda** quando o assunto é só o computador.

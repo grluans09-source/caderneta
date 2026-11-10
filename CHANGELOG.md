@@ -5,6 +5,18 @@
 Formato: versão semântica (`MAIOR.MENOR.CORREÇÃO`). Cada versão diz **o que mudou para a pessoa que usa**.
 Antes da 1.0.0 as versões eram numeradas só pelo nome do cache do app (v1 a v16); estão aqui como marcos de desenvolvimento.
 
+## [1.30.0-beta.1]: 10 de novembro de 2026 · redesign, fase G: o app no computador
+No computador (janela com 1.024 px de largura ou mais), o Balancete deixa de ser "um celular esticado" (D67, Relatório 02). **No celular nada muda.**
+- **Barra lateral à esquerda** no lugar da barra de baixo: a marca, o botão **"+ Nova anotação"** em destaque (com a tecla **N** à vista; o atalho funciona na fase H), os 4 destinos, os atalhos **Anotações** e **Hoje no Brasil**, e embaixo **Perguntar**, **Ajustes** e **quando foi a última cópia** dos dados. Em telas de 1.024 a 1.279 px ela mostra só os ícones (o nome aparece ao passar o mouse); o botão « recolhe ou abre a barra, e o app lembra a escolha.
+- **Início em duas colunas**: à esquerda, o "É meu de verdade" e as **5 últimas anotações**; à direita, **"Precisa de você"**, o resumo do mês e os objetivos. Em 1.440 × 900, tudo isso aparece sem rolar.
+- **Dinheiro com lista e detalhe**: em Contas e Dívidas, clicar numa conta mostra ao lado o valor, "Conferir com o banco", "Editar" e o **extrato** (as 15 anotações mais recentes daquela conta). Em 1.024 px o detalhe fica embaixo da lista.
+- **Saúde em grade**: o panorama numa faixa larga e os **10 indicadores em 2, 3 ou 4 colunas** (conforme a largura), do mais grave ao mais tranquilo, com "Aguardando dados" por último.
+- **Planejar em duas colunas**: o acerto do mês e a agenda à esquerda; as ferramentas (Metas, Caixinhas, Contas fixas, Simulador) à direita.
+- A **folha de anotar** vira um **painel de 460 px à direita**, com a tela de trás ainda à vista; as **janelas** abrem no centro, com até 560 px; o **relatório** fica numa coluna de leitura de 720 px.
+- No computador, as respostas do Perguntar e as dicas dizem "na barra da esquerda" em vez de "na barra de baixo" ou "a engrenagem no alto".
+- Correções que valem também no celular: o selo "▲ R$ … desde o mês passado" voltou a ter espaço entre o valor e o texto, e a linha de baixo das ferramentas do Planejar não quebra mais palavra por palavra.
+- Testes: 1114 verificações em 41 arquivos (novo: fase G, que finge uma janela de computador). No Chrome, `tools/conferir-computador.js` confere 1024, 1280, 1440 e 1920 px.
+
 ## [1.29.0-beta.1]: 10 de novembro de 2026 · redesign, fase F: movimento com propósito
 Cada animação agora mostra **causa e efeito** e nunca segura a pessoa (D67, seção de movimento do relatório).
 - A **folha de anotar sobe** de baixo (0,3 s) e **desce** ao fechar; o fundo escurece junto.

@@ -55,6 +55,7 @@ function abrirFixture(html,erros,extra){
     const D=w.Date;
     class Fixa extends D{constructor(...a){if(a.length===0)super(FIXO);else super(...a)} static now(){return FIXO}}
     w.Date=Fixa;
+    if(extra&&extra.antes)extra.antes(w);
     w.localStorage.setItem("caderneta:v2",JSON.stringify(extra&&extra.seed||SEED));
     w.localStorage.setItem("caderneta:v2:noticias",JSON.stringify(NOTICIAS));
   }}).window;

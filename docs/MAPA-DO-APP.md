@@ -1,6 +1,6 @@
 # Mapa do app
 
-O app **de hoje** (versão 1.29.0, com o redesign "Tinta & Latão" até a fase F, D67; antes, a simplificação da 1.23.0: ver `AUDITORIA-INTERFACE.md`): onde mora cada assunto, o que tem em cada tela e o mapa de cores. Nasceu no passo 3 do plano da beta (decisões Q1 a Q7 da [auditoria de funções](AUDITORIA-FUNCOES.md), aceitas pelo dono em 6 nov 2026) e foi completado com Investir, Notícias e o chat.
+O app **de hoje** (versão 1.30.0, com o redesign "Tinta & Latão" até a fase G, D67; antes, a simplificação da 1.23.0: ver `AUDITORIA-INTERFACE.md`): onde mora cada assunto, o que tem em cada tela e o mapa de cores. Nasceu no passo 3 do plano da beta (decisões Q1 a Q7 da [auditoria de funções](AUDITORIA-FUNCOES.md), aceitas pelo dono em 6 nov 2026) e foi completado com Investir, Notícias e o chat.
 
 **Regras do mapa**
 1. **Cada assunto mora em um único lugar.** Nos outros lugares só existe um **atalho** (uma linha que leva até a casa dele).
@@ -24,6 +24,15 @@ O app **de hoje** (versão 1.29.0, com o redesign "Tinta & Latão" até a fase F
 Os nomes da barra aparecem **sempre**, também com letra Enorme. **Nada fica flutuando por cima do conteúdo** (só a barra e avisos de poucos segundos). *(Até a 1.26.0 a barra tinha 6 abas, Início · Dinheiro · Investir · Planejar · Saúde · Mais, com a pena e o Perguntar flutuando nos cantos.)*
 
 **Linguagem visual "viva"**: formas **grossas, redondas e cheias** (ícones preenchidos, botões em pílula, cartões arredondados) e **movimento com propósito**: abertura do app com o **Brasão** (a moeda-logo) que cai girando, abre os olhos e pisca (D54), aba que quica e ganha bolha dourada, blocos que sobem em sequência, gráficos que crescem, bolinhas do + em círculo. Tudo isso some com "Movimento: Parado". *(Desde a 1.29.0, D67, o movimento segue a regra "causa e efeito": a folha sobe e desce, o indicador do tipo desliza, a linha nova fica dourada por 1,2 s, gráficos crescem só na 1ª vez, o pote enche; nada fica se mexendo à toa, e números e gráficos não "quicam". Os momentos do Mordomo e o menu das medalhas continuam.)*
+
+### No computador (janela com 1.024 px ou mais, desde a 1.30.0)
+O conteúdo é o mesmo; muda a arrumação (no celular, tudo como acima):
+- **Barra lateral à esquerda** (no lugar da barra de baixo): marca e « (recolher), **+ Nova anotação** (latão claro, tecla N), Início · Dinheiro · Planejar · Saúde, **Atalhos** (Anotações, Hoje no Brasil) e, embaixo, **Perguntar**, **Ajustes** e a data da última cópia. Perguntar e Ajustes saem do cabeçalho. De 1.024 a 1.279 px, só os ícones.
+- **Início**: à esquerda o "É meu de verdade" e as 5 últimas anotações; à direita "Precisa de você", o mês e os objetivos.
+- **Dinheiro > Contas e Dívidas**: lista à esquerda (4/12) e, à direita (8/12), o detalhe da conta escolhida com o extrato. Editar fica no botão do detalhe.
+- **Planejar**: acerto e agenda à esquerda (7/12), ferramentas à direita (5/12).
+- **Saúde**: panorama numa faixa e os 10 indicadores em grade (2 colunas até 1.439 px, 3 em 1.440, 4 em 1.920).
+- **Anotar** abre um painel de 460 px à direita; as janelas abrem no centro (até 560 px); o relatório tem 720 px de largura.
 
 ## 2. Onde mora cada assunto
 

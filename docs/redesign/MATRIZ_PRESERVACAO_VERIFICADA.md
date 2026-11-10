@@ -2,7 +2,7 @@
 
 > Pedido do prompt de redesign: cada função de antes (PF-01 a PF-50 do celular, PD-01 a PD-34 do computador) com **onde ficou**, **como foi testada** e o **resultado**.
 > Teste automático: `tests/38-matriz-preservacao.test.js` (roda em `npm test`, com a massa de teste e o relógio parado em 9/11/2026). Cada linha abaixo é uma verificação dele.
-> Situação em 1.28.0-beta.1: **50 de 50 funções do celular preservadas**. PD-01 a PD-34 (computador) entram nas fases G e H.
+> Situação em 1.30.0-beta.1: **50 de 50 funções do celular preservadas** e **34 de 34 funções do computador preservadas** (PD-01 a PD-34). A apresentação nova do computador está pronta nas telas da fase G; o que é teclado e tabela entra na fase H (coluna "Apresentação").
 
 ## Celular (Relatório 01, seção 28)
 | ID | Função | Onde ficou (desde a 1.27.0) | Como foi testada | Resultado |
@@ -59,4 +59,41 @@
 | PF-50 | Lembrete semanal de conferir (D6) | "Precisa de você" no Início (igual) | Confere o texto com a massa | ✅ |
 
 ## Computador (Relatório 02, PD-01 a PD-34)
-A fazer nas fases G e H (layout de computador, mouse e teclado). Até lá, o computador usa as mesmas telas do celular, e tudo da tabela acima vale para ele.
+Situação na fase G (1.30.0): todas as funções continuam no computador. "Apresentação" diz se a arrumação nova do relatório já está pronta; o que falta é teclado, mouse e tabelas (fase H).
+
+| ID | Função | Onde ficou (computador) | Como foi testada | Apresentação |
+|---|---|---|---|---|
+| PD-01 | Abertura animada | Só no 1º uso e quando o app atualiza (fase B, igual no computador) | teste 36 | Feita |
+| PD-02 | Primeiros passos | Coluna centralizada, as mesmas 3 etapas | teste 36 e foto 25 | Feita (desvio 36) |
+| PD-03 | Frase do dia | Rodapé do Início, largura toda | teste 38 (PF-04) e teste 41 | Feita |
+| PD-04 | Dica de instalar | "Instalar no computador", no fim do Início, só depois da 1ª anotação | teste 36 | Feita |
+| PD-05 | É meu de verdade + composição | Coluna esquerda do Início, no alto | teste 41 e conferir-computador | Feita |
+| PD-06 | Como ler a balança | Janela no centro (até 560 px) | teste 38 e foto 18 | Feita |
+| PD-07 | Entrou / Saiu / Sobrou; quanto dá por dia | Cartão do mês, coluna direita do Início | teste 41 | Feita |
+| PD-08 | Falta pagar, vencimentos, limite | "Precisa de você", coluna direita do Início | teste 41 e conferir-computador | Feita |
+| PD-09 | Lembrete de cópia | "Precisa de você" + rodapé da barra lateral ("Cópia: dd/mm") | teste 41 | Feita |
+| PD-10 | Hoje no Brasil / Notícias | Cartão no Início + atalho na barra lateral | teste 41 | Feita |
+| PD-11 | Seus objetivos | Coluna direita do Início (seção que abre) | teste 38 | Feita |
+| PD-12 | Últimas anotações | 5 linhas, coluna esquerda do Início | teste 41 | Feita (tabela na H) |
+| PD-13 | Anotar (4 tipos, busca, favoritas, nova categoria, novo bem, datas, anotação, caixinha, resumo) | Painel de 460 px à direita | testes 39 e 41, conferir-computador | Feita (teclas 1–4 e Enter na H) |
+| PD-14 | Arredondamento do dinheiro vivo | No painel, igual ao celular | teste 39 | Feita |
+| PD-15 | Pagar fatura (juros/multa) | No painel ("Pagar <conta>") | teste 39 | Feita |
+| PD-16 | Editar · Apagar · Desfazer | Painel; Apagar com janela; Desfazer no aviso | testes 36 e 39 | Feita |
+| PD-17 | Contas, cédulas, conferir, editar, apagar | Dinheiro > Contas: lista + detalhe com extrato; Editar no detalhe | teste 41 | Feita |
+| PD-18 | Dívidas (limite, disponível, pagar) | Dinheiro > Dívidas: lista + detalhe | teste 41 | Feita |
+| PD-19 | Bens (valorização, atualizar, vendi) | Dinheiro > Bens: lista (como no celular) | teste 38 | Feita (desvio 31) |
+| PD-20 | Pessoas (emprestei / peguei) | Dinheiro > Pessoas: lista (como no celular) | teste 38 | Feita (desvio 31) |
+| PD-21 | Investimentos | Dinheiro > Investimentos (como no celular) | teste 38 | Feita (desvio 31) |
+| PD-22 | Acerto de contas do mês | Coluna principal do Planejar (7/12), em linha | teste 41 | Feita |
+| PD-23 | Agenda | Mesma coluna, embaixo do acerto | teste 41 | Feita (hover na H) |
+| PD-24 | Metas do mês | Coluna lateral do Planejar + tela própria | teste 41 | Feita |
+| PD-25 | Caixinhas | Coluna lateral + tela própria | teste 41 | Feita |
+| PD-26 | Contas fixas | Coluna lateral + tela própria | teste 41 | Feita |
+| PD-27 | Simulador | Coluna lateral + tela própria (coluna única) | teste 38 | Feita (desvio 36) |
+| PD-28 | Panorama + 10 indicadores | Faixa de panorama + grade de 2 a 4 colunas | teste 41 e conferir-computador | Feita |
+| PD-29 | Relatório + compartilhar | Coluna de leitura de 720 px | teste 41 | Feita |
+| PD-30 | Mês a mês · Relatórios em lista | Embaixo da grade da Saúde | teste 41 | Feita (tabela na H) |
+| PD-31 | Anotações (busca, ordenar, filtrar) | Atalho na barra lateral; lista como no celular | teste 41 | Feita (tabela e "/" na H) |
+| PD-32 | Ajustes | Atalho no rodapé da barra lateral; coluna única | teste 41 | Feita (desvio 36) |
+| PD-33 | Perguntar | Rodapé da barra lateral; janela no centro | teste 41 | Feita (desvio 35) |
+| PD-34 | Lembrete semanal de conferir | "Precisa de você" (igual) | teste 38 (PF-50) | Feita |
