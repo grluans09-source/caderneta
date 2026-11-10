@@ -10,7 +10,7 @@ const css=html.match(/<style>([\s\S]*?)<\/style>/)[1];
 const LIVRE=/\.fb\b|\.momento|#splash|\.sp-|\.dock|\.bal\b|\.bal |\.md-|\.perg\.r-|\.perg \.pp-/;
 
 // ---- tokens de movimento ----
-eq("tokens de duração e curva do relatório",["--dur-instant:90ms","--dur-fast:160ms","--dur-base:220ms","--dur-slow:300ms","--dur-emph:560ms","--ease-standard:cubic-bezier(.2,0,0,1)","--ease-enter:cubic-bezier(.05,.7,.1,1)","--ease-exit:cubic-bezier(.3,0,1,1)"].every(t=>css.includes(t)),true);
+eq("tokens de duração (D68, 1.32.1: meio-termo pedido pelo dono, ~1,7× o relatório) e curvas do relatório",["--dur-instant:150ms","--dur-fast:270ms","--dur-base:380ms","--dur-slow:500ms","--dur-emph:800ms","--ease-standard:cubic-bezier(.2,0,0,1)","--ease-enter:cubic-bezier(.05,.7,.1,1)","--ease-exit:cubic-bezier(.3,0,1,1)"].every(t=>css.includes(t)),true);
 
 // ---- só transform e opacity ----
 const kf={}; css.replace(/@keyframes ([\w-]+)\{((?:[^{}]*\{[^{}]*\})*)\s*\}/g,(m,n,c)=>{kf[n]=c});   /* a última definição vale */
@@ -29,15 +29,15 @@ eq("nada em loop infinito fora dos momentos de deleite",loops,[]);
 
 // ---- cada movimento do relatório ----
 const tem=re=>re.test(css);
-eq("MM-02: a tela nova entra (esmaecer + 8 px, 0,22 s), sem fila de blocos",[tem(/#tela\.entra\{animation:fSobe var\(--dur-base\) var\(--ease-enter\)\}/),tem(/#tela\.entra>\*,#tela\.entra>\*:nth-child\(n\)\{animation:none\}/)],[true,true]);
-eq("MM-03: a folha sobe (0,3 s) e desce (0,22 s)",[tem(/\.folha\.on\{animation:fFolha var\(--dur-slow\) var\(--ease-enter\)\}/),tem(/\.folha\.fecha\{display:block;pointer-events:none;animation:fFolhaSai var\(--dur-base\)/)],[true,true]);
+eq("MM-02: a tela nova entra (esmaecer + 8 px, 0,38 s desde a D68), sem fila de blocos",[tem(/#tela\.entra\{animation:fSobe var\(--dur-base\) var\(--ease-enter\)\}/),tem(/#tela\.entra>\*,#tela\.entra>\*:nth-child\(n\)\{animation:none\}/)],[true,true]);
+eq("MM-03: a folha sobe (0,5 s) e desce (0,38 s) desde a D68",[tem(/\.folha\.on\{animation:fFolha var\(--dur-slow\) var\(--ease-enter\)\}/),tem(/\.folha\.fecha\{display:block;pointer-events:none;animation:fFolhaSai var\(--dur-base\)/)],[true,true]);
 eq("MM-04: o indicador do tipo desliza (transform) e a cor do tipo vai para o Salvar e a categoria",[tem(/\.f-seg::before\{[^}]*transform:translateX\(calc\(var\(--i,0\)/),tem(/\.folha \.lc-cats \.opt\[aria-pressed="true"\],\.f-barra \.btn[^{]*\{background:var\(--cor-tipo\)/)],[true,true]);
 eq("MM-06: a linha nova em destaque por 1,2 s (só opacidade)",tem(/\.novo-lin::before\{[^}]*animation:fDestaque 1\.2s/),true);
 eq("MM-07: campo com erro treme 3 px, duas vezes",tem(/@keyframes fTreme\{0%,100%\{transform:none\}25%\{transform:translateX\(-3px\)\}75%\{transform:translateX\(3px\)\}\}/)&&tem(/\.treme\{animation:fTreme 90ms linear 2\}/),true);
-eq("MM-08/MM-14: aviso sobe 12 px em 0,18 s e sai em 0,14 s; com Desfazer, a barra do tempo esvazia em 8 s",[tem(/\.toast\{transform:translateY\(12px\);transition:opacity 140ms var\(--ease-exit\)/),tem(/\.toast\.on\{transform:none;transition:opacity 180ms var\(--ease-enter\)/),tem(/\.toast\.com-botao::after\{[^}]*animation:fEsvazia 8s linear forwards\}/)],[true,true,true]);
+eq("MM-08/MM-14: aviso sobe 12 px em 0,3 s e sai em 0,24 s (D68); com Desfazer, a barra do tempo esvazia em 8 s",[tem(/\.toast\{transform:translateY\(12px\);transition:opacity 240ms var\(--ease-exit\)/),tem(/\.toast\.on\{transform:none;transition:opacity 300ms var\(--ease-enter\)/),tem(/\.toast\.com-botao::after\{[^}]*animation:fEsvazia 8s linear forwards\}/)],[true,true,true]);
 eq("MM-09: barras de quanto já foi crescem da esquerda (scaleX), sem mexer na largura",tem(/\.barra-lim div,\.trilho div,\.barra2 div,\.fino div\{transform-origin:left;animation:fCresceX/),true);
 eq("MM-11: barras crescem da base (0,4 s, 40 ms entre elas) e a linha se desenha (0,6 s)",[tem(/\.grafico rect\{transform-box:fill-box;transform-origin:center bottom;animation:fCresceY 400ms var\(--ease-standard\) both\}/),tem(/\.grafico rect:nth-of-type\(2\)\{animation-delay:40ms\}/),tem(/\.linha-real\{stroke-dasharray:1;stroke-dashoffset:0;animation:fDesenha 600ms/)],[true,true,true]);
-eq("MM-12 / MM-13 / MM-15: seção que abre, janela (escala .96 → 1) e resposta do Perguntar entram suaves",[tem(/details\.rec\[open\]>\.rec-c\{animation:fSobe/),tem(/@keyframes fDialogo\{from\{opacity:0;transform:scale\(\.96\)\}/),tem(/\.ch-m\{animation:fSobe 180ms/)],[true,true,true]);
+eq("MM-12 / MM-13 / MM-15: seção que abre, janela (escala .96 → 1) e resposta do Perguntar entram suaves",[tem(/details\.rec\[open\]>\.rec-c\{animation:fSobe/),tem(/@keyframes fDialogo\{from\{opacity:0;transform:scale\(\.96\)\}/),tem(/\.ch-m\{animation:fSobe 300ms/)],[true,true,true]);
 eq("MM-15: o destaque do \"Ver no app\" pisca 2 vezes de 0,6 s",tem(/\.destaque\{[^}]*animation:destaca \.6s ease-in-out 2\}/),true);
 eq("MM-16: o nível do pote sobe (transform) e, passando da meta, a gota cai 6 px",[tem(/\.jar \.nivel\{position:absolute;inset:0;animation:fNivel/),tem(/@keyframes fGota\{from\{opacity:0;transform:translateY\(-6px\)\}/)],[true,true]);
 eq("Movimento: Parado: sem deslocamento, só esmaecer de 0,12 s no aviso, na janela, na folha e na troca de tela; a linha do gráfico aparece inteira",[tem(/html\.calmo \*,html\.calmo \*:before,html\.calmo \*:after\{animation:none!important;transition:none!important\}/),tem(/html\.calmo #tela\.entra,html\.calmo \.modal,html\.calmo \.modal-fundo\.on,html\.calmo \.folha\.on\{animation:fFade 120ms linear!important\}/),tem(/html\.calmo \.linha-real\{stroke-dashoffset:0\}/)],[true,true,true]);
@@ -64,8 +64,8 @@ eq("MM-07: salvar sem valor faz o campo tremer",$("#fValor").classList.contains(
 // MM-03: ao fechar, a folha desce e já não segura a tela
 T.fecharFolha();
 eq("MM-03: ao fechar, a folha desce (classe fecha) e a tela já fica livre",[$("#folha").classList.contains("on"),$("#folha").classList.contains("fecha"),$("#tela").hasAttribute("inert")],[false,true,false]);
-await espera(260);
-eq("   em 0,23 s a folha some",$("#folha").classList.contains("fecha"),false);
+await espera(420);
+eq("   em 0,39 s a folha some (D68)",$("#folha").classList.contains("fecha"),false);
 // com Movimento: Parado, a folha não desce
 d.documentElement.classList.add("calmo"); T.novaFolha({tipo:"saida"}); T.fecharFolha();
 eq("com Movimento: Parado a folha fecha na hora, sem descer",$("#folha").classList.contains("fecha"),false);

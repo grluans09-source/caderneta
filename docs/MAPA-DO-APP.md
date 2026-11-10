@@ -1,6 +1,6 @@
 # Mapa do app
 
-O app **de hoje** (versão 1.32.0, com o redesign "Tinta & Latão" concluído, D67; antes, a simplificação da 1.23.0: ver `AUDITORIA-INTERFACE.md`): onde mora cada assunto, o que tem em cada tela e o mapa de cores. Nasceu no passo 3 do plano da beta (decisões Q1 a Q7 da [auditoria de funções](AUDITORIA-FUNCOES.md), aceitas pelo dono em 6 nov 2026) e foi completado com Investir, Notícias e o chat.
+O app **de hoje** (versão 1.32.1, com o redesign "Tinta & Latão" concluído, D67, e animações no ritmo escolhido pelo dono, D68; antes, a simplificação da 1.23.0: ver `AUDITORIA-INTERFACE.md`): onde mora cada assunto, o que tem em cada tela e o mapa de cores. Nasceu no passo 3 do plano da beta (decisões Q1 a Q7 da [auditoria de funções](AUDITORIA-FUNCOES.md), aceitas pelo dono em 6 nov 2026) e foi completado com Investir, Notícias e o chat.
 
 **Regras do mapa**
 1. **Cada assunto mora em um único lugar.** Nos outros lugares só existe um **atalho** (uma linha que leva até a casa dele).

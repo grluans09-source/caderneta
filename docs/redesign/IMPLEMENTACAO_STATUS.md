@@ -44,7 +44,7 @@ No celular as telas que rolam aparecem inteiras (até 4.200 px); no computador, 
 
 ## Fase B: o que foi feito
 - Avisos: um por vez no mesmo lugar (4 s; 8 s com "Desfazer", nunca cortado antes de 3 s); o balão do Perguntar fala só no primeiro acesso e nunca por cima de outro aviso.
-- Abertura: só no primeiro uso e depois de atualizar, em 1,2 s; tocar pula.
+- Abertura: só no primeiro uso e depois de atualizar, em 1,2 s; tocar pula. *(Desde a 1.32.1, 2,5 s: decisão do dono, D68.)*
 - Saúde (D1): contadores Saudáveis · Atenção · Alerta + "Aguardando dados". Para contar como saudável é preciso ter 30 dias de anotações ou a renda informada. O selo dos cartões e a resposta do chat seguem a mesma regra; os indicadores e os relatórios não mudaram.
 - ⓘ de 20 px num alvo de 44 px no lugar do "?". Janelas e folha de anotar: foco no título, Tab fica dentro, Esc fecha, o foco volta, o fundo fica inerte. O <main> sem aria-live, link "Pular para o conteúdo", um H1 por tela.
 - Bordas de campo #8C8473 / #7C7566 (contraste ≥ 3:1); hover básico com mouse; Enter num campo salva.
@@ -191,7 +191,7 @@ Situação: **A fazer** · **Feito** · **Parcial** · **Descartado** (com motiv
 ### Relatório 01 (celular): movimento (MM)
 | ID | Elemento · onde | Fase | Situação |
 |---|---|---|---|
-| MM-01 | Marca (moeda) e conteúdo · Abertura | F | Feito (B: abertura curta; F: conteúdo entra em 0,22 s) |
+| MM-01 | Marca (moeda) e conteúdo · Abertura | F | Feito (B: abertura curta; F: conteúdo entra em 0,22 s; D68, 1.32.1: 2,5 s e 0,38 s, pedido do dono) |
 | MM-02 | Conteúdo da aba · Barra inferior | F | Parcial (a tela nova entra; a saída da anterior não, para a tela ficar livre na hora) |
 | MM-03 | Folha "Nova anotação" · Global | F | Feito (fase F) |
 | MM-04 | Controle de tipo (Gastei/Recebi/Transferi/Bem) · Folha Anotar | F | Feito (fase F) |

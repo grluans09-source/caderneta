@@ -93,7 +93,7 @@ T.fimAviso(); T.AVISOS.length=0;
 // ---- abertura curta (R-05) ----
 eq("abertura: no primeiro uso desta versão ela aparece (curta) e fica marcada como vista",[!!w.localStorage.getItem("caderneta:v2:abertura")],[true]);
 const css=html.match(/<style>([\s\S]*?)<\/style>/)[1];
-eq("   a abertura curta termina em 1,2 s",/#splash\.curta\{animation:spSai \.25s \.95s/.test(css)&&/setTimeout\(spTira,1200\)/.test(html),true);
+eq("   a abertura curta termina em 2,5 s (D68, 1.32.1; era 1,2 s)",/#splash\.curta\{animation:spSai \.4s 2\.1s/.test(css)&&/setTimeout\(spTira,2500\)/.test(html),true);
 const w2=abrirFixture(html,erros,{});  w2.localStorage.setItem("caderneta:v2:abertura",w2.__T.S()?(html.match(/VERSAO_APP="([^"]+)"/)||[])[1]:"");
 eq("   e nas outras aberturas não aparece (o app abre direto)",(()=>{const w3=new (require("jsdom").JSDOM)(html,{runScripts:"dangerously",url:"http://localhost/",pretendToBeVisual:true,beforeParse(x){x.localStorage.setItem("caderneta:v2",JSON.stringify(SEED));x.localStorage.setItem("caderneta:v2:abertura",(html.match(/VERSAO_APP="([^"]+)"/)||[])[1])}}).window;return !!w3.document.getElementById("splash")})(),false);
 

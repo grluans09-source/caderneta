@@ -17,7 +17,7 @@ const pes=$('[data-a="pesaoFecha"]'); if(pes)pes.click();
 const nav=v=>{fecha();click('nav [data-v="'+v+'"]')};
 
 /* ---- abertura e primeiros passos ---- */
-pf("PF-01","abertura animada: só no 1º uso e ao atualizar, 1,2 s",()=>/#splash\.curta\{animation:spSai \.25s \.95s/.test(html)&&/lsGet\(KEY\+":abertura"\)===VERSAO_APP/.test(html));
+pf("PF-01","abertura animada: só no 1º uso e ao atualizar, 2,5 s (D68; era 1,2 s)",()=>/#splash\.curta\{animation:spSai \.4s 2\.1s/.test(html)&&/lsGet\(KEY\+":abertura"\)===VERSAO_APP/.test(html));
 const w0=new JSDOM(html,{runScripts:"dangerously",url:"http://localhost/",pretendToBeVisual:true}).window, d0=w0.document;
 pf("PF-02","primeiros passos: carteira, banco, guardado e como rende",()=>{d0.querySelector('[data-a="oProx"]').click();return ["oCarteira","oBanco","oPoup"].every(i=>!!d0.getElementById(i))&&!!d0.querySelector('[data-a="oModoRend"]')});
 pf("PF-03","primeiros passos: cartão (nome, fecha, vence, limite, vencimentos)",()=>{d0.querySelector('[data-a="oProx"]').click();d0.querySelector('[data-a="oCartao"][data-s="1"]').click();return !d0.getElementById("oCartaoCampos").hidden&&d0.getElementById("oCartaoCampos").querySelectorAll("input").length>=4});

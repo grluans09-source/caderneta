@@ -748,14 +748,14 @@ h2:after{content:"";position:absolute;left:0;bottom:0;width:2.8rem;height:.32rem
 @keyframes spSai{to{opacity:0;visibility:hidden}}
 html.calmo #splash .sp-t,html.calmo #splash .sp-s{opacity:1}
 /* abertura curta (redesign R-05): a mesma moeda e a balança, em 1,2 s */
-#splash.curta{animation:spSai .25s .95s ease forwards}
-#splash.curta .br-moeda{animation-duration:.55s}
-#splash.curta .br-reflexo{animation:spRef .4s ease-in-out .5s both}
+#splash.curta{animation:spSai .4s 2.1s ease forwards}
+#splash.curta .br-moeda{animation-duration:1.05s}
+#splash.curta .br-reflexo{animation:spRef .8s ease-in-out 1s both}
 #splash.curta .br-pino{animation:none}
-#splash.curta .br-olhos{animation:spAbre .7s ease-in-out .45s both}
-#splash.curta .br-trav{animation:spBal .6s ease-in-out .5s both}
-#splash.curta .sp-t{animation:spT .35s .45s forwards}
-#splash.curta .sp-s{animation:spT .35s .55s forwards}
+#splash.curta .br-olhos{animation:spAbre 1.2s ease-in-out .95s both}
+#splash.curta .br-trav{animation:spBal 1.1s ease-in-out 1s both}
+#splash.curta .sp-t{animation:spT .6s .9s forwards}
+#splash.curta .sp-s{animation:spT .6s 1.1s forwards}
 .logo-mini{width:1.75rem;height:1.75rem;vertical-align:-.38rem;margin-right:.45rem}
 
 /* conferir com o banco, contas do ano, mês a mês */
@@ -1057,7 +1057,7 @@ body.folha-aberta::after{content:"";position:fixed;inset:0;background:var(--colo
 /* ===== Redesign, fase F (D67): movimento como causa e efeito, nunca enfeite =====
    Só transform e opacity (exceção: a cor do tipo e o contorno do destaque); a tela fica livre em até 0,22 s;
    números e gráficos sem "quicar"; com Movimento: Parado ou "reduzir movimento" no celular, só um esmaecer de até 0,12 s. */
-:root{--dur-instant:90ms;--dur-fast:160ms;--dur-base:220ms;--dur-slow:300ms;--dur-emph:560ms;
+:root{--dur-instant:150ms;--dur-fast:270ms;--dur-base:380ms;--dur-slow:500ms;--dur-emph:800ms;
   --ease-standard:cubic-bezier(.2,0,0,1);--ease-enter:cubic-bezier(.05,.7,.1,1);--ease-exit:cubic-bezier(.3,0,1,1)}
 @keyframes fSobe{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @keyframes fFade{from{opacity:0}to{opacity:1}}
@@ -1109,8 +1109,8 @@ body.folha-aberta::after{animation:fFade var(--dur-fast) var(--ease-standard)}
 .treme{animation:fTreme 90ms linear 2}
 .f-erro{animation:fSobe var(--dur-fast) var(--ease-enter)}
 /* MM-08 / MM-14: o aviso sobe 12 px, fica 4 s (8 s com Desfazer, com a barra do tempo) e sai rápido */
-.toast{transform:translateY(12px);transition:opacity 140ms var(--ease-exit),transform 140ms var(--ease-exit)}
-.toast.on{transform:none;transition:opacity 180ms var(--ease-enter),transform 180ms var(--ease-enter)}
+.toast{transform:translateY(12px);transition:opacity 240ms var(--ease-exit),transform 240ms var(--ease-exit)}
+.toast.on{transform:none;transition:opacity 300ms var(--ease-enter),transform 300ms var(--ease-enter)}
 .toast.com-botao{overflow:hidden}
 .toast.com-botao::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--latao-claro);transform-origin:left;animation:fEsvazia 8s linear forwards}
 /* MM-09: barras que mostram quanto já foi (pago, usado, guardado) crescem da esquerda, sem passar do ponto */
@@ -1127,12 +1127,12 @@ body.folha-aberta::after{animation:fFade var(--dur-fast) var(--ease-standard)}
 .st-critico.selo{animation:none}
 /* MM-12: a seção que abre mostra o conteúdo com um esmaecer curto */
 details.rec[open]>.rec-c{animation:fSobe var(--dur-fast) var(--ease-enter)}
-details.rec>summary .rec-s{transition:transform 180ms var(--ease-standard)}
+details.rec>summary .rec-s{transition:transform 300ms var(--ease-standard)}
 /* MM-13: janela e véu */
-.modal-fundo.on{animation:fFade 140ms var(--ease-standard)}
+.modal-fundo.on{animation:fFade 240ms var(--ease-standard)}
 .modal{animation:fDialogo var(--dur-fast) var(--ease-enter)}
 /* MM-15: a resposta do Perguntar entra */
-.ch-m{animation:fSobe 180ms var(--ease-enter)}
+.ch-m{animation:fSobe 300ms var(--ease-enter)}
 .perg-bal{transition:opacity var(--dur-fast) var(--ease-standard),transform var(--dur-fast) var(--ease-enter)}
 /* MM-16: o nível do pote sobe; passando da meta, a gota cai */
 .jar .nivel{position:absolute;inset:0;animation:fNivel var(--dur-emph) var(--ease-standard) both}
@@ -1375,7 +1375,7 @@ html.calmo .linha-real{stroke-dashoffset:0}
 /* ---------- utilidades ---------- */
 var KEY="caderneta:v2";
 /* versão do app (siga o CHANGELOG.md; subir junto com VERSAO em sw.js e "version" em package.json) */
-var VERSAO_APP="1.32.0-beta.1";
+var VERSAO_APP="1.32.1-beta.1";
 var RE_ID=/^[A-Za-z0-9_-]+$/, RE_DATA=/^\d{4}-\d{2}-\d{2}$/;
 var MES=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
 var MES3=["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
@@ -3746,7 +3746,7 @@ function fecharFolhaComCuidado(){
   if(F&&!F.id&&(F.cent>0||(F.desc||"").trim()))confirmar("Descartar o que você digitou?","Descartar",fecharFolha); else fecharFolha();
 }
 /* MM-03: a folha desce em 0,22 s; ela já não segura a tela (sem cliques) enquanto desce */
-function folhaDesce(){var fo=$("#folha"); if(!fo||calmo())return; fo.classList.add("fecha"); clearTimeout(fo._t); fo._t=setTimeout(function(){fo.classList.remove("fecha")},230)}
+function folhaDesce(){var fo=$("#folha"); if(!fo||calmo())return; fo.classList.add("fecha"); clearTimeout(fo._t); fo._t=setTimeout(function(){fo.classList.remove("fecha")},390)}
 function folhaFechou(){fundoInerte(); var g=FOLHA_VOLTA; FOLHA_VOLTA=null; devolverFoco(g)}
 function fecharFolha(){
   if(!FOLHA_ABERTA)return;
@@ -5746,12 +5746,12 @@ try{ if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()
 if(S.config.pronto&&S.contas.length)ir("inicio"); else iniciarOnb();
 setTimeout(buscarNoticias,1500);
 var spTira=function(){var sp=$("#splash"); if(sp)sp.remove()};
-/* redesign R-05: a abertura aparece só no primeiro uso e quando o app atualiza, em 1,2 s; nas outras vezes, o app abre direto */
+/* redesign R-05: a abertura aparece só no primeiro uso e quando o app atualiza (2,5 s desde a 1.32.1, D68; era 1,2 s); nas outras vezes, o app abre direto */
 if(lsGet(KEY+":abertura")===VERSAO_APP)spTira();
 else{
   lsSet(KEY+":abertura",VERSAO_APP);
   if($("#splash")){$("#splash").classList.add("curta"); $("#splash").addEventListener("click",spTira)}   /* tocar pula a abertura */
-  setTimeout(spTira,1200);
+  setTimeout(spTira,2500);
 }
 
 })();

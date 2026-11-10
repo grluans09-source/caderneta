@@ -6,7 +6,7 @@
 App de celular (instalável, funciona sem internet), em português, pensado para qualquer pessoa: do idoso ao jovem e ao adulto na correria.
 
 - **App no ar:** https://grluans09-source.github.io/caderneta/
-- **Versão atual:** 1.32.0-beta.1 (beta para testadores; redesign "Tinta & Latão" concluído: celular e computador, atalhos de teclado, validação final em `docs/redesign/RELATORIO_TESTES.md`) (veja o [CHANGELOG](CHANGELOG.md))
+- **Versão atual:** 1.32.1-beta.1 (beta para testadores; animações num ritmo mais calmo; redesign "Tinta & Latão" concluído: celular e computador, atalhos de teclado, validação final em `docs/redesign/RELATORIO_TESTES.md`) (veja o [CHANGELOG](CHANGELOG.md))
 - **Seus dados ficam só no celular de cada pessoa.** Não existe servidor, conta nem banco de dados.
 
 > Em uma frase: a pessoa anota o que gasta e recebe, e o app mostra **quanto é dela de verdade**, para onde o dinheiro está indo e o que vem pela frente. A partida dobrada fica escondida no "motor"; a tela fala como a gente fala.

@@ -5,6 +5,12 @@
 Formato: versão semântica (`MAIOR.MENOR.CORREÇÃO`). Cada versão diz **o que mudou para a pessoa que usa**.
 Antes da 1.0.0 as versões eram numeradas só pelo nome do cache do app (v1 a v16); estão aqui como marcos de desenvolvimento.
 
+## [1.32.1-beta.1]: 10 de novembro de 2026 · animações num ritmo mais calmo (D68)
+O dono achou as passagens de tela e a abertura rápidas demais e escolheu o **meio-termo**.
+- **Troca de tela** em 0,38 s (era 0,22 s); a **folha de anotar** sobe em 0,5 s (era 0,3 s) e desce em 0,38 s; **janelas**, **avisos** e as respostas do **Perguntar** também ficaram cerca de 1,7 vez mais lentos.
+- **Abertura** (a moeda do Brasão que ganha vida) em **2,5 s** (era 1,2 s): a moeda chega, o Mordomo abre os olhos e a balança mexe. Continua só na primeira vez e quando o app atualiza; tocar pula.
+- Quem escolhe **Movimento: Parado** (ou "reduzir movimento" no aparelho) continua sem nada se deslocando.
+
 ## [1.32.0-beta.1]: 10 de novembro de 2026 · redesign, fase I: validação final (redesign concluído)
 A última fase do redesign "Tinta & Latão" (D67): tudo foi conferido de novo, no celular e no computador, e duas coisas foram corrigidas.
 - **Nada mais cortado com "…"**: nomes e detalhes das anotações, da agenda e das ferramentas do Planejar agora quebram a linha e aparecem inteiros (os valores em R$ continuam sem quebrar no meio).
