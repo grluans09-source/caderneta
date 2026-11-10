@@ -37,6 +37,10 @@ const espera=ms=>new Promise(r=>setTimeout(r,ms));
           document.querySelectorAll("#tela details").forEach(d=>d.open=true);
           await new Promise(r=>setTimeout(r,120));
           const W=document.documentElement.clientWidth, larg=[...document.querySelectorAll("#tela *")].filter(e=>{const q=e.getBoundingClientRect();return q.width>0&&(q.right>W+1||q.left<-1)&&!e.closest("svg")}).slice(-3).map(e=>e.tagName+"."+(e.className||"").toString().split(" ")[0]+" "+(e.textContent||"").trim().slice(0,30));
+          /* fase E (R-16): nenhum valor em R$ quebra no meio da linha */
+          const quebra=[]; const it=document.createTreeWalker(document.getElementById("tela"),NodeFilter.SHOW_TEXT); let n;
+          while((n=it.nextNode())){const re=/R\$\s?[\d.]+,\d\d/g; let m; while((m=re.exec(n.data))){const rg=document.createRange(); rg.setStart(n,m.index); rg.setEnd(n,m.index+m[0].length); const rs=[...rg.getClientRects()].filter(r=>r.width>0); if(rs.length>1&&Math.abs(rs[0].top-rs[rs.length-1].top)>2)quebra.push(m[0])}}
+          if(quebra.length)larg.push("valor quebrado: "+quebra.slice(0,3).join(", "));
           return {v,rola:document.documentElement.scrollWidth>W+1,larg};
         },v,CAMINHO[v]||["nav [data-v=\""+v+"\"]"]);
         n++;

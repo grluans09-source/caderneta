@@ -1,6 +1,6 @@
 # Mapa do app
 
-O app **de hoje** (versão 1.27.0, com o redesign "Tinta & Latão" até a fase D, D67; antes, a simplificação da 1.23.0: ver `AUDITORIA-INTERFACE.md`): onde mora cada assunto, o que tem em cada tela e o mapa de cores. Nasceu no passo 3 do plano da beta (decisões Q1 a Q7 da [auditoria de funções](AUDITORIA-FUNCOES.md), aceitas pelo dono em 6 nov 2026) e foi completado com Investir, Notícias e o chat.
+O app **de hoje** (versão 1.28.0, com o redesign "Tinta & Latão" até a fase E, D67; antes, a simplificação da 1.23.0: ver `AUDITORIA-INTERFACE.md`): onde mora cada assunto, o que tem em cada tela e o mapa de cores. Nasceu no passo 3 do plano da beta (decisões Q1 a Q7 da [auditoria de funções](AUDITORIA-FUNCOES.md), aceitas pelo dono em 6 nov 2026) e foi completado com Investir, Notícias e o chat.
 
 **Regras do mapa**
 1. **Cada assunto mora em um único lugar.** Nos outros lugares só existe um **atalho** (uma linha que leva até a casa dele).
@@ -15,8 +15,8 @@ O app **de hoje** (versão 1.27.0, com o redesign "Tinta & Latão" até a fase D
 |---|---|
 | **Início** | Como estou hoje e o que precisa de mim? |
 | **Dinheiro** (abas Contas · Investimentos · Dívidas · Bens · Pessoas) | Onde está meu dinheiro, quanto rende e o que eu devo? |
-| **Anotar** (no centro da barra: botão de tinta com "+" dourado, um pouco acima dela; aberto, o "+" vira "×") | O que aconteceu agora? |
-| **Menu de medalhas**: o Anotar abre 4 medalhas **numa fileira acima dele**, com o nome embaixo (Gastei − bordô, Recebi + azul, Transferi ⇄ ardósia, Comprei um bem ⌂ cobre). Na folha de anotar, o botão "Tipo" abre as mesmas medalhas em arco. | Qual foi o tipo? |
+| **Anotar** (no centro da barra: botão de tinta com "+" dourado, um pouco acima dela): **um toque abre a folha já no Gastei**; **segurar** abre as 4 medalhas (aberto, o "+" vira "×") | O que aconteceu agora? |
+| **Menu de medalhas** (segurando o Anotar): 4 medalhas **numa fileira acima dele**, com o nome embaixo (Gastei − bordô, Recebi + azul, Transferi ⇄ ardósia, Comprei um bem ⌂ cobre). Na folha, o tipo fica num seletor no topo. | Qual foi o tipo? |
 | **Planejar** | O que vem pela frente? |
 | **Saúde** | Como estão minhas finanças? (panorama, 4 indicadores principais, os outros 6 em "Ver mais", mês a mês e os relatórios) |
 | **No alto de toda tela:** o **rostinho do Mordomo** (Perguntar, abre o chat) e a **engrenagem** (Ajustes) | Tirar uma dúvida; deixar o app do meu jeito |
@@ -89,14 +89,14 @@ A explicação do que é uma "conta" fica no **"?"** do topo.
 3. **Caixinhas que rendem**
 O rendimento é calculado a cada dia útil (sem fim de semana e feriado nacional) com o CDI, a Selic e a inflação oficiais de cada dia, e anotado uma vez por mês; a poupança rende no dia do aniversário. O investido **não** é "dinheiro para usar agora". Taxa fora do comum pergunta "era isso?"; mudar como rende refaz os rendimentos calculados (D65).
 
-### Anotar (o botão do centro da barra): "O que aconteceu"
-> *"Escolha o que aconteceu e preencha: de onde saiu, para onde foi."*
-O tipo vem do **menu de medalhas** do botão **Anotar**, no centro da barra (2 toques). A folha mostra o tipo no título e, **embaixo no canto direito, um botão redondo fixo** (a medalha do tipo atual; aberto, vira uma medalha preta com ×); tocar nele gera as 4 bolinhas de novo, com a do tipo atual **apagada** ("você está aqui") e as outras 3 trocando o tipo sem perder o que foi digitado. Duas colunas curtas: **"De onde saiu"** = conta Dinheiro + as **3 favoritas** (ou as 3 mais usadas; em Gastei e Comprei um bem, aplicações só entram se forem favoritas e, na lista completa, vêm por último com "(resgatar)"); **"Para onde foi"** = as **5 categorias favoritas** (ou as mais usadas). Cada coluna tem uma **busca**: **tocar no campo abre a lista com tudo** (em ordem alfabética, rolando dentro da coluna), digitar filtra todas, e "↑ Mostrar só as favoritas" volta à lista curta. Há "★ Escolher minhas 3 favoritas" (contas) e "★ Escolher minhas 5 favoritas" (categorias). No dinheiro vivo, valores com centavos ganham a sugestão de **arredondar para reais inteiros**. A **anotação** (texto) e o **pagar com o dinheiro de uma caixinha** ficam em **"Mais detalhes"** (abre sozinho se já tiver algo).
+### Anotar (o botão do centro da barra): "O que aconteceu" (folha de uma etapa desde a 1.28.0, R-03)
+> *"Escolha o que aconteceu e preencha: quanto, de onde saiu, para onde foi."*
+Tocar em Anotar abre a **folha de baixo para cima** (alça no topo; arrastar para baixo fecha, perguntando antes se algo foi digitado), já em **Gastei**, com o **valor em foco** (teclado com vírgula: "50" = R$ 50,00; por extenso a partir de R$ 1.000). Em cima, o **tipo** num seletor (Gastei · Recebi · Transferi · Comprei um bem; trocar não perde o que foi digitado). Depois: **"De onde saiu"** (contas numa fileira que corre para o lado: Dinheiro + as 3 favoritas, busca e "Escolher minhas 3 favoritas") e **"Para onde foi"** (categorias numa grade de 3: as 5 favoritas, busca, "+ Nova categoria"; em Comprei um bem, os bens e "+ Novo bem"); **Quando** (Hoje · Ontem · Outro dia); parcelas (no cartão); juros ou multa (ao pagar dívida); **Mais detalhes** (anotação e caixinha); o resumo por extenso; e a **barra do Salvar presa embaixo**, com o resumo curto ("R$ 32,00 · Dinheiro → Mercado"), à vista mesmo com o teclado aberto. Pagar uma dívida abre a folha **"Pagar <conta>"**. Ao salvar: um aviso só ("Gasto anotado." com Desfazer) e a linha nova em destaque.
 
 ### Planejar: "O que vem pela frente"
 > *"O que você precisa pagar e como se organizar."*
 1. **Ferramentas** (4 botões com ícone e seta: Metas do mês · Caixinhas · Contas fixas · Simulador), no topo para nunca ficarem escondidas atrás de uma lista longa
-2. **Acerto de contas do mês** (cartão preto com ouro: total que falta, 3 contas de prévia e o botão **Abrir o acerto de contas**, que sobe uma **janela preta e dourada por cima da tela** com **todas** as dívidas e contas fixas do mês, cada uma com o prazo em palavras ("vence em…", "atrasada há…") e **Pagar**/**Paguei**, o já pago embaixo e as setas de mês; depois de pagar, a janela volta) ← casa oficial
+2. **Acerto de contas do mês**, **em linha** (desde a 1.28.0, R-09): mês (‹ ›), quanto falta pagar, "x de y pagas" e cada conta com a data em palavras e **Pagar** (dívida) ou **Paguei** e **Pular este mês** (conta fixa); as pagas numa seção que abre. *(Antes: cartão preto com prévia e uma janela por cima.)*
 3. **Agenda dos próximos dias** (visão rápida: mostra 4; "Ver todas" abre o resto). A legenda das cores e o significado das datas ficam no **"?"** do título
 
 **Regra geral de cores ("Tinta & Latão", D67, desde a 1.26.0):** **tinta = ação** (botão principal liso em tinta; secundário com contorno de tinta; o que está selecionado fica em tinta; no tema escuro a ação é latão claro); **latão = marca** (Brasão, cabeçalho, "É meu de verdade", conquistas, aba ativa); linhas que abrem algo têm seta › cinza. Estados: ✓ verde-musgo (saudável), ! âmbar (atenção), ✕ vermelho (alerta), — neutro (aguardando dados). *(Até a 1.25.0 a regra era "dourado = clicável, preto = selecionado", D44.)*

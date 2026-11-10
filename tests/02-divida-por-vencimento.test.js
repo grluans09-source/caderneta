@@ -9,7 +9,7 @@ function click(sel){let el=typeof sel==="string"?$(sel):sel;
   /* a tela Dinheiro tem abas e Metas é uma tela própria: se o botão não está na tela, vai até a aba/tela dele, como uma pessoa faria */
   if(!el&&typeof sel==="string"){for(const alvo of ['[data-a="dinAba"][data-v="bens"]','[data-a="dinAba"][data-v="pessoas"]','[data-a="dinAba"][data-v="dividas"]','[data-a="dinAba"][data-v="contas"]','[data-a="ir"][data-v="metas"]']){const b=$(alvo);if(b){b.click();el=$(sel);if(el)break}}}
   if(!el)throw new Error("sem elemento "+sel);el.click()}
-function digita(el,txt){el.value=txt;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
+function digita(el,txt){/* D2 do redesign: os testes antigos digitam centavos ("2500" = R$ 25,00); no campo de dinheiro isso vira "25,00" */ if(el&&el.dataset&&el.dataset.cent!==undefined&&/^\d+$/.test(String(txt)))txt=Math.floor(txt/100)+","+String(txt%100).padStart(2,"0");el.value=txt;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
 const S=()=>T.S();
 function irV(v){if(v==='relatorios'){click('nav [data-v="graficos"]');click('#tela [data-a="ir"][data-v="relatorios"]');return}if(v==='caixinhas'||v==='fixas'||v==='simulador')click('[data-a="ir"][data-v="planejar"]');if(v==='ajustes')click('[data-a="ir"][data-v="mais"]');click('[data-a="ir"][data-v="'+v+'"]')}
 d.documentElement.classList.add("calmo");

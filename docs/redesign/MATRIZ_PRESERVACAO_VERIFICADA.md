@@ -2,7 +2,7 @@
 
 > Pedido do prompt de redesign: cada função de antes (PF-01 a PF-50 do celular, PD-01 a PD-34 do computador) com **onde ficou**, **como foi testada** e o **resultado**.
 > Teste automático: `tests/38-matriz-preservacao.test.js` (roda em `npm test`, com a massa de teste e o relógio parado em 9/11/2026). Cada linha abaixo é uma verificação dele.
-> Situação em 1.27.0-beta.1: **50 de 50 funções do celular preservadas**. PD-01 a PD-34 (computador) entram nas fases G e H.
+> Situação em 1.28.0-beta.1: **50 de 50 funções do celular preservadas**. PD-01 a PD-34 (computador) entram nas fases G e H.
 
 ## Celular (Relatório 01, seção 28)
 | ID | Função | Onde ficou (desde a 1.27.0) | Como foi testada | Resultado |
@@ -22,13 +22,13 @@
 | PF-13 | Hoje no Brasil | Início, recolhível | Acha a seção | ✅ |
 | PF-14 | Seus objetivos | Início, recolhível | Acha a seção | ✅ |
 | PF-15 | Últimas anotações + Ver todas | Início + Dinheiro > Todas as anotações | Confere as 3 e os dois atalhos | ✅ |
-| PF-16 | Anotar: 4 tipos | Anotar no centro da barra | Abre e confere os 4 tipos | ✅ |
-| PF-17 | Busca e favoritas | Folha de anotar (igual) | Confere as 2 buscas e as favoritas | ✅ |
+| PF-16 | Anotar: 4 tipos | Anotar no centro da barra: tocar = Gastei; os 4 tipos no seletor do topo da folha e segurando o Anotar | Abre e confere o seletor e as 4 medalhas | ✅ |
+| PF-17 | Busca e favoritas | Folha de uma etapa (contas em carrossel, categorias em grade) | Confere as 2 buscas e as favoritas | ✅ |
 | PF-18 | + Nova categoria · + Novo bem | Folha de anotar (igual) | Confere os dois | ✅ |
 | PF-19 | Quando: Hoje / Ontem / Outro dia | Folha de anotar (igual) | Confere os botões | ✅ |
 | PF-20 | Anotação e caixinha opcionais | "Mais detalhes" da folha | Confere os campos | ✅ |
-| PF-21 | Resumo em linguagem comum | Folha de anotar (igual) | Confere o resumo | ✅ |
-| PF-22 | Juros ou multa ao pagar | Dinheiro > Dívidas > Pagar | Abre o pagamento e confere o campo | ✅ |
+| PF-21 | Resumo em linguagem comum | Folha (resumo completo) + barra do Salvar (resumo curto) | Confere o resumo | ✅ |
+| PF-22 | Juros ou multa ao pagar | Dinheiro > Dívidas > Pagar (folha "Pagar <conta>") | Abre o pagamento e confere o campo | ✅ |
 | PF-23 | Editar, apagar, Desfazer | Tocar na anotação (igual) | Abre e confere Apagar e Salvar | ✅ |
 | PF-24 | Carteira com cédulas | Dinheiro > Contas > Dinheiro | Abre a carteira | ✅ |
 | PF-25 | Conta: editar, conferir, apagar | Dinheiro > Contas > a conta | Confere as 3 ações | ✅ |
@@ -40,11 +40,11 @@
 | PF-31 | Investimentos: resumo | Dinheiro > Investimentos | Confere o resumo e a barra marcando Dinheiro | ✅ |
 | PF-32 | Aplicação: aplicar, resgatar, conferir, editar, apagar | Dinheiro > Investimentos > a aplicação | Confere as 5 ações | ✅ |
 | PF-33 | Nova aplicação: 5 jeitos de render | Dinheiro > Investimentos > + Nova | Confere os 5 jeitos | ✅ |
-| PF-34 | Acerto de contas | Planejar (igual) | Abre e confere os meses | ✅ |
+| PF-34 | Acerto de contas | Planejar, em linha (sem janela) | Confere os meses e as ações | ✅ |
 | PF-35 | Agenda: Pagar, Paguei, Pular, Ver todas | Planejar (igual) | Confere as ações | ✅ |
 | PF-36 | Metas do mês | Planejar > Metas (estados da fase B) | Confere os 3 potes | ✅ |
 | PF-37 | Caixinhas | Planejar > Caixinhas (igual) | Confere guardar/tirar e abrir | ✅ |
-| PF-38 | Contas fixas | Planejar > Contas fixas (igual) | Confere nova e a existente | ✅ |
+| PF-38 | Contas fixas | Planejar > Contas fixas (conta e categoria por botões) | Confere nova e a existente | ✅ |
 | PF-39 | Simulador | Planejar > Simulador (igual) | Confere a tela | ✅ |
 | PF-40 | Panorama + 10 indicadores | Saúde (contadores da fase B) | Confere o panorama e os 10 cartões | ✅ |
 | PF-41 | Relatório + Compartilhar | Saúde > Ler o relatório | Abre e confere Compartilhar | ✅ |

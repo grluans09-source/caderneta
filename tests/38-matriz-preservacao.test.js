@@ -41,7 +41,7 @@ pf("PF-15","últimas anotações + Ver todas (Início) e Todas as anotações (D
 
 /* ---- Anotar ---- */
 nav("inicio");
-pf("PF-16","Anotar: Gastei, Recebi, Transferi, Comprei um bem",()=>{click("nav .nav-anotar");const t=$$("#fabMenu .fb").map(b=>b.dataset.t).join();click("#fabMenu .fabfundo");return t==="saida,entrada,transferencia,bem"});
+pf("PF-16","Anotar: tocar abre o Gastei; os 4 tipos no topo da folha e segurando o Anotar",()=>{click("nav .nav-anotar");const r=$("#folha").classList.contains("on")&&$$("#folha .f-seg .seg").map(b=>b.dataset.t).join()==="saida,entrada,transferencia,bem"&&$$("#fabMenu .fb").length===4;fecha();return r});
 T.novaFolha({tipo:"saida"});
 pf("PF-17","busca de conta e categoria; favoritas (3 contas, 5 categorias)",()=>$$("#folha .bcol").length===2&&tem('#folha [data-a="favoritas"]','#folha [data-a="favCats"]'));
 pf("PF-18","+ Nova categoria e + Novo bem",()=>{const a=tem('#folha .opt.novo');fecha();T.novaFolha({tipo:"bem"});const b=tem('#folha [data-a="fBemNovo"]')||/Novo bem/.test(tx("#folha"));return a&&b});
@@ -68,7 +68,7 @@ pf("PF-33","nova aplicação: CDI, fixa, IPCA, poupança, varia",()=>{click('#te
 
 /* ---- Planejar ---- */
 nav("planejar");
-pf("PF-34","acerto de contas do mês (meses, pagar)",()=>{click('#tela [data-a="acToggle"]');const r=tem("#modal.acm")&&$$('#modal [data-a="pagMes"],#modal .mesnav button').length>0;fecha();return r});
+pf("PF-34","acerto de contas do mês (meses, pagar), em linha no Planejar",()=>tem("#cardPagar .pagar-l",'#cardPagar [data-a="pagMes"]')&&$$('#cardPagar [data-a="pagar"],#cardPagar [data-a="fxPagar"]').length>0);
 pf("PF-35","agenda: Pagar, Paguei, Pular, Ver todas",()=>tem('#tela [data-a="fxPagar"]','#tela [data-a="fxPular"]','#tela [data-a="agMais"]'));
 pf("PF-36","Metas do mês",()=>{click('#tela [data-a="ir"][data-v="metas"]');return $$("#tela .jarw").length===3});
 pf("PF-37","Caixinhas: alvo, prazo, rendimento, guardar, tirar, atualizar",()=>{nav("planejar");click('#tela [data-a="ir"][data-v="caixinhas"]');return tem('#tela [data-a="cxMov"]','#tela [data-a="caixa"]')});

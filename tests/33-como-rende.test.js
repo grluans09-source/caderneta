@@ -80,13 +80,13 @@ sd=base(); sd.caixas=[{id:"x1",nome:"Reserva",alvo:0,modo:"cdi",taxa:100,ir:true
 sd.reservas=[{id:"r1",data:dd(-5),de:"livre",para:"x1",valor:100000,conta:"b1"}];
 w=abre(sd); T=w.__T; d=w.document; $=s=>d.querySelector(s);
 T.ir("caixinhas"); $('#tela [data-a="cxConferir"][data-id="x1"]').click();
-let v=$("#cxcValor"); v.value="100500"; v.dispatchEvent(new w.Event("input",{bubbles:true}));
+let v=$("#cxcValor"); v.value="1005,00"; v.dispatchEvent(new w.Event("input",{bubbles:true}));
 eq("7. o banco mostra R$ 5 a mais: o app sugere que foi rendimento",[/a mais/.test($("#cxcRes").textContent),!!$('[data-a="cxcRend"]'),!!$('[data-a="cxcGuard"]')],[true,true,true]);
 $('[data-a="cxcRend"]').click();
 const aj=T.S().lancamentos.find(l=>l.cxAj==="x1");
 eq("   \"foi rendimento\": a caixinha passa a ter R$ 1.005, o ajuste entra como Rendimentos e fica marcada como conferida",[T.saldoCaixa("x1"),aj&&aj.valor,aj&&aj.tipo,T.S().caixas[0].conferido],[100500,500,"entrada",hoje]);
 T.ir("caixinhas"); $('#tela [data-a="cxConferir"][data-id="x1"]').click();
-v=$("#cxcValor"); v.value="90500"; v.dispatchEvent(new w.Event("input",{bubbles:true})); $('[data-a="cxcGuard"]').click();
+v=$("#cxcValor"); v.value="905,00"; v.dispatchEvent(new w.Event("input",{bubbles:true})); $('[data-a="cxcGuard"]').click();
 eq("   \"eu tirei dinheiro dela\": só volta para o dinheiro para usar, sem criar gasto",[T.saldoCaixa("x1"),T.S().lancamentos.filter(l=>l.tipo==="saida").length],[90500,0]);
 
 // ---- 8. lembrete semanal de conferir ----

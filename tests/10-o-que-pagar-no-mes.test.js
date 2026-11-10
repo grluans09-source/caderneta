@@ -49,7 +49,7 @@ eq("Início não repete a lista nem o já pago",!/Já pagou/.test(ini)&&!/Intern
 eq("a linha do Início leva ao Planejar",!!$('#tela .linha-falta[data-a="ir"][data-v="planejar"]'),true);
 click('#tela .linha-falta');
 const pl=$("#tela").textContent;
-eq("Planejar é a casa: mostra o total, o já pago e a lista",/Falta pagar em/.test(pl)&&/R\$ 550,00/.test(pl)&&/Já pagou R\$ 850,00 de R\$ 1\.400,00/.test(pl)&&/Internet/.test(pl)&&/Maria/.test(pl)&&/Nubank/.test(pl),true);
+eq("Planejar é a casa: mostra o total, o já pago e a lista",/Falta pagar em/.test(pl)&&/R\$ 550,00/.test(pl)&&/[Jj]á pagou R\$ 850,00 de R\$ 1\.400,00/.test(pl)&&/Internet/.test(pl)&&/Maria/.test(pl)&&/Nubank/.test(pl),true);
 click('#cardPagar [data-a="pagMes"][data-n="1"]');
 eq("seta para o mês seguinte mostra 'Vai vencer em' com o total previsto (1.050)",/Vai vencer em/.test($("#cardPagar").textContent)&&/R\$ 1.050,00/.test($("#cardPagar").textContent),true);
 for(let i=0;i<3;i++)click('#cardPagar [data-a="pagMes"][data-n="-1"]');

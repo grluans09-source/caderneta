@@ -77,7 +77,7 @@ A contabilidade (partida dobrada) é **o mecânico debaixo do capô**: trabalha 
 | Balança | Equação patrimonial: Ativo = Passivo + PL |
 | Caixinha, meta | Organização pessoal, **fora** do razão (como um orçamento) |
 | Contas fixas | Compromisso futuro (vira despesa só ao pagar) |
-| ANOTADO (carimbo) | Lançamento no livro |
+| "Gasto anotado." (aviso depois de salvar; até a 1.27.0 era o carimbo ANOTADO) | Lançamento no livro |
 | Previsão | Projeção |
 
 ## 7. O que NÃO é (por enquanto)

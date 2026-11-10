@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
 <title>Balancete</title>
 <meta name="description" content="Suas finanças em ordem, sem complicação. Seus dados ficam só no seu celular.">
 <meta name="theme-color" content="#1B1F2A">
@@ -968,6 +968,70 @@ html[data-tam="g"] .fabmenu:not(.emfolha) .fb{--cy:1.6}html[data-tam="gg"] .fabm
 /* letra "Enorme" em 320 px: linhas e opções quebram em vez de passar da tela */
 .gaveta{flex-wrap:wrap}.gaveta .txt{min-width:0;flex:1 1 7rem}.gaveta .pont{min-width:0}
 .opc{flex-wrap:wrap}.opc button{min-width:0;flex:1 1 4.5rem;padding:0 .3rem}
+
+/* ===== Redesign, fase E (D67): folha de uma etapa, valor com vírgula ===== */
+.extenso{font-size:var(--fs-peq);line-height:var(--lh-peq);color:var(--color-text-3);margin:.25rem 0 0}
+.extenso:empty{display:none}
+input.com-erro{border-color:var(--color-danger)!important}
+.f-erro{color:var(--color-danger);font-weight:700;font-size:var(--fs-rot);margin:.35rem 0 0}
+body.folha-aberta::after{content:"";position:fixed;inset:0;background:var(--color-scrim);z-index:39}
+.folha{top:46px;border-radius:var(--raio-g) var(--raio-g) 0 0;box-shadow:0 -6px 24px rgba(0,0,0,.18);padding-bottom:0;transition:transform .2s}
+.folha .wrap{padding-bottom:0}
+.f-alca{display:block;width:100%;height:20px;position:relative;background:none;border:0}
+.f-alca:before{content:"";position:absolute;left:50%;top:7px;width:40px;height:5px;margin-left:-20px;border-radius:3px;background:var(--color-border-field)}
+.folha .capa.f{margin-top:0;border-radius:0}
+#dockTipo,.folha .dock{display:none!important}
+.f-seg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.3rem;margin:.75rem 0 .2rem;padding:.25rem;border-radius:var(--raio);background:var(--color-surface-2)}
+.f-seg .seg{min-height:48px;border-radius:.6rem;font-weight:700;font-size:var(--fs-peq);line-height:1.1;padding:.2rem;text-align:center;color:var(--color-text-2);border:0;background:none}
+.f-seg .seg[aria-checked="true"]{background:var(--color-surface);color:var(--color-text);box-shadow:inset 0 -3px 0 var(--seg)}
+.seg-gasto{--seg:var(--color-out)}.seg-ganho{--seg:var(--color-in)}.seg-transf{--seg:var(--color-transfer)}.seg-bem{--seg:var(--color-asset)}
+#fValor{font-family:var(--font-display);font-size:2.75rem;line-height:1.1;font-weight:600}
+/* contas e categorias uma embaixo da outra; contas em carrossel; categorias em grade de 3 */
+.folha .tt .th,.folha .lnk{display:none}
+.folha .tc{display:block}
+.folha .tc>div{border:0;padding:0;margin:.4rem 0 0}
+.folha .colrot{font-weight:700;font-size:var(--fs-rot);margin:.8rem 0 .35rem;text-transform:none;letter-spacing:0;text-align:left}
+.folha .lc-contas,.folha .lc-bens{display:flex;flex-direction:row;align-items:stretch;gap:.45rem;overflow-x:auto;padding:.15rem .1rem .45rem;scroll-snap-type:x proximity}
+.folha .lc-contas .opt,.folha .lc-bens .opt{flex:0 0 auto;width:auto;min-width:8.5rem;max-width:13rem;min-height:48px;scroll-snap-align:start;margin:0}
+.folha .lc-contas.todas,.folha .lc-bens.todas{flex-wrap:wrap;overflow:visible}
+.folha .lc-cats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.45rem}
+.folha .lc-cats .opt{min-height:64px;margin:0;display:flex;align-items:center;justify-content:center;text-align:center;overflow-wrap:anywhere}
+.folha .lc .link,.folha .lc .lc-cab{grid-column:1/-1;flex:0 0 100%}
+.folha .lc-contas .link,.folha .lc-bens .link{flex:0 0 auto;align-self:center;white-space:nowrap}
+.folha .bcol{min-height:44px}
+.f-barra{position:sticky;bottom:var(--teclado,0px);z-index:3;display:flex;align-items:center;gap:.6rem;margin:1rem -1rem 0;padding:.6rem 1rem calc(.6rem + env(safe-area-inset-bottom));background:var(--color-surface);border-top:1px solid var(--color-border);box-shadow:0 -4px 12px rgba(0,0,0,.06)}
+.f-resumo{flex:1;min-width:0;font-size:var(--fs-peq);line-height:var(--lh-peq);color:var(--color-text-2);overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.f-barra .btn{width:auto;flex:none;min-height:52px;margin:0;padding:.6rem 1.4rem}
+
+/* Planejar: acerto em linha (R-09) */
+.card.pagar-l{border:1px solid var(--color-border)}
+.pagar-l .rot2{color:var(--color-text-2);font-weight:700}
+.pagar-l .gr{font-family:var(--font-display);font-size:var(--fs-h1);line-height:var(--lh-h1);font-weight:600;color:var(--color-out);margin:.15rem 0 .35rem}
+.pagar-l .gr.zero{color:var(--color-ok)}
+.pagar-l .barra2 div{background:var(--color-ok)}
+.pagar-l .ac-lista{background:none;padding:0}
+.pagar-l .ac-row{min-height:64px}
+.pagar-l .ac-t,.pagar-l .ac-v{grid-row:1}
+.pagar-l .ac-b{grid-column:1/-1;grid-row:2;justify-self:start;justify-content:flex-start}
+.pagar-l .ac-b{display:flex;gap:.35rem;flex-wrap:wrap;justify-content:flex-end}
+.pagar-l .ac-b .btn{min-height:36px;margin:0;padding:.3rem .8rem;background:transparent;color:var(--color-text);border:1.5px solid var(--color-action);font-size:var(--fs-peq)}
+.pagar-l .ac-pagas-w{margin-top:.6rem}
+/* escolha por botões (R-11) */
+.esc .esc-busca{width:100%;min-height:44px;margin-bottom:.4rem;border:1.5px solid var(--color-border-field);border-radius:var(--raio);padding:.4rem .8rem;background:var(--color-surface)}
+.esc-chips .chip{min-height:48px}
+/* metas (R-10): pote 56 × 72, nome em até 2 linhas */
+.jar{width:3.5rem;height:4.5rem}
+.jarw b{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+/* 320 px (R-16): ferramentas em 1 coluna abaixo de 360 px; valores nunca quebram */
+@media (max-width:359px){
+  html[data-tam="gg"] .tri{grid-template-columns:1fr}
+  html[data-tam="gg"] .tri div{display:flex;justify-content:space-between;align-items:baseline;gap:.5rem;border-left:0;border-top:1px solid var(--rule2);text-align:left}
+  html[data-tam="gg"] .tri div:first-child{border-top:0}
+  .ferrs{grid-template-columns:1fr}
+  .ferr{min-height:4rem}
+  .ferr .ft span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+}
+.vl,.ac-v,.inv-v,.cartao .linhas3 b,.legenda b,.bb-l b,.pagar-l .gr,.hero .grande,.gaveta .vl,.lanc .v,.jarw small,.nb{white-space:nowrap}
 </style>
 </head>
 <body>
@@ -980,7 +1044,7 @@ html[data-tam="g"] .fabmenu:not(.emfolha) .fb{--cy:1.6}html[data-tam="gg"] .fabm
 <nav aria-label="Menu principal"><div class="in">
   <button data-a="ir" data-v="inicio"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11 12 4l8.5 7"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5.5h4V20"/></svg></span><span class="lb">Início</span></button>
   <button data-a="ir" data-v="contas"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13.5" rx="3"/><path d="M3 10.5h18"/><path d="M15.5 15h2"/></svg></span><span class="lb">Dinheiro</span></button>
-  <button class="nav-anotar" data-a="novo" aria-label="Anotar: escolher o tipo" aria-haspopup="true" aria-expanded="false"><span class="na-b" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span><span class="lb">Anotar</span></button>
+  <button class="nav-anotar" data-a="novo" aria-label="Anotar um gasto (segure para escolher outro tipo)" aria-expanded="false"><span class="na-b" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span><span class="lb">Anotar</span></button>
   <button data-a="ir" data-v="planejar"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M8 14h3M8 17h6"/></svg></span><span class="lb">Planejar</span></button>
   <button data-a="ir" data-v="graficos"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h16"/><path d="M7 16v-5M12 16V6M17 16v-8"/></svg></span><span class="lb">Saúde</span></button>
 </div></nav>
@@ -1014,7 +1078,7 @@ html[data-tam="g"] .fabmenu:not(.emfolha) .fb{--cy:1.6}html[data-tam="gg"] .fabm
 /* ---------- utilidades ---------- */
 var KEY="caderneta:v2";
 /* versão do app (siga o CHANGELOG.md; subir junto com VERSAO em sw.js e "version" em package.json) */
-var VERSAO_APP="1.27.0-beta.1";
+var VERSAO_APP="1.28.0-beta.1";
 var RE_ID=/^[A-Za-z0-9_-]+$/, RE_DATA=/^\d{4}-\d{2}-\d{2}$/;
 var MES=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
 var MES3=["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
@@ -1028,6 +1092,23 @@ function $(s){return document.querySelector(s)}
 
 function num(c){return (Math.abs(c)/100).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2})}
 function brl(c){return (c<0?"−":"")+"R$ "+num(c)}
+/* Valores em R$ nunca quebram no meio da linha (redesign R-16): no texto da tela, cada "R$ 1.234,56" vira um pedaço
+   que não quebra (<span class="nb">). O texto lido (e o que o leitor de tela fala) continua igual. */
+var RE_VALOR=/R\$ [−-]?[\d.]+,\d\d/;
+function protegerValores(raiz){
+  if(!raiz||!document.createTreeWalker)return;
+  var tw=document.createTreeWalker(raiz,4,null), nos=[], n;
+  while((n=tw.nextNode())){var p=n.parentNode; if(RE_VALOR.test(n.data)&&p&&!(p.closest&&p.closest(".nb,svg,script,style,textarea,option,title")))nos.push(n)}
+  nos.forEach(function(n){
+    var frag=document.createDocumentFragment(), t=n.data, re=/R\$ [−-]?[\d.]+,\d\d/g, i=0, m;
+    while((m=re.exec(t))){if(m.index>i)frag.appendChild(document.createTextNode(t.slice(i,m.index))); var sp=document.createElement("span"); sp.className="nb"; sp.textContent=m[0]; frag.appendChild(sp); i=m.index+m[0].length}
+    if(i<t.length)frag.appendChild(document.createTextNode(t.slice(i)));
+    n.parentNode.replaceChild(frag,n);
+  });
+}
+var PROT=false;
+function protegerTudo(){PROT=false; ["tela","modal","folhaCorpo","toast"].forEach(function(id){protegerValores(document.getElementById(id))})}
+if(window.MutationObserver)new MutationObserver(function(){if(PROT)return; PROT=true; (window.queueMicrotask||setTimeout)(protegerTudo)}).observe(document.documentElement,{childList:true,subtree:true});
 function pad(n){return String(n).padStart(2,"0")}
 function isoDe(d){return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate())}
 function hojeISO(){return isoDe(new Date())}
@@ -1468,11 +1549,13 @@ function cartaoPagar(ym,o){
   function linhaAc(x,pago){
     var dt=x.data?dataBR(x.data).slice(0,5):"sem data";
     var info=pago||!x.data?dt:x.atrasada?'<em>'+esc(quandoTxt(x.data))+'</em> · '+dt:esc('vence '+quandoTxt(x.data))+' · '+dt;
-    var bt=(pago||!atual)?'':x.k==="divida"?'<button class="btn peq" data-a="pagar" data-id="'+esc(x.cid)+'" data-valor="'+x.valor+'">Pagar</button>':'<button class="btn peq" data-a="fxPagar" data-id="'+esc(x.fid)+'" data-ref="'+esc(x.ref)+'" data-data="'+esc(x.data)+'">Paguei</button>';
+    var bt=(pago||!atual)?'':x.k==="divida"?'<button class="btn peq" data-a="pagar" data-id="'+esc(x.cid)+'" data-valor="'+x.valor+'">Pagar</button>':'<button class="btn peq" data-a="fxPagar" data-id="'+esc(x.fid)+'" data-ref="'+esc(x.ref)+'" data-data="'+esc(x.data)+'">Paguei</button>'+(o.claro?'<button class="btn peq sec" data-a="fxPular" data-id="'+esc(x.fid)+'" data-ref="'+esc(x.ref)+'">Pular este mês</button>':'');
     return '<div class="ac-row k-'+esc(x.k||"divida")+'"><div class="ac-t"><b>'+esc(x.titulo)+'</b><span>'+info+'</span></div><div class="ac-v">'+esc(brl(x.valor))+'</div>'+(bt?'<div class="ac-b">'+bt+'</div>':'')+'</div>';
   }
-  var h='<div class="card pagar">'+nav+'<div class="rot2">'+esc(tit)+'</div><div class="gr'+(p.tf===0?" zero":"")+'">'+esc(brl(p.tf))+'</div>';
-  if(p.tp>0)h+='<div class="barra2" role="img" aria-label="'+pc+'% já pago"><div style="width:'+pc+'%;background:var(--latao)"></div></div><p class="faint">Já pagou <b>'+esc(brl(p.tp))+'</b> de <b>'+esc(brl(tot))+'</b> neste mês</p>';
+  var h='<div class="card '+(o.claro?"pagar-l":"pagar")+'">'+nav+'<div class="rot2">'+esc(tit)+'</div><div class="gr'+(p.tf===0?" zero":"")+'">'+esc(brl(p.tf))+'</div>';
+  if(o.claro){var np=p.pago.length, nt=np+p.falta.length;
+    h+='<div class="barra2" role="img" aria-label="'+np+' de '+nt+' pagas"><div style="width:'+(nt?Math.round(np/nt*100):0)+'%"></div></div><p class="faint"><b>'+np+' de '+nt+'</b> '+(nt===1?"paga":"pagas")+(p.tp>0?' · já pagou <b>'+esc(brl(p.tp))+'</b> de <b>'+esc(brl(tot))+'</b>':'')+'</p>'}
+  else if(p.tp>0)h+='<div class="barra2" role="img" aria-label="'+pc+'% já pago"><div style="width:'+pc+'%;background:var(--latao)"></div></div><p class="faint">Já pagou <b>'+esc(brl(p.tp))+'</b> de <b>'+esc(brl(tot))+'</b> neste mês</p>';
   if(o.lista!==false&&p.falta.length){
     if(aberto)h+='<div class="ac-lista" id="acLista">'+p.falta.map(function(x){return linhaAc(x,false)}).join("")+'</div>'+(!atual?'<p class="faint" style="margin-top:.4rem">Ainda não venceu: o botão de pagar aparece quando o mês chegar.</p>':'');
     else{
@@ -1484,11 +1567,15 @@ function cartaoPagar(ym,o){
     }
     if(o.acerto)h+='<button class="btn peq" data-a="acToggle" aria-haspopup="dialog" aria-expanded="'+AC_ABERTO+'">Abrir o acerto de contas ('+p.falta.length+')</button>';
   }
-  if(aberto&&p.pago.length)h+='<p class="rot2" style="margin-top:.9rem">Já pago neste mês</p><div class="ac-lista ac-pagas">'+p.pago.map(function(x){return linhaAc(x,true)}).join("")+'</div>';
+  if(aberto&&p.pago.length)h+=o.claro?'<details class="rec ac-pagas-w"><summary><span class="rec-t">Pagas ('+p.pago.length+')</span><i class="rec-s" aria-hidden="true">›</i></summary><div class="ac-lista ac-pagas">'+p.pago.map(function(x){return linhaAc(x,true)}).join("")+'</div></details>'
+    :'<p class="rot2" style="margin-top:.9rem">Já pago neste mês</p><div class="ac-lista ac-pagas">'+p.pago.map(function(x){return linhaAc(x,true)}).join("")+'</div>';
   if(o.botao)h+='<button class="link" data-a="ir" data-v="planejar">Ver a agenda e pagar</button>';
   return h+'</div>';
 }
 function cartaoPagarInicio(){return cartaoPagar(ymMais(hojeISO().slice(0,7),PAG_OFF),{max:3,setas:true,off:PAG_OFF,acerto:true})}
+/* Planejar (redesign R-09): o acerto de contas inteiro na própria tela, sem janela por cima: mês, falta pagar, "x de y pagas",
+   cada conta com Pagar / Paguei / Pular este mês, e as pagas numa seção que abre */
+function cartaoPagarPlanejar(){return cartaoPagar(ymMais(hojeISO().slice(0,7),PAG_OFF),{setas:true,off:PAG_OFF,aberto:true,claro:true})}
 /* acerto de contas: janela preta e dourada que sobe por cima da tela */
 var AC_VOLTA=false;
 function abrirAcerto(){
@@ -1627,15 +1714,44 @@ function confirmar(texto,rotulo,acao){
 }
 $("#modalFundo").addEventListener("click",function(e){if(e.target===this)fecharModal()});
 
-/* máscara de dinheiro: o usuário digita só números e o app põe vírgula */
+/* Valor em reais (redesign D2 / R-07): teclado com vírgula e leitura tolerante.
+   "50" = R$ 50,00 · "50,5" = R$ 50,50 · "1.234,56" = R$ 1.234,56 · "1234.5" = R$ 1.234,50.
+   Os valores continuam guardados em centavos, como antes. */
+function lerValor(t){
+  t=String(t==null?"":t).replace(/R\$|\s/g,"").replace(/[^\d,.]/g,"");
+  if(!t)return 0;
+  if(t.indexOf(",")>=0){var k=t.lastIndexOf(","); t=t.slice(0,k).replace(/[.,]/g,"")+"."+t.slice(k+1).replace(/[.,]/g,"")}
+  else{var pts=t.split(".").length-1; if(!(pts===1&&/\.\d{1,2}$/.test(t)))t=t.replace(/\./g,"")}
+  var n=Number(t); if(!isFinite(n))return 0;
+  return Math.min(99999999999,Math.max(0,Math.round(n*100)));
+}
+function textoValor(c){return c?(Math.floor(c/100)+"").replace(/\B(?=(\d{3})+(?!\d))/g,".")+","+pad(c%100):""}
+/* o valor por extenso, para conferir valores a partir de R$ 1.000 ("mil e duzentos reais") */
+function porExtenso(c){
+  var U=["zero","um","dois","três","quatro","cinco","seis","sete","oito","nove","dez","onze","doze","treze","quatorze","quinze","dezesseis","dezessete","dezoito","dezenove"];
+  var D=["","","vinte","trinta","quarenta","cinquenta","sessenta","setenta","oitenta","noventa"];
+  var C=["","cento","duzentos","trezentos","quatrocentos","quinhentos","seiscentos","setecentos","oitocentos","novecentos"];
+  function ate999(n){if(n===100)return "cem"; var c=Math.floor(n/100), r=n%100, p=[]; if(c)p.push(C[c]); if(r)p.push(r<20?U[r]:D[Math.floor(r/10)]+(r%10?" e "+U[r%10]:"")); return p.join(" e ")}
+  var r=Math.floor(c/100), ct=c%100, g=[], n=r;
+  [[1e9,"bilhão","bilhões"],[1e6,"milhão","milhões"],[1e3,"mil","mil"]].forEach(function(x){var q=Math.floor(n/x[0]); if(q){g.push({v:q,t:(x[0]===1e3&&q===1?"mil":ate999(q)+" "+(q===1?x[1]:x[2]))}); n%=x[0]}});
+  if(n)g.push({v:n,t:ate999(n)});
+  var txt="";
+  if(g.length){var u=g[g.length-1]; txt=g.length>1?g.slice(0,-1).map(function(x){return x.t}).join(" ")+((u.v<100||u.v%100===0)?" e ":" ")+u.t:u.t;
+    txt+=(r>=1e6&&r%1e6===0)?" de reais":r===1?" real":" reais"}
+  if(ct)txt+=(txt?" e ":"")+ate999(ct)+(ct===1?" centavo":" centavos");
+  return txt||"zero reais";
+}
 function ligarDinheiro(el,inicial,aoMudar){
+  el.setAttribute("inputmode","decimal"); el.setAttribute("autocomplete","off");
   el.dataset.cent=inicial||0;
   el.value=inicial?brl(inicial):"";
-  el.addEventListener("input",function(){
-    var d=el.value.replace(/\D/g,"").slice(0,11), c=d?parseInt(d,10):0;
-    el.dataset.cent=c; el.value=c?brl(c):"";
-    if(aoMudar)aoMudar(c);
-  });
+  var ext=document.createElement("p"); ext.className="extenso"; ext.setAttribute("aria-live","polite");
+  if(el.parentNode)el.parentNode.insertBefore(ext,el.nextSibling);
+  function mostra(c){ext.textContent=c>=100000?porExtenso(c):""}
+  mostra(inicial||0);
+  el.addEventListener("focus",function(){var c=+el.dataset.cent||0; el.value=c?textoValor(c):""});
+  el.addEventListener("input",function(){var c=lerValor(el.value); el.dataset.cent=c; mostra(c); if(aoMudar)aoMudar(c)});
+  el.addEventListener("blur",function(){var c=+el.dataset.cent||0; el.value=c?brl(c):""});
 }
 function cent(el){return parseInt(el.dataset.cent,10)||0}
 
@@ -1970,10 +2086,10 @@ var PERGS=[
      (!n.base&&is.some(function(i){return i.st==="ok"})?' Para eu chamar algum de saudável, preciso de 30 dias de anotações (ou da sua renda informada em Ajustes).':'')+
      (u?' O que mais pede cuidado agora: <b>'+esc(u.nome)+'</b>. '+esc(u.leitura):n.base?' Tudo em ordem.':'');}},
  /* ---------- Como usar o app ---------- */
- {g:"app",q:"Como eu anoto um gasto?",kw:"anotar anoto gasto gastei registrar como",ir:"inicio",r:function(){return 'Toque em <b>Anotar</b>, no meio da barra de baixo, e depois em <b>Gastei</b>. Digite o valor, escolha <b>de onde saiu</b> e <b>para onde foi</b> e toque em Salvar.'}},
+ {g:"app",q:"Como eu anoto um gasto?",kw:"anotar anoto gasto gastei registrar como",ir:"inicio",r:function(){return 'Toque em <b>Anotar</b>, no meio da barra de baixo: a folha já abre em <b>Gastei</b>. Digite o valor, escolha <b>de onde saiu</b> e <b>para onde foi</b> e toque em Salvar.'}},
  {g:"app",q:"Como anoto uma compra parcelada?",kw:"parcelada parcelado parcelas cartao compra",ir:"inicio",r:function(){return 'Anote como um gasto (Anotar > Gastei), escolha o <b>cartão</b> em "de onde saiu" e informe o <b>número de parcelas</b>. O app distribui as parcelas nas faturas certas.'}},
  {g:"app",q:"Como pago uma conta ou a fatura?",kw:"pagar paguei fatura conta pagamento quitar",ir:"acerto",r:function(){return 'Vá em <b>Planejar > Acerto de contas</b> e toque em <b>Pagar</b> (dívidas e faturas) ou <b>Paguei</b> (contas fixas). O app já preenche o valor; é só confirmar de qual conta saiu.'}},
- {g:"app",q:"Como passo dinheiro de uma conta para outra?",kw:"transferir transferencia passar dinheiro conta outra pix",ir:"inicio",r:function(){return 'Toque em <b>Anotar</b> e escolha <b>Transferi entre contas</b>. Escolha de onde saiu e para onde foi. Isso não é gasto: o dinheiro só mudou de lugar.'}},
+ {g:"app",q:"Como passo dinheiro de uma conta para outra?",kw:"transferir transferencia passar dinheiro conta outra pix",ir:"inicio",r:function(){return 'Toque em <b>Anotar</b> e, no topo da folha, escolha <b>Transferi</b>. Escolha de onde saiu e para onde foi. Isso não é gasto: o dinheiro só mudou de lugar.'}},
  {g:"app",q:"Anotei errado. Como corrijo ou apago?",kw:"errado corrigir apagar excluir editar desfazer erro",ir:"anotacoes",r:function(){return 'Toque na anotação (no Início ou em Dinheiro > Todas as anotações) para <b>alterar</b> ou <b>apagar</b>. Logo depois de apagar, aparece o botão <b>Desfazer</b>, caso tenha sido sem querer.'}},
  {g:"app",q:"Como guardo dinheiro numa caixinha?",kw:"guardar caixinha separar juntar objetivo",ir:"caixinhas",r:function(){return 'Em <b>Planejar > Caixinhas</b>, escolha a caixinha e toque em <b>Guardar</b>. O dinheiro <b>continua na sua conta e continua seu</b>: ele só sai do que você pode usar agora.'}},
  {g:"app",q:"Como cadastro uma conta fixa (aluguel, internet)?",kw:"conta fixa aluguel internet assinatura luz agua cadastrar",ir:"fixas",r:function(){return 'Em <b>Planejar > Contas fixas</b>, toque em <b>Nova conta fixa</b>. Escolha se repete <b>todo mês</b> ou <b>todo ano</b> (IPVA, IPTU). O app avisa quando vencer.'}},
@@ -2655,7 +2771,7 @@ function modalConferir(id){
   abrirModal('<p class="q">Conferir com o banco</p>'+
     '<p class="sub">Abra o app do banco e veja o saldo de <b>'+esc(c.nome)+'</b> agora. Digite aqui o mesmo valor.</p>'+
     '<p class="faint">No Balancete: <b style="color:var(--ink)">'+esc(brl(saldoConta(c)))+'</b>'+(c.conferido?' · última conferência em '+esc(dataBR(c.conferido)):'')+'</p>'+
-    '<div class="campo"><label for="cfSaldo">Saldo no banco agora</label><input id="cfSaldo" inputmode="numeric" placeholder="R$ 0,00"></div>'+
+    '<div class="campo"><label for="cfSaldo">Saldo no banco agora</label><input id="cfSaldo" inputmode="decimal" placeholder="R$ 0,00"></div>'+
     '<div id="cfRes" aria-live="polite"></div>'+
     '<button class="btn sec" data-a="mFechar">Fechar</button>');
   ligarDinheiro($("#cfSaldo"),0);
@@ -2769,16 +2885,18 @@ function empHTML(parts){
     parts.map(function(p){return '<li><i style="background:'+p.cor+'"></i><span>'+esc(p.n)+'</span><b>'+esc(brl(p.v))+' · '+Math.round(p.v/tot*100)+'%</b></li>'}).join("")+'</ul></div>';
 }
 function barrasParSVG(serie,ka,kb,rotA,rotB,aria){
-  var W=320,H=172,pL=8,pR=8,pT=24,pB=24, n=serie.length, w=(W-pL-pR)/n, bw=Math.min(18,w/2-3), mx=1, s="";
+  var W=320,H=172,pL=8,pR=8,pT=26,pB=24, n=serie.length, w=(W-pL-pR)/n, bw=Math.max(14,Math.min(18,w/2-3)), mx=1, s="";
   serie.forEach(function(m){mx=Math.max(mx,m[ka],kb?m[kb]:0)});
   serie.forEach(function(m,i){
     var cx=pL+w*i+w/2, ha=(H-pT-pB)*m[ka]/mx, hb=kb?(H-pT-pB)*m[kb]/mx:0, xa=kb?cx-bw-1:cx-bw/2;
-    s+='<rect x="'+xa.toFixed(1)+'" y="'+(H-pB-ha).toFixed(1)+'" width="'+bw+'" height="'+ha.toFixed(1)+'" rx="2" style="fill:'+(kb?"var(--in)":"var(--out)")+'"/>';
-    if(kb)s+='<rect x="'+(cx+1).toFixed(1)+'" y="'+(H-pB-hb).toFixed(1)+'" width="'+bw+'" height="'+hb.toFixed(1)+'" rx="2" style="fill:var(--out)"/>';
-    s+='<text x="'+cx.toFixed(1)+'" y="'+(H-8)+'" font-size="9.5" text-anchor="middle" style="fill:var(--ink2)">'+m.l+'</text>';
+    var vazio=!m[ka]&&!(kb&&m[kb]);
+    s+='<rect x="'+xa.toFixed(1)+'" y="'+(H-pB-ha).toFixed(1)+'" width="'+bw+'" height="'+ha.toFixed(1)+'" rx="3" style="fill:'+(kb?"var(--in)":"var(--out)")+'"><title>'+esc(m.l+": "+rotA+" "+brl(m[ka]))+'</title></rect>';
+    if(kb)s+='<rect x="'+(cx+1).toFixed(1)+'" y="'+(H-pB-hb).toFixed(1)+'" width="'+bw+'" height="'+hb.toFixed(1)+'" rx="3" style="fill:var(--out)"><title>'+esc(m.l+": "+rotB+" "+brl(m[kb]))+'</title></rect>';
+    if(vazio)s+='<text x="'+cx.toFixed(1)+'" y="'+(H-pB-6)+'" font-size="9" text-anchor="middle" style="fill:var(--ink3)">sem anotações</text>';
+    s+='<text x="'+cx.toFixed(1)+'" y="'+(H-8)+'" font-size="10.5" text-anchor="middle" style="fill:'+(vazio?"var(--ink3)":"var(--ink2)")+'">'+m.l+'</text>';
   });
   s+='<line x1="'+pL+'" x2="'+(W-pR)+'" y1="'+(H-pB)+'" y2="'+(H-pB)+'" style="stroke:var(--rule2)"/>';
-  s+='<text x="'+pL+'" y="13" font-size="10" font-weight="700" style="fill:'+(kb?"var(--in)":"var(--out)")+'">■ '+esc(rotA)+'</text>'+(kb?'<text x="'+(pL+70)+'" y="13" font-size="10" font-weight="700" style="fill:var(--out)">■ '+esc(rotB)+'</text>':'');
+  s+='<text x="'+pL+'" y="14" font-size="12.5" font-weight="700" style="fill:'+(kb?"var(--in)":"var(--out)")+'">■ '+esc(rotA)+'</text>'+(kb?'<text x="'+(pL+80)+'" y="14" font-size="12.5" font-weight="700" style="fill:var(--out)">■ '+esc(rotB)+'</text>':'');
   return '<svg class="grafico" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(aria)+'">'+s+'</svg>';
 }
 
@@ -2803,7 +2921,7 @@ function indicadores(){
   out.push({id:"liquidez",nome:"Folga para os próximos 30 dias",pergunta:"Meu dinheiro cobre as contas que vêm aí?",
     valor:obrig===0?"Sem contas":n1(razao)+"x",
     st:obrig===0?"ok":razao>=2?"ok":razao>=1?"atencao":"critico",
-    leitura:obrig===0?"Nenhuma conta nos próximos 30 dias.":razao>=1?"Seu dinheiro cobre "+n1(razao)+" vez(es) as contas.":"Seu dinheiro não cobre todas as contas.",
+    leitura:obrig===0?"Nenhuma conta nos próximos 30 dias.":razao>=1?"Seu dinheiro cobre "+n1(razao)+(razao>=1.95?" vezes":" vez")+" as contas.":"Seu dinheiro não cobre todas as contas.",
     d:{caixa:caixa,obrig:obrig,razao:razao},
     graf:duasHTML([{n:"Seu dinheiro (com o guardado)",v:caixa,cor:C.ok},{n:"Contas até 30 dias",v:obrig,cor:C.cr}])});
 
@@ -2903,7 +3021,7 @@ function relatorioTexto(i){
   }else if(i.id==="liquidez"){
     T.o="Responde: se todas as contas dos próximos 30 dias chegassem juntas, o meu dinheiro cobre? É como olhar o tanque antes de uma viagem.";
     T.c=d.obrig===0?"Você não tem contas registradas para os próximos 30 dias, então a folga hoje é total. Cadastre suas contas fixas e dívidas para este indicador ficar fiel.":
-      "Você tem <b>"+RB(d.caixa)+"</b> em dinheiro (contando o que está guardado) e <b>"+RB(d.obrig)+"</b> de contas até 30 dias. Isso cobre as contas <b>"+n1(d.razao)+" vez(es)</b>.";
+      "Você tem <b>"+RB(d.caixa)+"</b> em dinheiro (contando o que está guardado) e <b>"+RB(d.obrig)+"</b> de contas até 30 dias. Isso cobre as contas <b>"+n1(d.razao)+(d.razao>=1.95?" vezes":" vez")+"</b>.";
     T.r="2 vezes ou mais: folgado. Entre 1 e 2 vezes: apertado, qualquer imprevisto pesa. Abaixo de 1: o dinheiro não cobre tudo e alguma conta vai atrasar.";
     T.p=st==="critico"?"O dinheiro não cobre as contas do mês. Ordene por prioridade (moradia, comida, saúde e contas com multa) e negocie as outras antes de atrasar.":st==="atencao"?"Dá para pagar, mas sem folga. Evite novas compras parceladas até o próximo recebimento.":"Você paga tudo em dia e ainda sobra. Boa hora para mandar o excedente para a reserva ou para uma dívida com juros.";
     T.b=["Abra o acerto de contas em Planejar e pague uma a uma, por ordem de vencimento.","Se faltar, procure o credor antes de atrasar: renegociar custa menos que a multa.","Use a agenda para ver o que vence primeiro."];
@@ -3147,21 +3265,21 @@ function barras(por,total,cls){
   }).join("");
 }
 function graficoEvolucao(){
-  var hoje=hojeISO(), ymH=hoje.slice(0,7), i;
+  var hoje=hojeISO(), ymH=hoje.slice(0,7), i, prev=mesesCompletos()>=2;   /* D3: previsão só com base */
   var primeiro=ymH; S.lancamentos.forEach(function(l){var m=l.data.slice(0,7); if(m<primeiro)primeiro=m});
   var atras=0; while(atras<5&&ymMais(ymH,-(atras+1))>=primeiro)atras++;
   var plH=totais(hoje).pl, sobras=[];
   for(i=0;i<3;i++){var rr=resumoMes(ymMais(ymH,-i)); if(rr.lanc.length)sobras.push(rr.ent-rr.sai)}
   var media=sobras.length?Math.round(sobras.reduce(function(a,b){return a+b},0)/sobras.length):0;
   var pts=[];
-  for(i=-atras;i<=6;i++){
+  for(i=-atras;i<=(prev?6:0);i++){
     var ym2=ymMais(ymH,i), p=ym2.split("-").map(Number), fim=ym2+"-"+pad(ultimoDia(p[0],p[1]-1));
     pts.push({i:i,l:MES3[p[1]-1],pl:i<0?totais(fim).pl:i===0?plH:plH+media*i});
   }
   var W=320,H=176,pL=12,pR=12,pT=30,pB=26, vs=pts.map(function(q){return q.pl});
   var mn=Math.min.apply(null,vs.concat([0])), mx=Math.max.apply(null,vs.concat([1]));
   if(mn===mx){mn-=1;mx+=1}
-  function X(k){return pL+k/(pts.length-1)*(W-pL-pR)}
+  function X(k){return pts.length<2?W/2:pL+k/(pts.length-1)*(W-pL-pR)}
   function Y(val){return pT+(H-pT-pB)-(val-mn)/(mx-mn)*(H-pT-pB)}
   var k0=atras, real=[], proj=[];
   pts.forEach(function(q,k){var s=X(k).toFixed(1)+","+Y(q.pl).toFixed(1); if(k<=k0)real.push(s); if(k>=k0)proj.push(s)});
@@ -3169,17 +3287,25 @@ function graficoEvolucao(){
     '<line x1="'+X(k0).toFixed(1)+'" x2="'+X(k0).toFixed(1)+'" y1="'+(pT-6)+'" y2="'+(H-pB)+'" stroke="var(--latao)" stroke-width="1" stroke-dasharray="2,3"/>'+
     '<text x="'+(X(k0)+(k0<2?5:0)).toFixed(1)+'" y="'+(pT-10)+'" font-size="10" text-anchor="'+(k0<2?"start":"middle")+'" fill="var(--ouro)" font-weight="700">hoje: '+esc(brl(plH))+'</text>';
   if(real.length>1)s+='<path d="M'+real.join(" L")+'" fill="none" stroke="var(--ouro)" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>';
-  s+='<path d="M'+proj.join(" L")+'" fill="none" stroke="var(--ouro)" stroke-width="4" stroke-dasharray="1,8" stroke-linecap="round" opacity=".9"/>';
+  if(prev)s+='<path d="M'+proj.join(" L")+'" fill="none" stroke="var(--ouro)" stroke-width="4" stroke-dasharray="1,8" stroke-linecap="round" opacity=".9"/>';
   pts.forEach(function(q,k){
     s+='<circle cx="'+X(k).toFixed(1)+'" cy="'+Y(q.pl).toFixed(1)+'" r="'+(q.i===0?5:3.4)+'" fill="'+(q.fut?"var(--card)":"var(--ouro)")+'" stroke="var(--ouro)" stroke-width="2"/>'+
        '<text x="'+X(k).toFixed(1)+'" y="'+(H-8)+'" font-size="9.5" fill="var(--ink2)" text-anchor="middle">'+q.l+'</text>';
   });
   var last=pts[pts.length-1];
-  s+='<text x="'+(W-pR)+'" y="14" font-size="11" font-weight="700" fill="var(--ink)" text-anchor="end">em 6 meses: '+esc(brl(last.pl))+'</text>';
-  var nota=sobras.length
+  if(prev)s+='<text x="'+(W-pR)+'" y="14" font-size="12" font-weight="700" fill="var(--ink)" text-anchor="end">em 6 meses: '+esc(brl(last.pl))+'</text>';
+  var nota=!prev?'<b>Precisamos de mais dados</b> para prever: a linha dos próximos 6 meses aparece quando houver <b>2 meses completos</b> de anotações.':sobras.length
     ? 'A linha pontilhada é uma <b>previsão</b>: se você continuar '+(media>=0?"sobrando":"gastando a mais")+' cerca de <b>'+esc(brl(Math.abs(media)))+'</b> por mês, o que é seu chega a <b>'+esc(brl(last.pl))+'</b> em 6 meses.'
     : 'Anote por um tempo e a linha pontilhada mostra para onde o que é seu está indo nos próximos 6 meses.';
   return '<svg class="grafico" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Do começo até 6 meses à frente">'+s+'</svg><p class="sub" style="margin-top:.4rem">'+nota+'</p>';
+}
+/* meses inteiros com anotações (D3 do redesign): conta a partir do primeiro mês que começou com o app em uso */
+function mesesCompletos(){
+  var ds=S.lancamentos.filter(function(l){return !l.rend&&!l.rendCx&&l.tipo!=="ajuste"}).map(function(l){return l.data}).sort();
+  if(!ds.length)return 0;
+  var ym=ds[0].slice(8)==="01"?ds[0].slice(0,7):ymMais(ds[0].slice(0,7),1), ymH=hojeISO().slice(0,7), n=0;
+  while(ym<ymH&&n<120){n++; ym=ymMais(ym,1)}
+  return n;
 }
 function blocoContador(r){
   var ym=REF.getFullYear()+"-"+pad(REF.getMonth()+1), razao={}, ordem=[];
@@ -3232,25 +3358,36 @@ function telaAjustes(){
 /* =====================================================================
    FOLHA "ANOTAR" (criar / editar lançamento)
    ===================================================================== */
-var F=null, FOLHA_ABERTA=false;
+var F=null, FOLHA_ABERTA=false, ANOT_LONGO=false;
+/* segurar o Anotar (meio segundo) abre as 4 medalhas de tipo; tocar abre direto o "Gastei" (redesign R-01) */
+(function(){
+  var t=null;
+  document.addEventListener("pointerdown",function(e){var b=e.target.closest&&e.target.closest(".nav-anotar"); if(!b)return; clearTimeout(t); t=setTimeout(function(){ANOT_LONGO=true; fabMenu(true); try{if(navigator.vibrate)navigator.vibrate(15)}catch(x){}},500)});
+  ["pointerup","pointercancel","pointerleave"].forEach(function(ev){document.addEventListener(ev,function(){clearTimeout(t)})});
+  document.addEventListener("contextmenu",function(e){if(e.target.closest&&e.target.closest(".nav-anotar"))e.preventDefault()});
+})();
 
 function abrirFolha(){
   if(!FOLHA_ABERTA)FOLHA_VOLTA=lembrarGatilho();
-  $("#folha").classList.add("on"); document.body.style.overflow="hidden";
-  if(!FOLHA_ABERTA){FOLHA_ABERTA=true; try{history.pushState({f:1},"")}catch(e){} fundoInerte(); setTimeout(function(){var ft=$("#folhaTit"); if(ft&&FOLHA_ABERTA)try{ft.focus({preventScroll:true})}catch(e){}},0)}
+  $("#folha").classList.add("on"); document.body.style.overflow="hidden"; document.body.classList.add("folha-aberta");
+  if(!FOLHA_ABERTA){FOLHA_ABERTA=true; try{history.pushState({f:1},"")}catch(e){} fundoInerte(); setTimeout(function(){var fv=$("#fValor")||$("#folhaTit"); if(fv&&FOLHA_ABERTA)try{fv.focus({preventScroll:true})}catch(e){}},0)}
+}
+/* fechar arrastando a alça: se já tem algo digitado numa anotação nova, pergunta antes */
+function fecharFolhaComCuidado(){
+  if(F&&!F.id&&(F.cent>0||(F.desc||"").trim()))confirmar("Descartar o que você digitou?","Descartar",fecharFolha); else fecharFolha();
 }
 function folhaFechou(){fundoInerte(); var g=FOLHA_VOLTA; FOLHA_VOLTA=null; devolverFoco(g)}
 function fecharFolha(){
   if(!FOLHA_ABERTA)return;
   FOLHA_ABERTA=false; F=null;
-  $("#folha").classList.remove("on"); document.body.style.overflow="";
+  $("#folha").classList.remove("on"); document.body.style.overflow=""; document.body.classList.remove("folha-aberta");
   try{if(history.state&&history.state.f)history.back()}catch(e){}
   folhaFechou();
   voltaAcerto();
 }
-function voltaAcerto(){if(AC_VOLTA){AC_VOLTA=false; var c=$("#cardPagar"); if(c)c.innerHTML=cartaoPagarInicio(); if(VIEW==="planejar")abrirAcerto()}}
+function voltaAcerto(){if(AC_VOLTA){AC_VOLTA=false; var c=$("#cardPagar"); if(c)c.innerHTML=VIEW==="planejar"?cartaoPagarPlanejar():cartaoPagarInicio()}}
 window.addEventListener("popstate",function(){
-  if(FOLHA_ABERTA){FOLHA_ABERTA=false;F=null;$("#folha").classList.remove("on");document.body.style.overflow="";folhaFechou();voltaAcerto()}
+  if(FOLHA_ABERTA){FOLHA_ABERTA=false;F=null;$("#folha").classList.remove("on");document.body.style.overflow="";document.body.classList.remove("folha-aberta");folhaFechou();voltaAcerto()}
 });
 
 function novaFolha(o){
@@ -3286,12 +3423,31 @@ function gerarParcelas(contaId,data,total,n){
   var v1=(c.fecha&&c.vence)?primeiroVencimento(data,c.fecha,c.vence):data;
   return dividir(total,n).map(function(val,i){return {data:addMes(v1,i),valor:val}});
 }
+/* escolha por botões (redesign R-11): no lugar do <select> de conta e categoria. Guarda o valor num campo escondido com o
+   mesmo id, então quem lê o formulário não muda. Com mais de 8 opções, aparece uma busca em cima. */
+function escolha(id,rotulo,lista,sel){
+  var atual=sel&&lista.some(function(o){return o.id===sel})?sel:(lista[0]&&lista[0].id)||"";
+  return '<div class="campo esc"><span class="rot" id="'+id+'Rot">'+esc(rotulo)+'</span>'+
+    (lista.length>8?'<input type="search" class="esc-busca" data-esc="'+id+'" placeholder="Buscar" aria-label="Buscar: '+esc(rotulo)+'" autocomplete="off">':'')+
+    '<div class="chips esc-chips" role="radiogroup" aria-labelledby="'+id+'Rot">'+lista.map(function(o){var on=o.id===atual;
+      return '<button type="button" class="chip" role="radio" data-a="escolha" data-campo="'+id+'" data-v="'+esc(o.id)+'" aria-checked="'+on+'" aria-pressed="'+on+'">'+esc(o.nome)+'</button>'}).join("")+'</div>'+
+    '<input type="hidden" id="'+id+'" value="'+esc(atual)+'"></div>';
+}
+document.addEventListener("input",function(e){
+  var b=e.target; if(!b.classList||!b.classList.contains("esc-busca"))return;
+  var q=norm(b.value.trim()); b.parentNode.querySelectorAll(".esc-chips .chip").forEach(function(c){c.hidden=!!q&&norm(c.textContent).indexOf(q)<0});
+});
 function chip(acao,id,rot,sel,extra){return '<button class="chip" data-a="'+acao+'" data-id="'+id+'" aria-pressed="'+sel+'">'+esc(rot)+(extra||"")+'</button>'}
 
 function desenharFolha(){
   var tr=F.tipo==="transferencia", cl=F.tipo==="saida"?"s":F.tipo==="entrada"?"e":"t", c=conta(F.contaId);
-  var h='<header class="capa f"><button class="volta" data-a="fFechar" aria-label="Voltar">←</button><h1 id="folhaTit" tabindex="-1">'+(F.id?"Editar: ":"")+NOME_TIPO[F.tipo]+'</h1></header>';
-  h+='<label class="rot" for="fValor">Quanto?</label><input id="fValor" class="dinheiro '+cl+'" inputmode="numeric" autocomplete="off" placeholder="R$ 0,00">';
+  var dvP=conta(F.destinoId), tit=F.id?"Editar anotação":(F.pagar&&dvP?"Pagar "+dvP.nome:"Nova anotação");
+  var h='<button type="button" class="f-alca" data-a="fArrasta" aria-label="Fechar (arraste para baixo)"></button>'+
+    '<header class="capa f"><button class="volta" data-a="fFechar" aria-label="Voltar">←</button><h1 id="folhaTit" tabindex="-1">'+esc(tit)+'</h1></header>';
+  /* tipo em controle segmentado no topo (antes: o botão "Tipo" no canto) */
+  if(!F.pagar)h+='<div class="f-seg" role="radiogroup" aria-label="O que aconteceu?">'+TIPOS.map(function(t){var on=F.tipo===t[0];
+    return '<button type="button" class="seg seg-'+t[3]+'" role="radio" data-a="fTipo" data-t="'+t[0]+'" aria-checked="'+on+'" aria-pressed="'+on+'">'+t[1]+'</button>'}).join("")+'</div>';
+  h+='<label class="rot" for="fValor">Quanto?</label><input id="fValor" class="dinheiro '+cl+'" inputmode="decimal" enterkeyhint="done" autocomplete="off" placeholder="R$ 0,00" aria-describedby="fValorErro"><p class="f-erro" id="fValorErro" role="alert" hidden></p>';
   h+='<div id="fArred"></div>';
 
   var want=F.tipo==="saida"?"despesa":"receita";
@@ -3301,7 +3457,7 @@ function desenharFolha(){
   else if(F.tipo==="bem"){tE="Paguei com";tD="Qual bem?";kE="contas";kD="bens";aE="fConta";aD="fDestino";sE=F.contaId;sD=F.destinoId}
   else{tE="De onde sai";tD="Para onde vai";kE="contas";kD="contas";aE="fConta";aD="fDestino";sE=F.contaId;sD=F.destinoId}
   F.cols={E:{k:kE,a:aE,sel:sE,tit:tE,ex:null,want:want,semInv:(F.tipo==="saida"||F.tipo==="bem")},D:{k:kD,a:aD,sel:sD,tit:tD,ex:(F.tipo==="transferencia"?F.contaId:null),want:want}};
-  function colHTML(l,c){return '<div><p class="colrot">'+c.tit+'</p><input type="search" class="bcol" data-l="'+l+'" placeholder="'+(c.k==="contas"?"Buscar conta":c.k==="cats"?"Buscar categoria":"Buscar bem")+'" aria-label="'+(c.k==="contas"?"Buscar conta":c.k==="cats"?"Buscar categoria":"Buscar bem")+'" autocomplete="off" value="'+esc(F["q"+l]||"")+'"><div class="lc" id="lc'+l+'"></div></div>'}
+  function colHTML(l,c){return '<div class="col-'+c.k+'"><p class="colrot">'+c.tit+'</p><input type="search" class="bcol" data-l="'+l+'" placeholder="'+(c.k==="contas"?"Buscar conta":c.k==="cats"?"Buscar categoria":"Buscar bem")+'" aria-label="'+(c.k==="contas"?"Buscar conta":c.k==="cats"?"Buscar categoria":"Buscar bem")+'" autocomplete="off" value="'+esc(F["q"+l]||"")+'"><div class="lc lc-'+c.k+'" id="lc'+l+'"></div></div>'}
   h+='<div class="tt" id="tt"><div class="th"><span>'+tE+'</span><span>'+tD+'</span></div>'+
     '<div class="tc">'+colHTML("E",F.cols.E)+colHTML("D",F.cols.D)+'</div>'+
     '<svg class="lnk" id="lnk" aria-hidden="true"><path id="lp" d=""/></svg></div>';
@@ -3317,18 +3473,19 @@ function desenharFolha(){
 
   var dv=conta(F.destinoId);
   if(F.tipo==="transferencia"&&dv&&dv.tipo==="passivo")
-    h+='<div class="campo" id="wJuros"><label for="fJuros">Desse valor, quanto foi de juros ou multa? (opcional)</label><p class="faint" style="margin-bottom:.4rem">Só os juros viram gasto. O resto abate a dívida.</p><input id="fJuros" inputmode="numeric" placeholder="R$ 0,00"></div>';
+    h+='<div class="campo" id="wJuros"><label for="fJuros">Desse valor, quanto foi de juros ou multa? (opcional)</label><p class="faint" style="margin-bottom:.4rem">Só os juros viram gasto. O resto abate a dívida.</p><input id="fJuros" inputmode="decimal" placeholder="R$ 0,00"></div>';
   var md='<div class="campo"><label for="fDesc">Anotação (opcional)</label><input id="fDesc" maxlength="60" placeholder="'+(F.tipo==="saida"?"Ex.: mercado do mês":F.tipo==="entrada"?"Ex.: salário de novembro":F.tipo==="bem"?"Ex.: TV nova da sala":"Ex.: saquei no caixa")+'" value="'+esc(F.desc)+'"></div>';
   var cxs=S.caixas.filter(function(x){return saldoCaixa(x.id)>0||x.id===F.caixaId});
   if(F.tipo==="saida"&&cxs.length)md+='<span class="rot">Pagar com o dinheiro de uma caixinha? (opcional)</span><div class="chips"><button class="chip" data-a="fCaixa" data-id="" aria-pressed="'+(!F.caixaId)+'">Nenhuma</button>'+
     cxs.map(function(x){return '<button class="chip" data-a="fCaixa" data-id="'+x.id+'" aria-pressed="'+(F.caixaId===x.id)+'">'+esc(x.nome)+' · '+esc(brl(saldoCaixa(x.id)))+'</button>'}).join("")+'</div>';
   h+=maisDetalhes(md,!!(F.desc||F.caixaId||F.mdAberto),"Mais detalhes: anotação"+(F.tipo==="saida"&&cxs.length?" e caixinha":"")+" (opcional)");
   h+='<div class="prev" id="fPrev"></div>';
-  h+='<div class="acoes"><button class="btn" data-a="fSalvar">'+(F.id?"Salvar alterações":"Salvar")+'</button></div>';
   if(F.id)h+='<button class="btn perigo" data-a="fApagar">Apagar esta anotação</button>';
+  /* barra fixa embaixo, acima do teclado: o resumo curto e o Salvar sempre à vista */
+  h+='<div class="f-barra"><span class="f-resumo" id="fResumo"></span><button class="btn" data-a="fSalvar">'+(F.id?"Salvar alterações":"Salvar")+'</button></div>';
   $("#folhaCorpo").innerHTML=h;
 
-  ligarDinheiro($("#fValor"),F.cent,function(c){F.cent=c;previa()});
+  ligarDinheiro($("#fValor"),F.cent,function(c){F.cent=c;erroValor("");previa()});
   if($("#fJuros"))ligarDinheiro($("#fJuros"),F.juros||0,function(c){F.juros=c;previa()});
   $("#fDesc").addEventListener("input",function(){F.desc=this.value});
   var fmd=$("#folhaCorpo details.md"); if(fmd)fmd.addEventListener("toggle",function(){if(F)F.mdAberto=fmd.open});
@@ -3350,8 +3507,19 @@ function ligarFio(){
   p.style.setProperty("--L",L);
 }
 window.addEventListener("resize",function(){if(F)ligarFio()});
+/* erro do valor no próprio campo (R-03 / MM-07), sem aviso solto */
+function erroValor(t){
+  var e=$("#fValorErro"), i=$("#fValor"); if(!e||!i)return;
+  e.textContent=t; e.hidden=!t; if(t){i.setAttribute("aria-invalid","true"); i.classList.add("com-erro")} else {i.removeAttribute("aria-invalid"); i.classList.remove("com-erro")}
+}
+function resumoFolha(){
+  var rs=$("#fResumo"); if(!rs||!F)return;
+  var c=conta(F.contaId), d=conta(F.destinoId), k=cat(F.catId), de, para;
+  if(F.tipo==="saida"){de=c&&c.nome;para=k&&k.nome} else if(F.tipo==="entrada"){de=k&&k.nome;para=c&&c.nome} else {de=c&&c.nome;para=d&&d.nome}
+  rs.textContent=(F.cent?brl(F.cent):"R$ 0,00")+" · "+(de||"—")+" → "+(para||"—");
+}
 function previa(){
-  pintarArred();
+  pintarArred(); resumoFolha();
   var el=$("#fPrev"); if(!el||!F)return;
   var c=conta(F.contaId), d=conta(F.destinoId), k=cat(F.catId), h="", valor=F.cent;
   var nt=$("#fNtxt"); if(nt)nt.textContent=F.n===1?"À vista":F.n+" vezes";
@@ -3774,7 +3942,7 @@ function modalInvest(id){
   var bs=contasDinheiro().filter(function(x){return !x.carteira});
   abrirModal('<p class="q">'+(c?"Editar aplicação":"Nova aplicação")+'</p>'+
     '<div class="campo"><label for="ivNome">Nome</label><input id="ivNome" maxlength="30" placeholder="Ex.: Caixinha Nubank, CDB Inter, Tesouro Selic" value="'+esc(c?c.nome:"")+'"></div>'+
-    (c?'':'<div class="campo"><label for="ivValor">Quanto tem nela hoje?</label><input id="ivValor" inputmode="numeric" placeholder="R$ 0,00"></div>')+
+    (c?'':'<div class="campo"><label for="ivValor">Quanto tem nela hoje?</label><input id="ivValor" inputmode="decimal" placeholder="R$ 0,00"></div>')+
     blocoComoRende("iv",IV,true)+
     (bs.length?'<span class="rot">Em qual banco ela está? (opcional)</span><div class="chips" id="ivBancos">'+bs.map(function(b){return '<button class="chip" data-a="ivBanco" data-id="'+b.id+'" aria-pressed="'+(IV.banco===b.id)+'">'+esc(b.nome)+'</button>'}).join("")+'</div>':'')+
     maisDetalhes('<div class="campo"><label for="ivDesde">Desde quando o dinheiro está aplicado?</label><p class="faint">Serve para estimar o Imposto de Renda, que diminui com o tempo (22,5% até 6 meses; 15% depois de 2 anos).</p><input id="ivDesde" type="date" value="'+esc(o.desde||"")+'"></div>',!!o.desde,"Desde quando está aplicado (opcional)")+
@@ -3906,7 +4074,7 @@ function conferirAnotacao(l,extra,antiga){
   return {impede:imp,avisa:av};
 }
 function salvarFolha(){
-  if(!F.cent){toast("Diga quanto foi");$("#fValor").focus();return}
+  if(!F.cent){erroValor("Diga quanto foi");$("#fValor").focus();return}
   if(F.tipo==="transferencia"){
     if(!F.destinoId||F.destinoId===F.contaId){toast("Escolha duas contas diferentes");return}
   }else if(F.tipo==="bem"){
@@ -3929,15 +4097,17 @@ function salvarFolha(){
   if(cf.impede.length){F.salvando=false; janelaTrava(cf.impede,false); return}
   if(cf.avisa.length&&!F.confirmado){F.salvando=false; janelaTrava(cf.avisa,true); return}
   F.confirmado=false;
+  var sn=foto();   /* para o "Desfazer" do aviso */
   if(i>=0)S.lancamentos[i]=l; else S.lancamentos.push(l);
   if(extra)S.lancamentos.push(extra);
   salvar(); ULTIMO=l.id; WOB=true;
-  var fim=function(){var u=ULTIMO; fecharFolha(); toast(i>=0?"Alterado!":"Pronto, anotado!"); ULTIMO=u; desenhar()};
-  if(calmo()){fim();return}
   var pagou=(l.tipo==="transferencia"&&dj&&dj.tipo==="passivo")||(l.tipo==="saida"&&!!l.fixaId);
-  if(i<0&&l.tipo==="entrada")momento("moeda"); else if(i<0&&pagou)momento("selo"); else carimbo(i>=0?"ALTERADO":"ANOTADO");
-  moedaFio();
-  setTimeout(fim,800);
+  /* um só retorno (redesign MF-20): a folha fecha, a linha nova fica em destaque e o aviso diz o que foi feito, com Desfazer */
+  var msg=i>=0?"Anotação alterada.":pagou?"Pagamento anotado.":{saida:"Gasto anotado.",entrada:"Ganho anotado.",transferencia:"Transferência anotada.",bem:"Compra anotada."}[l.tipo];
+  var fim=function(){var u=ULTIMO; fecharFolha(); toastDesfazer(msg,sn); ULTIMO=u; desenhar()};
+  if(calmo()||i>=0){fim();return}
+  /* os momentos do Mordomo (D54) continuam só para receber e pagar */
+  if(l.tipo==="entrada"&&momento("moeda"))setTimeout(fim,800); else if(pagou&&momento("selo"))setTimeout(fim,800); else fim();
 }
 
 /* =====================================================================
@@ -3960,13 +4130,13 @@ function modalGaveta(id,tipoNovo){
     (G.bloqueado?'<p class="faint" style="margin-top:.3rem">O tipo não muda porque já há anotações nesta conta.</p>':"")+
     (c&&c.tipo==="ativo"&&uso
       ?'<div class="campo" id="gInicialWrap"><span class="rot">Saldo de hoje</span><p class="g-saldo">'+esc(brl(saldoConta(c)))+'</p><p class="faint">O saldo muda pelas anotações. Se não bater com o banco, toque em <b>Conferir com o banco</b>: a diferença entra como anotação de hoje, sem mexer no passado.</p></div>'
-      :'<div class="campo" id="gInicialWrap"><label for="gInicial">Quanto tem aí hoje?</label><input id="gInicial" inputmode="numeric" placeholder="R$ 0,00"></div>')+
+      :'<div class="campo" id="gInicialWrap"><label for="gInicial">Quanto tem aí hoje?</label><input id="gInicial" inputmode="decimal" placeholder="R$ 0,00"></div>')+
     '<div class="campo" id="gFaturasWrap">'+(c&&c.tipo==="passivo"&&uso
       ?'<p class="faint">Hoje você deve <b>'+esc(brl(Math.max(0,saldoConta(c))))+'</b> aqui. As compras e os pagamentos anotados já entram nessa conta.</p>'+maisDetalhes(fatHTML+'<p class="faint">Não repita aqui as compras que você anotou.</p>',false,"O que você já devia aqui antes de usar o app")
       :'<label>O que você já deve aqui</label>'+fatHTML)+'</div>'+
     '<div id="gCartao"><div class="campo"><label for="gFecha">Dia que a fatura fecha (opcional)</label><input id="gFecha" type="number" min="1" max="31" inputmode="numeric" value="'+(c&&c.fecha||"")+'"></div>'+
     '<div class="campo"><label for="gVence">Dia que a fatura vence (opcional)</label><input id="gVence" type="number" min="1" max="31" inputmode="numeric" value="'+(c&&c.vence||"")+'"></div>'+
-    '<div class="campo"><label for="gLimite">Limite (opcional)</label><input id="gLimite" inputmode="numeric" placeholder="R$ 0,00"></div></div>'+
+    '<div class="campo"><label for="gLimite">Limite (opcional)</label><input id="gLimite" inputmode="decimal" placeholder="R$ 0,00"></div></div>'+
     '<button class="btn" data-a="gSalvar">Salvar</button>'+
     (c?'<button class="btn perigo" data-a="gApagar">Apagar conta</button>':"")+
     '<button class="btn sec" data-a="mFechar">Cancelar</button>';
@@ -3982,7 +4152,7 @@ function modalGaveta(id,tipoNovo){
 function addLinhaFatura(sel,f){
   var div=document.createElement("div"); div.className="linha-f";
   div.innerHTML='<input type="date" class="fd" aria-label="Data de vencimento" value="'+esc(f&&f.data||"")+'">'+
-    '<input class="fv" inputmode="numeric" placeholder="R$ 0,00" aria-label="Valor que vence nessa data">'+
+    '<input class="fv" inputmode="decimal" placeholder="R$ 0,00" aria-label="Valor que vence nessa data">'+
     '<button class="x" data-a="fDel" aria-label="Tirar esta linha">×</button>';
   $(sel).appendChild(div);
   ligarDinheiro(div.querySelector(".fv"),f?f.valor:0);
@@ -4045,7 +4215,7 @@ function modalCategoria(id,tipo){
     '<span class="rot">É um...</span><div class="opc" id="kTipos">'+
       '<button data-a="kTipo" data-t="despesa" aria-pressed="'+(K.tipo==="despesa")+'"'+(K.bloqueado||(!k&&tipo)?" disabled":"")+'>Gasto</button>'+
       '<button data-a="kTipo" data-t="receita" aria-pressed="'+(K.tipo==="receita")+'"'+(K.bloqueado||(!k&&tipo)?" disabled":"")+'>Ganho</button></div>'+
-    '<div class="campo" id="kMetaWrap"><label for="kMeta">Meta por mês (opcional)</label><p class="faint" style="margin-bottom:.4rem">Quanto você pretende gastar aqui por mês. É um limite para acompanhar: não bloqueia nada e não guarda dinheiro (para guardar, use uma caixinha). No app ele aparece como um pote que esvazia conforme você gasta.</p><input id="kMeta" inputmode="numeric" placeholder="R$ 0,00"></div>'+
+    '<div class="campo" id="kMetaWrap"><label for="kMeta">Meta por mês (opcional)</label><p class="faint" style="margin-bottom:.4rem">Quanto você pretende gastar aqui por mês. É um limite para acompanhar: não bloqueia nada e não guarda dinheiro (para guardar, use uma caixinha). No app ele aparece como um pote que esvazia conforme você gasta.</p><input id="kMeta" inputmode="decimal" placeholder="R$ 0,00"></div>'+
     '<button class="btn" data-a="kSalvar">Salvar</button>'+
     (k&&!uso?'<button class="btn perigo" data-a="kApagar">Apagar categoria</button>':"")+
     '<button class="btn sec" data-a="mFechar">Cancelar</button>');
@@ -4102,9 +4272,9 @@ function modalBem(id,daFolha){
   abrirModal('<p class="q">'+(b?esc(b.nome):"Novo bem")+'</p>'+
     (b?'<p class="sub">Vale hoje <b>'+esc(brl(saldoConta(b)))+'</b></p>':'')+
     '<div class="campo"><label for="bNome">Nome</label><input id="bNome" maxlength="30" placeholder="Ex.: Carro, Casa, Celular" value="'+esc(b?b.nome:"")+'"></div>'+
-    (!b&&!daFolha?'<div class="campo"><label for="bValor">Quanto vale hoje?</label><p class="faint" style="margin-bottom:.4rem">Já está quitado? Então é só isso. Se ainda falta pagar, ligue a opção abaixo.</p><input id="bValor" inputmode="numeric" placeholder="R$ 0,00"></div>'+
+    (!b&&!daFolha?'<div class="campo"><label for="bValor">Quanto vale hoje?</label><p class="faint" style="margin-bottom:.4rem">Já está quitado? Então é só isso. Se ainda falta pagar, ligue a opção abaixo.</p><input id="bValor" inputmode="decimal" placeholder="R$ 0,00"></div>'+
       '<div class="linha-sw" style="margin-top:.9rem"><div><b>Ainda estou pagando</b><p class="faint">Financiamento, consórcio ou parcelas que faltam.</p></div><button class="sw" id="bDevo" data-a="bDevo" role="switch" aria-checked="false" aria-pressed="false" aria-label="Ainda estou pagando"></button></div>'+
-      '<div id="bDevoWrap" hidden><div class="campo"><label for="bFalta">Quanto ainda falta pagar?</label><p class="faint" style="margin-bottom:.4rem">Só o que você ainda deve hoje, sem os juros que ainda vão vir. Os juros você separa quando for pagando cada parcela.</p><input id="bFalta" inputmode="numeric" placeholder="R$ 0,00"></div>'+
+      '<div id="bDevoWrap" hidden><div class="campo"><label for="bFalta">Quanto ainda falta pagar?</label><p class="faint" style="margin-bottom:.4rem">Só o que você ainda deve hoje, sem os juros que ainda vão vir. Os juros você separa quando for pagando cada parcela.</p><input id="bFalta" inputmode="decimal" placeholder="R$ 0,00"></div>'+
       '<div class="campo"><label for="bParc">Em quantas parcelas?</label><input id="bParc" type="number" min="1" max="360" inputmode="numeric" value="12"></div>'+
       '<div class="campo"><label for="bProx">A próxima parcela vence em</label><input id="bProx" type="date" value="'+addMes(hojeISO(),1)+'"></div></div>':'')+
     '<span class="rot">Com o tempo, esse bem...</span><div class="opc" id="bVar"><button data-a="bVar" data-s="-1">Perde valor</button><button data-a="bVar" data-s="1">Ganha valor</button><button data-a="bVar" data-s="0">Mantém</button></div>'+
@@ -4152,7 +4322,7 @@ function modalAjusteBem(id){
   var b=conta(id); if(!b)return;
   BM={id:id};
   abrirModal('<p class="q">Atualizar o valor de '+esc(b.nome)+'</p><p class="sub">No livro vale <b>'+esc(brl(saldoConta(b)))+'</b>. Diga quanto vale hoje de verdade.</p>'+
-    '<div class="campo"><label for="ajValor">Vale hoje</label><input id="ajValor" class="dinheiro" inputmode="numeric" placeholder="R$ 0,00"></div>'+
+    '<div class="campo"><label for="ajValor">Vale hoje</label><input id="ajValor" class="dinheiro" inputmode="decimal" placeholder="R$ 0,00"></div>'+
     '<button class="btn" data-a="ajSalvar">Atualizar</button><button class="btn sec" data-a="mFechar">Cancelar</button>');
   ligarDinheiro($("#ajValor"),0);
 }
@@ -4168,7 +4338,7 @@ function modalVendaBem(id){
   if(!gs.length){toast("Crie uma conta com dinheiro para receber a venda");return}
   BM={id:id,gav:gs[0].id};
   abrirModal('<p class="q">Vendi '+esc(b.nome)+'</p><p class="sub">No livro vale <b>'+esc(brl(saldoConta(b)))+'</b>. Se vendeu por mais ou por menos, a diferença vira ganho ou perda.</p>'+
-    '<div class="campo"><label for="vdValor">Vendi por</label><input id="vdValor" class="dinheiro" inputmode="numeric" placeholder="R$ 0,00"></div>'+
+    '<div class="campo"><label for="vdValor">Vendi por</label><input id="vdValor" class="dinheiro" inputmode="decimal" placeholder="R$ 0,00"></div>'+
     '<span class="rot">O dinheiro entrou em</span><div class="chips" id="vdGavs">'+gs.map(function(c){return '<button class="chip" data-a="vdGav" data-id="'+c.id+'" aria-pressed="'+(c.id===BM.gav)+'">'+esc(c.nome)+'</button>'}).join("")+'</div>'+
     '<button class="btn" data-a="vdSalvar">Registrar venda</button><button class="btn sec" data-a="mFechar">Cancelar</button>');
   ligarDinheiro($("#vdValor"),0);
@@ -4188,7 +4358,7 @@ function modalPessoaNova(dir){
   PS={dir:dir,gav:ativos[0]?ativos[0].id:null,antes:false};
   abrirModal('<p class="q">'+(emp?"Emprestei dinheiro":"Peguei dinheiro emprestado")+'</p>'+
     '<div class="campo"><label for="pNome">'+(emp?"Para quem?":"De quem?")+'</label><input id="pNome" maxlength="30" placeholder="Nome da pessoa"></div>'+
-    '<div class="campo"><label for="pValor">Quanto?</label><input id="pValor" inputmode="numeric" placeholder="R$ 0,00"></div>'+
+    '<div class="campo"><label for="pValor">Quanto?</label><input id="pValor" inputmode="decimal" placeholder="R$ 0,00"></div>'+
     '<div class="campo"><label for="pData">'+(emp?"Combinou de pagar até quando?":"Até quando você precisa pagar?")+' (opcional)</label><input id="pData" type="date"></div>'+
     '<div id="pGavWrap"><span class="rot">'+(emp?"De qual conta saiu o dinheiro?":"Em qual conta o dinheiro entrou?")+'</span><div class="chips" id="pGavs">'+
       ativos.map(function(c){return '<button class="chip" data-a="pGav" data-id="'+c.id+'" aria-pressed="'+(PS.gav===c.id)+'">'+esc(c.nome)+'</button>'}).join("")+'</div></div>'+
@@ -4247,12 +4417,12 @@ function modalFixa(id){
   var meses=MES.map(function(m,i){return '<option value="'+i+'"'+(f&&f.mes===i?" selected":"")+'>'+m+'</option>'}).join("");
   abrirModal('<p class="q">'+(f?"Editar conta fixa":"Nova conta fixa")+'</p>'+
     '<div class="campo"><label for="xNome">Nome</label><input id="xNome" maxlength="30" placeholder="Ex.: Plano de celular" value="'+esc(f?f.nome:"")+'"></div>'+
-    '<div class="campo"><label for="xValor">Valor</label><input id="xValor" inputmode="numeric" placeholder="R$ 0,00"></div>'+
+    '<div class="campo"><label for="xValor">Valor</label><input id="xValor" inputmode="decimal" placeholder="R$ 0,00"></div>'+
     '<span class="rot">Repete</span><div class="opc" id="xFreqs"><button data-a="xFreq" data-f="mensal" aria-pressed="'+(X.freq==="mensal")+'">Todo mês</button><button data-a="xFreq" data-f="anual" aria-pressed="'+(X.freq==="anual")+'">Todo ano</button></div>'+
     '<div class="campo"><label for="xDia">Vence no dia</label><input id="xDia" type="number" min="1" max="31" inputmode="numeric" value="'+(f?f.dia:"")+'"></div>'+
     '<div class="campo" id="xMesWrap"><label for="xMes">No mês de</label><select id="xMes">'+meses+'</select></div>'+
-    '<div class="campo"><label for="xConta">Sai de qual conta?</label><select id="xConta">'+opt(cs,f&&f.contaId)+'</select></div>'+
-    '<div class="campo"><label for="xCat">Categoria do gasto</label><select id="xCat">'+opt(ks,f&&f.catId)+'</select></div>'+
+    escolha("xConta","Sai de qual conta?",cs,f&&f.contaId)+
+    escolha("xCat","Categoria do gasto",ks,f&&f.catId)+
     maisDetalhes('<div class="campo"><label for="xInicio">Começa em</label><input id="xInicio" type="date" value="'+esc(f?f.inicio:hojeISO())+'"></div>'+
     '<div class="campo"><label for="xVezes">Quantas vezes? (vazio = para sempre)</label><input id="xVezes" type="number" min="1" max="240" inputmode="numeric" value="'+(f&&f.vezes||"")+'"></div>',!!(f&&f.vezes),"Começa em e quantas vezes (opcional)")+
     '<button class="btn" data-a="xSalvar">Salvar</button>'+(f?'<button class="btn perigo" data-a="xApagar">Apagar conta fixa</button>':'')+
@@ -4300,7 +4470,7 @@ function telaPlanejar(){
       ferr("caixinhas","Caixinhas",res>0?"Guardado "+brl(res):"Guardar por objetivo")+
       ferr("fixas","Contas fixas",S.fixas.length?S.fixas.length+" · "+brl(mensal)+"/mês":"Assinaturas e planos")+
       ferr("simulador","Simulador","E se eu comprar...?")+'</div>'+
-    '<h2>Acerto de contas do mês</h2><div id="cardPagar">'+cartaoPagarInicio()+'</div>'+
+    '<h2>Acerto de contas do mês</h2><div id="cardPagar">'+cartaoPagarPlanejar()+'</div>'+
     '<h2>Agenda dos próximos dias'+(ag.length?ajuda('<span class="legenda-ag"><span class="lg k-divida">Dívida</span><span class="lg k-fixa">Conta fixa</span><span class="lg k-receber">A receber</span></span>A cor da faixa mostra o tipo. <b>Data pintada</b>: vence hoje ou já passou. <b>Data clara</b>: vence em até 3 dias.'):'')+'</h2><div class="card" id="cardAgenda" style="padding:.3rem 1rem">'+
     (ag.length?mostra.map(linhaAgenda).join(""):vazio("Nada para os próximos dias","Contas do cartão, contas fixas e cobranças aparecem aqui.",'<button class="btn peq sec" data-a="ir" data-v="fixas">Cadastrar uma conta fixa</button>'))+'</div>'+
     (ag.length>4?'<button class="link" data-a="agMais">'+(AG_TODAS?"Mostrar menos":"Ver todas ("+ag.length+")")+'</button>':'');
@@ -4391,7 +4561,7 @@ function modalCaixa(id,sobra,pre){
   CX={id:id||null,sobra:sobra||null,modo:x&&rendeAuto(x)?(x.modo||"fixa"):"nao",taxa:x&&x.taxa||0,ir:!(x&&x.ir===false)};
   abrirModal('<p class="q">'+(x?"Editar caixinha":"Nova caixinha")+'</p>'+
     '<div class="campo"><label for="cNome">Nome</label><input id="cNome" maxlength="30" placeholder="Ex.: Reserva, Viagem, IPVA" value="'+esc(x?x.nome:(pre.nome||""))+'"></div>'+
-    maisDetalhes('<div class="campo"><label for="cAlvo">Alvo (opcional)</label><input id="cAlvo" inputmode="numeric" placeholder="R$ 0,00"></div>'+
+    maisDetalhes('<div class="campo"><label for="cAlvo">Alvo (opcional)</label><input id="cAlvo" inputmode="decimal" placeholder="R$ 0,00"></div>'+
     '<div class="campo"><label for="cPrazo">Até quando? (opcional)</label><input id="cPrazo" type="date" value="'+esc(x&&x.prazo||pre.prazo||"")+'"></div>'+
     blocoComoRende("cx",CX,false),!!(x&&(x.alvo||x.prazo||x.taxa)||pre.alvo||pre.prazo),"Alvo, prazo e como rende (opcional)")+
     '<button class="btn" data-a="cxSalvar">Salvar</button>'+(x&&saldoCaixa(x.id)===0?'<button class="btn perigo" data-a="cxApagar">Apagar caixinha</button>':'')+
@@ -4434,7 +4604,7 @@ function modalConferirCaixa(id){
   var x=caixa(id); if(!x)return; CF={cx:id};
   abrirModal('<p class="q">Atualizar o valor de '+esc(x.nome)+'</p><p class="sub">Abra o app do banco e veja quanto tem nessa caixinha agora. Digite aqui o mesmo valor.</p>'+
     '<p class="faint">No Balancete: <b style="color:var(--ink)">'+esc(brl(saldoCaixa(id)))+'</b>'+(x.conferido?' · última conferência em '+esc(dataBR(x.conferido)):'')+'</p>'+
-    '<div class="campo"><label for="cxcValor">Valor no banco agora</label><input id="cxcValor" inputmode="numeric" placeholder="R$ 0,00"></div><div id="cxcRes" aria-live="polite"></div>'+
+    '<div class="campo"><label for="cxcValor">Valor no banco agora</label><input id="cxcValor" inputmode="decimal" placeholder="R$ 0,00"></div><div id="cxcRes" aria-live="polite"></div>'+
     '<button class="btn sec" data-a="mFechar">Cancelar</button>');
   ligarDinheiro($("#cxcValor"),0); $("#cxcValor").addEventListener("input",pintarConferirCaixa);
 }
@@ -4492,7 +4662,7 @@ function modalMov(id,modo){
   abrirModal('<p class="q">'+(modo==="guardar"?"Guardar em ":"Tirar de ")+esc(x.nome)+'</p>'+
     '<p class="sub">'+(modo==="guardar"?"Para usar agora: <b>"+esc(brl(livreAgora()))+"</b>":"Na caixinha: <b>"+esc(brl(saldoCaixa(id)))+"</b>")+'</p>'+
     '<div id="mvBloco">'+bloco+'</div>'+
-    '<div class="campo"><label for="mvValor">Quanto?</label><input id="mvValor" class="dinheiro" inputmode="numeric" placeholder="R$ 0,00"></div>'+
+    '<div class="campo"><label for="mvValor">Quanto?</label><input id="mvValor" class="dinheiro" inputmode="decimal" placeholder="R$ 0,00"></div>'+
     '<button class="btn" data-a="mvSalvar">'+(modo==="guardar"?"Guardar":"Tirar")+'</button><button class="btn sec" data-a="mFechar">Cancelar</button>');
   ligarDinheiro($("#mvValor"),0);
 }
@@ -4518,7 +4688,7 @@ function modalTirarRapido(){
   abrirModal('<p class="q">Tirar de uma caixinha</p><p class="sub">O dinheiro sai da caixinha e volta para o que você pode usar.</p>'+
     '<span class="rot">De qual caixinha?</span><div class="chips" id="tqChips">'+cx.map(function(x,i){return '<button class="chip" data-a="tirarEsc" data-id="'+x.id+'" aria-pressed="'+(i===0)+'">'+esc(x.nome)+' · '+esc(brl(saldoCaixa(x.id)))+'</button>'}).join("")+'</div>'+
     '<div id="mvBloco">'+bloco+'</div>'+
-    '<div class="campo"><label for="mvValor">Quanto?</label><input id="mvValor" class="dinheiro" inputmode="numeric" placeholder="R$ 0,00"></div>'+
+    '<div class="campo"><label for="mvValor">Quanto?</label><input id="mvValor" class="dinheiro" inputmode="decimal" placeholder="R$ 0,00"></div>'+
     '<button class="btn" data-a="mvSalvar">Tirar</button><button class="btn sec" data-a="mFechar">Cancelar</button>');
   ligarDinheiro($("#mvValor"),0);
 }
@@ -4526,8 +4696,8 @@ function modalMeta(){
   var ks=S.categorias.filter(function(k){return k.tipo==="despesa"&&!(k.meta>0)});
   if(!ks.length){toast("Todas as categorias de gasto já têm meta. Toque num pote para mudar.");return}
   abrirModal('<p class="q">Nova meta do mês</p>'+
-    '<div class="campo"><label for="meCat">Categoria</label><select id="meCat">'+ks.map(function(k){return '<option value="'+k.id+'">'+esc(k.nome)+'</option>'}).join("")+'</select></div>'+
-    '<div class="campo"><label for="meValor">Quanto quer gastar por mês?</label><input id="meValor" class="dinheiro" inputmode="numeric" placeholder="R$ 0,00"></div>'+
+    escolha("meCat","Categoria",ks,null)+
+    '<div class="campo"><label for="meValor">Quanto quer gastar por mês?</label><input id="meValor" class="dinheiro" inputmode="decimal" placeholder="R$ 0,00"></div>'+
     '<button class="btn" data-a="metaSalvar">Salvar meta</button><button class="btn sec" data-a="mFechar">Cancelar</button>');
   ligarDinheiro($("#meValor"),0);
 }
@@ -4540,12 +4710,12 @@ function telaSimulador(){
   var auto=!(S.config.renda>0);
   return capa("E se eu comprar...?","Simulador","planejar")+
     '<p class="sub lead">Veja o peso de uma compra nos próximos 12 meses antes de decidir. Nada é salvo.</p>'+
-    '<label class="rot" for="sValor">Quanto custa?</label><input id="sValor" class="dinheiro s" inputmode="numeric" placeholder="R$ 0,00">'+
+    '<label class="rot" for="sValor">Quanto custa?</label><input id="sValor" class="dinheiro s" inputmode="decimal" placeholder="R$ 0,00">'+
     '<span class="rot">Vai pagar com</span><div class="chips" id="sContas">'+cs.map(function(c){return '<button class="chip" data-a="sConta" data-id="'+c.id+'" aria-pressed="'+(SIM.contaId===c.id)+'">'+esc(c.nome)+(c.tipo==="passivo"?" (dívida)":c.inv?" (resgatar)":"")+'</button>'}).join("")+'</div>'+
     '<span class="rot">Essa compra é...</span><div class="chips" id="sTipo"><button class="chip" data-a="sTipo" data-b="0" aria-pressed="'+(!SIM.bem)+'">Um gasto (consumo)</button><button class="chip" data-a="sTipo" data-b="1" aria-pressed="'+(!!SIM.bem)+'">Um bem que guarda valor</button></div>'+
     '<div id="sParc"><span class="rot">Em quantas vezes?</span><div class="passo"><button data-a="sN" data-n="-1" aria-label="Menos uma parcela">−</button><b id="sNtxt"></b><button data-a="sN" data-n="1" aria-label="Mais uma parcela">+</button></div>'+
-      '<div class="campo"><label for="sTotal">Total pago no final, se tiver juros (opcional)</label><input id="sTotal" inputmode="numeric" placeholder="R$ 0,00"></div></div>'+
-    maisDetalhes('<div class="campo"><label for="sRenda">Minha renda por mês'+(auto?' (se vazio, uso a média do que entrou)':'')+'</label><input id="sRenda" inputmode="numeric" placeholder="R$ 0,00"></div>',!(rendaMedia()>0),"Minha renda por mês (opcional)")+
+      '<div class="campo"><label for="sTotal">Total pago no final, se tiver juros (opcional)</label><input id="sTotal" inputmode="decimal" placeholder="R$ 0,00"></div></div>'+
+    maisDetalhes('<div class="campo"><label for="sRenda">Minha renda por mês'+(auto?' (se vazio, uso a média do que entrou)':'')+'</label><input id="sRenda" inputmode="decimal" placeholder="R$ 0,00"></div>',!(rendaMedia()>0),"Minha renda por mês (opcional)")+
     '<div id="sRes" style="margin-top:1rem"></div>';
 }
 function iniciarSim(){
@@ -4659,7 +4829,7 @@ function desenharOnb(){
     h='<div class="fino"><div style="width:66%"></div></div><h1>Onde está seu dinheiro hoje?</h1>'+
             '<p class="sub">Diga quanto você tem em cada lugar. Se não tiver, deixe vazio.</p>'+
       [["oCarteira","Dinheiro vivo (só cédulas, sem moedas)"],["oBanco","Conta no banco"],["oPoup","Você tem dinheiro guardado ou investido? (poupança, CDB, Tesouro...)"]].map(function(x){
-        return '<div class="campo"><label for="'+x[0]+'">'+x[1]+'</label><input id="'+x[0]+'" inputmode="numeric" placeholder="R$ 0,00"></div>'}).join("")+
+        return '<div class="campo"><label for="'+x[0]+'">'+x[1]+'</label><input id="'+x[0]+'" inputmode="decimal" placeholder="R$ 0,00"></div>'}).join("")+
       '<span class="rot">Como ele rende? (opcional, veja no app do banco)</span><div class="chips" id="oModos"><button class="chip" data-a="oModoRend" data-v="cdi" aria-pressed="'+((O.modoRend||"cdi")==="cdi")+'">% do CDI</button><button class="chip" data-a="oModoRend" data-v="fixa" aria-pressed="'+(O.modoRend==="fixa")+'">% ao ano</button></div>'+
       '<div class="campo"><label for="oTaxa">Quanto? (ex.: 115 para "115% do CDI", ou 12 para "12% ao ano")</label><input id="oTaxa" inputmode="decimal" placeholder="Ex.: 100"></div>'+
       '<button class="btn" data-a="oProx">Continuar</button>';
@@ -4671,7 +4841,7 @@ function desenharOnb(){
         '<div class="campo"><label for="oNome">Nome do cartão</label><input id="oNome" maxlength="30" placeholder="Ex.: Nubank"></div>'+
         '<div class="campo"><label for="oFecha">Dia que a fatura fecha</label><input id="oFecha" type="number" min="1" max="31" inputmode="numeric"></div>'+
         '<div class="campo"><label for="oVence">Dia que a fatura vence</label><input id="oVence" type="number" min="1" max="31" inputmode="numeric"></div>'+
-        '<div class="campo"><label for="oLimite">Limite</label><input id="oLimite" inputmode="numeric" placeholder="R$ 0,00"></div>'+
+        '<div class="campo"><label for="oLimite">Limite</label><input id="oLimite" inputmode="decimal" placeholder="R$ 0,00"></div>'+
         '<div class="campo"><label>O que você já deve nele</label>'+
           '<p class="faint" style="margin-bottom:.5rem">Separe por vencimento. Ex.: R$ 190 que vence em 05/11 e R$ 15 que vence em 05/12. Sem dívida? Deixe vazio.</p>'+
           '<div id="oFaturas"></div><button class="btn sec peq" data-a="fAdd" data-c="#oFaturas">+ Outro vencimento</button></div></div>'+
@@ -4716,7 +4886,7 @@ function aplicarConfig(){
 var ACOES={
   ir:function(d){ir(d.v)},
   ajuda:function(d,b){var t=b.nextElementSibling; if(!t||!t.classList.contains("ajuda-t"))return; var ab=t.hidden; t.hidden=!ab; b.setAttribute("aria-expanded",String(ab))},
-  acertoIr:function(){ir("planejar");abrirAcerto()},
+  acertoIr:function(){irPara({v:"planejar",foco:"#cardPagar"})},
   oModoRend:function(d){O.modoRend=d.v; document.querySelectorAll("#oModos button").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.v===d.v))})},
   rendModo:function(d){var st=d.p==="iv"?IV:CX; if(!st)return; var i=$("#"+d.p+"Taxa"); if(i)st.taxa=lerTaxa(i.value,300); st.modo=d.v; if(d.v==="poup")st.ir=false; else if(d.v!=="poup"&&st.ir===false&&st.modoAnt==="poup")st.ir=true; st.modoAnt=d.v;
     var r=$("#"+d.p+"Rende"); if(r)r.innerHTML=camposRende(d.p,st); document.querySelectorAll("#"+d.p+"Modos button").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.v===d.v))})},
@@ -4745,7 +4915,14 @@ var ACOES={
   verMesAMes:function(){lsSet(KEY+":rec:mesAMes","1");ir("graficos");setTimeout(function(){var m=$("#cardMM"); if(m&&m.scrollIntoView)m.scrollIntoView({block:"center"})},50)},
   aplicacao:function(d){modalAplicacao(d.id)},
   invApagar:function(d){G={id:d.id}; ACOES.gApagar()},
-  novo:function(){fabMenu()},
+  novo:function(d,b){
+    if(b&&b.classList&&b.classList.contains("nav-anotar")){
+      if(ANOT_LONGO){ANOT_LONGO=false;return}
+      if($("#fabMenu").classList.contains("on")){fabMenu(false);return}
+      novaFolha({tipo:"saida"}); return;
+    }
+    fabMenu();
+  },
   fabFecha:function(){fabMenu(false)},
   novoT:function(d){
     if(FOLHA_ABERTA&&F){ fabMenu(false); if(F.tipo!==d.t){F.tipo=d.t;F.qE="";F.qD="";F.tE=false;F.tD=false;ajustarFolha();desenharFolha()} return }
@@ -4772,7 +4949,7 @@ var ACOES={
   },
   cedM:function(d){var v=+d.v; G.ced[v]=Math.max(0,Math.min(999,(G.ced[v]||0)+(+d.n))); var b=$("#ced"+v); if(b)b.textContent=G.ced[v]; var t=$("#cedTotal"); if(t)t.textContent=brl(totalCed(G.ced))},
   cedSalvar:salvarCarteira,
-  fArred:function(d){F.cent=+d.v; var i=$("#fValor"); if(i){i.dataset.cent=F.cent; i.value=brl(F.cent)} previa()},
+  fArred:function(d){F.cent=+d.v; var i=$("#fValor"); if(i){i.dataset.cent=F.cent; i.value=brl(F.cent); i.dispatchEvent(new Event("input"))} previa()},
   editar:function(d){
     var l=null; S.lancamentos.forEach(function(x){if(x.id===d.id)l=x}); if(!l)return;
     if(l.tipo==="ajuste"){
@@ -4791,7 +4968,7 @@ var ACOES={
     if(AC_ABERTO){fecharAcerto(); AC_VOLTA=true}
     var banco=melhorConta();   /* paga, de início, pela conta com mais dinheiro livre (a pessoa pode trocar) */
     if(!banco){toast("Crie uma conta com dinheiro para pagar");return}
-    novaFolha({tipo:"transferencia",contaId:banco.id,destinoId:c.id,cent:+d.valor,desc:"Pagamento "+c.nome});
+    novaFolha({tipo:"transferencia",contaId:banco.id,destinoId:c.id,cent:+d.valor,desc:"Pagamento "+c.nome,pagar:true});
   },
   agMais:function(){AG_TODAS=!AG_TODAS; desenhar()},
   relInd:function(d){REL_ID=d.id; if(VIEW!=="relatorio")REL_VOLTA=VIEW==="relatorios"?"relatorios":"graficos"; ir("relatorio")},
@@ -4839,6 +5016,10 @@ var ACOES={
   fechouOk:function(d){lsSet(KEY+":fechou:"+d.ym,"1"); var c=$("#cardFechou"); if(c)c.remove()},
   dicaOk:function(){lsSet(KEY+":dicaInstalar","1"); var c=$("#dicaInst"); if(c)c.remove()},
   instalar:function(){var p=PEDIDO_INSTALAR; if(!p)return; PEDIDO_INSTALAR=null; p.prompt(); p.userChoice.then(function(r){if(r&&r.outcome==="accepted"){lsSet(KEY+":dicaInstalar","1")} desenhar()}).catch(function(){})},
+  escolha:function(d,b){
+    var h=document.getElementById(d.campo); if(!h)return; h.value=d.v;
+    var g=b.closest(".esc-chips"); if(g)g.querySelectorAll(".chip").forEach(function(c){var on=c===b; c.setAttribute("aria-checked",String(on)); c.setAttribute("aria-pressed",String(on))});
+  },
   dinAba:function(d){if(d.v==="investir"){ir("investir");return} DIN_ABA=d.v; if(VIEW!=="contas")ir("contas"); else desenhar()},
   gaveta:function(d){modalGaveta(d.id||null,d.t||null)},
   frase:function(){
@@ -4911,7 +5092,7 @@ var ACOES={
   mvConta:function(d){MV.conta=d.id; document.querySelectorAll("#mvContas .chip").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.id===d.id))})},
   pagMes:function(d){
     PAG_OFF=Math.max(-2,Math.min(11,PAG_OFF+(+d.n)));
-    var c=$("#cardPagar"); if(c)c.innerHTML=cartaoPagarInicio();
+    var c=$("#cardPagar"); if(c)c.innerHTML=VIEW==="planejar"?cartaoPagarPlanejar():cartaoPagarInicio();
     if(AC_ABERTO)abrirAcerto();
   },
   metaSalvar:function(){
@@ -5028,7 +5209,8 @@ var ACOES={
   },
   /* folha */
   fFechar:fecharFolha,
-  fTipo:function(d){F.tipo=d.t;F.qE="";F.qD="";F.tE=false;F.tD=false;ajustarFolha();desenharFolha()},
+  fTipo:function(d){if(F.tipo===d.t)return; F.tipo=d.t;F.qE="";F.qD="";F.tE=false;F.tD=false;ajustarFolha();desenharFolha();var v=$("#fValor");if(v)try{v.focus({preventScroll:true})}catch(e){}},
+  fArrasta:function(){fecharFolhaComCuidado()},
   fConta:function(d){F.contaId=d.id;F.qE="";F.qD="";F.tE=false;F.tD=false;F.tE=false;F.tD=false;ajustarFolha();desenharFolha()},
   fDestino:function(d){F.destinoId=d.id;F.qE="";F.qD="";F.tE=false;F.tD=false;desenharFolha()},
   fCat:function(d){F.catId=d.id;F.qE="";F.qD="";F.tE=false;F.tD=false;desenharFolha()},
@@ -5089,6 +5271,14 @@ document.addEventListener("keydown",function(e){
     if(alvo){e.preventDefault();alvo.click()}
   }
 });
+(function(){
+  var y0=null, f=null;
+  document.addEventListener("touchstart",function(e){var a=e.target.closest&&e.target.closest(".f-alca,.folha .capa.f"); if(!a||!FOLHA_ABERTA)return; y0=e.touches[0].clientY; f=$("#folha")},{passive:true});
+  document.addEventListener("touchmove",function(e){if(y0==null||!f)return; var dy=Math.max(0,e.touches[0].clientY-y0); f.style.transform="translateY("+dy+"px)"},{passive:true});
+  document.addEventListener("touchend",function(e){if(y0==null||!f)return; var dy=(e.changedTouches[0].clientY-y0); f.style.transform=""; y0=null; if(dy>90)fecharFolhaComCuidado()});
+})();
+/* teclado aberto: a barra do Salvar sobe junto (a área visível encolhe) */
+if(window.visualViewport){var ajustaTeclado=function(){var vv=window.visualViewport, t=Math.max(0,window.innerHeight-vv.height-vv.offsetTop); document.documentElement.style.setProperty("--teclado",t+"px")}; window.visualViewport.addEventListener("resize",ajustaTeclado); window.visualViewport.addEventListener("scroll",ajustaTeclado)}
 document.addEventListener("click",function(e){var p=e.target.closest&&e.target.closest(".pular"); if(p){e.preventDefault(); var t=$("#tela"); if(t)t.focus()}});
 
 /* ---------- início ---------- */

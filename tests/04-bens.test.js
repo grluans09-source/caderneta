@@ -18,7 +18,7 @@ function click(sel){let el=typeof sel==="string"?$(sel):sel;
   if(!el)throw new Error("sem elemento "+sel);el.click()}
 function abreFolha(t){abreFolha();click('#fabMenu [data-a="novoT"][data-t="'+(t||"saida")+'"]')}
 function abreFolha(t){click('[data-a="novo"]');click('#fabMenu [data-a="novoT"][data-t="'+(t||"saida")+'"]')}
-function digita(sel,txt){const el=$(sel);el.value=txt;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
+function digita(sel,txt){const el=$(sel);/* D2 do redesign: os testes antigos digitam centavos ("2500" = R$ 25,00); no campo de dinheiro isso vira "25,00" */ if(el&&el.dataset&&el.dataset.cent!==undefined&&/^\d+$/.test(String(txt)))txt=Math.floor(txt/100)+","+String(txt%100).padStart(2,"0");el.value=txt;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
 const S=()=>T.S();
 d.documentElement.classList.add("calmo");
 function nav(v){
@@ -79,7 +79,7 @@ eq("TV vale 2.000 e o cartão deve 2.000",[T.saldoConta(tv),T.saldoConta(S().con
 eq("parcelas da TV entram em contas a pagar",T.aPagar().filter(g=>g.conta.id==="c3").length,4);
 tudoFecha("após comprar bem");
 nav("inicio");const botao=[...d.querySelectorAll('[data-a="editar"]')].find(b=>b.dataset.id===lt.id);click(botao);
-eq("edição reabre como 'Comprei um bem' com 4 vezes",[/Comprei um bem/.test($("#folhaCorpo .capa h1").textContent),$("#fNtxt").textContent],[true,"4 vezes"]);
+eq("edição reabre como 'Comprei um bem' com 4 vezes",[/Comprei um bem/.test((($('#folha .seg[aria-checked="true"]')||{}).textContent||$("#folhaCorpo .capa h1").textContent)),$("#fNtxt").textContent],[true,"4 vezes"]);
 click('[data-a="fFechar"]');
 
 // ---- atualizar o valor (TV vale menos) ----
@@ -147,7 +147,7 @@ eq("padrão é gasto",/O que é seu cai/.test($("#sRes").textContent),true);
 click('[data-a="sTipo"][data-b="1"]');
 eq("como bem, o é meu não cai",/não cai hoje/.test($("#sRes").textContent),true);
 click('[data-a="sComprar"]');
-eq("Vou comprar abre como 'Comprei um bem'",/Comprei um bem/.test($("#folhaCorpo .capa h1").textContent),true);
+eq("Vou comprar abre como 'Comprei um bem'",/Comprei um bem/.test((($('#folha .seg[aria-checked="true"]')||{}).textContent||$("#folhaCorpo .capa h1").textContent)),true);
 click('[data-a="fFechar"]');
 
 // ---- backup e dados ruins ----

@@ -22,7 +22,7 @@ const w=dom.window,d=w.document,T=w.__T,$=s=>d.querySelector(s),S=()=>T.S();
 d.documentElement.classList.add("calmo");
 let ok=true;function eq(n,a,b){const p=JSON.stringify(a)===JSON.stringify(b);if(!p)ok=false;console.log(p?"OK  ":"FAIL",n,p?"":JSON.stringify(a)+" != "+JSON.stringify(b))}
 function click(sel){const el=typeof sel==="string"?$(sel):sel;if(!el)throw new Error("sem elemento "+sel);el.click()}
-function digita(sel,txt){const el=$(sel);el.value=txt;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
+function digita(sel,txt){const el=$(sel);/* D2 do redesign: os testes antigos digitam centavos ("2500" = R$ 25,00); no campo de dinheiro isso vira "25,00" */ if(el&&el.dataset&&el.dataset.cent!==undefined&&/^\d+$/.test(String(txt)))txt=Math.floor(txt/100)+","+String(txt%100).padStart(2,"0");el.value=txt;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
 const fechaPartidas=()=>S().lancamentos.every(l=>{const p=T.partidas(l);return p.length===2&&p[0].lado==="D"&&p[1].lado==="C"});
 
 // ======== 3) conferir o saldo com o banco ========
@@ -39,7 +39,7 @@ click('[data-a="gaveta"][data-id="b1"]');click('[data-a="conferir"][data-id="b1"
 digita("#cfSaldo","465000");
 eq("saldo menor: mostra quanto falta e as duas saídas",[/Faltam R\$ 50,00 no banco/.test($("#cfRes").textContent),!!$('[data-a="cfAnotar"]'),!!$('[data-a="cfCorrigir"]')],[true,true,true]);
 click('[data-a="cfAnotar"]');
-eq("'Anotar o gasto que faltou' abre a folha de gasto já com a conta e o valor",[$("#folha").classList.contains("on"),$("#folhaCorpo .capa h1").textContent,$("#fValor").value],[true,"Gastei","R$ 50,00"]);
+eq("'Anotar o gasto que faltou' abre a folha de gasto já com a conta e o valor",[$("#folha").classList.contains("on"),(($('#folha .seg[aria-checked="true"]')||{}).textContent||$("#folhaCorpo .capa h1").textContent),$("#fValor").value],[true,"Gastei","R$ 50,00"]);
 click('[data-a="fFechar"]');
 click('[data-a="gaveta"][data-id="b1"]');click('[data-a="conferir"][data-id="b1"]');
 digita("#cfSaldo","465000");

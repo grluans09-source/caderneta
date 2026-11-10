@@ -16,7 +16,7 @@ function abre(sd){return new JSDOM(html,{runScripts:"dangerously",url:"http://lo
 const w=abre(seed), d=w.document, T=w.__T, $=s=>d.querySelector(s), S=()=>T.S();
 d.documentElement.classList.add("calmo");
 function click(s){const el=typeof s==="string"?$(s):s;if(!el)throw new Error("sem "+s);el.click()}
-function digita(s,t){const el=$(s);el.value=t;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
+function digita(s,t){const el=$(s);/* D2 do redesign: os testes antigos digitam centavos ("2500" = R$ 25,00); no campo de dinheiro isso vira "25,00" */ if(el&&el.dataset&&el.dataset.cent!==undefined&&/^\d+$/.test(String(t)))t=Math.floor(t/100)+","+String(t%100).padStart(2,"0");el.value=t;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
 const espera=ms=>new Promise(r=>setTimeout(r,ms));
 (async()=>{
 // ---- dias úteis e feriados (sem internet) ----
@@ -55,7 +55,7 @@ eq("a Poupança convertida rende pela regra oficial da poupança (1.24.0)",/Poup
 eq("a caixinha que rende aparece com a taxa",/Reserva/.test($("#tela").textContent)&&/10% ao ano/.test($("#tela").textContent),true);
 // aplicar: transferência do banco ligado para a aplicação
 click('#tela [data-a="aplicacao"][data-id="cdb"]');click('[data-a="invAplicar"][data-id="cdb"]');
-eq("Aplicar abre a folha de transferência do Banco para o CDB",[$("#folha").classList.contains("on"),$("#folhaCorpo .capa h1").textContent],[true,"Transferi entre contas"]);
+eq("Aplicar abre a folha de transferência do Banco para o CDB",[$("#folha").classList.contains("on"),(($('#folha .seg[aria-checked="true"]')||{}).textContent||$("#folhaCorpo .capa h1").textContent)],[true,"Transferi"]);
 click('[data-a="fFechar"]');
 // resgatar mais do que tem: trava
 const saldoCdb=T.saldoConta(cdb);
@@ -86,7 +86,7 @@ const w2=abre(null), d2=w2.document; const $2=s=>d2.querySelector(s);
 $2('[data-a="oProx"]').click();
 const lab=$2('label[for="oPoup"]').textContent;
 const dg=(s,t)=>{const el=$2(s);el.value=t;el.dispatchEvent(new w2.Event("input",{bubbles:true}))};
-dg("#oPoup","500000"); $2('[data-a="oModoRend"][data-v="fixa"]').click(); dg("#oTaxa","10,5");
+dg("#oPoup","5000");   /* D2: em reais */ $2('[data-a="oModoRend"][data-v="fixa"]').click(); dg("#oTaxa","10,5");
 $2('[data-a="oProx"]').click(); $2('[data-a="oFim"]')&&$2('[data-a="oFim"]').click();
 const inv=w2.__T.S().contas.find(c=>c.inv);
 eq("Primeiros passos pergunta 'Você tem dinheiro guardado ou investido?' e cria a aplicação com a taxa",[/guardado ou investido/.test(lab),!!inv&&inv.inicial,inv&&inv.inv.taxa,inv&&inv.inv.modo],[true,500000,10.5,"fixa"]);

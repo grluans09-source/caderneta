@@ -23,7 +23,7 @@ function click(sel){let el=typeof sel==="string"?$(sel):sel;
   if(!el)throw new Error("sem elemento "+sel);el.click()}
 function abreFolha(t){abreFolha();click('#fabMenu [data-a="novoT"][data-t="'+(t||"saida")+'"]')}
 function abreFolha(t){click('[data-a="novo"]');click('#fabMenu [data-a="novoT"][data-t="'+(t||"saida")+'"]')}
-function digita(sel,txt){const el=$(sel);el.value=txt;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
+function digita(sel,txt){const el=$(sel);/* D2 do redesign: os testes antigos digitam centavos ("2500" = R$ 25,00); no campo de dinheiro isso vira "25,00" */ if(el&&el.dataset&&el.dataset.cent!==undefined&&/^\d+$/.test(String(txt)))txt=Math.floor(txt/100)+","+String(txt%100).padStart(2,"0");el.value=txt;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
 const S=()=>T.S();
 d.documentElement.classList.add("calmo");
 function nav(v){
@@ -43,9 +43,9 @@ eq("menu: início, dinheiro, planejar, saúde (Investir em Dinheiro; Ajustes e P
 nav("caixinhas");eq("caixinhas marca Planejar",$("nav [aria-current]").dataset.v,"planejar");
 nav("relatorios");eq("os relatórios ficam dentro da aba Saúde (a barra marca Saúde)",$("nav [aria-current]").dataset.v,"graficos");
 nav("inicio");
-abreFolha();digita("#fValor","4500");eq("campo de valor mostra R$",$("#fValor").value,"R$ 45,00");
-eq("Salvar não é fixo (sem .acoes sticky)",w.getComputedStyle($(".acoes")).position!=="sticky"&&w.getComputedStyle($(".acoes")).position!=="fixed",true);
-eq("ordem: Salvar vem depois da prévia",($("#fPrev").compareDocumentPosition($(".acoes"))&4)>0,true);
+abreFolha();digita("#fValor","4500");$("#fValor").dispatchEvent(new w.Event("blur"));eq("campo de valor mostra R$ (ao sair do campo)",$("#fValor").value,"R$ 45,00");
+eq("Salvar fica numa barra presa embaixo da folha, acima do teclado (redesign R-03)",w.getComputedStyle($(".f-barra")).position,"sticky");
+eq("ordem: a barra do Salvar vem depois da prévia",($("#fPrev").compareDocumentPosition($(".f-barra"))&4)>0,true);
 click('[data-a="fFechar"]');
 
 // ---- frase ----
@@ -203,8 +203,9 @@ eq("à vista fala das caixinhas",/caixinhas/.test($("#sRes").textContent),true);
 
 // ---- gráfico com projeção (agora na aba Gráficos) ----
 click('nav [data-v="graficos"]');
-eq("gráfico fala de previsão",/previsão/.test($("#tela").textContent),true);
-eq("gráfico tem 'hoje' e 'em 6 meses'",/hoje:/.test($("#tela").innerHTML)&&/em 6 meses:/.test($("#tela").innerHTML),true);
+/* D3 do redesign: a previsão de 6 meses só aparece com 2 meses completos de anotações; antes, "Precisamos de mais dados" */
+eq("gráfico: previsão só com 2 meses completos de anotações (D3); antes disso, \"Precisamos de mais dados\"",w.__T.mesesCompletos()>=2?/previsão/.test($("#tela").textContent):/Precisamos de mais dados/.test($("#tela").textContent),true);
+eq("gráfico tem 'hoje', e 'em 6 meses' só quando há previsão",/hoje:/.test($("#tela").innerHTML)&&(w.__T.mesesCompletos()>=2)===/em 6 meses:/.test($("#tela").innerHTML),true);
 
 // ---- backup preserva tudo ----
 const h2=T.higienizar(JSON.parse(JSON.stringify(S())));

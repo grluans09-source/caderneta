@@ -17,7 +17,7 @@
 | B | Correções rápidas (avisos, abertura, panorama, diálogos, contraste, textos, formulário) | **Concluída** (9 nov 2026), publicada na **1.25.0-beta.1** |
 | C | Fundação: cores (tokens), letras Fraunces + Atkinson locais, componentes base | **Concluída** (9 nov 2026), versão **1.26.0-beta.1** |
 | D | Estrutura do celular: barra Início · Dinheiro · [Anotar] · Planejar · Saúde; Perguntar e Ajustes no cabeçalho | **Concluída** (9 nov 2026), versão **1.27.0-beta.1** |
-| E | Componentes e telas do celular (folha de anotar, valor, Planejar, metas, gráficos, 320 px) | A fazer |
+| E | Componentes e telas do celular (folha de anotar, valor, Planejar, metas, gráficos, 320 px) | **Concluída** (9 nov 2026), versão **1.28.0-beta.1** |
 | F | Movimento (animações MM e MD) | A fazer |
 | G | Layout do computador (barra lateral, colunas) | A fazer |
 | H | Mouse e teclado no computador (atalhos, hover, tabela) | A fazer |
@@ -73,6 +73,19 @@ No celular as telas que rolam aparecem inteiras (até 4.200 px); no computador, 
 - **Testes**: 38 arquivos, **1019 verificações, todos verdes**. Fotos: `docs/redesign/capturas/fase-d/` (inclui `26-inicio-primeira-tela`).
 - **Não verificado:** celular de verdade; leitor de tela de verdade.
 
+## Fase E: o que foi feito
+- **D2 / R-07**: `lerValor()` tolerante ("50" = R$ 50,00; "50,5"; "1.234,56"), teclado com vírgula em todos os campos de dinheiro, valor por extenso a partir de R$ 1.000. Os valores continuam em centavos.
+- **R-03 + R-01**: Anotar → folha já no Gastei com o valor em foco (segurar = 4 tipos); seletor de tipo no topo; contas em carrossel, categorias em grade de 3; Salvar numa barra presa embaixo, acima do teclado; erro no próprio campo; alça para fechar. Tudo da folha preservado (busca, favoritas, nova categoria, novo bem, datas, parcelas, juros, anotação, caixinha, resumo, arredondamento do dinheiro vivo).
+- **MF-20**: um retorno só ao salvar (aviso com Desfazer + linha em destaque); sem carimbo.
+- **MF-09**: pagar abre "Pagar <conta>".
+- **R-09**: acerto de contas em linha no Planejar, com Pagar / Paguei / Pular este mês e as pagas recolhidas.
+- **R-11**: conta e categoria por botões em Contas fixas e Metas.
+- **R-15 / D3**: previsão só com 2 meses completos; barras com raio 3, título ao tocar, "sem anotações", legenda maior; "vezes" no plural certo.
+- **R-16**: abaixo de 360 px, ferramentas em 1 coluna; nenhum valor em R$ quebra no meio da linha (`protegerValores()`).
+- **Aceite**: no Chrome, com o teclado aberto (390 × 520), tocar em Anotar mostra o Salvar à vista (y = 510 de 520), com o foco no valor e a conta e a categoria escolhidas: **Anotar → digitar → Salvar = 2 toques**. 320 px: 78 combinações sem rolagem lateral e sem valor quebrado. Golden master igual, menos "vez(es)" → "vezes" (aprovado, MF-15).
+- **Testes**: 39 arquivos, **1042 verificações, todos verdes** (novo: `tests/39-redesign-fase-e.test.js`). Fotos: `docs/redesign/capturas/fase-e/`.
+- **Não verificado:** celular de verdade (o teclado real do Android e do iPhone).
+
 ## Itens dos relatórios
 
 Situação: **A fazer** · **Feito** · **Parcial** · **Descartado** (com motivo). A coluna "Fase" diz quando cada item entra.
@@ -85,43 +98,43 @@ Situação: **A fazer** · **Feito** · **Parcial** · **Descartado** (com motiv
 | MF-03 | P1 | Abertura obrigatória de 4,1 s a cada carregamento | B | Feito (fase B) |
 | MF-04 | P1 | A primeira dobra do Início não mostra o que exige ação | D | Feito (fase D) |
 | MF-05 | P1 | Painel de Saúde declara "saudável" sem dados | B (D1) | Feito (fase B) |
-| MF-06 | P2 | Campo de valor interpreta dígitos como centavos sem aviso | E (D2) | A fazer |
+| MF-06 | P2 | Campo de valor interpreta dígitos como centavos sem aviso | E (D2) | Feito (fase E, D2) |
 | MF-07 | P2 | Botão "?" colado ao título é lido como pontuação | B | Feito (fase B) |
-| MF-08 | P2 | Formulário de anotação: Salvar fora da tela e foco não automático | E | A fazer |
-| MF-09 | P2 | Padrões de seleção inconsistentes entre formulários | E | A fazer |
+| MF-08 | P2 | Formulário de anotação: Salvar fora da tela e foco não automático | E | Feito (fase E) |
+| MF-09 | P2 | Padrões de seleção inconsistentes entre formulários | E | Feito (fase E) |
 | MF-10 | P2 | Diálogos não gerenciam foco; anúncio de tela inteira | B | Feito (fase B) |
 | MF-11 | P2 | Contraste insuficiente em bordas de campos e controles | B | Feito (fase B) |
-| MF-12 | P2 | Repetição de valores no Início e no Planejar | D/E | Parcial (D: Início; Planejar na E) |
+| MF-12 | P2 | Repetição de valores no Início e no Planejar | D/E | Feito (D: Início; E: Planejar) |
 | MF-13 | P2 | Dourado usado para tudo dilui o sinal | C/E | Feito (fase C: latão só para marca e valor; ação em tinta) |
 | MF-14 | P2 | Tipografia serifada depende do sistema | C | Feito (fase C) |
-| MF-15 | P2 | Gráficos e projeções com pouca base de dados | E (D3) | A fazer |
+| MF-15 | P2 | Gráficos e projeções com pouca base de dados | E (D3) | Feito (fase E, D3) |
 | MF-16 | P2 | Meta estourada aparece como pote vazio | B | Feito (fase B) |
 | MF-17 | P3 | Textos com lacuna e inconsistência | B | Feito (fase B) |
 | MF-18 | P3 | Letra "Enorme" esconde os rótulos da barra inferior | D | Feito (fase D) |
-| MF-19 | P3 | Em 320 px, as ferramentas do Planejar ficam espremidas | E | A fazer |
-| MF-20 | P3 | Excesso de camadas de confirmação ao salvar | E | A fazer |
+| MF-19 | P3 | Em 320 px, as ferramentas do Planejar ficam espremidas | E | Feito (fase E) |
+| MF-20 | P3 | Excesso de camadas de confirmação ao salvar | E | Feito (fase E: aviso único; os momentos do Mordomo continuam só ao receber e pagar) |
 | MF-21 | P3 | Dinheiro e Investir divididos em abas diferentes | D (D4) | Feito (fase D) |
 | MF-22 | P3 | Cartão de instalação ocupa o topo até ser dispensado | B | Feito (B: texto por aparelho; D: só depois da 1ª anotação, no fim do Início) |
 
 ### Relatório 01 (celular): recomendações (R)
 | ID | Recomendação | Resolve | Fase | Situação |
 |---|---|---|---|---|
-| R-01 | Navegação: barra Início · Dinheiro · [Anotar] · Planejar · Saúde; Perguntar e Ajustes no cabeçalho | MF-01, MF-18, MF-21 | D | Parcial (D: barra, cabeçalho e realocação; tocar = Gastei direto e toque longo = 4 tipos, na fase E com a folha de uma etapa) |
+| R-01 | Navegação: barra Início · Dinheiro · [Anotar] · Planejar · Saúde; Perguntar e Ajustes no cabeçalho | MF-01, MF-18, MF-21 | D | Feito (D: barra e cabeçalho; E: tocar = Gastei, segurar = 4 tipos) |
 | R-02 | Início reorganizado por urgência | MF-04, MF-12, MF-22 | D | Feito (fase D) |
-| R-03 | Folha "Nova anotação" de uma etapa | MF-08, MF-20, MF-06 | E | A fazer |
+| R-03 | Folha "Nova anotação" de uma etapa | MF-08, MF-20, MF-06 | E | Feito (fase E) |
 | R-04 | Fila única de avisos e regra para o mascote | MF-02, MF-20 | B | Feito (fase B) |
 | R-05 | Abertura curta e só quando agrega | MF-03 | B | Feito (fase B) |
 | R-06 | Saúde honesta: panorama por estado | MF-05, MF-15 | B | Feito (fase B) |
-| R-07 | Entrada monetária à prova de engano | MF-06 | E | A fazer |
+| R-07 | Entrada monetária à prova de engano | MF-06 | E | Feito (fase E, D2) |
 | R-08 | Ajuda contextual com ícone ⓘ | MF-07 | B | Feito (fase B) |
-| R-09 | Planejar: acerto de contas em linha | MF-12, MF-09 | E | A fazer |
-| R-10 | Estados das metas e caixinhas | MF-16 | B/E | Parcial (B: metas; caixinhas e movimento na E/F) |
-| R-11 | Componentes de seleção unificados | MF-09 | E | A fazer |
+| R-09 | Planejar: acerto de contas em linha | MF-12, MF-09 | E | Feito (fase E) |
+| R-10 | Estados das metas e caixinhas | MF-16 | B/E | Feito (B: estados; E: pote 56 × 72 e nome em 2 linhas) |
+| R-11 | Componentes de seleção unificados | MF-09 | E | Feito (fase E) |
 | R-12 | Diálogos e leitores de tela | MF-10 | B | Feito (fase B) |
 | R-13 | Papel do dourado e limites visíveis | MF-11, MF-13 | C/E | Feito (fase C) |
 | R-14 | Sistema tipográfico próprio | MF-14 | C | Feito (fase C) |
-| R-15 | Gráficos com base mínima | MF-15 | E | A fazer |
-| R-16 | Ajustes para 320 px | MF-19 | E | A fazer |
+| R-15 | Gráficos com base mínima | MF-15 | E | Feito (fase E, D3) |
+| R-16 | Ajustes para 320 px | MF-19 | E | Feito (fase E) |
 
 ### Relatório 01 (celular): movimento (MM)
 | ID | Elemento · onde | Fase | Situação |

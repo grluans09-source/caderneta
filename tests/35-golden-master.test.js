@@ -12,7 +12,11 @@ const aprov=JSON.parse(fs.readFileSync(path.join(__dirname,"golden","mudancas-ap
 function semAprovadas(g){
   const c=JSON.parse(JSON.stringify(g));
   /* caminho = "grupo.chave"; a chave pode ter pontos (ex.: "Anotei errado. Como corrijo ou apago?") */
-  aprov.forEach(m=>{const i=m.caminho.indexOf("."), g=i<0?m.caminho:m.caminho.slice(0,i), k=i<0?null:m.caminho.slice(i+1); if(k===null)delete c[g]; else if(c[g])delete c[g][k]});
+  aprov.forEach(m=>{const i=m.caminho.indexOf("."), g=i<0?m.caminho:m.caminho.slice(0,i), k=i<0?null:m.caminho.slice(i+1);
+    if(k===null){delete c[g];return}
+    /* listas (indicadores, relatórios): "grupo.id.campo" apaga só aquele campo do item com aquele id */
+    if(Array.isArray(c[g])){const [id,campo]=k.split(".");const it=c[g].find(x=>x&&(x.id===id||x[0]===id));if(it)delete it[campo];return}
+    if(c[g])delete c[g][k]});
   /* a hora das notícias aparece no fuso de quem usa ("às 12h00" no Brasil, "15h00" no robô do GitHub, que roda em UTC) */
   if(c.perguntas)Object.keys(c.perguntas).forEach(q=>{c.perguntas[q]=c.perguntas[q].replace(/às \d\dh\d\d/g,"às (hora local)")});
   return c;

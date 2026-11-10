@@ -56,22 +56,22 @@ const wb=abrirFixture(html,erros,{seed:semBens}); wb.__T.novaFolha({tipo:"bem"})
 eq("Comprei um bem, sem bem escolhido: pede para escolher, sem \"?\" solto",[/Escolha ou crie o bem para ver o resumo/.test(wb.document.querySelector("#fPrev").textContent),/\?/.test(wb.document.querySelector("#fPrev").textContent)],[true,false]);
 
 // ---- diálogos (R-12): foco no título, fundo inerte, Tab contido, Esc fecha, foco volta ----
-T.ir("planejar");
-const gat=$('#tela [data-a="acToggle"]'); gat.focus(); gat.click(); await espera(10);
-eq("janela aberta: o foco vai para o título e ela tem nome",[$("#modal").contains(d.activeElement)&&!!d.activeElement.id,$("#modal").getAttribute("aria-labelledby")===d.activeElement.id,/Acerto de contas/.test(d.activeElement.textContent)],[true,true,true]);
+T.ir("inicio");
+const gat=$('#tela .hero [data-a="como"]'); gat.focus(); gat.click(); await espera(10);
+eq("janela aberta: o foco vai para o título e ela tem nome",[$("#modal").contains(d.activeElement)&&!!d.activeElement.id,$("#modal").getAttribute("aria-labelledby")===d.activeElement.id,/Como ler a balança/.test(d.activeElement.textContent)],[true,true,true]);
 eq("   o resto da tela fica inerte (leitor de tela e Tab não vão para trás)",[$("#tela").hasAttribute("inert"),d.querySelector("nav").hasAttribute("inert"),$("#tela .capa .perg").closest("[inert]")!==null,$("#modalFundo").hasAttribute("inert"),$("#toast").hasAttribute("inert")],[true,true,true,false,false]);
 const foc=T.focaveis?null:null;
 const botoes=[...d.querySelectorAll("#modal button")]; botoes[botoes.length-1].focus();
 d.dispatchEvent(new w.KeyboardEvent("keydown",{key:"Tab",bubbles:true}));
 eq("   Tab no último item volta ao primeiro (não sai da janela)",$("#modal").contains(d.activeElement),true);
 d.dispatchEvent(new w.KeyboardEvent("keydown",{key:"Escape",bubbles:true})); await espera(10);
-eq("   Esc fecha, o fundo volta ao normal e o foco volta para o botão que abriu",[$("#modalFundo").classList.contains("on"),$("#tela").hasAttribute("inert"),d.activeElement&&d.activeElement.getAttribute("data-a")],[false,false,"acToggle"]);
+eq("   Esc fecha, o fundo volta ao normal e o foco volta para o botão que abriu",[$("#modalFundo").classList.contains("on"),$("#tela").hasAttribute("inert"),d.activeElement&&d.activeElement.getAttribute("data-a")],[false,false,"como"]);
 
 // ---- folha de anotar: diálogo e Enter salva ----
 T.ir("inicio"); const fab=$(".nav-anotar"); fab.focus();
 T.novaFolha({tipo:"saida"}); await espera(10);
-eq("a folha de anotar é um diálogo com título, foco nele e o fundo inerte",[$("#folha").getAttribute("role"),$("#folha").getAttribute("aria-labelledby"),d.activeElement&&d.activeElement.id,$("#tela").hasAttribute("inert")],["dialog","folhaTit","folhaTit",true]);
-const n0=T.S().lancamentos.length, val=$("#fValor"); val.value="2500"; val.dispatchEvent(new w.Event("input",{bubbles:true}));
+eq("a folha de anotar é um diálogo com título, foco no valor (redesign R-03) e o fundo inerte",[$("#folha").getAttribute("role"),$("#folha").getAttribute("aria-labelledby"),d.activeElement&&d.activeElement.id,$("#tela").hasAttribute("inert")],["dialog","folhaTit","fValor",true]);
+const n0=T.S().lancamentos.length, val=$("#fValor"); val.value="25,00"; val.dispatchEvent(new w.Event("input",{bubbles:true}));
 const fc=$('#folha [data-a="fConta"]')||$('#folha .tc>div:first-child .opt'); if(fc&&fc.getAttribute("aria-pressed")!=="true")fc.click();
 const fk=$('#folha .tc>div:last-child .opt'); if(fk&&fk.getAttribute("aria-pressed")!=="true")fk.click();
 val.focus(); val.dispatchEvent(new w.KeyboardEvent("keydown",{key:"Enter",bubbles:true}));

@@ -2,7 +2,7 @@
 
 Use este guia para **mandar o app a quem vai testar** e para **observar o que acontece**. Tem três partes: a mensagem pronta, o passo a passo para a pessoa, e a ficha para você anotar o que viu.
 
-> **Novidade (1.25.0 e 1.26.0):** o app está passando por um redesign em fases. Na 1.26.0 mudaram as cores (botões em azul-escuro "tinta", o dourado ficou para a marca) e as letras. Na 1.27.0 mudou a barra de baixo: **Anotar** fica no meio dela; **Perguntar** (o rostinho) e **Ajustes** (a engrenagem) ficam no alto; Investimentos e a lista de anotações ficam dentro de Dinheiro. A animação de abertura aparece só na primeira vez e quando o app atualiza; na aba Saúde, os indicadores só ficam "Saudável" depois de 30 dias de anotações (antes disso, "Aguardando dados"). Isso é de propósito.
+> **Novidade (1.25.0 e 1.26.0):** o app está passando por um redesign em fases. Na 1.26.0 mudaram as cores (botões em azul-escuro "tinta", o dourado ficou para a marca) e as letras. Na 1.27.0 mudou a barra de baixo: **Anotar** fica no meio dela; **Perguntar** (o rostinho) e **Ajustes** (a engrenagem) ficam no alto; Investimentos e a lista de anotações ficam dentro de Dinheiro. Na 1.28.0 mudou o jeito de anotar: o valor é digitado em reais, com vírgula (antes "50" virava R$ 0,50; agora é R$ 50,00). **Vale observar se alguém ainda digita no jeito antigo.** A animação de abertura aparece só na primeira vez e quando o app atualiza; na aba Saúde, os indicadores só ficam "Saudável" depois de 30 dias de anotações (antes disso, "Aguardando dados"). Isso é de propósito.
 
 > **Fase atual:** teste gratuito. O app é o mesmo que será vendido depois (venda única). O objetivo do teste é descobrir **onde as pessoas travam**, não elogios.
 
@@ -31,7 +31,7 @@ Aberto no navegador, o app mostra uma vez, no Início, como instalar. Peça para
 ### Primeiros passos
 1. Responder "Onde está seu dinheiro hoje?" (carteira, banco, poupança). Pode deixar vazio o que não tem.
 2. Dizer se usa cartão de crédito (dia que fecha e dia que vence).
-3. Tocar no botão **Anotar** (o "+" no meio da barra de baixo) para o primeiro gasto.
+3. Tocar no botão **Anotar** (o "+" no meio da barra de baixo): a folha já abre em **Gastei**. Digitar o valor em reais ("32" é R$ 32,00) e tocar em **Salvar**.
 
 ### Guardar e recuperar uma cópia dos dados
 - **Guardar:** Mais → Ajustes → **Guardar uma cópia**. Mandar o arquivo para o próprio e-mail ou WhatsApp.

@@ -48,5 +48,15 @@
   "caminho": "perguntas.Como deixo a letra maior ou a tela escura?",
   "fase": "D",
   "decisao": "D4 do prompt de redesign (D67): Anotar no centro da barra, Ajustes na engrenagem do cabeçalho, Investimentos dentro de Dinheiro, Anotações em Dinheiro. Só o caminho no texto mudou; nenhum valor."
+ },
+ {
+  "caminho": "indicadores.liquidez.leitura",
+  "fase": "E",
+  "decisao": "MF-15 do relatório de redesign (D67, fase E): plural correto, \"2,4 vezes\" no lugar de \"2,4 vez(es)\". Só o texto; o valor e o estado do indicador não mudaram."
+ },
+ {
+  "caminho": "relatorios.liquidez.2",
+  "fase": "E",
+  "decisao": "MF-15 do relatório de redesign (D67, fase E): plural correto, \"2,4 vezes\" no lugar de \"2,4 vez(es)\". Só o texto; o valor e o estado do indicador não mudaram."
  }
 ]

@@ -52,19 +52,19 @@ function medir(nLanc) {
   const r = { lancamentos: nLanc, "abrir o app (carregar + 1ª tela)": abrir };
   r["tela Início"] = tempo("i", () => d.querySelector('nav [data-v="inicio"]').click());
   r["tela Dinheiro"] = tempo("c", () => d.querySelector('nav [data-v="contas"]').click());
-  r["tela Investir"] = tempo("v", () => d.querySelector('nav [data-v="investir"]').click());
+  r["Dinheiro > Investimentos"] = tempo("v", () => d.querySelector('#tela [data-a="dinAba"][data-v="investir"]').click());
   r["tela Planejar"] = tempo("p", () => d.querySelector('nav [data-v="planejar"]').click());
   r["tela Saúde"] = tempo("g", () => d.querySelector('nav [data-v="graficos"]').click());
   r["Saúde > relatórios em lista"] = tempo("r", () => d.querySelector('#tela [data-a="ir"][data-v="relatorios"]').click());
-  d.querySelector('nav [data-v="mais"]').click();
-  r["tela Anotações"] = tempo("a", () => d.querySelector('#tela [data-v="anotacoes"]').click());
+  d.querySelector('nav [data-v="contas"]').click();   /* Anotações mora em Dinheiro (redesign D4) */
+  r["Dinheiro > Todas as anotações"] = tempo("a", () => d.querySelector('#tela [data-a="ir"][data-v="anotacoes"]').click());
   const busca = d.querySelector("#fBusca");
   r["digitar na busca (1 letra)"] = tempo("b", () => { busca.value = "Anotação 12"; busca.dispatchEvent(new dom.window.Event("input", { bubbles: true })); });
   const n0 = dom.window.__T.S().lancamentos.length;
   r["salvar 1 anotação"] = tempo("s", () => {
     d.querySelector('[data-a="novo"]').click();
     d.querySelector('#fabMenu [data-a="novoT"][data-t="saida"]').click();
-    const v = d.getElementById("fValor"); v.value = "1000"; v.dispatchEvent(new dom.window.Event("input", { bubbles: true }));
+    const v = d.getElementById("fValor"); v.value = "10";   /* em reais (D2) */ v.dispatchEvent(new dom.window.Event("input", { bubbles: true }));
     d.querySelector('#lcD [data-a="fCat"]').click();
     d.querySelector('[data-a="fSalvar"]').click();
   });

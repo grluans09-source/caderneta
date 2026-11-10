@@ -7,7 +7,7 @@ function iso(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0"
 function dd(n){const x=new Date();x.setDate(x.getDate()+n);return iso(x)}
 const cfg={tamanho:"m",tema:"auto",contador:false,ultimoBackup:iso(new Date()),pronto:true,movimento:"parado"};
 function abre(seed){return new JSDOM(html,{runScripts:"dangerously",url:"http://localhost/",virtualConsole:vc,pretendToBeVisual:true,beforeParse(x){x.localStorage.setItem("caderneta:v2",JSON.stringify(seed))}}).window}
-function digita(d,w,s,t){const el=d.querySelector(s);el.value=t;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
+function digita(d,w,s,t){const el=d.querySelector(s);/* D2 do redesign: os testes antigos digitam centavos ("2500" = R$ 25,00); no campo de dinheiro isso vira "25,00" */ if(el&&el.dataset&&el.dataset.cent!==undefined&&/^\d+$/.test(String(t)))t=Math.floor(t/100)+","+String(t%100).padStart(2,"0");el.value=t;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
 
 // ---- 1. editar uma conta não dobra o saldo ----
 let w=abre({contas:[{id:"d1",nome:"Dinheiro",tipo:"ativo",inicial:0,carteira:true},{id:"b1",nome:"Banco",tipo:"ativo",inicial:100000},{id:"b2",nome:"Nova",tipo:"ativo",inicial:5000},

@@ -36,9 +36,20 @@ const espera=ms=>new Promise(r=>setTimeout(r,ms));
       console.log("letra "+tam+": vencimento \""+r.vencimento+"\" termina em y="+r.base+" (a barra começa em y="+r.limite+"); flutuando sobre o conteúdo: "+(r.flut.length?r.flut.join(", "):"nada"));
       if(tam==="m"&&!(r.base&&r.base<=r.limite))falhas.push("letra normal: o vencimento não aparece sem rolar");
       if(r.flut.length)falhas.push("letra "+tam+": elementos flutuando: "+r.flut.join(", "));
+      /* aceite da fase E: com o teclado aberto (a tela encolhe para 390 × 520), tocar em Anotar mostra o Salvar sem rolar,
+         com o valor em foco e a conta e a categoria já escolhidas: Anotar → digitar → Salvar */
+      await pg.setViewport({width:390,height:520,isMobile:true,hasTouch:true}); await espera(200);
+      const e=await pg.evaluate(async()=>{
+        document.querySelector("nav .nav-anotar").click(); await new Promise(r=>setTimeout(r,400));
+        const b=document.querySelector(".f-barra [data-a=\"fSalvar\"]").getBoundingClientRect(), H=innerHeight;
+        return {salvarVisivel:b.top>=0&&b.bottom<=H+1, foco:document.activeElement&&document.activeElement.id,
+          conta:!!document.querySelector("#folha .lc-contas .opt[aria-pressed=\"true\"]"), cat:!!document.querySelector("#folha .lc-cats .opt[aria-pressed=\"true\"]"), base:Math.round(b.bottom), H};
+      });
+      console.log("letra "+tam+", teclado aberto (390 × 520): Salvar "+(e.salvarVisivel?"à vista":"ESCONDIDO")+" (y="+e.base+" de "+e.H+"), foco em "+e.foco+", conta "+(e.conta?"escolhida":"—")+", categoria "+(e.cat?"escolhida":"—"));
+      if(!e.salvarVisivel||e.foco!=="fValor"||!e.conta||!e.cat)falhas.push("letra "+tam+": anotar com o teclado aberto não ficou em 1 tela");
       await pg.close();
     }
   }finally{await b.close(); srv.kill()}
-  console.log(falhas.length?"PROBLEMAS:\n"+falhas.join("\n"):"aceite da fase D: OK");
+  console.log(falhas.length?"PROBLEMAS:\n"+falhas.join("\n"):"aceite das fases D e E: OK");
   process.exit(falhas.length?1:0);
 })().catch(e=>{console.error(e);process.exit(1)});

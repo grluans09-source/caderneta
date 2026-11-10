@@ -6,7 +6,7 @@
 App de celular (instalável, funciona sem internet), em português, pensado para qualquer pessoa: do idoso ao jovem e ao adulto na correria.
 
 - **App no ar:** https://grluans09-source.github.io/caderneta/
-- **Versão atual:** 1.27.0-beta.1 (beta para testadores; redesign em andamento, fases A a D prontas) (veja o [CHANGELOG](CHANGELOG.md))
+- **Versão atual:** 1.28.0-beta.1 (beta para testadores; redesign em andamento, fases A a E prontas) (veja o [CHANGELOG](CHANGELOG.md))
 - **Seus dados ficam só no celular de cada pessoa.** Não existe servidor, conta nem banco de dados.
 
 > Em uma frase: a pessoa anota o que gasta e recebe, e o app mostra **quanto é dela de verdade**, para onde o dinheiro está indo e o que vem pela frente. A partida dobrada fica escondida no "motor"; a tela fala como a gente fala.
@@ -19,10 +19,10 @@ App de celular (instalável, funciona sem internet), em português, pensado para
 | **Notícias** | "Hoje no Brasil" no Início e tela própria: dólar, Selic, CDI, inflação, o que ficou mais caro, combustíveis, previsões do Focus e notícias do IBGE, **só de fontes oficiais** com link, selo CERTEZA ou POSSIBILIDADE e o efeito na sua vida. Atualiza ao meio-dia O celular busca as notícias do IBGE direto no site do IBGE, sem enviar nenhum dado seu |
 | **Perguntar (chat)** | O rostinho do Mordomo, **no alto de toda tela**: 63 perguntas prontas em linguagem comum, muitas respondidas com os seus próprios números, com busca e um "Ver no app" que leva direto ao lugar exato. Sem internet e sem IA |
 | **Travas de coerência** | Antes de salvar, o app confere a anotação: **não deixa** passar do limite do cartão nem a carteira ficar negativa, e **pergunta** quando algo é estranho (banco negativo, pagar a mais, data distante, valor muito acima do costume) |
-| **Anotar** | O botão **Anotar, no centro da barra de baixo** (tinta com "+" dourado), **abre 4 medalhas douradas numa fileira, com animação, cada uma com o centro na cor do tipo** (Gastei, Recebi, Transferi entre contas, Comprei um bem): um toque gera, outro escolhe. Na folha, um botão redondo fixo no mesmo canto troca o tipo (o atual fica apagado). As listas são curtas (Dinheiro + 3 contas favoritas, 5 categorias favoritas); tocar na busca abre a lista com tudo. A conta **Dinheiro** é a carteira (não se apaga, e quem já usava o app ganha ela sozinha) e conta cédulas |
+| **Anotar** | O botão **Anotar, no centro da barra de baixo** (tinta com "+" dourado): **um toque abre a folha já no Gastei** (valor em foco, com vírgula: "50" = R$ 50,00; conta e categoria já escolhidas; Salvar sempre à vista), e **segurar** abre **4 medalhas douradas, cada uma com o centro na cor do tipo** (Gastei, Recebi, Transferi entre contas, Comprei um bem): um toque gera, outro escolhe. Na folha, um botão redondo fixo no mesmo canto troca o tipo (o atual fica apagado). As listas são curtas (Dinheiro + 3 contas favoritas, 5 categorias favoritas); tocar na busca abre a lista com tudo. A conta **Dinheiro** é a carteira (não se apaga, e quem já usava o app ganha ela sozinha) e conta cédulas |
 | **Dinheiro** | Cinco abas: Contas (com o guardado, o "para usar" e **Conferir com o banco**), Investimentos (veja abaixo), Dívidas (cartões e empréstimos), Bens e Pessoas (emprestei / devo); e **Todas as anotações** (buscar e ordenar por data, valor ou nome) |
 | **Dinheiro > Investimentos** (até a 1.26.0, a aba Investir) | Poupança, caixinhas, CDB, Tesouro e fundos, cada um do seu jeito: **% do CDI** (ex.: 115% do CDI), taxa fixa ao ano, IPCA + taxa, poupança (regra oficial) ou "varia". O app calcula o rendimento a cada dia útil com o CDI, a Selic e a inflação oficiais, mostra quanto você receberia se resgatasse hoje (já sem o Imposto de Renda), deixa atualizar o valor com o do banco e lembra toda semana de conferir. Caixinhas também podem render |
-| **Planejar** | Ferramentas no topo (Metas do mês, Caixinhas, Contas fixas com **Contas do ano**, Simulador), **Acerto de contas do mês** (abre numa janela preta e dourada por cima da tela, com todas as dívidas, o prazo de cada uma em palavras e o botão Pagar) e a agenda do que vence |
+| **Planejar** | Ferramentas no topo (Metas do mês, Caixinhas, Contas fixas com **Contas do ano**, Simulador), **Acerto de contas do mês** (em linha, na própria tela: o mês, quanto falta, "x de y pagas", cada conta com o prazo em palavras e Pagar, Paguei ou Pular este mês) e a agenda do que vence |
 | **Saúde** | Antes eram as abas Gráficos e Relatórios. Mostra o **panorama** e os 4 indicadores principais (o que é seu de verdade, folga para 30 dias, reserva de emergência, taxa de poupança); os outros 6 (peso das dívidas, renda já reservada, **custo fixo de vida**, para onde vai o dinheiro, composição do patrimônio, custo dos juros) ficam em "Ver mais indicadores". Também o **Mês a mês** e um **relatório por indicador**, explicado como um consultor: o que é, como você está, para comparar, o que quer dizer e por onde começar |
 | **Ajustes** (a engrenagem no alto de toda tela; até a 1.26.0 ficava na aba Mais, que saiu) | Letra, cores, movimento, modo contador, categorias, cópia dos dados, instalar e ajuda |
 
@@ -48,7 +48,7 @@ caderneta/
 │   ├── index.html    O app inteiro: HTML + CSS + JavaScript, sem dependências
 │   ├── sw.js         Faz o app abrir sem internet (cache)
 │   ├── manifest.webmanifest, icon-*.png, icon.svg   Instalação na tela inicial
-├── tests/          Testes automáticos: 1019 verificações que simulam uma pessoa usando o app
+├── tests/          Testes automáticos: 1042 verificações que simulam uma pessoa usando o app
 ├── tools/          Ferramentas: servidor local e gerador de ícones
 ├── docs/           Documentação (leia a partir de docs/README.md)
 ├── .github/workflows/publicar.yml   Testa e publica sozinho a cada envio para o GitHub

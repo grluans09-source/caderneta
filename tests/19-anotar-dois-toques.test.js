@@ -28,15 +28,18 @@ const S=()=>T.S();
 d.documentElement.classList.add("calmo");
 function abreFolha(t){click('[data-a="novo"]');click('#fabMenu [data-a="novoT"][data-t="'+(t||"saida")+'"]')}
 
-function digita(sel,txt){const el=$(sel);el.value=txt;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
+function digita(sel,txt){const el=$(sel);/* D2 do redesign: os testes antigos digitam centavos ("2500" = R$ 25,00); no campo de dinheiro isso vira "25,00" */ if(el&&el.dataset&&el.dataset.cent!==undefined&&/^\d+$/.test(String(txt)))txt=Math.floor(txt/100)+","+String(txt%100).padStart(2,"0");el.value=txt;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
 const menu=()=>$("#fabMenu");
 const aberto=()=>menu().classList.contains("on");
-const h1=()=>$("#folhaCorpo .capa h1").textContent;
+const h1=()=>(($('#folha .seg[aria-checked="true"]')||{}).textContent||$("#folhaCorpo .capa h1").textContent);   /* redesign R-03: o tipo fica no seletor do topo da folha */
 const ids=lado=>[...d.querySelectorAll("#lc"+lado+" .opt:not(.novo)")].map(b=>b.dataset.id);
 
-// ======== 1) O + abre 4 bolinhas (dois toques) ========
+// ======== 1) Anotar (redesign R-01): tocar abre direto o Gastei; segurar abre as 4 medalhas ========
 eq("o menu das bolinhas começa fechado",[aberto(),$(".nav-anotar").getAttribute("aria-expanded")],[false,"false"]);
 click('.nav-anotar');
+eq("tocar no Anotar abre direto a folha do Gastei, com o valor em foco",[$("#folha").classList.contains("on"),h1(),aberto()],[true,"Gastei",false]);
+click('[data-a="fFechar"]');
+T.fabMenu(true);   /* o mesmo que segurar o Anotar */
 // as 4 bolinhas ficam em pontos de um mesmo círculo, espelhadas à esquerda e à direita
 /* redesign R-01: na barra, as bolinhas abrem em arco acima do Anotar; na folha, em quarto de círculo a partir do "Tipo" (canto) */
 const css=html.match(/<style>([\s\S]*?)<\/style>/)[1];
@@ -45,38 +48,31 @@ const arco=posicoes(""), pontos=posicoes(".fabmenu.emfolha ");
 eq("na barra: as 4 bolinhas numa fileira acima do Anotar, da esquerda para a direita, igualmente espaçadas e simétricas",[arco.every(([x,y])=>y>0&&y===arco[0][1]),arco.every(([x,y],i)=>i===0||Math.abs(x-arco[i-1][0]-1)<0.001),arco.every(([x,y],i)=>Math.abs(x+arco[3-i][0])<0.001)],[true,true,true]);
 eq("as 4 bolinhas ficam num quarto de círculo (raio 1) que abre para a esquerda e para cima, do canto direito",[pontos.every(([x,y])=>Math.abs(Math.hypot(x,y)-1)<0.001&&x<=0.0001&&y>=-0.0001),pontos.every(([x,y],i)=>Math.abs(Math.atan2(y,-x)*180/Math.PI-30*i)<0.1)],[true,true]);
 eq("e são simétricas em relação à diagonal do canto (uma espelha a outra)",pontos.every(([x,y],i)=>Math.abs(-x-pontos[3-i][1])<0.001),true);
-eq("tocar no + abre o menu e gera as 4 bolinhas",[aberto(),$(".nav-anotar").getAttribute("aria-expanded"),[...d.querySelectorAll("#fabMenu .fb")].map(b=>b.dataset.t)],[true,"true",["saida","entrada","transferencia","bem"]]);
+eq("segurar o Anotar abre o menu e gera as 4 bolinhas",[aberto(),$(".nav-anotar").getAttribute("aria-expanded"),[...d.querySelectorAll("#fabMenu .fb")].map(b=>b.dataset.t)],[true,"true",["saida","entrada","transferencia","bem"]]);
 eq("as bolinhas têm o nome do tipo",[...d.querySelectorAll("#fabMenu .fbl")].map(b=>b.textContent),["Gastei","Recebi","Transferi entre contas","Comprei um bem"]);
 eq("cada bolinha tem um atraso próprio (entra em sequência, com animação)",[...d.querySelectorAll("#fabMenu .fb")].map(b=>b.getAttribute("style").match(/--d:(\d+)ms/)[1]),["0","55","110","165"]);
 click('#fabMenu .fabfundo');
 eq("tocar fora fecha o menu",aberto(),false);
-click('.nav-anotar');click('.nav-anotar');
-eq("tocar no + de novo também fecha",aberto(),false);
+T.fabMenu(true);click('.nav-anotar');
+eq("com o menu aberto, tocar no Anotar fecha o menu",aberto(),false);
 w.document.dispatchEvent(new w.KeyboardEvent("keydown",{key:"Escape"}));
-click('.nav-anotar');w.document.dispatchEvent(new w.KeyboardEvent("keydown",{key:"Escape"}));
+T.fabMenu(true);w.document.dispatchEvent(new w.KeyboardEvent("keydown",{key:"Escape"}));
 eq("a tecla Esc fecha o menu",aberto(),false);
-for(const [t,nome] of [["saida","Gastei"],["entrada","Recebi"],["transferencia","Transferi entre contas"],["bem","Comprei um bem"]]){
-  click('.nav-anotar');click('#fabMenu [data-t="'+t+'"]');
+for(const [t,nome] of [["saida","Gastei"],["entrada","Recebi"],["transferencia","Transferi"],["bem","Comprei um bem"]]){
+  T.fabMenu(true);click('#fabMenu [data-t="'+t+'"]');
   eq("segundo toque em '"+nome+"': abre a folha nesse tipo e fecha o menu",[$("#folha").classList.contains("on"),h1(),aberto()],[true,nome,false]);
   click('[data-a="fFechar"]');
 }
 
-// ======== 2) folha: 3 bolinhas no lugar dos 4 botões ========
+// ======== 2) folha de uma etapa (redesign R-03): o tipo num seletor no topo ========
 abreFolha("saida");
-eq("a folha não tem mais os 4 botões de tipo no topo nem as 3 bolinhas no cabeçalho",[!$("#folhaCorpo .seg3"),!$("#folhaCorpo .trocar")],[true,true]);
-eq("o seletor de tipo é um botão fixo embaixo, que mostra o tipo atual (a medalha de Gastei)",[!!$("#dockTipo"),$("#dockTipo").classList.contains("dk-gasto"),$("#dockTipo .medalha").dataset.m],[true,true,"gasto"]);
+eq("o tipo fica num controle segmentado no topo da folha, com Gastei marcado; o botão \"Tipo\" do canto saiu",[!!$("#folhaCorpo .f-seg"),[...d.querySelectorAll("#folhaCorpo .f-seg .seg")].map(b=>b.dataset.t),h1(),!!$("#dockTipo")&&w.getComputedStyle($("#dockTipo")).display==="none"],[true,["saida","entrada","transferencia","bem"],"Gastei",true]);
 eq("as 4 bolinhas são medalhas de ouro com o esmalte do tipo (arte de hoje, não os círculos antigos)",[...d.querySelectorAll("#fabMenu .fbc .medalha")].map(m=>m.dataset.m+":"+!!m.querySelector('circle[fill="url(#mg-e-'+m.dataset.m+')"]')),["gasto:true","ganho:true","transf:true","bem:true"]);
 eq("os esmaltes das medalhas existem na página",["gasto","ganho","transf","bem"].map(k=>!!d.getElementById("mg-e-"+k)),[true,true,true,true]);
-click("#dockTipo");
-eq("tocar no botão gera as 4 bolinhas, com a do tipo atual apagada",[aberto(),[...d.querySelectorAll("#fabMenu .fb")].map(b=>b.dataset.t+":"+b.classList.contains("atual")),$("#fabMenu").classList.contains("emfolha")],[true,["saida:true","entrada:false","transferencia:false","bem:false"],true]);
-eq("a bolinha do tipo atual fica bloqueada (aria-disabled) e as outras 3 ficam livres",[...d.querySelectorAll("#fabMenu .fb")].map(b=>b.getAttribute("aria-disabled")),["true","false","false","false"]);
 digita("#fValor","1234");
-click('#fabMenu [data-t="entrada"]');
-eq("escolher outra troca o tipo SEM perder o que já foi digitado e fecha o menu",[h1(),$("#fValor").value,aberto(),$("#dockTipo").classList.contains("dk-ganho")],["Recebi","R$ 12,34",false,true]);
-click("#dockTipo");
-eq("agora a apagada é a de Recebi",[...d.querySelectorAll("#fabMenu .fb")].map(b=>b.classList.contains("atual")),[false,true,false,false]);
-click("#fabMenu .fabfundo");
-eq("tocar fora fecha o menu e o tipo continua",[aberto(),h1()],[false,"Recebi"]);
+click('#folhaCorpo .seg[data-t="entrada"]');
+eq("trocar o tipo NÃO perde o que já foi digitado",[h1(),$("#fValor").dataset.cent],["Recebi","1234"]);
+eq("a barra do Salvar fica no fim da folha, com o resumo curto",[!!$("#folhaCorpo .f-barra [data-a=\"fSalvar\"]"),/R\$ 12,34/.test($("#fResumo").textContent)],[true,true]);
 click('[data-a="fFechar"]');
 
 // ======== 3) listas curtas: 3 contas, 5 categorias, busca e favoritas ========

@@ -11,7 +11,7 @@ function click(sel){let el=typeof sel==="string"?$(sel):sel;
   if(!el)throw new Error("sem elemento "+sel);el.click()}
 function abreFolha(t){abreFolha();click('#fabMenu [data-a="novoT"][data-t="'+(t||"saida")+'"]')}
 function abreFolha(t){click('[data-a="novo"]');click('#fabMenu [data-a="novoT"][data-t="'+(t||"saida")+'"]')}
-function digita(sel,txt){const el=$(sel);el.value=txt;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
+function digita(sel,txt){const el=$(sel);/* D2 do redesign: os testes antigos digitam centavos ("2500" = R$ 25,00); no campo de dinheiro isso vira "25,00" */ if(el&&el.dataset&&el.dataset.cent!==undefined&&/^\d+$/.test(String(txt)))txt=Math.floor(txt/100)+","+String(txt%100).padStart(2,"0");el.value=txt;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
 function muda(sel,txt){const el=$(sel);el.value=txt;el.dispatchEvent(new w.Event("change",{bubbles:true}))}
 const S=()=>T.S();
 function irV(v){if(v==='relatorios'){click('nav [data-v="graficos"]');click('#tela [data-a="ir"][data-v="relatorios"]');return}if(v==='caixinhas'||v==='fixas'||v==='simulador')click('[data-a="ir"][data-v="planejar"]');if(v==='ajustes'){click('#tela .cab-aj');return}click('[data-a="ir"][data-v="'+v+'"]')}
@@ -33,7 +33,8 @@ eq("fev venc 31",T.primeiroVencimento("2026-01-26",25,31),"2026-02-28");
 eq("onboarding aparece",$("#onb").classList.contains("on"),true);
 click('[data-a="oProx"]');
 digita("#oCarteira","10000");digita("#oBanco","500000");
-eq("máscara",$("#oBanco").value,"R$ 5.000,00");
+$("#oBanco").dispatchEvent(new w.Event("blur"));
+eq("valor (D2: digita com vírgula; ao sair do campo, aparece formatado)",[$("#oBanco").value,$("#oBanco").dataset.cent],["R$ 5.000,00","500000"]);
 click('[data-a="oProx"]');
 click('[data-a="oCartao"][data-s="1"]');
 digita("#oNome","Nubank");$("#oFecha").value="25";$("#oVence").value="5";digita("#oLimite","300000");
@@ -76,7 +77,7 @@ eq("grupos a pagar",ap.map(g=>[g.data,g.valor]),[["2026-10-05",15000],["2026-11-
 const antesSai=T.resumoMes("2026-10").sai;
 click('[data-a="ir"][data-v="contas"]');
 click('[data-a="pagar"]');
-eq("pagamento pré-preenchido",[$("#fValor").value, $("#folhaCorpo .capa h1").textContent],["R$ 150,00","Transferi entre contas"]);
+eq("pagamento pré-preenchido, numa folha \"Pagar <conta>\" (redesign MF-09)",[$("#fValor").value, $("#folhaCorpo .capa h1").textContent],["R$ 150,00","Pagar Nubank"]);
 muda("#fData","2026-10-04");
 click('[data-a="fSalvar"]');
 ap=T.aPagar();
@@ -99,7 +100,7 @@ eq("débito=crédito",S().lancamentos.every(l=>{const p=T.partidas(l);return p.l
 // editar e apagar
 click('[data-a="ir"][data-v="inicio"]');
 click('[data-a="editar"]');
-eq("modo edição",/Editar: /.test($("#folhaCorpo .capa h1").textContent),true);
+eq("modo edição",/Editar anotação/.test($("#folhaCorpo .capa h1").textContent),true);
 digita("#fValor","1000");click('[data-a="fSalvar"]');
 eq("editou sem duplicar",S().lancamentos.length,6);
 click('[data-a="editar"]');click('[data-a="fApagar"]');click('[data-a="mOk"]');

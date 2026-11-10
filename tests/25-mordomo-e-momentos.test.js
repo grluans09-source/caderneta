@@ -43,7 +43,7 @@ eq("em outras telas o Pesão nunca aparece",(()=>{$('nav [data-v="graficos"]').c
 w=abre([{id:"d1",nome:"Dinheiro",tipo:"ativo",inicial:100000,carteira:true},{id:"cc",nome:"Cartão",tipo:"passivo",inicial:30000}],{caixas:[{id:"cx1",nome:"Reserva",alvo:0}]});
 d=w.document; $=s=>d.querySelector(s);
 function click(s){const el=typeof s==="string"?$(s):s; if(!el)throw new Error("sem "+s); el.click()}
-function digita(s,t){const el=$(s);el.value=t;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
+function digita(s,t){const el=$(s);/* D2 do redesign: os testes antigos digitam centavos ("2500" = R$ 25,00); no campo de dinheiro isso vira "25,00" */ if(el&&el.dataset&&el.dataset.cent!==undefined&&/^\d+$/.test(String(t)))t=Math.floor(t/100)+","+String(t%100).padStart(2,"0");el.value=t;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
 const espera=ms=>new Promise(r=>setTimeout(r,ms));
 (async()=>{
 function anota(tipo,valor,fn){click(".nav-anotar");click('#fabMenu [data-t="'+tipo+'"]');digita("#fValor",valor);if(fn)fn();click('[data-a="fSalvar"]')}
@@ -56,7 +56,7 @@ eq("pagar uma dívida: o Selo de lacre sela PAGO",[!!$(".momento.m-sela"),/PAGO/
 anota("saida","2000",()=>{click('[data-a="fConta"][data-id="d1"]');click('[data-a="fCat"][data-id="k1"]')});
 const carOn=$("#carimbo").classList.contains("on");
 await espera(950);
-eq("um gasto comum continua com o carimbo ANOTADO",[carOn,$("#carimbo").textContent],[true,"ANOTADO"]);
+eq("um gasto comum: um retorno só, o aviso \"Gasto anotado.\" com Desfazer, sem carimbo (redesign MF-20: o carimbo virou o destaque da linha)",[carOn,w.__T.AVISOS.some(a=>/Gasto anotado/.test(a.t))||/Gasto anotado/.test($("#toast").textContent)],[false,true]);
 click('nav [data-v="planejar"]');click('[data-a="ir"][data-v="caixinhas"]');
 const bt=$('[data-a="cxMov"][data-m="guardar"]')||$('[data-a="cxMov"]');
 if(bt){click(bt);digita("#mvValor","1000");const ch=$('#mvContas .chip');if(ch)click(ch);click('[data-a="mvSalvar"]');

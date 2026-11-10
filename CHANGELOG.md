@@ -5,6 +5,19 @@
 Formato: versão semântica (`MAIOR.MENOR.CORREÇÃO`). Cada versão diz **o que mudou para a pessoa que usa**.
 Antes da 1.0.0 as versões eram numeradas só pelo nome do cache do app (v1 a v16); estão aqui como marcos de desenvolvimento.
 
+## [1.28.0-beta.1]: 9 de novembro de 2026 · redesign, fase E: anotar em 2 toques e valor com vírgula
+Anotar ficou mais rápido e o valor, à prova de engano (D67). As contas não mudaram (golden master).
+- **Valor com vírgula (D2)**: o teclado do valor agora tem vírgula, e o app entende do jeito que a pessoa pensa: **"50" é R$ 50,00** (antes virava R$ 0,50), "50,5" é R$ 50,50, "1.234,56" é R$ 1.234,56. A partir de R$ 1.000 aparece o valor **por extenso** embaixo ("mil e duzentos reais"), para conferir. Vale para todos os campos de dinheiro.
+- **Anotar em 2 toques**: tocar em **Anotar** abre a folha já no **Gastei**, com o teclado aberto e a conta e a categoria de sempre já escolhidas: digite o valor e toque em **Salvar**. **Segurar** o Anotar abre as 4 medalhas de tipo.
+- **Folha de uma etapa**: o tipo (Gastei · Recebi · Transferi · Comprei um bem) num seletor no topo; as contas numa fileira que corre para o lado; as categorias numa grade de 3; e o **Salvar numa barra presa embaixo**, com um resumo curto ("R$ 32,00 · Dinheiro → Mercado"), que fica à vista **mesmo com o teclado aberto**. Sem valor, o aviso aparece no próprio campo. Arrastar a alça para baixo fecha (pergunta antes de descartar o que foi digitado).
+- **Um retorno só ao salvar**: a folha fecha, a linha nova fica em destaque e aparece "Gasto anotado." com **Desfazer**. O carimbo "ANOTADO" saiu; a Moedinha (ao receber) e o Selo PAGO (ao pagar) continuam.
+- **Pagar uma dívida** abre a folha **"Pagar Nubank"** (antes "Transferi entre contas"); por dentro, continua sendo a mesma transferência.
+- **Acerto de contas direto no Planejar**, sem janela por cima: mês, quanto falta, "x de y pagas" e cada conta com **Pagar**, **Paguei** ou **Pular este mês**; as pagas numa seção que abre.
+- **Contas fixas e Metas** escolhem conta e categoria pelos mesmos botões da folha de anotar (antes, uma lista de seleção).
+- **Previsão só com base (D3)**: a linha "em 6 meses" só aparece com **2 meses completos** de anotações; antes disso, "Precisamos de mais dados". Gráficos de barras com legenda maior, "sem anotações" nos meses vazios e o valor ao tocar. "2,4 vezes" no lugar de "2,4 vez(es)".
+- **Celular pequeno (320 px)**: as ferramentas do Planejar em uma coluna, e **nenhum valor em R$ quebra no meio** da linha.
+- Testes: 1042 verificações em 39 arquivos (novo: fase E). No Chrome: com o teclado aberto, o Salvar fica à vista nos 3 tamanhos de letra.
+
 ## [1.27.0-beta.1]: 9 de novembro de 2026 · redesign, fase D: barra nova e Início por urgência
 O jeito de andar pelo app mudou (D67, decisão D4 do prompt). **Nada foi removido**: as 50 funções da matriz do relatório foram conferidas no lugar novo (teste `38`). As contas não mudaram.
 - **Barra de baixo: Início · Dinheiro · [Anotar] · Planejar · Saúde.** O **Anotar** fica no centro, num botão de tinta com "+" dourado, e abre as 4 medalhas (Gastei, Recebi, Transferi, Comprei um bem), agora numa fileira acima dele. Os nomes da barra aparecem **sempre**, também com letra Enorme.

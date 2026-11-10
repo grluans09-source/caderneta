@@ -18,17 +18,17 @@ d.documentElement.classList.add("calmo");
 const p=T.pagarNoMes?T.pagarNoMes(iso(new Date()).slice(0,7)):null;
 if(p)eq("conta vencida há 4 dias conta como atrasada no acerto, mesmo sendo deste mês",p.falta.map(x=>[x.titulo,x.atrasada]),[["Carnê",true],["Cartão",false]]);
 $('nav [data-v="planejar"]').click();
-$('#cardPagar [data-a="acToggle"]').click();
-const linhas=[...d.querySelectorAll("#modal #acLista .ac-t span")].map(x=>x.textContent);
-eq("na janela a vencida diz 'atrasada há 4 dias' e a outra 'vence em 10 dias'",[/atrasada há 4 dias/.test(linhas[0]),/vence em 10 dias/.test(linhas[1])],[true,true]);
-eq("a atrasada vem primeiro",/Carnê/.test(d.querySelector("#modal #acLista .ac-t b").textContent),true);
+/* redesign R-09: o acerto de contas fica direto no Planejar, sem janela */
+const linhas=[...d.querySelectorAll("#cardPagar #acLista .ac-t span")].map(x=>x.textContent);
+eq("no acerto a vencida diz 'atrasada há 4 dias' e a outra 'vence em 10 dias'",[/atrasada há 4 dias/.test(linhas[0]),/vence em 10 dias/.test(linhas[1])],[true,true]);
+eq("a atrasada vem primeiro",/Carnê/.test(d.querySelector("#cardPagar #acLista .ac-t b").textContent),true);
 eq("o mesmo texto aparece na agenda",/atrasada há 4 dias/.test($("#tela").textContent),true);
 // ---- botão de anotar no centro da barra (redesign R-01): "+" em latão claro, com o rótulo "Anotar" sempre à vista ----
 const fab=$("nav .nav-anotar");
-eq("o Anotar fica no centro da barra, com o rótulo \"Anotar\" à vista",[!!fab,[...d.querySelectorAll("nav .in > button")].indexOf(fab),fab.querySelector(".lb").textContent,fab.getAttribute("aria-label")],[true,2,"Anotar","Anotar: escolher o tipo"]);
-fab.click();
+eq("o Anotar fica no centro da barra, com o rótulo \"Anotar\" à vista",[!!fab,[...d.querySelectorAll("nav .in > button")].indexOf(fab),fab.querySelector(".lb").textContent,fab.getAttribute("aria-label")],[true,2,"Anotar","Anotar um gasto (segure para escolher outro tipo)"]);
+w.__T.fabMenu(true);   /* segurar o Anotar abre o menu dos tipos */
 eq("aberto, o \"+\" gira e vira um × para fechar",[fab.classList.contains("aberto"),fab.getAttribute("aria-expanded")],[true,"true"]);
-fab.click();
+fab.click();   /* tocar com o menu aberto fecha o menu */
 // ---- dica de instalar ----
 eq("sem saber se está instalado (ambiente de teste), não mostra a dica",!!$("#dicaInst"),false);
 eq("sem nenhuma anotação ainda, o Início não mostra a dica de instalar (redesign PF-05: só depois da 1ª anotação)",!!abre("navegador").document.querySelector("#dicaInst"),false);

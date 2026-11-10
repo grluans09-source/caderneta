@@ -113,7 +113,7 @@ eq("e dá para fechar os filtros",!$("#anConta"),true);
 // ---- editar a partir da lista e a lista continua filtrada ----
 busca("Água 8");
 const alvo=linhas()[0];click(alvo);
-eq("tocar numa linha abre para editar",/Editar: /.test($("#folha").textContent),true);
+eq("tocar numa linha abre para editar",/Editar anotação/.test($("#folha").textContent),true);
 click('[data-a="fFechar"]');
 eq("a busca continua ali ao voltar",$("#fBusca").value,"Água 8");
 
