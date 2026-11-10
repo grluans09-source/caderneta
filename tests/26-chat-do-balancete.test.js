@@ -22,7 +22,7 @@ const espera=ms=>new Promise(r=>setTimeout(r,ms));
 (async()=>{
 await espera(50);
 // ---- pílula ----
-eq("a pílula Perguntar fica no canto, com o rostinho do Mordomo",[!!$("body > .perg"),!!$(".perg svg .pp-pup"),/Perguntar/.test($(".perg").textContent)],[true,true,true]);
+eq("o Perguntar fica no cabeçalho de todas as abas, com o rostinho do Mordomo (redesign R-01)",[!!$("#tela .capa .perg"),!!$(".perg svg .pp-pup"),$(".perg").getAttribute("aria-label"),!$("body > .perg")],[true,true,"Perguntar ao Balancete",true]);
 eq("ao abrir com conta atrasada, o aviso dela aparece e o balão espera (redesign R-04: nunca um por cima do outro)",[!!$("#pesao"),$("#pergBal").classList.contains("on")],[true,false]);
 click('[data-a="pesaoFecha"]');
 click('nav [data-v="graficos"]'); await espera(20);

@@ -96,6 +96,9 @@ Passo 5 do plano: **aprovado pelo dono em 7 nov 2026 e no app desde a versão 1.
 | 50 | Meus dados ficam seguros? Alguém vê? | aprender | Ficam só neste celular; ninguém (nem o Balancete) vê; por isso a cópia é importante |
 | 53 | O que mudou na economia que me afeta? | dados + aprender | As notícias oficiais mais importantes do dia, com o "para você" (D59). Acrescentada na 1.21.0 |
 
+## Caminhos atualizados no redesign (1.27.0, D67/D4)
+Nove respostas mudaram só o caminho, para o app de hoje: **Anotar** fica no meio da barra de baixo (antes "a pena dourada, embaixo à direita"); **Ajustes** é a engrenagem no alto da tela (antes "Mais > Ajustes"); **Dinheiro > Investimentos** (antes "aba Investir"); **Dinheiro > Todas as anotações** (antes "Mais > Anotações"). Perguntas: Quanto dinheiro eu tenho agora?, Como eu anoto um gasto?, Como anoto uma compra parcelada?, Como passo dinheiro de uma conta para outra?, Anotei errado. Como corrijo ou apago?, Como cadastro meu carro ou minha casa?, Como faço uma cópia dos meus dados?, Troquei de celular. Como levo meus dados?, Como deixo a letra maior ou a tela escura? (mais três respostas que só aparecem sem aplicações). O "Ver no app" continua levando ao lugar exato (teste `34`). O chat abre pelo **rostinho do Mordomo no alto de toda tela**.
+
 ## As 10 perguntas novas (1.24.1)
 
 | Grupo | Pergunta | Tipo | Como responde |

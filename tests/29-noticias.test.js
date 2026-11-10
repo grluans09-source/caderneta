@@ -47,7 +47,7 @@ eq("CDI: a aplicação de 12% ao ano rende cerca de 88% do CDI",/CDB \(12,00% ao
 eq("Selic: lembra que há dívida para quitar",/Você deve R\$ 500,00/.test(tela),true);
 eq("o texto malicioso nunca vira código na tela",[!d.querySelector("#tela img"),!/onerror/.test(d.querySelector("#tela").innerHTML)],[true,true]);
 eq("avisa que não é recomendação de investimento",/Não são recomendação de investimento/.test(tela),true);
-eq("Mais tem o atalho para Notícias",(()=>{w.__T.ir("mais");return !!d.querySelector('#tela [data-a="ir"][data-v="noticias"]')})(),true);
+eq("o Início tem o atalho para Notícias (Hoje no Brasil > Ver todas, redesign D4)",(()=>{w.__T.ir("inicio");return !!d.querySelector('#tela [data-a="ir"][data-v="noticias"]')})(),true);
 const q=T.PERGS.find(p=>/economia que me afeta/.test(p.q));
 eq("o chat resume o que mudou na economia",!!q&&/Dólar a R\$ 5,50/.test(q.r())&&/Gasolina/.test(q.r()),true);
 eq("erros de script",errs,[]);

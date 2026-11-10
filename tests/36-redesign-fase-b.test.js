@@ -13,9 +13,9 @@ const pes=$('[data-a="pesaoFecha"]'); if(pes)pes.click();
 // ---- leitor de tela: o <main> não anuncia a tela inteira; um H1 por tela; link para pular ----
 eq("o <main> não tem aria-live (avisos só no role=status)",[$("#tela").hasAttribute("aria-live"),$("#toast").getAttribute("role")],[false,"status"]);
 eq("o primeiro item da página é \"Pular para o conteúdo\", que leva ao <main>",[d.body.firstElementChild.className,d.body.firstElementChild.getAttribute("href"),$("#tela").getAttribute("tabindex")],["pular","#tela","-1"]);
-const telas=["inicio","contas","investir","planejar","caixinhas","metas","fixas","simulador","graficos","relatorios","mais","anotacoes","noticias","ajustes"];
+const telas=["inicio","contas","investir","planejar","caixinhas","metas","fixas","simulador","graficos","relatorios","anotacoes","noticias","ajustes"];
 const h1s=telas.map(v=>{T.ir(v);return $$("#tela h1").length});
-eq("cada uma das 14 telas tem exatamente um H1",h1s,telas.map(()=>1));
+eq("cada uma das 13 telas tem exatamente um H1",h1s,telas.map(()=>1));
 
 // ---- ⓘ no lugar do "?" ----
 T.ir("graficos");
@@ -59,7 +59,7 @@ eq("Comprei um bem, sem bem escolhido: pede para escolher, sem \"?\" solto",[/Es
 T.ir("planejar");
 const gat=$('#tela [data-a="acToggle"]'); gat.focus(); gat.click(); await espera(10);
 eq("janela aberta: o foco vai para o título e ela tem nome",[$("#modal").contains(d.activeElement)&&!!d.activeElement.id,$("#modal").getAttribute("aria-labelledby")===d.activeElement.id,/Acerto de contas/.test(d.activeElement.textContent)],[true,true,true]);
-eq("   o resto da tela fica inerte (leitor de tela e Tab não vão para trás)",[$("#tela").hasAttribute("inert"),d.querySelector("nav").hasAttribute("inert"),$(".fab").hasAttribute("inert"),$("#modalFundo").hasAttribute("inert"),$("#toast").hasAttribute("inert")],[true,true,true,false,false]);
+eq("   o resto da tela fica inerte (leitor de tela e Tab não vão para trás)",[$("#tela").hasAttribute("inert"),d.querySelector("nav").hasAttribute("inert"),$("#tela .capa .perg").closest("[inert]")!==null,$("#modalFundo").hasAttribute("inert"),$("#toast").hasAttribute("inert")],[true,true,true,false,false]);
 const foc=T.focaveis?null:null;
 const botoes=[...d.querySelectorAll("#modal button")]; botoes[botoes.length-1].focus();
 d.dispatchEvent(new w.KeyboardEvent("keydown",{key:"Tab",bubbles:true}));
@@ -68,7 +68,7 @@ d.dispatchEvent(new w.KeyboardEvent("keydown",{key:"Escape",bubbles:true})); awa
 eq("   Esc fecha, o fundo volta ao normal e o foco volta para o botão que abriu",[$("#modalFundo").classList.contains("on"),$("#tela").hasAttribute("inert"),d.activeElement&&d.activeElement.getAttribute("data-a")],[false,false,"acToggle"]);
 
 // ---- folha de anotar: diálogo e Enter salva ----
-T.ir("inicio"); const fab=$(".fab"); fab.focus();
+T.ir("inicio"); const fab=$(".nav-anotar"); fab.focus();
 T.novaFolha({tipo:"saida"}); await espera(10);
 eq("a folha de anotar é um diálogo com título, foco nele e o fundo inerte",[$("#folha").getAttribute("role"),$("#folha").getAttribute("aria-labelledby"),d.activeElement&&d.activeElement.id,$("#tela").hasAttribute("inert")],["dialog","folhaTit","folhaTit",true]);
 const n0=T.S().lancamentos.length, val=$("#fValor"); val.value="2500"; val.dispatchEvent(new w.Event("input",{bubbles:true}));

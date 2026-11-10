@@ -64,7 +64,7 @@ click('[data-a="fFechar"]');
 
 // ---- Dinheiro ----
 click('nav [data-v="contas"]');
-eq("Dinheiro: explicação longa no \"?\"",[!!$('#tela .lead [data-a="ajuda"]'),/Investir/.test(tx("#tela .lead .ajuda-t"))],[true,true]);
+eq("Dinheiro: explicação longa no \"?\"",[!!$('#tela .lead [data-a="ajuda"]'),/Investimentos/.test(tx("#tela .lead .ajuda-t"))],[true,true]);
 eq("a carteira se apresenta como dinheiro vivo",/Dinheiro vivo \(carteira\)/.test(tx('#tela [data-id="d1"]')),true);
 click('#tela [data-a="gaveta"][data-id="b1"]');
 eq("janela da conta: Conferir com o banco no topo (antes de Salvar)",[...d.querySelectorAll("#modal .btn")].map(b=>b.dataset.a).indexOf("conferir")<[...d.querySelectorAll("#modal .btn")].map(b=>b.dataset.a).indexOf("gSalvar"),true);
@@ -81,7 +81,7 @@ eq("pessoa: ações à vista; nome, data e apagar em Mais detalhes",[!!$('#modal
 fecha();
 
 // ---- Investir ----
-click('nav [data-v="investir"]');
+click('nav [data-v="contas"]');click('#tela [data-a="dinAba"][data-v="investir"]');
 eq("Investir: um botão por aplicação (antes eram 4)",[$$('#tela .inv-c .btn').length,!!$('#tela [data-a="invAplicar"]')],[1,false]);
 click('#tela [data-a="aplicacao"][data-id="cdb"]');
 eq("   a janela da aplicação tem as 4 ações e Apagar aplicação",["invAplicar","invResgatar","conferir","invEditar","invApagar"].map(a=>!!$('#modal [data-a="'+a+'"][data-id="cdb"]')),[true,true,true,true,true]);
@@ -117,7 +117,7 @@ const chips=$$('#tela [data-a="sConta"]').map(b=>b.textContent);
 eq("Simulador: aplicações por último, com \"(resgatar)\"; renda em Mais detalhes",[chips[chips.length-1],!!$("#tela details.md #sRenda")],["CDB (resgatar)",true]);
 
 // ---- Saúde (Gráficos + Relatórios) ----
-eq("barra com 6 abas e a aba Saúde",[$$("nav button[data-v]").length,tx('nav [data-v="graficos"] .lb'),!!$('nav [data-v="relatorios"]')],[6,"Saúde",false]);
+eq("barra com 4 destinos + Anotar e a aba Saúde (redesign R-01)",[$$("nav button[data-v]").length,!!$("nav .nav-anotar"),tx('nav [data-v="graficos"] .lb'),!!$('nav [data-v="relatorios"]')],[4,true,"Saúde",false]);
 click('nav [data-v="graficos"]');
 const fora=$$('#tela > .ind-card').map(c=>c.querySelector("[data-a='relInd']").dataset.id), dentro=$$('#tela details[data-rec="maisInd"] .ind-card').length;
 eq("Saúde: 4 indicadores à vista, os outros 6 em \"Ver mais indicadores\"",[fora,dentro],[["patrimonio","liquidez","reserva","poupanca"],6]);
@@ -132,8 +132,8 @@ eq("   a lista de relatórios volta para a Saúde",$('#tela .volta2').dataset.v,
 // ---- Notícias ----
 const N={versao:1,gerado:new Date().toISOString(),selic:{v:15,data:dd(-1)},cdi:{v:14.9,data:dd(-1)},ipca:{mes:0.09,doze:4.68,ref:dd(-40).slice(0,7)},focus:{ipca:4.5,selic:15,cambio:5.5,ano:"2026",data:dd(-3)},erros:[]};
 w=abre(seed,x=>x.localStorage.setItem("caderneta:v2:noticias",JSON.stringify(N))); d=w.document; T=w.__T;
-click('nav [data-v="mais"]'); click('#tela [data-a="ir"][data-v="noticias"]');
-eq("Notícias aberta pelo Mais volta para o Mais e a barra marca Mais",[$('#tela .volta2').dataset.v,$("nav [aria-current]").dataset.v],["mais","mais"]);
+click('nav [data-v="inicio"]'); click('#tela [data-a="ir"][data-v="noticias"]');
+eq("Notícias aberta pelo Início volta para o Início e a barra marca Início (redesign D4)",[$('#tela .volta2').dataset.v,$("nav [aria-current]").dataset.v],["inicio","inicio"]);
 const cards=$$("#tela .nt-card");
 eq("cada notícia: título à vista; fato e significado em \"Entenda a notícia\"; link oficial continua",cards.every(c=>c.querySelector("h3")&&c.querySelector("details.md")&&/O que isso significa/.test(c.querySelector("details.md").textContent)&&c.querySelector("a.nt-link")),true);
 eq("Selic, CDI, IPCA e Focus ganharam \"?\"",["Selic","CDI","IPCA","Focus"].map(t=>cards.some(c=>c.querySelector("h3 .ajuda-t")&&new RegExp(t).test(c.querySelector("h3 .ajuda-t").textContent))),[true,true,true,true]);
@@ -141,11 +141,11 @@ T.ir("inicio");
 eq("Hoje no Brasil no Início vira uma linha que abre, com o atalho para Notícias",[!!$('#tela details[data-rec="hojeBrasil"]'),!!$('#tela details[data-rec="hojeBrasil"] [data-v="noticias"]')],[true,true]);
 
 // ---- Anotações e Ajustes ----
-click('nav [data-v="mais"]'); click('#tela [data-a="ir"][data-v="anotacoes"]');
+click('nav [data-v="contas"]'); click('#tela [data-a="ir"][data-v="anotacoes"]');
 eq("Anotações: busca à vista; ordem e filtros em \"Ordenar e filtrar\"",[!!$("#fBusca"),!!$('#tela details[data-rec="anFiltros"] [data-a="anOrdem"]'),!!$('#tela details[data-rec="anFiltros"] [data-a="anTipo"]'),!!$('#tela details[data-rec="anFiltros"] [data-a="anMais"]')],[true,true,true,true]);
 click('#tela [data-a="anTipo"][data-t="saida"]');
 eq("   com filtro ligado, \"Limpar filtros\" fica à vista, fora da seção",!!$('#anotCtl > [data-a="anLimpar"]'),true);
-click('nav [data-v="mais"]'); click('#tela [data-a="ir"][data-v="ajustes"]');
+click('#tela .cab-aj');
 eq("Ajustes: tudo continua lá (letra, cores, movimento, modo contador, categorias, cópia, recuperar, apagar tudo, como ler, contar problema)",
   ['[data-g="tamanho"]','[data-g="tema"]','[data-g="movimento"]','[data-g="contador"]','[data-a="categoria"]','[data-a="backup"]','[data-a="restaurar"]','[data-a="zerar"]','[data-a="como"]','[data-a="feedback"]'].map(s=>!!$("#tela "+s)),[true,true,true,true,true,true,true,true,true,true]);
 eq("   \"Seus dados\" abre aberto; o arquivo de cópia fica fora das seções",[$('#tela details[data-rec="ajDados"]').open,!!$("#tela > #arquivo")],[true,true]);

@@ -23,16 +23,18 @@ const linhas=[...d.querySelectorAll("#modal #acLista .ac-t span")].map(x=>x.text
 eq("na janela a vencida diz 'atrasada há 4 dias' e a outra 'vence em 10 dias'",[/atrasada há 4 dias/.test(linhas[0]),/vence em 10 dias/.test(linhas[1])],[true,true]);
 eq("a atrasada vem primeiro",/Carnê/.test(d.querySelector("#modal #acLista .ac-t b").textContent),true);
 eq("o mesmo texto aparece na agenda",/atrasada há 4 dias/.test($("#tela").textContent),true);
-// ---- botão de anotar no canto: a pena num medalhão, sem a palavra do lado ----
-const fab=$("body > .fab");
-eq("o botão de anotar fica fora da barra e é a pena, sem a palavra Anotar do lado (o nome fica só para leitor de tela)",[!!fab.querySelector("svg.pena"),!fab.querySelector("em"),fab.getAttribute("aria-label")],[true,true,"Anotar: escolher o tipo"]);
+// ---- botão de anotar no centro da barra (redesign R-01): "+" em latão claro, com o rótulo "Anotar" sempre à vista ----
+const fab=$("nav .nav-anotar");
+eq("o Anotar fica no centro da barra, com o rótulo \"Anotar\" à vista",[!!fab,[...d.querySelectorAll("nav .in > button")].indexOf(fab),fab.querySelector(".lb").textContent,fab.getAttribute("aria-label")],[true,2,"Anotar","Anotar: escolher o tipo"]);
 fab.click();
-eq("aberto, a pena dá lugar a um × para fechar",[fab.classList.contains("aberto"),!!fab.querySelector(".pena-x")],[true,true]);
+eq("aberto, o \"+\" gira e vira um × para fechar",[fab.classList.contains("aberto"),fab.getAttribute("aria-expanded")],[true,"true"]);
 fab.click();
 // ---- dica de instalar ----
 eq("sem saber se está instalado (ambiente de teste), não mostra a dica",!!$("#dicaInst"),false);
+eq("sem nenhuma anotação ainda, o Início não mostra a dica de instalar (redesign PF-05: só depois da 1ª anotação)",!!abre("navegador").document.querySelector("#dicaInst"),false);
+seed.lancamentos=[{id:"l1",tipo:"saida",valor:1000,desc:"",contaId:"d1",destinoId:null,catId:"k1",data:dd(-1)}];
 const w2=abre("navegador");w2.document.querySelector('nav [data-v="inicio"]').click();
-eq("aberto no navegador: o Início mostra como instalar o app",!!w2.document.querySelector("#dicaInst"),true);
+eq("aberto no navegador, depois da 1ª anotação: o Início mostra como instalar o app, no fim (redesign PF-05)",!!w2.document.querySelector("#dicaInst"),true);
 eq("a dica explica o porquê e o caminho no menu",/seta de subir/.test(w2.document.querySelector("#dicaInst").textContent)&&/tela inicial|Tela de Início/.test(w2.document.querySelector("#dicaInst").textContent),true);
 w2.document.querySelector('[data-a="dicaOk"]').click();
 eq("'Entendi' some com a dica",!!w2.document.querySelector("#dicaInst"),false);
@@ -41,7 +43,7 @@ eq("e ela não volta mais neste aparelho",!!w2.document.querySelector("#dicaInst
 // redesign RD-12 / DF-10: no computador, nada de instrução de Android
 const w4=abrePC();
 eq("no computador sem a opção de instalar do navegador: nenhuma dica no Início",[w4.__T.plataforma(),!!w4.document.querySelector("#dicaInst")],["computador",false]);
-w4.document.querySelector('nav [data-v="mais"]').click();w4.document.querySelector('#tela [data-a="ir"][data-v="ajustes"]').click();
+w4.document.querySelector('#tela .cab-aj').click();
 eq("   as instruções ficam em Ajustes > Ajuda, com o caminho do computador",/No computador/.test(w4.document.querySelector("#tela").textContent),true);
 const ev=new w4.Event("beforeinstallprompt"); ev.prompt=()=>{}; ev.userChoice=Promise.resolve({outcome:"dismissed"}); w4.dispatchEvent(ev);
 w4.document.querySelector('nav [data-v="inicio"]').click();

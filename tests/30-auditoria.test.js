@@ -51,7 +51,7 @@ eq("   o código sobrevive à cópia dos dados",h.categorias[0].sis,"juros");
 w=abre({contas:[{id:"d1",nome:"Dinheiro",tipo:"ativo",inicial:1000,carteira:true},{id:"i1",nome:"CDB",tipo:"ativo",inicial:1000,inv:{taxa:10,banco:null,ate:iso(new Date())}}],categorias:[],lancamentos:[],config:cfg});
 d=w.document; T=w.__T;
 const proib=/gaveta|partida dobrada|lançamento|saldo devedor|comprometid|projeção|débito|crédito/i, achados=[];
-["investir","noticias","inicio","contas","planejar","fixas","caixinhas","graficos","relatorios","mais"].forEach(v=>{T.ir(v);const m=d.querySelector("#tela").textContent.match(proib);if(m)achados.push(v+": "+m[0])});
+["investir","noticias","inicio","contas","planejar","fixas","caixinhas","graficos","relatorios","anotacoes","ajustes"].forEach(v=>{T.ir(v);const m=d.querySelector("#tela").textContent.match(proib);if(m)achados.push(v+": "+m[0])});
 T.PERGS.forEach(p=>{const m=p.r().replace(/<[^>]+>/g,"").match(proib);if(m)achados.push("chat: "+m[0])});
 eq("6. nenhuma palavra proibida em Investir, Notícias, nas outras telas e nas respostas do chat",achados,[]);
 eq("erros de script",errs,[]);

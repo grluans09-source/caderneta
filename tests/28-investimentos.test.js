@@ -47,8 +47,8 @@ T.atualizarRendimentos();
 const lcx=S().lancamentos.filter(l=>l.rendCx==="x1"), rcx=S().reservas.filter(r=>r.rend&&r.para==="x1");
 eq("caixinha que rende: o rendimento entra na conta (Banco) e fica guardado na caixinha",[lcx.length>0,lcx.every(l=>l.contaId==="b1"),T.saldoCaixa("x1")-antesCx===lcx.reduce((s,l)=>s+l.valor,0),rcx.length>0],[true,true,true,true]);
 // ---- aba Investir ----
-click('nav [data-v="investir"]');
-eq("a aba Investir fica logo depois de Dinheiro e mostra investido, rendeu no mês e no ano",[[...d.querySelectorAll("nav button[data-v]")].map(b=>b.dataset.v).slice(0,3),/Investido/.test($("#tela").textContent),/Rendeu em/.test($("#tela").textContent)],[["inicio","contas","investir"],true,true]);
+click('nav [data-v="contas"]');click('#tela [data-a="dinAba"][data-v="investir"]');
+eq("Investimentos fica dentro de Dinheiro (redesign D4) e mostra investido, rendeu no mês e no ano",[[$("nav [aria-current]").dataset.v,$('#tela [data-a="dinAba"][aria-pressed="true"]').dataset.v,$("#tela .capa h1").textContent],/Investido/.test($("#tela").textContent),/Rendeu em/.test($("#tela").textContent)],[["contas","investir","Dinheiro"],true,true]);
 eq("cada aplicação mostra taxa e banco e um botão só; a janela dela tem Aplicar, Resgatar, Conferir, Editar e Apagar (1.23.0)",[/12% ao ano · Banco/.test($("#tela").textContent),$('#tela [data-a="aplicacao"][data-id="cdb"]')&&($('#tela [data-a="aplicacao"][data-id="cdb"]').click(),true),!!$('#modal [data-a="invAplicar"][data-id="cdb"]'),!!$('#modal [data-a="invResgatar"][data-id="cdb"]'),!!$('#modal [data-a="conferir"][data-id="cdb"]'),!!$('#modal [data-a="invEditar"][data-id="cdb"]'),!!$('#modal [data-a="invApagar"][data-id="cdb"]')],[true,true,true,true,true,true,true]);
 $('#modal [data-a="mFechar"]').click();
 eq("a Poupança convertida rende pela regra oficial da poupança (1.24.0)",/Poupança \(regra oficial\)/.test($("#tela").textContent),true);
@@ -69,7 +69,7 @@ click('[data-a="cfCorrigir"]'); click('#modal [data-a="mOk"]');
 const aj=S().lancamentos[S().lancamentos.length-1];
 eq("ajustar cria um rendimento de R$ 5 e o saldo bate com o banco",[aj.tipo,aj.valor,aj.catId===kr.id,T.saldoConta(cdb)],["entrada",500,true,saldoCdb+500]);
 // editar: informar a taxa da poupança (rende daqui para a frente)
-click('nav [data-v="investir"]'); click('#tela [data-a="aplicacao"][data-id="po"]'); click('[data-a="invEditar"][data-id="po"]'); click('#modal [data-a="rendModo"][data-v="fixa"]'); digita("#ivTaxa","6,17"); click('[data-a="ivSalvar"]');
+click('nav [data-v="contas"]');click('#tela [data-a="dinAba"][data-v="investir"]'); click('#tela [data-a="aplicacao"][data-id="po"]'); click('[data-a="invEditar"][data-id="po"]'); click('#modal [data-a="rendModo"][data-v="fixa"]'); digita("#ivTaxa","6,17"); click('[data-a="ivSalvar"]');
 eq("trocar a Poupança para taxa fixa de 6,17% ao ano: passa a usar a taxa (sem refazer nada, ainda não havia rendimento)",[po.inv.modo,po.inv.taxa,po.inv.ate],["fixa",6.17,hoje]);
 // nova aplicação
 click('[data-a="invEditar"][data-id=""]'); digita("#ivNome","Tesouro Selic"); digita("#ivValor","300000"); click('#modal [data-a="rendModo"][data-v="fixa"]'); digita("#ivTaxa","11"); click('[data-a="ivSalvar"]');

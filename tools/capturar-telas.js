@@ -19,8 +19,8 @@ const TELAS=[
   ["04-dinheiro-bens",[nav("contas"),clique('[data-a="dinAba"][data-v="bens"]')]],
   ["05-dinheiro-pessoas",[nav("contas"),clique('[data-a="dinAba"][data-v="pessoas"]')]],
   ["06-conta-editar",[nav("contas"),clique('[data-a="gaveta"][data-id="b1"]')]],
-  ["07-investir",[nav("investir")]],
-  ["08-investir-aplicacao",[nav("investir"),clique('#tela [data-a="aplicacao"]')]],
+  ["07-investir",[nav("contas"),clique('[data-a="dinAba"][data-v="investir"]')]],
+  ["08-investir-aplicacao",[nav("contas"),clique('[data-a="dinAba"][data-v="investir"]'),clique('#tela [data-a="aplicacao"]')]],
   ["09-planejar",[nav("planejar")]],
   ["10-acerto-de-contas",[nav("planejar"),clique('[data-a="acToggle"]')]],
   ["11-caixinhas",[nav("planejar"),noTela("caixinhas")]],
@@ -30,14 +30,15 @@ const TELAS=[
   ["15-saude",[nav("graficos")]],
   ["16-relatorios",[nav("graficos"),noTela("relatorios")]],
   ["17-relatorio",[nav("graficos"),clique('#tela [data-a="relInd"]')]],
-  ["18-mais",[nav("mais")]],
-  ["19-anotacoes",[nav("mais"),noTela("anotacoes")]],
-  ["20-noticias",[nav("mais"),noTela("noticias")]],
-  ["21-ajustes",[nav("mais"),noTela("ajustes")]],
+  ["18-como-ler",[clique('#tela [data-a="como"]')]],
+  ["19-anotacoes",[nav("contas"),noTela("anotacoes")]],
+  ["20-noticias",[nav("inicio"),noTela("noticias")]],
+  ["21-ajustes",[clique('#tela .cab-aj')]],
   ["22-menu-anotar",[clique('[data-a="novo"]')]],
   ["23-folha-gastei",[clique('[data-a="novo"]'),clique('#fabMenu [data-t="saida"]')]],
   ["24-chat",[clique('[data-a="chat"]')]],
-  ["25-primeiros-passos",[],true]
+  ["25-primeiros-passos",[],true],
+  ["26-inicio-primeira-tela",[]]   /* só o que se vê sem rolar (aceite da fase D: o vencimento mais próximo à vista) */
 ];
 const CEL={width:390,height:844,deviceScaleFactor:1,isMobile:true,hasTouch:true}, UA_CEL="Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Mobile Safari/537.36";
 /* [nome, tamanho, página inteira, tema]; com CAPTURA_ESCURO=1 também fotografa o celular no tema escuro */
@@ -68,7 +69,7 @@ function espera(ms){return new Promise(r=>setTimeout(r,ms))}
         for(const js of passos){await pg.evaluate(js); await espera(250)}
         await espera(400);
         /* página inteira: estica a janela até a altura da página (assim a barra de baixo fica no fim, como no celular) */
-        if(inteira&&!/menu|folha|chat|acerto|aplicacao|editar/.test(nome)){
+        if(inteira&&!/menu|folha|chat|acerto|aplicacao|editar|primeira-tela|como-ler/.test(nome)){
           const alt=await pg.evaluate(()=>Math.min(4200,document.documentElement.scrollHeight));
           if(alt>vp.height){await pg.setViewport(Object.assign({},vp,{height:alt})); await espera(300)}
         }

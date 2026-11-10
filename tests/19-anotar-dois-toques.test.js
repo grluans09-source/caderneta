@@ -35,24 +35,28 @@ const h1=()=>$("#folhaCorpo .capa h1").textContent;
 const ids=lado=>[...d.querySelectorAll("#lc"+lado+" .opt:not(.novo)")].map(b=>b.dataset.id);
 
 // ======== 1) O + abre 4 bolinhas (dois toques) ========
-eq("o menu das bolinhas começa fechado",[aberto(),$(".fab").getAttribute("aria-expanded")],[false,"false"]);
-click('.fab');
+eq("o menu das bolinhas começa fechado",[aberto(),$(".nav-anotar").getAttribute("aria-expanded")],[false,"false"]);
+click('.nav-anotar');
 // as 4 bolinhas ficam em pontos de um mesmo círculo, espelhadas à esquerda e à direita
-const pontos=[...d.querySelectorAll("#fabMenu .fb")].map(b=>{const st=b.getAttribute("style");return [+st.match(/--cx:(-?[\d.]+)/)[1],+st.match(/--cy:(-?[\d.]+)/)[1]]});
+/* redesign R-01: na barra, as bolinhas abrem em arco acima do Anotar; na folha, em quarto de círculo a partir do "Tipo" (canto) */
+const css=html.match(/<style>([\s\S]*?)<\/style>/)[1];
+function posicoes(pre){return ["gasto","ganho","transf","bem"].map(k=>{const i=css.indexOf(pre+".fb-"+k+"{--cx:");if(i<0)return [9,9];const m=css.slice(i).match(/--cx:(-?[\d.]+);--cy:(-?[\d.]+)/);return [+m[1],+m[2]]})}
+const arco=posicoes(""), pontos=posicoes(".fabmenu.emfolha ");
+eq("na barra: as 4 bolinhas numa fileira acima do Anotar, da esquerda para a direita, igualmente espaçadas e simétricas",[arco.every(([x,y])=>y>0&&y===arco[0][1]),arco.every(([x,y],i)=>i===0||Math.abs(x-arco[i-1][0]-1)<0.001),arco.every(([x,y],i)=>Math.abs(x+arco[3-i][0])<0.001)],[true,true,true]);
 eq("as 4 bolinhas ficam num quarto de círculo (raio 1) que abre para a esquerda e para cima, do canto direito",[pontos.every(([x,y])=>Math.abs(Math.hypot(x,y)-1)<0.001&&x<=0.0001&&y>=-0.0001),pontos.every(([x,y],i)=>Math.abs(Math.atan2(y,-x)*180/Math.PI-30*i)<0.1)],[true,true]);
 eq("e são simétricas em relação à diagonal do canto (uma espelha a outra)",pontos.every(([x,y],i)=>Math.abs(-x-pontos[3-i][1])<0.001),true);
-eq("tocar no + abre o menu e gera as 4 bolinhas",[aberto(),$(".fab").getAttribute("aria-expanded"),[...d.querySelectorAll("#fabMenu .fb")].map(b=>b.dataset.t)],[true,"true",["saida","entrada","transferencia","bem"]]);
+eq("tocar no + abre o menu e gera as 4 bolinhas",[aberto(),$(".nav-anotar").getAttribute("aria-expanded"),[...d.querySelectorAll("#fabMenu .fb")].map(b=>b.dataset.t)],[true,"true",["saida","entrada","transferencia","bem"]]);
 eq("as bolinhas têm o nome do tipo",[...d.querySelectorAll("#fabMenu .fbl")].map(b=>b.textContent),["Gastei","Recebi","Transferi entre contas","Comprei um bem"]);
 eq("cada bolinha tem um atraso próprio (entra em sequência, com animação)",[...d.querySelectorAll("#fabMenu .fb")].map(b=>b.getAttribute("style").match(/--d:(\d+)ms/)[1]),["0","55","110","165"]);
 click('#fabMenu .fabfundo');
 eq("tocar fora fecha o menu",aberto(),false);
-click('.fab');click('.fab');
+click('.nav-anotar');click('.nav-anotar');
 eq("tocar no + de novo também fecha",aberto(),false);
 w.document.dispatchEvent(new w.KeyboardEvent("keydown",{key:"Escape"}));
-click('.fab');w.document.dispatchEvent(new w.KeyboardEvent("keydown",{key:"Escape"}));
+click('.nav-anotar');w.document.dispatchEvent(new w.KeyboardEvent("keydown",{key:"Escape"}));
 eq("a tecla Esc fecha o menu",aberto(),false);
 for(const [t,nome] of [["saida","Gastei"],["entrada","Recebi"],["transferencia","Transferi entre contas"],["bem","Comprei um bem"]]){
-  click('.fab');click('#fabMenu [data-t="'+t+'"]');
+  click('.nav-anotar');click('#fabMenu [data-t="'+t+'"]');
   eq("segundo toque em '"+nome+"': abre a folha nesse tipo e fecha o menu",[$("#folha").classList.contains("on"),h1(),aberto()],[true,nome,false]);
   click('[data-a="fFechar"]');
 }

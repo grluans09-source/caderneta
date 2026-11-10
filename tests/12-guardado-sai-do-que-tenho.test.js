@@ -34,7 +34,9 @@ click('nav [data-v="inicio"]');
 eq("guardar NÃO tira do total: o que é meu de verdade continua igual, e o dinheiro para usar cai para 700",[T.totais().pl===pl0,/Dinheiro para usar agora R\$ 700,00/.test(tela())],[true,true]);
 caix();eq("na tela Caixinhas, para usar agora caiu para 700",/Para usar agora R\$ 700,00/.test(tela()),true);click('nav [data-v="inicio"]');
 eq("aparece separado: Guardado e investido 300",/Guardado e investido \(continua seu\) R\$ 300,00/.test(tela()),true);
-eq("a balança ganhou moedas roxas do guardado",$("#bal").innerHTML.includes("#A98BD6"),true);
+click('[data-a="como"]');
+eq("a balança (no \"Como ler?\") ganhou moedas roxas do guardado",$("#modal #bal").innerHTML.includes("#A98BD6"),true);
+click('#modal [data-a="mFechar"]');
 eq("o é meu de verdade NÃO mudou",T.totais().pl,pl0);
 caix();eq("aparece o botão para usar o dinheiro guardado",!!$('[data-a="tirarCx"]'),true);
 // tela Dinheiro: saldos reais + explicação
@@ -70,14 +72,14 @@ click('[data-a="como"]');eq("'Como ler' fala das caixinhas",/Caixinhas:/.test($(
 
 // ---- modo contador: contabilidade não conhece caixinha ----
 guardar("x1",30000);
-click('nav [data-v="mais"]');click('#tela [data-a="ir"][data-v="ajustes"]');click('[data-a="cfg"][data-g="contador"]');
+click('#tela .cab-aj');click('[data-a="cfg"][data-g="contador"]');
 click('nav [data-v="inicio"]');
 eq("modo contador mostra o Ativo inteiro, sem separar guardado",/Ativo disponível R\$ 1\.000,00/.test(tela())&&!/Guardado e investido/.test(tela()),true);
-click('nav [data-v="mais"]');click('#tela [data-a="ir"][data-v="ajustes"]');click('[data-a="cfg"][data-g="contador"]');
+click('#tela .cab-aj');click('[data-a="cfg"][data-g="contador"]');
 
 // ---- caixinha com dinheiro maior que o livre (guardado > dinheiro): moedas e legenda não quebram ----
 S().contas[1].inicial=0;S().reservas.push({id:"zz",data:"2026-01-01",de:"livre",para:"x2",valor:500000});
 click('nav [data-v="inicio"]');
-eq("guardado maior que o dinheiro não quebra a tela",$("#bal")!==null&&tela().length>100,true);
+eq("guardado maior que o dinheiro não quebra a tela (nem a balança do \"Como ler?\")",(()=>{const ok=tela().length>100;click('[data-a="como"]');const b=$("#modal #bal")!==null;click('#modal [data-a="mFechar"]');return ok&&b})(),true);
 eq("erros de script",errs,[]);
 console.log(ok?"TUDO OK":"HÁ FALHAS");process.exit(ok?0:1);

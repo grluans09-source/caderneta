@@ -16,7 +16,7 @@
 | A | Linha de base: massa de teste, "golden master", fotos "antes", cópia .json | **Concluída** (9 nov 2026), publicada na **1.25.0-beta.1** |
 | B | Correções rápidas (avisos, abertura, panorama, diálogos, contraste, textos, formulário) | **Concluída** (9 nov 2026), publicada na **1.25.0-beta.1** |
 | C | Fundação: cores (tokens), letras Fraunces + Atkinson locais, componentes base | **Concluída** (9 nov 2026), versão **1.26.0-beta.1** |
-| D | Estrutura do celular: barra Início · Dinheiro · [Anotar] · Planejar · Saúde; Perguntar e Ajustes no cabeçalho | A fazer |
+| D | Estrutura do celular: barra Início · Dinheiro · [Anotar] · Planejar · Saúde; Perguntar e Ajustes no cabeçalho | **Concluída** (9 nov 2026), versão **1.27.0-beta.1** |
 | E | Componentes e telas do celular (folha de anotar, valor, Planejar, metas, gráficos, 320 px) | A fazer |
 | F | Movimento (animações MM e MD) | A fazer |
 | G | Layout do computador (barra lateral, colunas) | A fazer |
@@ -63,6 +63,16 @@ No celular as telas que rolam aparecem inteiras (até 4.200 px); no computador, 
 - Fotos depois (claro, escuro e computador): `docs/redesign/capturas/fase-c/`.
 - **Não verificado:** celular de verdade (as letras e o tema escuro foram vistos só no Chrome do computador).
 
+## Fase D: o que foi feito
+- **Barra de baixo** Início · Dinheiro · [Anotar] · Planejar · Saúde (R-01): ícones de traço 2 px em 24 px, rótulos sempre visíveis (12 / 13 / 14 px), pílula latão-claro na aba ativa, Anotar de 58 × 58 px em tinta com "+" latão-claro, 26 px acima da barra. A pena e o Perguntar flutuantes saíram.
+- **Cabeçalho** de toda tela com Perguntar (rosto do Mordomo, 44 × 44) e Ajustes (engrenagem, 44 × 44).
+- **D4**: Investimentos é aba de Dinheiro (mesma tela e botões); Todas as anotações em Dinheiro; Notícias no Início > Hoje no Brasil; Ajustes no cabeçalho; a aba Mais saiu (o endereço interno `mais` leva ao Início).
+- **Início por urgência** (R-02): cartão do valor com variação e Tenho × Devo; "Precisa de você" (some vazio); cartão do mês com "por dia"; últimas anotações; Hoje no Brasil e Seus objetivos recolhidos; dica de instalar só depois da 1ª anotação; frase no rodapé; balança no "Como ler?".
+- **Chat**: 9 respostas com o caminho novo (aprovadas no golden master pela D4; nenhum valor mudou).
+- **Aceite**: em 390 × 844 com a massa de teste, o 1º vencimento termina em y = 611 px e a barra começa em 765 px; nada flutua sobre o conteúdo (Normal, Grande e Enorme) — `tools/conferir-primeira-tela.js`. **Matriz PF-01 a PF-50: 50 de 50** no lugar novo (`tests/38-matriz-preservacao.test.js`; detalhe em `MATRIZ_PRESERVACAO_VERIFICADA.md`). 320 px: 78 combinações sem rolagem para o lado.
+- **Testes**: 38 arquivos, **1019 verificações, todos verdes**. Fotos: `docs/redesign/capturas/fase-d/` (inclui `26-inicio-primeira-tela`).
+- **Não verificado:** celular de verdade; leitor de tela de verdade.
+
 ## Itens dos relatórios
 
 Situação: **A fazer** · **Feito** · **Parcial** · **Descartado** (com motivo). A coluna "Fase" diz quando cada item entra.
@@ -70,10 +80,10 @@ Situação: **A fazer** · **Feito** · **Parcial** · **Descartado** (com motiv
 ### Relatório 01 (celular): problemas (MF)
 | ID | Prioridade | Problema | Fase | Situação |
 |---|---|---|---|---|
-| MF-01 | P1 | Camada flutuante permanente cobre conteúdo e ações | D | A fazer |
+| MF-01 | P1 | Camada flutuante permanente cobre conteúdo e ações | D | Feito (fase D) |
 | MF-02 | P1 | Balões e avisos se sobrepõem e reaparecem a cada troca de aba | B | Feito (fase B) |
 | MF-03 | P1 | Abertura obrigatória de 4,1 s a cada carregamento | B | Feito (fase B) |
-| MF-04 | P1 | A primeira dobra do Início não mostra o que exige ação | D | A fazer |
+| MF-04 | P1 | A primeira dobra do Início não mostra o que exige ação | D | Feito (fase D) |
 | MF-05 | P1 | Painel de Saúde declara "saudável" sem dados | B (D1) | Feito (fase B) |
 | MF-06 | P2 | Campo de valor interpreta dígitos como centavos sem aviso | E (D2) | A fazer |
 | MF-07 | P2 | Botão "?" colado ao título é lido como pontuação | B | Feito (fase B) |
@@ -81,23 +91,23 @@ Situação: **A fazer** · **Feito** · **Parcial** · **Descartado** (com motiv
 | MF-09 | P2 | Padrões de seleção inconsistentes entre formulários | E | A fazer |
 | MF-10 | P2 | Diálogos não gerenciam foco; anúncio de tela inteira | B | Feito (fase B) |
 | MF-11 | P2 | Contraste insuficiente em bordas de campos e controles | B | Feito (fase B) |
-| MF-12 | P2 | Repetição de valores no Início e no Planejar | D/E | A fazer |
+| MF-12 | P2 | Repetição de valores no Início e no Planejar | D/E | Parcial (D: Início; Planejar na E) |
 | MF-13 | P2 | Dourado usado para tudo dilui o sinal | C/E | Feito (fase C: latão só para marca e valor; ação em tinta) |
 | MF-14 | P2 | Tipografia serifada depende do sistema | C | Feito (fase C) |
 | MF-15 | P2 | Gráficos e projeções com pouca base de dados | E (D3) | A fazer |
 | MF-16 | P2 | Meta estourada aparece como pote vazio | B | Feito (fase B) |
 | MF-17 | P3 | Textos com lacuna e inconsistência | B | Feito (fase B) |
-| MF-18 | P3 | Letra "Enorme" esconde os rótulos da barra inferior | D | A fazer |
+| MF-18 | P3 | Letra "Enorme" esconde os rótulos da barra inferior | D | Feito (fase D) |
 | MF-19 | P3 | Em 320 px, as ferramentas do Planejar ficam espremidas | E | A fazer |
 | MF-20 | P3 | Excesso de camadas de confirmação ao salvar | E | A fazer |
-| MF-21 | P3 | Dinheiro e Investir divididos em abas diferentes | D (D4) | A fazer |
-| MF-22 | P3 | Cartão de instalação ocupa o topo até ser dispensado | B | Parcial (B: texto por aparelho; mudar de lugar fica na D) |
+| MF-21 | P3 | Dinheiro e Investir divididos em abas diferentes | D (D4) | Feito (fase D) |
+| MF-22 | P3 | Cartão de instalação ocupa o topo até ser dispensado | B | Feito (B: texto por aparelho; D: só depois da 1ª anotação, no fim do Início) |
 
 ### Relatório 01 (celular): recomendações (R)
 | ID | Recomendação | Resolve | Fase | Situação |
 |---|---|---|---|---|
-| R-01 | Navegação: barra Início · Dinheiro · [Anotar] · Planejar · Saúde; Perguntar e Ajustes no cabeçalho | MF-01, MF-18, MF-21 | D | A fazer |
-| R-02 | Início reorganizado por urgência | MF-04, MF-12, MF-22 | D | A fazer |
+| R-01 | Navegação: barra Início · Dinheiro · [Anotar] · Planejar · Saúde; Perguntar e Ajustes no cabeçalho | MF-01, MF-18, MF-21 | D | Parcial (D: barra, cabeçalho e realocação; tocar = Gastei direto e toque longo = 4 tipos, na fase E com a folha de uma etapa) |
+| R-02 | Início reorganizado por urgência | MF-04, MF-12, MF-22 | D | Feito (fase D) |
 | R-03 | Folha "Nova anotação" de uma etapa | MF-08, MF-20, MF-06 | E | A fazer |
 | R-04 | Fila única de avisos e regra para o mascote | MF-02, MF-20 | B | Feito (fase B) |
 | R-05 | Abertura curta e só quando agrega | MF-03 | B | Feito (fase B) |

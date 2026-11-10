@@ -10,11 +10,14 @@ function abre(contas,extra){
   const seed=Object.assign({contas:contas,categorias:cats,lancamentos:[],fixas:[],caixas:[],reservas:[],config:cfg},extra||{});
   return new JSDOM(html,{runScripts:"dangerously",url:"http://localhost/",virtualConsole:vc,pretendToBeVisual:true,beforeParse(w){w.localStorage.setItem("caderneta:v2",JSON.stringify(seed))}}).window;
 }
-const humor=w=>w.document.querySelector("#bal").dataset.h;
+/* a balança do Mordomo mora no "Como ler?" do Início (redesign R-02) */
+function comoLer(w){const b=w.document.querySelector('#tela [data-a="como"]'); if(b&&!w.document.querySelector("#modal #bal"))b.click(); return w.document.querySelector("#modal #bal")}
+const humor=w=>comoLer(w).dataset.h;
 
 // ---- o Mordomo é a balança do Início ----
 let w=abre([{id:"d1",nome:"Dinheiro",tipo:"ativo",inicial:500000,carteira:true},{id:"cc",nome:"Cartão",tipo:"passivo",inicial:50000}]), d=w.document, $=s=>d.querySelector(s);
-eq("a balança do Início é o Mordomo: medalhão com olhos, gravata e pedestal",[!!$("#bal .md-cab"),d.querySelectorAll("#bal .md-olho").length,!!$("#bal [data-a]")||$("#bal").dataset.a],[true,2,"mordomo"]);
+comoLer(w);
+eq("a balança (no \"Como ler?\" do Início) é o Mordomo: medalhão com olhos, gravata e pedestal",[!!$("#bal .md-cab"),d.querySelectorAll("#bal .md-olho").length,!!$("#bal [data-a]")||$("#bal").dataset.a],[true,2,"mordomo"]);
 eq("os pratos continuam com as moedas de cada cor (tenho e devo + é meu)",[$("#bal .pA").querySelectorAll(".moed").length>0,$("#bal .pB").querySelectorAll(".moed").length>0],[true,true]);
 eq("tem bem mais do que deve e nada atrasado: ele fica confiante",humor(w),"feliz");
 $("#bal").dispatchEvent(new w.MouseEvent("click",{bubbles:true}));
@@ -22,7 +25,7 @@ eq("tocar nele faz a reverência e ele fala da situação",[$("#bal").classList.
 eq("a balança fica em equilíbrio (o que tenho = o que devo + o que é meu): o travessão não fica torto",$("#bal .beam").getAttribute("transform"),null);
 w=abre([{id:"d1",nome:"Dinheiro",tipo:"ativo",inicial:10000,carteira:true},{id:"cc",nome:"Cartão",tipo:"passivo",inicial:50000}]);
 eq("deve mais do que tem: ele fica preocupado (e fala com calma)",humor(w),"preocupado");
-w.document.querySelector("#bal").dispatchEvent(new w.MouseEvent("click",{bubbles:true}));
+comoLer(w).dispatchEvent(new w.MouseEvent("click",{bubbles:true}));
 eq("a fala é de ajuda, não de bronca",/Vamos virar esse jogo juntos/.test(w.document.querySelector("#toast").textContent),true);
 w=abre([{id:"d1",nome:"Dinheiro",tipo:"ativo",inicial:100000,carteira:true},{id:"cc",nome:"Cartão",tipo:"passivo",inicial:0,abertas:[{data:dd(-3),valor:20000}]}]);
 eq("tem uma conta atrasada: ele fica atento",humor(w),"atento");
@@ -43,7 +46,7 @@ function click(s){const el=typeof s==="string"?$(s):s; if(!el)throw new Error("s
 function digita(s,t){const el=$(s);el.value=t;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
 const espera=ms=>new Promise(r=>setTimeout(r,ms));
 (async()=>{
-function anota(tipo,valor,fn){click(".fab");click('#fabMenu [data-t="'+tipo+'"]');digita("#fValor",valor);if(fn)fn();click('[data-a="fSalvar"]')}
+function anota(tipo,valor,fn){click(".nav-anotar");click('#fabMenu [data-t="'+tipo+'"]');digita("#fValor",valor);if(fn)fn();click('[data-a="fSalvar"]')}
 anota("entrada","5000",()=>{click('[data-a="fConta"][data-id="d1"]');click('[data-a="fCat"]')});
 await espera(950);
 eq("Recebi: a Moedinha cai no lugar do carimbo",[!!$(".momento.m-cai"),/Entrou dinheiro/.test(($(".momento")||{}).textContent||""),$("#carimbo").classList.contains("on")],[true,true,false]);

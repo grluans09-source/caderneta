@@ -40,8 +40,8 @@ setTimeout(()=>{
     eq("restaurar um backup antigo também cria a carteira",[h.contas.length,h.contas.filter(c=>c.carteira).length],[2,1]);
     eq("dados vazios (primeira vez) não ganham conta sozinhos",w.__T.higienizar({}).contas.length,0);
     // Relatórios fica só na barra de baixo
-    w.document.querySelector('nav [data-v="mais"]').click();
-    eq("a tela Mais não repete mais o atalho de Relatórios",[!!d.querySelector('#tela [data-a="ir"][data-v="relatorios"]'),!!d.querySelector('#tela [data-a="ir"][data-v="anotacoes"]'),!!d.querySelector('#tela [data-a="ir"][data-v="ajustes"]')],[false,true,true]);
+    w.document.querySelector('nav [data-v="contas"]').click();
+    eq("Dinheiro não repete o atalho de Relatórios e tem o de Anotações; Ajustes no cabeçalho (redesign D4)",[!!d.querySelector('#tela [data-a="ir"][data-v="relatorios"]'),!!d.querySelector('#tela [data-a="ir"][data-v="anotacoes"]'),!!d.querySelector('#tela .cab-aj[data-v="ajustes"]')],[false,true,true]);
     eq("erros de script",errs,[]);
     console.log(ok?"TUDO OK":"HÁ FALHAS");process.exit(ok?0:1);
   },1200);

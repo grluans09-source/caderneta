@@ -22,7 +22,7 @@ const $=s=>d.querySelector(s), S=()=>T.S(), n=()=>S().lancamentos.length;
 function click(s){const el=typeof s==="string"?$(s):s;if(!el)throw new Error("sem "+s);el.click()}
 function digita(s,t){const el=$(s);el.value=t;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
 function muda(s,v){const el=$(s);el.value=v;el.dispatchEvent(new w.Event("change",{bubbles:true}));el.dispatchEvent(new w.Event("input",{bubbles:true}))}
-function folha(tipo,valor,origem,destino){click(".fab");click('#fabMenu [data-t="'+tipo+'"]');digita("#fValor",valor);
+function folha(tipo,valor,origem,destino){click(".nav-anotar");click('#fabMenu [data-t="'+tipo+'"]');digita("#fValor",valor);
   if(tipo==="saida"){click('[data-a="fConta"][data-id="'+origem+'"]');click('[data-a="fCat"][data-id="k1"]')}
   else if(tipo==="transferencia"){click('[data-a="fConta"][data-id="'+origem+'"]');click('[data-a="fDestino"][data-id="'+destino+'"]')}}
 const janela=()=>$("#modalFundo").classList.contains("on")&&$("#modal").classList.contains("trava-j");

@@ -28,7 +28,7 @@ d.documentElement.classList.add("calmo");
 function nav(v){
   if(v==="relatorios"){click('nav [data-v="graficos"]');click('#tela [data-a="ir"][data-v="relatorios"]');return}   /* Relatórios mora na aba Saúde (1.23.0) */
   if(["caixinhas"].includes(v))click('nav [data-v="planejar"]');
-  if(["ajustes"].includes(v))click('nav [data-v="mais"]');
+  if(v==="ajustes"){click('#tela .cab-aj');return}   /* Ajustes fica no cabeçalho (redesign D4) */
   if(["caixinhas","ajustes"].includes(v))click('#tela [data-a="ir"][data-v="'+v+'"]');else click('nav [data-v="'+v+'"]');
 }
 

@@ -118,12 +118,12 @@ click('[data-a="fFechar"]');
 eq("a busca continua ali ao voltar",$("#fBusca").value,"Água 8");
 
 // ---- Mais e Relatórios ----
-click('nav [data-v="mais"]');
-eq("o menu Mais tem o atalho Anotações",!!$('#tela [data-a="ir"][data-v="anotacoes"]'),true);
+click('nav [data-v="contas"]');
+eq("Dinheiro tem o atalho Todas as anotações (redesign D4: a aba Mais saiu)",!!$('#tela [data-a="ir"][data-v="anotacoes"]'),true);
 click('#tela [data-a="ir"][data-v="anotacoes"]');
-eq("voltando de Mais, o botão volta para Mais",$(".capa .volta2").dataset.v,"mais");
+eq("voltando de Dinheiro, o botão volta para Dinheiro e a barra marca Dinheiro",[$(".capa .volta2").dataset.v,$("nav [aria-current]").dataset.v],["contas","contas"]);
 click('nav [data-v="graficos"]');click('#tela [data-a="ir"][data-v="relatorios"]');
-eq("Relatórios NÃO repete a lista de anotações (ela mora em Mais > Anotações)",[!!$("#fBusca"),!!$('[data-a="anOrdem"]'),$("#anotLista")===null],[false,false,true]);
+eq("Relatórios NÃO repete a lista de anotações (ela mora em Dinheiro > Todas as anotações)",[!!$("#fBusca"),!!$('[data-a="anOrdem"]'),$("#anotLista")===null],[false,false,true]);
 // vocabulário
 eq("a tela nova não usa jargão",/gaveta|lançamento|projeção/i.test($("#tela").textContent),false);
 eq("erros de script",errs,[]);

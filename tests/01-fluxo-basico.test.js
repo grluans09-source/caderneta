@@ -14,7 +14,7 @@ function abreFolha(t){click('[data-a="novo"]');click('#fabMenu [data-a="novoT"][
 function digita(sel,txt){const el=$(sel);el.value=txt;el.dispatchEvent(new w.Event("input",{bubbles:true}))}
 function muda(sel,txt){const el=$(sel);el.value=txt;el.dispatchEvent(new w.Event("change",{bubbles:true}))}
 const S=()=>T.S();
-function irV(v){if(v==='relatorios'){click('nav [data-v="graficos"]');click('#tela [data-a="ir"][data-v="relatorios"]');return}if(v==='caixinhas'||v==='fixas'||v==='simulador')click('[data-a="ir"][data-v="planejar"]');if(v==='ajustes')click('[data-a="ir"][data-v="mais"]');click('[data-a="ir"][data-v="'+v+'"]')}
+function irV(v){if(v==='relatorios'){click('nav [data-v="graficos"]');click('#tela [data-a="ir"][data-v="relatorios"]');return}if(v==='caixinhas'||v==='fixas'||v==='simulador')click('[data-a="ir"][data-v="planejar"]');if(v==='ajustes'){click('#tela .cab-aj');return}click('[data-a="ir"][data-v="'+v+'"]')}
 d.documentElement.classList.add("calmo");
 
 // funções puras
@@ -122,7 +122,7 @@ eq("categoria nova selecionada",(d.querySelector('.opt[aria-pressed="true"][data
 click('[data-a="fFechar"]');
 
 // todas as telas
-for(const v of ["inicio","contas","planejar","caixinhas","fixas","simulador","mais","relatorios","ajustes"]){irV(v);eq("tela "+v,$("#tela").textContent.length>50,true)}
+for(const v of ["inicio","contas","planejar","caixinhas","fixas","simulador","relatorios","ajustes"]){irV(v);eq("tela "+v,$("#tela").textContent.length>50,true)}
 click('[data-a="cfg"][data-g="contador"]');
 irV('relatorios');
 eq("balancete fecha",/Débito e crédito batem/.test($("#tela").textContent),true);

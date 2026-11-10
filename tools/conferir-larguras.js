@@ -7,7 +7,11 @@ const puppeteer=require(MOD);
 const {FIXO,SEED,NOTICIAS}=require("../tests/golden/fixture");
 const PORTA=8791;
 const NAV=["C:/Program Files/Google/Chrome/Application/chrome.exe","C:/Program Files (x86)/Google/Chrome/Application/chrome.exe","C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe","/usr/bin/google-chrome","/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"].find(p=>fs.existsSync(p));
-const TELAS=["inicio","contas","investir","planejar","caixinhas","metas","fixas","simulador","graficos","relatorios","mais","anotacoes","noticias","ajustes"];
+const TELAS=["inicio","contas","investir","planejar","caixinhas","metas","fixas","simulador","graficos","relatorios","anotacoes","noticias","ajustes"];
+/* como chegar em cada tela a partir da barra (redesign D4: Investir e Anotações em Dinheiro, Notícias no Início, Ajustes no cabeçalho) */
+const CAMINHO={investir:["nav [data-v=\"contas\"]","#tela [data-a=\"dinAba\"][data-v=\"investir\"]"],caixinhas:["nav [data-v=\"planejar\"]","#tela [data-a=\"ir\"][data-v=\"caixinhas\"]"],metas:["nav [data-v=\"planejar\"]","#tela [data-a=\"ir\"][data-v=\"metas\"]"],
+  fixas:["nav [data-v=\"planejar\"]","#tela [data-a=\"ir\"][data-v=\"fixas\"]"],simulador:["nav [data-v=\"planejar\"]","#tela [data-a=\"ir\"][data-v=\"simulador\"]"],relatorios:["nav [data-v=\"graficos\"]","#tela [data-a=\"ir\"][data-v=\"relatorios\"]"],
+  anotacoes:["nav [data-v=\"contas\"]","#tela [data-a=\"ir\"][data-v=\"anotacoes\"]"],noticias:["nav [data-v=\"inicio\"]","#tela [data-a=\"ir\"][data-v=\"noticias\"]"],ajustes:["#tela .cab-aj"]};
 const espera=ms=>new Promise(r=>setTimeout(r,ms));
 (async()=>{
   const srv=spawn(process.execPath,[path.join(__dirname,"servidor-local.js"),process.argv[2]||path.join(__dirname,"..","app")],{env:Object.assign({},process.env,{PORT:String(PORTA)}),stdio:"ignore"});
@@ -26,16 +30,15 @@ const espera=ms=>new Promise(r=>setTimeout(r,ms));
       await pg.goto("http://localhost:"+PORTA+"/",{waitUntil:"load"}); await espera(500);
       if(!fontes)fontes=await pg.evaluate(async()=>{await document.fonts.ready;const ok=[...document.fonts].filter(f=>f.status==="loaded").map(f=>f.family.replace(/"/g,""));return ["Fraunces","Atkinson Hyperlegible Next"].map(f=>ok.includes(f))});
       for(const v of TELAS){
-        const r=await pg.evaluate(async v=>{
+        const r=await pg.evaluate(async (v,passos)=>{
           const p=document.querySelector('[data-a="pesaoFecha"]'); if(p)p.click();
-          window.__T_ir=window.__T_ir||null;
-          const nav=document.querySelector('nav [data-v="'+v+'"]'); if(nav)nav.click(); else{const b=document.querySelector('#tela [data-a="ir"][data-v="'+v+'"]'); if(b)b.click(); else{const m=document.querySelector('nav [data-v="mais"],nav [data-v="planejar"],nav [data-v="graficos"]');}}
+          for(const s of passos){const e=document.querySelector(s); if(!e)return {v,rola:false,larg:["sem caminho: "+s]}; e.click(); await new Promise(r=>setTimeout(r,120))}
           await new Promise(r=>setTimeout(r,250));
           document.querySelectorAll("#tela details").forEach(d=>d.open=true);
           await new Promise(r=>setTimeout(r,120));
           const W=document.documentElement.clientWidth, larg=[...document.querySelectorAll("#tela *")].filter(e=>{const q=e.getBoundingClientRect();return q.width>0&&(q.right>W+1||q.left<-1)&&!e.closest("svg")}).slice(-3).map(e=>e.tagName+"."+(e.className||"").toString().split(" ")[0]+" "+(e.textContent||"").trim().slice(0,30));
           return {v,rola:document.documentElement.scrollWidth>W+1,larg};
-        },v);
+        },v,CAMINHO[v]||["nav [data-v=\""+v+"\"]"]);
         n++;
         if(r.rola||r.larg.length)problemas.push(tema+" "+tam+" "+r.v+": "+(r.rola?"rola para o lado; ":"")+r.larg.join(" | "));
       }
@@ -43,7 +46,7 @@ const espera=ms=>new Promise(r=>setTimeout(r,ms));
     }
   }finally{await b.close(); srv.kill()}
   console.log("letras locais carregadas (Fraunces, Atkinson):",JSON.stringify(fontes));
-  console.log(n+" combinações conferidas (14 telas × 3 letras × 2 temas, em 320 px)");
+  console.log(n+" combinações conferidas ("+TELAS.length+" telas × 3 letras × 2 temas, em 320 px)");
   console.log(problemas.length?"PROBLEMAS:\n"+problemas.join("\n"):"nenhuma tela passa da largura");
   process.exit(problemas.length||!fontes||fontes.includes(false)?1:0);
 })().catch(e=>{console.error(e);process.exit(1)});

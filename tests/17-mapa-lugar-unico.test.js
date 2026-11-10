@@ -20,13 +20,13 @@ const S=()=>T.S();
 
 // ---- Início enxuto ----
 click('nav [data-v="inicio"]');
-eq("Início: uma linha 'Falta pagar', sem o cartão completo",[!!$('#tela .linha-falta'),!$('#cardPagar')],[true,true]);
+eq("Início: sem nada a pagar no mês, a linha 'Falta pagar' some (redesign R-02: \"Precisa de você\" só aparece quando há algo) e o cartão completo não aparece",[!$('#tela .linha-falta'),!$('#cardPagar')],[true,true]);
 eq("Início não tem mais o botão de usar o guardado",!$('[data-a="tirarCx"]'),true);
 eq("Início mostra no máximo 3 anotações",d.querySelectorAll("#tela .lista .lanc").length<=3,true);
 
 // ---- Dinheiro em abas ----
 click('nav [data-v="contas"]');
-eq("Dinheiro tem 4 abas",[...d.querySelectorAll('[data-a="dinAba"]')].map(b=>b.textContent),["Contas","Dívidas","Bens","Pessoas"]);
+eq("Dinheiro tem 5 abas (Investimentos entrou, redesign D4)",[...d.querySelectorAll('[data-a="dinAba"]')].map(b=>b.textContent),["Contas","Investimentos","Dívidas","Bens","Pessoas"]);
 eq("aba Contas lista as contas e não mostra bens nem pessoas",/Carteira/.test($("#tela").textContent)&&!$('[data-a="bemNovo"]')&&!$('[data-a="pessoaNova"]'),true);
 click('[data-a="dinAba"][data-v="bens"]');
 eq("aba Bens tem o botão de bem e não mostra contas",!!$('[data-a="bemNovo"]')&&!$('[data-a="gaveta"][data-id="c1"]'),true);
@@ -52,7 +52,7 @@ const rel=$("#tela").textContent;
 eq("Relatórios tem o panorama e um relatório para cada um dos 10 indicadores, sem repetir o que já mora em outras telas",/Seu panorama/.test(rel)&&d.querySelectorAll("#tela .rel-item").length===10&&!/O que pagar em/.test(rel)&&!/Contas a pagar/.test(rel)&&!/Anotações do mês/.test(rel),true);
 
 // ---- Ajustes em 3 grupos ----
-click('nav [data-v="mais"]');click('#tela [data-a="ir"][data-v="ajustes"]');
+click('#tela .cab-aj');
 eq("Ajustes tem as seções Aparência, Categorias, Seus dados e Ajuda, nessa ordem, que abrem e fecham (1.23.0)",[...d.querySelectorAll("#tela details.rec > summary .rec-t")].map(x=>x.childNodes[0].textContent),["Aparência","Categorias","Seus dados","Ajuda"]);
 eq("erros de script",errs,[]);
 console.log(ok?"TUDO OK":"HÁ FALHAS");process.exit(ok?0:1);

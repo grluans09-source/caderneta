@@ -39,10 +39,11 @@ function varre(rot){
 function nav(v){
   if(v==="relatorios"){click('nav [data-v="graficos"]');click('#tela [data-a="ir"][data-v="relatorios"]');return}   /* Relatórios mora na aba Saúde (1.23.0) */
   if(["caixinhas","metas","fixas","simulador"].includes(v))click('nav [data-v="planejar"]');
-  if(["ajustes","anotacoes"].includes(v))click('nav [data-v="mais"]');
+  if(v==="ajustes"){click('#tela .cab-aj');return}   /* Ajustes fica no cabeçalho (redesign D4) */
+  if(v==="anotacoes")click('nav [data-v="contas"]');   /* Anotações em Dinheiro (redesign D4) */
   if(["caixinhas","metas","fixas","simulador","ajustes","anotacoes"].includes(v))click('#tela [data-a="ir"][data-v="'+v+'"]');else click('nav [data-v="'+v+'"]');
 }
-["inicio","contas","planejar","caixinhas","metas","fixas","simulador","mais","anotacoes","relatorios","ajustes"].forEach(v=>{nav(v);varre("tela "+v)});
+["inicio","contas","planejar","caixinhas","metas","fixas","simulador","anotacoes","relatorios","ajustes"].forEach(v=>{nav(v);varre("tela "+v)});
 ["dividas","bens","pessoas","contas"].forEach(t=>{nav("contas");click('[data-a="dinAba"][data-v="'+t+'"]');varre("dinheiro aba "+t)});
 // modo contador (balancete) e letra grande
 nav("ajustes");click('[data-a="cfg"][data-g="contador"]');["inicio","relatorios"].forEach(v=>{nav(v);varre("contador "+v)});

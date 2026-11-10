@@ -36,11 +36,11 @@ function colhe(rot){textos.push([rot,($("#tela").textContent+" "+$("#folha").tex
 function nav(v){
   if(v==="relatorios"){click('nav [data-v="graficos"]');click('#tela [data-a="ir"][data-v="relatorios"]');return}   /* Relatórios mora na aba Saúde (1.23.0) */
   if(["caixinhas","fixas","simulador"].includes(v))click('nav [data-v="planejar"]');
-  if(["ajustes"].includes(v))click('nav [data-v="mais"]');
+  if(v==="ajustes"){click('#tela .cab-aj');return}   /* Ajustes fica no cabeçalho (redesign D4) */
   if(["caixinhas","fixas","simulador","ajustes"].includes(v))click('#tela [data-a="ir"][data-v="'+v+'"]');else click('nav [data-v="'+v+'"]');
 }
 // ---- varredura de vocabulário em todas as telas e janelas ----
-["inicio","contas","planejar","caixinhas","fixas","simulador","mais","relatorios","ajustes"].forEach(v=>{nav(v);colhe(v)});
+["inicio","contas","planejar","caixinhas","fixas","simulador","relatorios","ajustes"].forEach(v=>{nav(v);colhe(v)});
 nav("simulador");digita("#sValor","100000");click('[data-a="sConta"][data-id="c3"]');colhe("simulador com valor");
 click('[data-a="sTipo"][data-b="1"]');colhe("simulador bem");
 nav("inicio");click('[data-a="como"]');colhe("como ler");click('[data-a="mFechar"]');

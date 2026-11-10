@@ -1,3 +1,52 @@
 [
- {"caminho":"perguntas.Minhas finanças estão saudáveis?","fase":"B","decisao":"D1 do prompt de redesign (D67): só conta como saudável com base mínima (30 dias de anotações ou renda informada); antes dizia '8 saudáveis' com 25 dias de dados, agora '8 aguardando dados'. Os indicadores (valor, estado, leitura) e os relatórios não mudaram."}
+ {
+  "caminho": "perguntas.Minhas finanças estão saudáveis?",
+  "fase": "B",
+  "decisao": "D1 do prompt de redesign (D67): só conta como saudável com base mínima (30 dias de anotações ou renda informada); antes dizia '8 saudáveis' com 25 dias de dados, agora '8 aguardando dados'. Os indicadores (valor, estado, leitura) e os relatórios não mudaram."
+ },
+ {
+  "caminho": "perguntas.Quanto dinheiro eu tenho agora?",
+  "fase": "D",
+  "decisao": "D4 do prompt de redesign (D67): Anotar no centro da barra, Ajustes na engrenagem do cabeçalho, Investimentos dentro de Dinheiro, Anotações em Dinheiro. Só o caminho no texto mudou; nenhum valor."
+ },
+ {
+  "caminho": "perguntas.Como eu anoto um gasto?",
+  "fase": "D",
+  "decisao": "D4 do prompt de redesign (D67): Anotar no centro da barra, Ajustes na engrenagem do cabeçalho, Investimentos dentro de Dinheiro, Anotações em Dinheiro. Só o caminho no texto mudou; nenhum valor."
+ },
+ {
+  "caminho": "perguntas.Como anoto uma compra parcelada?",
+  "fase": "D",
+  "decisao": "D4 do prompt de redesign (D67): Anotar no centro da barra, Ajustes na engrenagem do cabeçalho, Investimentos dentro de Dinheiro, Anotações em Dinheiro. Só o caminho no texto mudou; nenhum valor."
+ },
+ {
+  "caminho": "perguntas.Como passo dinheiro de uma conta para outra?",
+  "fase": "D",
+  "decisao": "D4 do prompt de redesign (D67): Anotar no centro da barra, Ajustes na engrenagem do cabeçalho, Investimentos dentro de Dinheiro, Anotações em Dinheiro. Só o caminho no texto mudou; nenhum valor."
+ },
+ {
+  "caminho": "perguntas.Anotei errado. Como corrijo ou apago?",
+  "fase": "D",
+  "decisao": "D4 do prompt de redesign (D67): Anotar no centro da barra, Ajustes na engrenagem do cabeçalho, Investimentos dentro de Dinheiro, Anotações em Dinheiro. Só o caminho no texto mudou; nenhum valor."
+ },
+ {
+  "caminho": "perguntas.Como cadastro meu carro ou minha casa?",
+  "fase": "D",
+  "decisao": "D4 do prompt de redesign (D67): Anotar no centro da barra, Ajustes na engrenagem do cabeçalho, Investimentos dentro de Dinheiro, Anotações em Dinheiro. Só o caminho no texto mudou; nenhum valor."
+ },
+ {
+  "caminho": "perguntas.Como faço uma cópia dos meus dados?",
+  "fase": "D",
+  "decisao": "D4 do prompt de redesign (D67): Anotar no centro da barra, Ajustes na engrenagem do cabeçalho, Investimentos dentro de Dinheiro, Anotações em Dinheiro. Só o caminho no texto mudou; nenhum valor."
+ },
+ {
+  "caminho": "perguntas.Troquei de celular. Como levo meus dados?",
+  "fase": "D",
+  "decisao": "D4 do prompt de redesign (D67): Anotar no centro da barra, Ajustes na engrenagem do cabeçalho, Investimentos dentro de Dinheiro, Anotações em Dinheiro. Só o caminho no texto mudou; nenhum valor."
+ },
+ {
+  "caminho": "perguntas.Como deixo a letra maior ou a tela escura?",
+  "fase": "D",
+  "decisao": "D4 do prompt de redesign (D67): Anotar no centro da barra, Ajustes na engrenagem do cabeçalho, Investimentos dentro de Dinheiro, Anotações em Dinheiro. Só o caminho no texto mudou; nenhum valor."
+ }
 ]

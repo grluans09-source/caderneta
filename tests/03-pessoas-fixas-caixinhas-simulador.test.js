@@ -29,7 +29,7 @@ d.documentElement.classList.add("calmo");
 function nav(v){
   if(v==="relatorios"){click('nav [data-v="graficos"]');click('#tela [data-a="ir"][data-v="relatorios"]');return}   /* Relatórios mora na aba Saúde (1.23.0) */
   if(["caixinhas","fixas","simulador"].includes(v))click('nav [data-v="planejar"]');
-  if(["ajustes"].includes(v))click('nav [data-v="mais"]');
+  if(v==="ajustes"){click('#tela .cab-aj');return}   /* Ajustes fica no cabeçalho (redesign D4) */
   if(["caixinhas","fixas","simulador","ajustes"].includes(v))click(`#tela [data-a="ir"][data-v="${v}"]`);else click(`nav [data-v="${v}"]`);
 }
 function invariante(n){
@@ -38,8 +38,8 @@ function invariante(n){
 }
 
 // ---- menu e R$ ----
-eq("6 abas na barra de baixo (Gráficos e Relatórios juntos na aba Saúde, 1.23.0), o botão de anotar fica solto no canto e abre as 4 bolinhas de tipo",[d.querySelectorAll("nav button").length,!!d.querySelector("body > .fab"),!d.querySelector("nav .fab"),d.querySelectorAll("#fabMenu .fb").length],[6,true,true,4]);
-eq("menu: início, dinheiro, investir, planejar, saúde, mais",[...d.querySelectorAll("nav button[data-v]")].map(b=>b.dataset.v),["inicio","contas","investir","planejar","graficos","mais"]);
+eq("barra de baixo com 4 destinos e o Anotar no centro (redesign R-01), que abre as 4 bolinhas de tipo",[d.querySelectorAll("nav button").length,!!d.querySelector("nav .nav-anotar"),!d.querySelector("body > .fab"),d.querySelectorAll("#fabMenu .fb").length],[5,true,true,4]);
+eq("menu: início, dinheiro, planejar, saúde (Investir em Dinheiro; Ajustes e Perguntar no cabeçalho)",[...d.querySelectorAll("nav button[data-v]")].map(b=>b.dataset.v),["inicio","contas","planejar","graficos"]);
 nav("caixinhas");eq("caixinhas marca Planejar",$("nav [aria-current]").dataset.v,"planejar");
 nav("relatorios");eq("os relatórios ficam dentro da aba Saúde (a barra marca Saúde)",$("nav [aria-current]").dataset.v,"graficos");
 nav("inicio");
@@ -55,7 +55,9 @@ eq("frase tem autor",/—/.test(f1),true);eq("tocar troca a frase",f1!==f2,true)
 eq("Início não tem mais 'Boa noite'",/Boa (noite|tarde)|Bom dia/.test($("#tela").textContent),false);
 
 // ---- balança ----
-eq("balança com moedas",d.querySelectorAll("#bal .moed").length>0,true);
+click('[data-a="como"]');
+eq("balança com moedas (no \"Como ler?\" do Início, redesign R-02)",d.querySelectorAll("#modal #bal .moed").length>0,true);
+click('#modal [data-a="mFechar"]');
 click('[data-a="como"]');eq("modal 'como ler'",/Como ler a balança/.test($("#modal").textContent),true);click('[data-a="mFechar"]');
 
 // ---- pessoas: emprestei ----

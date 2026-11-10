@@ -24,7 +24,7 @@ d.documentElement.classList.add("calmo");
 function nav(v){
   if(v==="relatorios"){click('nav [data-v="graficos"]');click('#tela [data-a="ir"][data-v="relatorios"]');return}   /* Relatórios mora na aba Saúde (1.23.0) */
   if(["caixinhas","fixas","simulador"].includes(v))click('nav [data-v="planejar"]');
-  if(["ajustes"].includes(v))click('nav [data-v="mais"]');
+  if(v==="ajustes"){click('#tela .cab-aj');return}   /* Ajustes fica no cabeçalho (redesign D4) */
   if(["caixinhas","fixas","simulador","ajustes"].includes(v))click('#tela [data-a="ir"][data-v="'+v+'"]');else click('nav [data-v="'+v+'"]');
 }
 function tudoFecha(n){
@@ -47,8 +47,12 @@ eq("o é meu sobe com o bem",T.totais().pl,pl0+3000000);
 click('[data-a="dinAba"][data-v="bens"]');eq("tela Dinheiro lista o bem",/Meus bens/.test($("#tela").textContent)&&/Carro/.test($("#tela").textContent)&&/Perde 12% ao ano/.test($("#tela").textContent),true);
 nav("inicio");
 eq("a legenda tem a linha 'Meus bens' (moedas cor de cobre)",/Meus bens/.test($("#tela").textContent),true);
-eq("balança tem moedas cor de cobre dos bens",$("#bal").innerHTML.includes("#CC8A56"),true);
-eq("frase explica com bens",/vendendo os seus bens/.test($("#tela").textContent),true);
+click('[data-a="como"]');
+eq("balança (no \"Como ler?\") tem moedas cor de cobre dos bens",$("#modal #bal").innerHTML.includes("#CC8A56"),true);
+click('#modal [data-a="mFechar"]');
+click('[data-a="como"]');
+eq("frase explica com bens (no \"Como ler?\", redesign R-02)",/vendendo os seus bens/.test($("#modal").textContent),true);
+click('#modal [data-a="mFechar"]');
 tudoFecha("após bem");
 
 // ---- bens não aparecem como forma de pagar um gasto ----

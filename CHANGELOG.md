@@ -5,6 +5,19 @@
 Formato: versão semântica (`MAIOR.MENOR.CORREÇÃO`). Cada versão diz **o que mudou para a pessoa que usa**.
 Antes da 1.0.0 as versões eram numeradas só pelo nome do cache do app (v1 a v16); estão aqui como marcos de desenvolvimento.
 
+## [1.27.0-beta.1]: 9 de novembro de 2026 · redesign, fase D: barra nova e Início por urgência
+O jeito de andar pelo app mudou (D67, decisão D4 do prompt). **Nada foi removido**: as 50 funções da matriz do relatório foram conferidas no lugar novo (teste `38`). As contas não mudaram.
+- **Barra de baixo: Início · Dinheiro · [Anotar] · Planejar · Saúde.** O **Anotar** fica no centro, num botão de tinta com "+" dourado, e abre as 4 medalhas (Gastei, Recebi, Transferi, Comprei um bem), agora numa fileira acima dele. Os nomes da barra aparecem **sempre**, também com letra Enorme.
+- **Perguntar e Ajustes no alto de toda tela**: o rostinho do Mordomo abre o chat; a engrenagem abre os Ajustes. Não há mais botões flutuando por cima do conteúdo.
+- **Investimentos dentro de Dinheiro**: abas Contas · Investimentos · Dívidas · Bens · Pessoas (as mesmas telas e botões de antes). **Todas as anotações** também em Dinheiro. **Notícias** no Início (Hoje no Brasil > Ver todas). A aba **Mais** saiu.
+- **Início por urgência**: o valor "É meu de verdade" num cartão, com a variação do mês (▲/▼), a barra **Tenho × Devo** e a composição; logo abaixo, **"Precisa de você"** (vencimentos, limite do cartão, lembrete de conferir, cópia), que some quando não há nada; depois o **mês** ("dá para gastar cerca de R$ X por dia" + entrou, saiu e sobrou), as últimas anotações, Hoje no Brasil e Seus objetivos. A **frase do dia** foi para o rodapé.
+- **A balança do Mordomo** mora no **"Como ler?"** do Início, com a explicação completa e a frase "Se você pagasse tudo o que deve hoje…".
+- A **dica de instalar** aparece só depois da 1ª anotação, no fim do Início (e sempre em Ajustes > Ajuda).
+- O aviso de conta atrasada do Mordomo (Pesão) fica dentro do "Precisa de você", não mais por cima da tela.
+- **Chat**: 9 respostas atualizadas com os caminhos novos (Anotar, Ajustes na engrenagem, Dinheiro > Investimentos, Dinheiro > Todas as anotações).
+- Em 390 × 844, o vencimento mais próximo aparece sem rolar (conferido no Chrome: `tools/conferir-primeira-tela.js`). Nada passa da largura em 320 px (13 telas × 3 letras × 2 temas; Contas fixas e Ajustes com letra Enorme passavam e foram corrigidas).
+- Testes: 1019 verificações em 38 arquivos (novo: matriz de preservação PF-01 a PF-50).
+
 ## [1.26.0-beta.1]: 9 de novembro de 2026 · redesign, fase C: cores e letras novas
 A "cara" nova do Balancete, "Tinta & Latão" (D67). Nada muda nas contas nem nos seus dados (o golden master confere).
 - **Letras novas, dentro do app** (funcionam sem internet): **Fraunces** nos títulos e valores e **Atkinson Hyperlegible Next** no texto, uma letra feita para leitura fácil (diferencia I, l e 1; O e 0). Antes, a letra dependia do celular (Times, Noto...).
