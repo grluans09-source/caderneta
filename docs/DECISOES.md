@@ -139,7 +139,7 @@ Por quê: o botão fixo atrapalhava a visualização. Consequência: nada de `po
 
 Ficaram para depois: rendimento como receita (com Investimentos, D50), fluxo de caixa do mês, relatório para o Imposto de Renda (perto da declaração) e etiquetas.
 
-**D54 · Identidade: Balancete, o Brasão e a letra de contabilidade (A).** *(Parte SUBSTITUÍDA pela D67: a abertura curta já vale desde a 1.25.0; letra Fraunces + Atkinson desde a 1.26.0; o Mordomo foi para o "Como ler?" do Início na 1.27.0. O nome e o Brasão continuam.)* Decidido pelo dono em 7 nov 2026, depois de protótipos (cópia em `docs/design/balancete-identidade.html`).
+**D54 · Identidade: Balancete, o Brasão e a letra de contabilidade (A).** *(Parte SUBSTITUÍDA pela D67: a abertura curta já vale desde a 1.25.0; letra Fraunces + Atkinson desde a 1.26.0; o Mordomo foi para o "Como ler?" do Início na 1.27.0, e o dono confirmou em 10 nov 2026 que a balança fica lá ("deixar como está"); no topo do Início fica a barra Tenho × Devo. O nome e o Brasão continuam.)* Decidido pelo dono em 7 nov 2026, depois de protótipos (cópia em `docs/design/balancete-identidade.html`).
 - **Nome:** Balancete. Caderneta se confundia com a caderneta de poupança e é palavra comum, difícil de registrar. Balancete vem da contabilidade e todo mundo entende ("balanço"). Ainda falta conferir no INPI antes de vender.
 - **Tom:** sério e luxuoso, mas próximo de quem usa.
 - **Logo:** o **Brasão**, uma moeda de ouro em faixas (serrilha, aro, nome em cima, "suas contas em ordem" embaixo, balança em relevo), **sem olhos e sem estrelas**. Ele **só ganha vida na abertura do app**.
