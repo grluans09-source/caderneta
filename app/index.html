@@ -1202,8 +1202,8 @@ html.calmo .linha-real{stroke-dashoffset:0}
   /* leitura longa (RD-14): relatório com no máximo 720 px */
   #tela.wrap[data-v="relatorio"]{max-width:calc(720px + 4rem)}
 }
-@keyframes fFolhaPC{from{transform:translateX(100%)}to{transform:none}}
-@keyframes fFolhaPCSai{from{transform:none}to{transform:translateX(100%)}}
+@keyframes fFolhaPC{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:none}}
+@keyframes fFolhaPCSai{from{opacity:1;transform:none}to{opacity:0;transform:translateX(24px)}}
 /* 1024 a 1279 px: barra lateral recolhida (72 px, só ícones, com dica); o Início com o valor em cima e 6/6 embaixo */
 @media (min-width:1024px) and (max-width:1279px){
   :root{--lat:72px}
@@ -1235,6 +1235,63 @@ html.calmo .linha-real{stroke-dashoffset:0}
   html.nav-recolhida nav button{justify-content:center;padding:.35rem}
   html.nav-recolhida .nav-topo{flex-direction:column}
 }
+
+/* ===== Redesign, fase H (D67, D5): mouse e teclado ===== */
+.dica{position:fixed;z-index:400;max-width:16rem;padding:.35rem .6rem;border-radius:.45rem;background:var(--tinta);color:var(--color-on-action);font-size:var(--fs-peq);line-height:var(--lh-peq);font-weight:600;pointer-events:none;box-shadow:0 2px 10px rgba(0,0,0,.22)}
+.dica[hidden]{display:none}
+.dica.on{animation:fDica 120ms var(--ease-enter)}
+@keyframes fDica{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.toast.pausa::after{animation-play-state:paused}
+.atalhos-l{display:grid;grid-template-columns:auto 1fr;gap:.45rem 1rem;align-items:baseline;margin:.8rem 0 1rem}
+.atalhos-l dt{margin:0;white-space:nowrap}
+.atalhos-l dd{margin:0}
+.atalhos-l kbd,.atalho-kbd{font:600 11px/14px ui-monospace,Consolas,monospace}
+.atalhos-l kbd{display:inline-block;padding:.15rem .4rem;border-radius:.3rem;border:1px solid var(--rule2);background:var(--color-surface-2);color:var(--ink)}
+.din-det.troca{animation:fFade var(--dur-fast) var(--ease-standard)}
+.din-nome:focus{outline:none}
+.din-nome:focus-visible{outline:2px solid var(--tinta);outline-offset:2px}
+/* RD-06: tabela de anotações (só no computador) */
+.tab-wrap{padding:0;overflow-x:auto}
+.tab-anot{width:100%;border-collapse:collapse;font-size:.875rem;line-height:1.25rem}
+.tab-anot th{text-align:left;font-size:12px;line-height:16px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2);font-weight:700;padding:.6rem .75rem;border-bottom:1px solid var(--rule2);white-space:nowrap}
+.tab-anot th.t-val,.tab-anot td.t-val{text-align:right}
+.tab-anot td{padding:.45rem .75rem;height:40px;border-bottom:1px solid var(--rule);vertical-align:middle;text-align:left}
+.tab-anot tbody tr{cursor:pointer}
+.tab-anot tbody tr:last-child td{border-bottom:0}
+.th-ord{display:inline-flex;align-items:center;gap:.3rem;min-height:0;padding:.1rem 0;border:0;background:none;color:inherit;font:inherit;text-transform:inherit;letter-spacing:inherit;cursor:pointer}
+.th-ord.on{color:var(--ink)}
+.th-ord .seta{display:inline-block;transition:transform 220ms var(--ease-standard)}
+.th-ord .seta.sobe{transform:rotate(180deg)}
+.t-ed{border:0;background:none;padding:0;min-height:0;font:inherit;font-weight:700;color:var(--ink);text-align:left;cursor:pointer}
+.t-data{white-space:nowrap;color:var(--ink2);font-variant-numeric:tabular-nums}
+.t-sub{color:var(--ink2)}
+.t-val{white-space:nowrap;font-family:var(--font-display);font-weight:600;font-variant-numeric:tabular-nums}
+.t-val.in{color:var(--in)}.t-val.out{color:var(--out)}.t-val.tr{color:var(--ink2)}
+.tab-anot tr.novo-lin td{background:var(--color-brand-bg)}
+/* RD-13: gráfico com foco do teclado mostra uma barra por vez */
+.grafico[tabindex]:focus{outline:none}
+.grafico[tabindex]:focus-visible{outline:2px solid var(--tinta);outline-offset:4px;border-radius:.3rem}
+.grafico [data-dica]{transition:opacity 120ms var(--ease-standard)}
+.grafico:focus-visible [data-dica]:not(.sel){opacity:.5}
+/* RD-09 / MD-01: estados do mouse (só com mouse de verdade) */
+@media (hover:hover) and (pointer:fine){
+  .lanc,.gaveta,.alerta,.ferr,.tab-anot tbody tr,details.rec>summary,.ind-card{transition:background-color 120ms var(--ease-standard)}
+  .lanc:hover,.gaveta:not([aria-current]):hover,.tab-anot tbody tr:hover td,details.rec>summary:hover{background:var(--color-surface-2)}
+  .btn:not(.sec):not(.perigo):not(:disabled):hover{filter:brightness(.94)}
+  .link:hover,.como:hover,.t-ed:hover{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
+  .btn:active,.chip:active,.lanc:active,.gaveta:active,.ferr:active,.alerta:active{transform:scale(.98)}
+  .grafico:hover [data-dica]:not(:hover){opacity:.5}
+  .grafico [data-dica]{cursor:default}
+}
+@media (min-width:1024px){
+  /* RD-11: Perguntar como painel de 380 px à direita; confirmação em 440 px */
+  .modal.chatm{position:fixed;top:0;right:0;bottom:0;width:380px;max-width:380px;height:100%;max-height:none;margin:0;border-radius:0}
+  .modal.conf{max-width:440px}
+  /* com o painel de anotar aberto, o aviso (e o Desfazer) fica ao lado dele, nunca por baixo */
+  body.folha-aberta .toast{right:calc(460px + 1rem)}
+  /* RD-04 / RD-10: as teclas aparecem na folha */
+  .f-seg .seg::after{content:attr(data-tecla);display:inline-block;margin-left:.35rem;padding:0 .3rem;border-radius:.25rem;background:rgba(0,0,0,.08);font:600 11px/14px ui-monospace,Consolas,monospace;opacity:.75}
+}
 </style>
 </head>
 <body>
@@ -1245,22 +1302,22 @@ html.calmo .linha-real{stroke-dashoffset:0}
 <main id="tela" class="wrap" tabindex="-1"></main>
 
 <nav aria-label="Menu principal">
-<div class="nav-topo so-pc"><span class="nav-marca"><svg class="logo-mini" viewBox="0 0 240 240" aria-hidden="true"><use href="#brasaoSimb"/></svg><span class="nav-txt">Balancete</span></span><button class="nav-recolhe" data-a="navRecolhe" aria-label="Recolher ou abrir a barra lateral" title="Recolher ou abrir a barra lateral">«</button></div>
+<div class="nav-topo so-pc"><span class="nav-marca"><svg class="logo-mini" viewBox="0 0 240 240" aria-hidden="true"><use href="#brasaoSimb"/></svg><span class="nav-txt">Balancete</span></span><button class="nav-recolhe" data-a="navRecolhe" aria-label="Recolher ou abrir a barra lateral" data-dica="Recolher ou abrir a barra">«</button></div>
 <div class="in">
-  <button data-a="ir" data-v="inicio" title="Início"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11 12 4l8.5 7"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5.5h4V20"/></svg></span><span class="lb">Início</span></button>
-  <button data-a="ir" data-v="contas" title="Dinheiro"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13.5" rx="3"/><path d="M3 10.5h18"/><path d="M15.5 15h2"/></svg></span><span class="lb">Dinheiro</span></button>
-  <button class="nav-anotar" data-a="novo" aria-label="Anotar um gasto (segure para escolher outro tipo)" aria-expanded="false"><span class="na-b" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span><span class="lb">Anotar</span><span class="lb-pc">Nova anotação</span><kbd class="atalho-kbd" aria-hidden="true">N</kbd></button>
-  <button data-a="ir" data-v="planejar" title="Planejar"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M8 14h3M8 17h6"/></svg></span><span class="lb">Planejar</span></button>
-  <button data-a="ir" data-v="graficos" title="Saúde"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h16"/><path d="M7 16v-5M12 16V6M17 16v-8"/></svg></span><span class="lb">Saúde</span></button>
+  <button data-a="ir" data-v="inicio" data-dica="Início · teclas G e I"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11 12 4l8.5 7"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5.5h4V20"/></svg></span><span class="lb">Início</span></button>
+  <button data-a="ir" data-v="contas" data-dica="Dinheiro · teclas G e D"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13.5" rx="3"/><path d="M3 10.5h18"/><path d="M15.5 15h2"/></svg></span><span class="lb">Dinheiro</span></button>
+  <button class="nav-anotar" data-a="novo" data-dica="Nova anotação · tecla N" aria-label="Anotar um gasto (segure para escolher outro tipo)" aria-expanded="false"><span class="na-b" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span><span class="lb">Anotar</span><span class="lb-pc">Nova anotação</span><kbd class="atalho-kbd" aria-hidden="true">N</kbd></button>
+  <button data-a="ir" data-v="planejar" data-dica="Planejar · teclas G e P"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M8 14h3M8 17h6"/></svg></span><span class="lb">Planejar</span></button>
+  <button data-a="ir" data-v="graficos" data-dica="Saúde · teclas G e S"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h16"/><path d="M7 16v-5M12 16V6M17 16v-8"/></svg></span><span class="lb">Saúde</span></button>
 </div>
 <div class="nav-atalhos so-pc"><p class="nav-sec">Atalhos</p>
-  <button data-a="atalho" data-dest="anotacoes" title="Anotações"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10a2 2 0 0 1 2 2v14l-4-2-3 2-3-2-4 2V6a2 2 0 0 1 2-2z"/><path d="M9 9h6M9 13h4"/></svg><span class="lb">Anotações</span></button>
-  <button data-a="atalho" data-dest="noticias" title="Hoje no Brasil"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h13v12a2 2 0 0 0 2 2H6a2 2 0 0 1-2-2z"/><path d="M17 9h3v9a2 2 0 0 1-2 2M7 9h7M7 13h7"/></svg><span class="lb">Hoje no Brasil</span></button>
+  <button data-a="atalho" data-dest="anotacoes" data-dica="Anotações · tecla /"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10a2 2 0 0 1 2 2v14l-4-2-3 2-3-2-4 2V6a2 2 0 0 1 2-2z"/><path d="M9 9h6M9 13h4"/></svg><span class="lb">Anotações</span></button>
+  <button data-a="atalho" data-dest="noticias" data-dica="Hoje no Brasil"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h13v12a2 2 0 0 0 2 2H6a2 2 0 0 1-2-2z"/><path d="M17 9h3v9a2 2 0 0 1-2 2M7 9h7M7 13h7"/></svg><span class="lb">Hoje no Brasil</span></button>
 </div>
 <div class="nav-rodape so-pc">
-  <button data-a="chat" class="nav-perg" aria-label="Perguntar ao Balancete" title="Perguntar"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5v.4"/><path d="M12 17h.01"/></svg><span class="lb">Perguntar</span></button>
-  <button data-a="atalho" data-dest="ajustes" title="Ajustes"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.5 5.5l1.85 1.85M16.65 16.65l1.85 1.85M5.5 18.5l1.85-1.85M16.65 7.35l1.85-1.85"/><circle cx="12" cy="12" r="6.4"/></svg><span class="lb">Ajustes</span></button>
-  <button data-a="backup" class="nav-copia" id="navCopia" title="Guardar uma cópia"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M5 19h14"/></svg><span class="lb" id="navCopiaTxt">Cópia dos dados</span></button>
+  <button data-a="chat" class="nav-perg" aria-label="Perguntar ao Balancete" data-dica="Perguntar · tecla ?"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5v.4"/><path d="M12 17h.01"/></svg><span class="lb">Perguntar</span></button>
+  <button data-a="atalho" data-dest="ajustes" data-dica="Ajustes"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.5 5.5l1.85 1.85M16.65 16.65l1.85 1.85M5.5 18.5l1.85-1.85M16.65 7.35l1.85-1.85"/><circle cx="12" cy="12" r="6.4"/></svg><span class="lb">Ajustes</span></button>
+  <button data-a="backup" class="nav-copia" id="navCopia" data-dica="Guardar uma cópia dos dados"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M5 19h14"/></svg><span class="lb" id="navCopiaTxt">Cópia dos dados</span></button>
 </div></nav>
 <div class="perg-bal" id="pergBal" aria-hidden="true"></div>
 <div class="fabmenu" id="fabMenu" aria-hidden="true">
@@ -1278,6 +1335,7 @@ html.calmo .linha-real{stroke-dashoffset:0}
 <section class="onb" id="onb" aria-label="Primeiros passos"><div class="wrap" id="onbCorpo"></div></section>
 <div class="modal-fundo" id="modalFundo"><div class="modal" id="modal" role="dialog" aria-modal="true"></div></div>
 <div class="toast" id="toast" role="status"></div>
+<div class="dica" id="dica" role="tooltip" hidden></div>
 <div class="carimbo" id="carimbo" aria-hidden="true">ANOTADO</div>
 
 <script>
@@ -1292,7 +1350,7 @@ html.calmo .linha-real{stroke-dashoffset:0}
 /* ---------- utilidades ---------- */
 var KEY="caderneta:v2";
 /* versão do app (siga o CHANGELOG.md; subir junto com VERSAO em sw.js e "version" em package.json) */
-var VERSAO_APP="1.30.0-beta.1";
+var VERSAO_APP="1.31.0-beta.1";
 var RE_ID=/^[A-Za-z0-9_-]+$/, RE_DATA=/^\d{4}-\d{2}-\d{2}$/;
 var MES=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
 var MES3=["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
@@ -1924,7 +1982,7 @@ function confirmar(texto,rotulo,acao){
   MOK=acao;
   abrirModal('<p class="q">'+esc(texto)+'</p>'+
     '<button class="btn perigo" data-a="mOk">'+esc(rotulo)+'</button>'+
-    '<button class="btn sec" data-a="mFechar">Cancelar</button>');
+    '<button class="btn sec" data-a="mFechar">Cancelar</button>',"conf");
 }
 $("#modalFundo").addEventListener("click",function(e){if(e.target===this)fecharModal()});
 
@@ -2652,13 +2710,28 @@ function pintarAnot(){
   var filtrado=AN.q.trim()||AN.tipo!=="todos"||AN.conta||AN.cat||periodoAtivo;
   h+='</div>';
   var ordTxt={data:"data",valor:"valor",nome:"nome"}[AN.ordem]||"data", tipoTxt={todos:"tudo",saida:"gastos",entrada:"ganhos",transferencia:"transferências",bens:"bens"}[AN.tipo]||"tudo";
-  ctl.innerHTML=recolhivel("anFiltros","Ordenar e filtrar",h,false,esc("Por "+ordTxt+" · mostrando "+tipoTxt+(extras?" · "+extras+(extras>1?" filtros":" filtro"):"")))+
+  ctl.innerHTML=recolhivel("anFiltros","Ordenar e filtrar",h,ehPC(),esc("Por "+ordTxt+" · mostrando "+tipoTxt+(extras?" · "+extras+(extras>1?" filtros":" filtro"):"")))+
     (filtrado?'<button class="link" data-a="anLimpar">Limpar filtros</button>':'');
   var ent=0, sai=0; tudo.forEach(function(l){if(l.tipo==="entrada")ent+=l.valor; else if(l.tipo==="saida")sai+=l.valor});
-  lista.innerHTML='<p class="faint" style="margin:.4rem 0">'+tudo.length+(tudo.length===1?" anotação":" anotações")+(modo!=="mes"&&AN.periodo==="mes"?" neste mês":"")+((ent||sai)?' · Entrou <b style="color:var(--in)">+'+esc(brl(ent))+'</b> · Saiu <b style="color:var(--out)">−'+esc(brl(sai))+'</b>':'')+'</p>'+
+  lista.innerHTML='<p class="faint" style="margin:.4rem 0" role="status">'+tudo.length+(tudo.length===1?" anotação":" anotações")+(modo!=="mes"&&AN.periodo==="mes"?" neste mês":"")+((ent||sai)?' · Entrou <b style="color:var(--in)">+'+esc(brl(ent))+'</b> · Saiu <b style="color:var(--out)">−'+esc(brl(sai))+'</b>':'')+'</p>'+
     (tudo.length
-      ?'<div class="card" style="padding:.3rem 1rem"><div class="lista">'+mostra.map(linha).join("")+'</div></div>'+(tudo.length>mostra.length?'<button class="btn sec" data-a="anVerMais">Mostrar mais ('+(tudo.length-mostra.length)+' restantes)</button>':'')
+      ?(ehPC()?tabelaAnot(mostra):'<div class="card" style="padding:.3rem 1rem"><div class="lista">'+mostra.map(linha).join("")+'</div></div>')+(tudo.length>mostra.length?'<button class="btn sec" data-a="anVerMais">Mostrar mais ('+(tudo.length-mostra.length)+' restantes)</button>':'')
       :'<div class="card">'+vazio("Nada encontrado","Tente outra palavra ou limpe os filtros."+(modo!=="mes"&&AN.periodo==="mes"?' Por padrão aparece só este mês: em “Ordenar e filtrar”, use “Mais filtros” para ver outro período.':''),filtrado?'<button class="btn peq sec" data-a="anLimpar">Limpar filtros</button>':'')+'</div>');
+}
+function tabelaAnot(ls){
+  function cab(o,rot,cls){var on=AN.ordem===o; return '<th scope="col"'+(cls?' class="'+cls+'"':'')+' aria-sort="'+(on?(AN.dir==="asc"?"ascending":"descending"):"none")+'"><button class="th-ord'+(on?" on":"")+'" data-a="anOrdem" data-o="'+o+'" data-dica="Ordenar por '+rot.toLowerCase()+'">'+rot+'<span class="seta'+(on&&AN.dir==="asc"?" sobe":"")+'" aria-hidden="true">'+(on?"↓":"↕")+'</span></button></th>'}
+  return '<div class="card tab-wrap"><table class="tab-anot"><caption class="sr">Anotações. Clique no título de uma coluna para ordenar; clique numa linha para editar.</caption><thead><tr>'+
+    cab("data","Data")+cab("nome","Descrição")+'<th scope="col">Categoria</th><th scope="col">Conta</th>'+cab("valor","Valor","t-val")+'</tr></thead><tbody>'+
+    ls.map(function(l){
+      var aj=l.tipo==="ajuste", mov=l.tipo==="transferencia"||l.tipo==="bem",
+        cls=aj?(l.sinal==="alta"?"in":"out"):l.tipo==="entrada"?"in":l.tipo==="saida"?"out":"tr",
+        sinal=aj?(l.sinal==="alta"?"↑":"↓"):l.tipo==="entrada"?"+":l.tipo==="saida"?"−":"⇄",
+        cat=mov?(l.tipo==="bem"?"Comprei um bem":"Transferência"):aj?"Ajuste de valor":nomeCat(l.catId),
+        cta=mov?nomeConta(l.contaId)+" → "+nomeConta(l.destinoId):nomeConta(l.contaId),
+        par=l.parcelas&&l.parcelas.length>1?' <span class="t-sub">· '+l.parcelas.length+'x</span>':'';
+      return '<tr class="an-lin'+(l.id===ULTIMO?" novo-lin":"")+'" data-a="editar" data-id="'+l.id+'"><td class="t-data">'+dataBR(l.data)+'</td>'+
+        '<td><button class="t-ed" data-a="editar" data-id="'+l.id+'">'+esc(tituloLanc(l))+'</button>'+par+'</td><td class="t-sub">'+esc(cat)+'</td><td class="t-sub">'+esc(cta)+'</td>'+
+        '<td class="t-val '+cls+'">'+sinal+' '+num(l.valor)+'</td></tr>'}).join("")+'</tbody></table></div>';
 }
 function iniciarAnot(){
   var b=$("#fBusca"); if(b)b.addEventListener("input",function(){AN.q=this.value;AN.n=15;pintarAnot()});
@@ -3120,19 +3193,20 @@ function empHTML(parts){
     parts.map(function(p){return '<li><i style="background:'+p.cor+'"></i><span>'+esc(p.n)+'</span><b>'+esc(brl(p.v))+' · '+Math.round(p.v/tot*100)+'%</b></li>'}).join("")+'</ul></div>';
 }
 function barrasParSVG(serie,ka,kb,rotA,rotB,aria){
-  var W=320,H=172,pL=8,pR=8,pT=26,pB=24, n=serie.length, w=(W-pL-pR)/n, bw=Math.max(14,Math.min(18,w/2-3)), mx=1, s="";
+  var W=320,H=172,pL=8,pR=8,pT=26,pB=24, n=serie.length, w=(W-pL-pR)/n, bw=Math.max(14,Math.min(18,w/2-3)), mx=1, s="", pc=ehPC();
+  function rotulo(t){return pc?' data-dica="'+esc(t)+'">':'><title>'+esc(t)+'</title>'}
   serie.forEach(function(m){mx=Math.max(mx,m[ka],kb?m[kb]:0)});
   serie.forEach(function(m,i){
     var cx=pL+w*i+w/2, ha=(H-pT-pB)*m[ka]/mx, hb=kb?(H-pT-pB)*m[kb]/mx:0, xa=kb?cx-bw-1:cx-bw/2;
     var vazio=!m[ka]&&!(kb&&m[kb]);
-    s+='<rect x="'+xa.toFixed(1)+'" y="'+(H-pB-ha).toFixed(1)+'" width="'+bw+'" height="'+ha.toFixed(1)+'" rx="3" style="fill:'+(kb?"var(--in)":"var(--out)")+'"><title>'+esc(m.l+": "+rotA+" "+brl(m[ka]))+'</title></rect>';
-    if(kb)s+='<rect x="'+(cx+1).toFixed(1)+'" y="'+(H-pB-hb).toFixed(1)+'" width="'+bw+'" height="'+hb.toFixed(1)+'" rx="3" style="fill:var(--out)"><title>'+esc(m.l+": "+rotB+" "+brl(m[kb]))+'</title></rect>';
-    if(vazio)s+='<text x="'+cx.toFixed(1)+'" y="'+(H-pB-6)+'" font-size="9" text-anchor="middle" style="fill:var(--ink3)">sem anotações</text>';
+    s+='<rect x="'+xa.toFixed(1)+'" y="'+(H-pB-ha).toFixed(1)+'" width="'+bw+'" height="'+ha.toFixed(1)+'" rx="3" style="fill:'+(kb?"var(--in)":"var(--out)")+'"'+rotulo(m.l+": "+rotA+" "+brl(m[ka]))+'</rect>';
+    if(kb)s+='<rect x="'+(cx+1).toFixed(1)+'" y="'+(H-pB-hb).toFixed(1)+'" width="'+bw+'" height="'+hb.toFixed(1)+'" rx="3" style="fill:var(--out)"'+rotulo(m.l+": "+rotB+" "+brl(m[kb]))+'</rect>';
+    if(vazio)s+='<text x="'+cx.toFixed(1)+'" y="'+(H-pB-6)+'" font-size="9" text-anchor="middle" textLength="'+Math.min(w-6,56).toFixed(0)+'" lengthAdjust="spacingAndGlyphs" style="fill:var(--ink3)">sem anotações</text>';
     s+='<text x="'+cx.toFixed(1)+'" y="'+(H-8)+'" font-size="10.5" text-anchor="middle" style="fill:'+(vazio?"var(--ink3)":"var(--ink2)")+'">'+m.l+'</text>';
   });
   s+='<line x1="'+pL+'" x2="'+(W-pR)+'" y1="'+(H-pB)+'" y2="'+(H-pB)+'" style="stroke:var(--rule2)"/>';
   s+='<text x="'+pL+'" y="14" font-size="12.5" font-weight="700" style="fill:'+(kb?"var(--in)":"var(--out)")+'">■ '+esc(rotA)+'</text>'+(kb?'<text x="'+(pL+80)+'" y="14" font-size="12.5" font-weight="700" style="fill:var(--out)">■ '+esc(rotB)+'</text>':'');
-  return '<svg class="grafico" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(aria)+'">'+s+'</svg>';
+  return '<svg class="grafico" viewBox="0 0 '+W+' '+H+'" role="img"'+(pc?' tabindex="0"':'')+' aria-label="'+esc(aria+(pc?". Use as setas para ouvir o valor de cada mês":""))+'">'+s+'</svg>';
 }
 
 /* ---------- os indicadores ---------- */
@@ -3469,7 +3543,7 @@ function detalheConta(){
   if(!c)return '<aside class="din-det card"><p class="faint">Escolha uma conta para ver o extrato.</p></aside>';
   var ls=S.lancamentos.filter(function(l){return l.contaId===c.id||l.destinoId===c.id}).sort(ordemRecente);
   return '<aside class="din-det card" aria-label="Detalhe: '+esc(c.nome)+'"><p class="rot2">'+(c.tipo==="passivo"?"Dívida":c.carteira?"Carteira":"Conta")+'</p>'+
-    '<h2 class="din-nome">'+esc(c.nome)+'</h2><div class="din-valor">'+esc(brl(saldoConta(c)))+'</div>'+
+    '<h2 class="din-nome" tabindex="-1">'+esc(c.nome)+'</h2><div class="din-valor">'+esc(brl(saldoConta(c)))+'</div>'+
     '<div class="din-acoes">'+(c.tipo==="ativo"&&!c.carteira?'<button class="btn peq" data-a="conferir" data-id="'+c.id+'">Conferir com o banco</button>':'')+
     '<button class="btn peq sec" data-a="gavetaEditar" data-id="'+c.id+'">'+(c.carteira?"Contar cédulas e editar":"Editar")+'</button></div>'+
     '<h3 class="din-ext">Extrato'+(ls.length>15?' (as 15 mais recentes)':'')+'</h3>'+
@@ -3618,6 +3692,7 @@ function telaAjustes(){
     '<input type="file" id="arquivo" accept=".json,application/json" hidden>'+
     recolhivel("ajAjuda","Ajuda",
       '<button class="btn sec" data-a="como">Como ler a balança</button>'+
+      (ehPC()?'<button class="btn sec" data-a="atalhos">Atalhos do teclado</button>':'')+
       (instalado()?'':'<h2>Instalar como aplicativo</h2><p class="sub">'+textoInstalar(plataforma())+'</p>'+(PEDIDO_INSTALAR?'<button class="btn sec" data-a="instalar">Instalar agora</button>':''))+
       '<h2>Ajude a melhorar</h2><p class="sub">Esta é uma versão de teste. Se algo travou, confundiu ou faltou, conte para mim: o texto já vai pronto, é só escolher o WhatsApp ou o e-mail e escrever o que aconteceu.</p><button class="btn" data-a="feedback">Contar um problema ou ideia</button>',
       false,"Como ler a balança, instalar e contar um problema")+
@@ -3718,7 +3793,7 @@ function desenharFolha(){
     '<header class="capa f"><button class="volta" data-a="fFechar" aria-label="Voltar">←</button><h1 id="folhaTit" tabindex="-1">'+esc(tit)+'</h1></header>';
   /* tipo em controle segmentado no topo (antes: o botão "Tipo" no canto) */
   if(!F.pagar)h+='<div class="f-seg" role="radiogroup" aria-label="O que aconteceu?">'+TIPOS.map(function(t){var on=F.tipo===t[0];
-    return '<button type="button" class="seg seg-'+t[3]+'" role="radio" data-a="fTipo" data-t="'+t[0]+'" aria-checked="'+on+'" aria-pressed="'+on+'">'+t[1]+'</button>'}).join("")+'</div>';
+    return '<button type="button" class="seg seg-'+t[3]+'" role="radio" data-a="fTipo" data-t="'+t[0]+'" aria-checked="'+on+'" aria-pressed="'+on+'" data-tecla="'+(TIPOS.indexOf(t)+1)+'">'+t[1]+'</button>'}).join("")+'</div>';
   h+='<label class="rot" for="fValor">Quanto?</label><input id="fValor" class="dinheiro '+cl+'" inputmode="decimal" enterkeyhint="done" autocomplete="off" placeholder="R$ 0,00" aria-describedby="fValorErro"><p class="f-erro" id="fValorErro" role="alert" hidden></p>';
   h+='<div id="fArred"></div>';
 
@@ -4380,8 +4455,14 @@ function salvarFolha(){
   var pagou=(l.tipo==="transferencia"&&dj&&dj.tipo==="passivo")||(l.tipo==="saida"&&!!l.fixaId);
   /* um só retorno (redesign MF-20): a folha fecha, a linha nova fica em destaque e o aviso diz o que foi feito, com Desfazer */
   var msg=i>=0?"Anotação alterada.":pagou?"Pagamento anotado.":{saida:"Gasto anotado.",entrada:"Ganho anotado.",transferencia:"Transferência anotada.",bem:"Compra anotada."}[l.tipo];
-  var fim=function(){var u=ULTIMO; fecharFolha(); toastDesfazer(msg,sn); ULTIMO=u; desenhar()};
-  if(calmo()||i>=0){fim();return}
+  var seguir=!!F.seguir&&i<0&&!F.pagar, tp=F.tipo, cid=F.contaId, dt=F.data;
+  var fim=function(){var u=ULTIMO;
+    if(seguir&&FOLHA_ABERTA){   /* a folha fica aberta, limpa, com o mesmo tipo, a mesma conta e a mesma data, e o cursor no valor */
+      F={id:null,tipo:tp,cent:0,contaId:cid,destinoId:null,catId:null,desc:"",data:dt,n:1,qE:"",qD:"",tE:false,tD:false};
+      ajustarFolha(); desenharFolha(); toastDesfazer(msg+" Pode anotar a próxima.",sn); ULTIMO=u; desenhar();
+      var fv=$("#fValor"); if(fv)try{fv.focus({preventScroll:true})}catch(e){} return}
+    fecharFolha(); toastDesfazer(msg,sn); ULTIMO=u; desenhar()};
+  if(calmo()||i>=0||seguir){fim();return}
   /* os momentos do Mordomo (D54) continuam só para receber e pagar */
   if(l.tipo==="entrada"&&momento("moeda"))setTimeout(fim,800); else if(pagou&&momento("selo"))setTimeout(fim,800); else fim();
 }
@@ -5161,6 +5242,7 @@ function aplicarConfig(){
 
 var ACOES={
   ir:function(d){ir(d.v)},
+  atalhos:function(){modalAtalhos()},
   atalho:function(d){ir(d.dest)},
   navRecolhe:function(){
     var h=document.documentElement;
@@ -5305,7 +5387,7 @@ var ACOES={
   dinAba:function(d){if(d.v==="investir"){ir("investir");return} DIN_ABA=d.v; if(VIEW!=="contas")ir("contas"); else desenhar()},
   gaveta:function(d){
     /* no computador, tocar numa conta da lista mostra o detalhe ao lado (RD-05); editar fica no botão do detalhe */
-    if(d.id&&ehPC()&&VIEW==="contas"&&!$("#modalFundo").classList.contains("on")){DIN_SEL=d.id; desenhar(); var dt=$("#tela .din-det"); if(dt)try{dt.focus({preventScroll:true})}catch(e){} return}
+    if(d.id&&ehPC()&&VIEW==="contas"&&!$("#modalFundo").classList.contains("on")){DIN_SEL=d.id; desenhar(); var dt=$("#tela .din-det"); if(dt){dt.classList.add("troca"); var dn=dt.querySelector(".din-nome"); if(dn)try{dn.focus({preventScroll:true})}catch(e){}} return}
     modalGaveta(d.id||null,d.t||null)},
   gavetaEditar:function(d){modalGaveta(d.id)},
   frase:function(){
@@ -5538,7 +5620,7 @@ document.addEventListener("change",function(e){
   }
 });
 document.addEventListener("keydown",function(e){
-  if(e.key==="Escape"){ if($("#modalFundo").classList.contains("on"))fecharModal(); else if(FOLHA_ABERTA)fecharFolha() }
+  if(e.key==="Escape"){ if($("#modalFundo").classList.contains("on"))fecharModal(); else if(FOLHA_ABERTA)fecharFolhaComCuidado() }
   var caixa=$("#modalFundo").classList.contains("on")?$("#modal"):FOLHA_ABERTA?$("#folha"):null;
   /* Tab não sai do diálogo aberto */
   if(e.key==="Tab"&&caixa){
@@ -5557,6 +5639,65 @@ document.addEventListener("keydown",function(e){
     if(alvo){e.preventDefault();alvo.click()}
   }
 });
+/* atalhos (D5, RD-10): N anota · 1–4 trocam o tipo na folha · Enter salva · Shift+Enter salva e segue · Esc fecha ·
+   / procura nas anotações · G e depois I, D, P ou S vão para Início, Dinheiro, Planejar ou Saúde · ? abre o Perguntar.
+   Num campo de texto, só Enter, Shift+Enter e Esc valem (o resto é digitação). */
+var G_ESPERA=0;
+function campoTexto(el){if(!el)return false; if(el.isContentEditable)return true; var t=el.tagName; if(t==="TEXTAREA"||t==="SELECT")return true; if(t!=="INPUT")return false; return !/^(button|checkbox|radio|submit|reset|range|color|file)$/i.test(el.type||"")}
+var ATALHOS=[["N","Nova anotação (abre o Gastei, com o cursor no valor)"],["1 a 4","Na anotação: Gastei, Recebi, Transferi ou Comprei um bem (fora de um campo de texto)"],["Enter","Salvar"],["Shift + Enter","Salvar e já anotar a próxima"],["Esc","Fechar (pergunta antes, se você já digitou algo)"],["/","Procurar nas anotações"],["G e depois I, D, P ou S","Ir para Início, Dinheiro, Planejar ou Saúde"],["?","Perguntar"],["← →","Num gráfico: ver o valor de cada mês"]];
+function modalAtalhos(){
+  abrirModal('<p class="q">Atalhos do teclado</p><p class="sub">Funcionam no computador, quando você não está escrevendo num campo (Enter e Esc valem sempre).</p><dl class="atalhos-l">'+
+    ATALHOS.map(function(a){return '<dt><kbd>'+esc(a[0])+'</kbd></dt><dd>'+esc(a[1])+'</dd>'}).join("")+'</dl><button class="btn sec" data-a="mFechar">Fechar</button>');
+}
+document.addEventListener("keydown",function(e){
+  if(e.defaultPrevented||e.ctrlKey||e.metaKey||e.altKey||e.isComposing)return;
+  var k=e.key, alvo=e.target, modal=$("#modalFundo").classList.contains("on");
+  /* gráfico com foco: as setas passam de mês em mês e mostram o valor (MD-11) */
+  if((k==="ArrowRight"||k==="ArrowLeft")&&alvo&&alvo.matches&&alvo.matches("svg.grafico")){
+    var bs=Array.prototype.slice.call(alvo.querySelectorAll("[data-dica]")); if(!bs.length)return; e.preventDefault();
+    var i=bs.indexOf(alvo.querySelector("[data-dica].sel")); i=k==="ArrowRight"?Math.min(bs.length-1,i+1):Math.max(0,i<0?0:i-1);
+    bs.forEach(function(b,j){b.classList.toggle("sel",j===i)}); mostrarDica(bs[i]); alvo.setAttribute("aria-describedby","dica"); return;
+  }
+  /* na folha de anotar */
+  if(FOLHA_ABERTA&&F&&!modal){
+    if(k==="Enter"&&e.shiftKey&&!(alvo&&alvo.tagName==="TEXTAREA")){e.preventDefault(); F.seguir=true; salvarFolha(); if(F)F.seguir=false; return}
+    if(/^[1-4]$/.test(k)&&!campoTexto(alvo)&&!F.pagar){e.preventDefault(); ACOES.fTipo({t:TIPOS[+k-1][0]}); return}
+    return;
+  }
+  if(campoTexto(alvo)||modal||FOLHA_ABERTA)return;
+  if($("#onb").classList.contains("on")||!S.config.pronto||$("#fabMenu").classList.contains("on"))return;
+  if(G_ESPERA&&Date.now()-G_ESPERA<1500){var dest={i:"inicio",d:"contas",p:"planejar",s:"graficos"}[k.toLowerCase()]; G_ESPERA=0; if(dest){e.preventDefault(); ir(dest)} return}
+  if(k==="g"||k==="G"){G_ESPERA=Date.now(); return}
+  if(k==="n"||k==="N"){e.preventDefault(); novaFolha({tipo:"saida"}); return}
+  if(k==="/"){e.preventDefault(); ir("anotacoes"); var b=$("#fBusca"); if(b)try{b.focus()}catch(x){} return}
+  if(k==="?"){e.preventDefault(); ACOES.chat(); return}
+});
+/* dica: mouse parado 0,4 s ou foco pelo teclado; some ao sair, ao rolar e com Esc (WCAG 1.4.13) */
+var DICA={el:null,t:null};
+function mostrarDica(el){
+  var d=$("#dica"), tx=el&&el.getAttribute("data-dica"); if(!d||!tx)return;
+  if(DICA.el&&DICA.el!==el)DICA.el.removeAttribute("aria-describedby");
+  d.textContent=tx; d.hidden=false; DICA.el=el; el.setAttribute("aria-describedby","dica");
+  var r=el.getBoundingClientRect(), w=d.offsetWidth, h=d.offsetHeight, x, y;
+  if(el.closest("nav")){x=r.right+10; y=r.top+r.height/2-h/2}
+  else{x=r.left+r.width/2-w/2; y=r.top-h-8; if(y<4)y=r.bottom+8}
+  x=Math.max(4,Math.min(window.innerWidth-w-4,x)); y=Math.max(4,Math.min(window.innerHeight-h-4,y));
+  d.style.left=Math.round(x)+"px"; d.style.top=Math.round(y)+"px";
+  d.classList.remove("on"); void d.offsetWidth; d.classList.add("on");
+}
+function esconderDica(){clearTimeout(DICA.t); var d=$("#dica"); if(!d||!DICA.el)return; d.classList.remove("on"); d.hidden=true; DICA.el.removeAttribute("aria-describedby"); DICA.el=null}
+document.addEventListener("pointerover",function(e){if(e.pointerType!=="mouse")return; var el=e.target.closest&&e.target.closest("[data-dica]"); if(!el||el===DICA.el)return; clearTimeout(DICA.t); DICA.t=setTimeout(function(){mostrarDica(el)},400)});
+document.addEventListener("pointerout",function(e){var el=e.target.closest&&e.target.closest("[data-dica]"); if(!el)return; if(e.relatedTarget&&el.contains&&el.contains(e.relatedTarget))return; clearTimeout(DICA.t); if(DICA.el===el)esconderDica()});
+document.addEventListener("focusin",function(e){var el=e.target.closest&&e.target.closest("[data-dica]"); if(!el){if(DICA.el&&!(e.target.matches&&e.target.matches("svg.grafico")))esconderDica(); return} var vis=true; try{vis=el.matches(":focus-visible")}catch(x){} if(vis)mostrarDica(el)});
+document.addEventListener("focusout",function(e){if(e.target.matches&&e.target.matches("svg.grafico"))e.target.querySelectorAll(".sel").forEach(function(b){b.classList.remove("sel")}); esconderDica()});
+window.addEventListener("scroll",esconderDica,true);
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&DICA.el){esconderDica(); e.stopPropagation(); e.preventDefault()}},true);
+/* aviso: o mouse ou o foco em cima seguram o tempo (MD-12) */
+(function(){var el=$("#toast"); if(!el)return;
+  function pausa(){if(!AV_ATUAL)return; clearTimeout(tmr); el.classList.add("pausa")}
+  function segue(){if(!el.classList.contains("pausa"))return; el.classList.remove("pausa"); if(!AV_ATUAL)return; clearTimeout(tmr); tmr=setTimeout(fimAviso,AVISOS.length?1500:2500)}
+  el.addEventListener("pointerenter",pausa); el.addEventListener("pointerleave",segue); el.addEventListener("focusin",pausa); el.addEventListener("focusout",segue);
+})();
 (function(){
   var y0=null, f=null;
   document.addEventListener("touchstart",function(e){var a=e.target.closest&&e.target.closest(".f-alca,.folha .capa.f"); if(!a||!FOLHA_ABERTA)return; y0=e.touches[0].clientY; f=$("#folha")},{passive:true});

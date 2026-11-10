@@ -37,7 +37,7 @@ eq("RD-01: a barra tem marca, 4 destinos, atalhos (Anotações, Hoje no Brasil) 
   [!!$("nav .nav-marca"),$$("nav .in button[data-v]").map(b=>b.dataset.v),$$("nav .nav-atalhos button").map(b=>b.dataset.dest),$$("nav .nav-rodape button").map(b=>b.dataset.a+":"+(b.dataset.dest||""))],
   [true,["inicio","contas","planejar","graficos"],["anotacoes","noticias"],["chat:","atalho:ajustes","backup:"]]);
 eq("RD-02: '+ Nova anotação' vem primeiro (order:-1), em latão claro, com o atalho N à vista",[/\.nav-anotar\{order:-1;[^}]*background:var\(--latao-claro\)/.test(css),$(".nav-anotar .lb-pc").textContent,$(".nav-anotar .atalho-kbd").textContent],[true,"Nova anotação","N"]);
-eq("RD-01: cada destino tem dica de mouse (title) para a barra recolhida",$$("nav button").every(b=>b.title||b.classList.contains("nav-anotar")),true);
+eq("RD-01: cada botão da barra tem dica (mouse e teclado) para a barra recolhida; desde a fase H é a dica própria (data-dica), não o title",$$("nav button").every(b=>b.dataset.dica&&!b.title),true);
 T.ir("anotacoes");
 eq("o atalho Anotações acende sozinho na barra (um item aceso por vez)",[$('nav [data-dest="anotacoes"]').getAttribute("aria-current"),$$('nav [aria-current="page"]').length],["page",1]);
 $('nav [data-dest="ajustes"]').click();

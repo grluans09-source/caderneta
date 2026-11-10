@@ -20,7 +20,7 @@
 | E | Componentes e telas do celular (folha de anotar, valor, Planejar, metas, gráficos, 320 px) | **Concluída** (9 nov 2026), versão **1.28.0-beta.1** |
 | F | Movimento (animações MM e MD) | **Concluída** (10 nov 2026), versão **1.29.0-beta.1** |
 | G | Layout do computador (barra lateral, colunas) | **Concluída** (10 nov 2026), versão **1.30.0-beta.1** |
-| H | Mouse e teclado no computador (atalhos, hover, tabela) | A fazer |
+| H | Mouse e teclado no computador (atalhos, hover, tabela) | **Concluída** (10 nov 2026), versão **1.31.0-beta.1** |
 | I | Validação final, matriz de preservação, documentação | A fazer |
 
 ## Fase A: o que foi feito e como conferir
@@ -106,6 +106,17 @@ No celular as telas que rolam aparecem inteiras (até 4.200 px); no computador, 
 - **Testes**: 41 arquivos, **1114 verificações, todos verdes** (novo: `tests/41-fase-g-computador.test.js`, que finge uma janela de computador com um `matchMedia` de mentira e confere celular e computador). Chrome: `tools/conferir-computador.js` (1024, 1280, 1440, 1920: barra, colunas, nada passa da largura, Início sem rolar em 1440 × 900, painel de anotar), `conferir-larguras` (320 px) e `conferir-primeira-tela` continuam OK. Fotos: `docs/redesign/capturas/fase-g/` (26 telas × celular e computador) e `fase-g/larguras/` (8 telas × 4 larguras).
 - **Não verificado:** num computador de verdade com mouse (as fotos são do Chrome sem janela); telas com zoom do navegador; Safari no Mac.
 
+## Fase H: o que foi feito
+- **RD-10 (D5, conjunto completo)**: N, 1–4, Enter, Shift+Enter, Esc, /, G + I/D/P/S, ?; setas nos gráficos. Num campo de texto só Enter, Shift+Enter e Esc valem; Ctrl/Alt/Cmd nunca são do app; com janela aberta, os atalhos globais param. Lista em Ajustes > Ajuda > Atalhos do teclado. O "pular para o conteúdo" já existia.
+- **RD-04 (teclado do painel)**: Enter salva; **Shift+Enter salva e limpa** (mesmo tipo, conta e data; cursor no valor); Esc pergunta antes se houver algo digitado; as teclas 1–4 aparecem nos botões de tipo (MD-03: o painel entra com 24 px + esmaecer).
+- **Dicas (MD-05, WCAG 1.4.13)**: `[data-dica]` no mouse (0,4 s) e no foco do teclado; Esc fecha. Nos botões da barra lateral (nome + tecla), nos títulos da tabela e nas barras dos gráficos.
+- **RD-06**: Anotações em tabela no computador (Data · Descrição · Categoria · Conta · Valor), ordenar pelo título (aria-sort), clicar na linha edita, contador anunciado (role=status).
+- **RD-09 / MD-01**: estados do mouse só com mouse de verdade: fundo nas linhas e cartões, botão principal 6% mais escuro, sublinhado mais grosso, apertar a .98.
+- **RD-11**: Perguntar em painel de 380 px à direita; confirmação em 440 px. **RD-13 / MD-11**: barra sob o mouse mostra mês e valor (as outras a 50%); foco no gráfico + setas. **MD-09**: detalhe da conta esmaece ao trocar e o foco vai ao nome. **MD-12**: aviso pausa com o mouse ou o foco em cima e fica ao lado do painel de anotar.
+- **Correção**: o rótulo "sem anotações" dos meses vazios cabia mal e se encavalava com o vizinho (também no celular); agora se ajusta à largura da barra.
+- **Testes**: 42 arquivos, **1162 verificações, todos verdes** (novo: `tests/42-fase-h-mouse-teclado.test.js`). Chrome: `tools/conferir-teclado.js` com teclas de verdade (5 anotações seguidas: N · valor · Tab · Shift+Enter), e `conferir-computador`, `conferir-larguras` (320 px) e `conferir-primeira-tela` continuam OK. Fotos: `docs/redesign/capturas/fase-h/` e `fase-h/teclado/`.
+- **Não verificado:** com leitor de tela de verdade (NVDA, VoiceOver); teclados de outros idiomas (a tecla "?" e "/" mudam de lugar, mas o app olha o caractere, não a posição); Safari no Mac.
+
 ## Itens dos relatórios
 
 Situação: **A fazer** · **Feito** · **Parcial** · **Descartado** (com motivo). A coluna "Fase" diz quando cada item entra.
@@ -181,15 +192,15 @@ Situação: **A fazer** · **Feito** · **Parcial** · **Descartado** (com motiv
 |---|---|---|---|---|
 | DF-01 | P1 | Layout de telefone esticado na tela do computador | G | Feito (fase G) |
 | DF-02 | P1 | Ações globais nos cantos da janela, longe do conteúdo | G | Feito (fase G: Nova anotação, Perguntar, Ajustes e cópia na barra lateral) |
-| DF-03 | P1 | Nenhum estado de hover | B (básico) / H | Parcial (B: hover básico; completo na H) |
+| DF-03 | P1 | Nenhum estado de hover | B (básico) / H | Feito (B: básico; H: estados do mouse completos) |
 | DF-04 | P1 | Rolagem excessiva e ação importante fora da dobra | G | Feito (fase G: em 1440 × 900 o Início mostra valor, Precisa de você, anotações e mês sem rolar) |
 | DF-05 | P1 | Panorama da Saúde declara "saudável" sem dados | B (D1) | Feito (fase B) |
 | DF-06 | P2 | Barra de navegação inferior (padrão de telefone) | G | Feito (fase G) |
-| DF-07 | P2 | Teclado: foco visível, mas fluxo lento e diálogos sem contenção | B (diálogos) / H | Parcial (B: diálogos; atalhos na H) |
-| DF-08 | P2 | Diálogos e formulário em formato de telefone | G | Parcial (G: painel de anotar de 460 px e janelas no centro; teclado na H) |
-| DF-09 | P2 | Listas sem estrutura de tabela | G/H | Parcial (G: extrato ao lado da conta; tabela de anotações na H) |
+| DF-07 | P2 | Teclado: foco visível, mas fluxo lento e diálogos sem contenção | B (diálogos) / H | Feito (B: diálogos; H: atalhos D5, Shift+Enter, dicas) |
+| DF-08 | P2 | Diálogos e formulário em formato de telefone | G | Feito (G: painel e janelas no centro; H: teclado no painel, Perguntar em painel) |
+| DF-09 | P2 | Listas sem estrutura de tabela | G/H | Feito (G: extrato ao lado da conta; H: Anotações em tabela) |
 | DF-10 | P2 | Instruções de instalação de Android mostradas no computador | B | Feito (fase B) |
-| DF-11 | P2 | Gráficos estreitos e sem interação de mouse | G/H | Parcial (G: grade de 2 a 4 colunas; mouse nos gráficos na H) |
+| DF-11 | P2 | Gráficos estreitos e sem interação de mouse | G/H | Feito (G: grade; H: valor sob o mouse e no teclado; desvio 45) |
 | DF-12 | P2 | Abertura de 4,1 s também no computador | B | Feito (fase B) |
 | DF-13 | P2 | Contraste insuficiente de limites de controle | B | Feito (fase B) |
 | DF-14 | P3 | Escala tipográfica idêntica à do telefone | C/G | Feito (C: escala do computador; G: layout) |
@@ -201,36 +212,36 @@ Situação: **A fazer** · **Feito** · **Parcial** · **Descartado** (com motiv
 | RD-01 | Layout de aplicação com barra lateral e grade de 12 colunas | DF-01, DF-06 | G | Feito (fase G) |
 | RD-02 | Ações globais na barra lateral | DF-02 | G | Feito (fase G; a tecla N funciona na H) |
 | RD-03 | Início em painel de duas colunas | DF-04, DF-15 | G | Feito (fase G; desvio 30) |
-| RD-04 | Painel lateral de anotação (não modal) | DF-08, DF-07 | G | Parcial (G: painel de 460 px com véu leve; Enter, Shift+Enter e 1–4 na H) |
+| RD-04 | Painel lateral de anotação (não modal) | DF-08, DF-07 | G | Feito (G: painel; H: Enter, Shift+Enter, 1–4, Esc) |
 | RD-05 | Dinheiro em mestre-detalhe (com Investimentos) | DF-01, DF-09 | G | Parcial (G: Contas e Dívidas com detalhe e extrato; desvios 31 e 32) |
-| RD-06 | Anotações como tabela ordenável | DF-09 | H | A fazer |
+| RD-06 | Anotações como tabela ordenável | DF-09 | H | Feito (fase H; desvio 44) |
 | RD-07 | Saúde em grade com panorama horizontal | DF-04, DF-05, DF-11 | G | Feito (fase G) |
 | RD-08 | Planejar em duas colunas | DF-04, DF-15 | G | Feito (fase G) |
-| RD-09 | Estados de interação para mouse | DF-03 | H | A fazer |
-| RD-10 | Teclado de primeira classe (atalhos completos, D5) | DF-07 | H | A fazer |
-| RD-11 | Diálogos centralizados | DF-08 | G | Feito (fase G: no centro, até 560 px) |
+| RD-09 | Estados de interação para mouse | DF-03 | H | Feito (fase H) |
+| RD-10 | Teclado de primeira classe (atalhos completos, D5) | DF-07 | H | Feito (fase H, D5 completo) |
+| RD-11 | Diálogos centralizados | DF-08 | G | Feito (G: centro; H: Perguntar em painel de 380 px, confirmação de 440 px) |
 | RD-12 | Conteúdo sensível à plataforma | DF-10 | B | Feito (fase B) |
-| RD-13 | Gráficos para mouse e telas largas | DF-11 | H | A fazer |
+| RD-13 | Gráficos para mouse e telas largas | DF-11 | H | Parcial (H: dica e teclado nas barras; 12 meses e legenda clicável ficaram de fora, desvio 45) |
 | RD-14 | Escala tipográfica do computador | DF-14 | C/G | Feito (C: escala; G: larguras e relatório com 720 px) |
 
 ### Relatório 02 (computador): movimento (MD)
 | ID | Elemento | Fase | Situação |
 |---|---|---|---|
-| MD-01 | Linhas, cartões, botões, itens da barra lateral | F/H | A fazer |
-| MD-02 | Anel de foco | F/H | A fazer |
-| MD-03 | Painel lateral "Nova anotação" (460 px) | F/G | A fazer |
-| MD-04 | Indicador da seção ativa | F/G | A fazer |
-| MD-05 | Dica ao passar o mouse (tooltip) | H | A fazer |
+| MD-01 | Linhas, cartões, botões, itens da barra lateral | F/H | Feito (fase H, só com mouse) |
+| MD-02 | Anel de foco | F/H | Feito (anel de foco instantâneo, desde a fase B) |
+| MD-03 | Painel lateral "Nova anotação" (460 px) | F/G | Feito (G/H: 24 px + esmaecer, véu de 18%, foco no valor) |
+| MD-04 | Indicador da seção ativa | F/G | Descartado por ora (desvio 39) |
+| MD-05 | Dica ao passar o mouse (tooltip) | H | Feito (fase H) |
 | MD-06 | Nova linha + valores | F | Feito (fase F, igual ao MM-06) |
-| MD-07 | Linhas ao ordenar | H | A fazer |
-| MD-08 | Filtros | H | A fazer |
-| MD-09 | Painel de detalhe (mestre-detalhe) | G | A fazer |
-| MD-10 | Diálogo centralizado | G | A fazer |
-| MD-11 | Gráficos (barras/linhas) + dica | H | A fazer |
+| MD-07 | Linhas ao ordenar | H | Parcial (a seta gira; as linhas trocam na hora, desvio 40) |
+| MD-08 | Filtros | H | Parcial (contador anunciado; sem animar a saída, desvio 41) |
+| MD-09 | Painel de detalhe (mestre-detalhe) | G | Feito (fase H) |
+| MD-10 | Diálogo centralizado | G | Feito (fase F: escala .96 → 1; G: no centro) |
+| MD-11 | Gráficos (barras/linhas) + dica | H | Feito (F: crescer; H: destaque e dica) |
 | MD-12 | Aviso (fila única) | F | Feito (fase F, igual ao MM-14) |
 | MD-13 | Item "Precisa de você" pago | F | Parcial (as barras crescem; igual ao MM-09) |
 | MD-14 | Abertura do aplicativo | F | Feito (B e F: abertura curta e entrada do conteúdo) |
-| MD-15 | Recolher / expandir a barra lateral (1024 a 1279 px) | G | A fazer |
+| MD-15 | Recolher / expandir a barra lateral (1024 a 1279 px) | G | Feito sem animação (desvio 43) |
 
 ## Matriz de preservação
 PF-01 a PF-50 (celular) e PD-01 a PD-34 (computador): cada função de hoje, onde ficou e como foi testada. Arquivo `docs/redesign/MATRIZ_PRESERVACAO_VERIFICADA.md`, preenchido a partir da Fase D (quando as funções mudam de lugar) e fechado na Fase I.

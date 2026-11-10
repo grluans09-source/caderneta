@@ -1,6 +1,6 @@
 # Mapa do app
 
-O app **de hoje** (versão 1.30.0, com o redesign "Tinta & Latão" até a fase G, D67; antes, a simplificação da 1.23.0: ver `AUDITORIA-INTERFACE.md`): onde mora cada assunto, o que tem em cada tela e o mapa de cores. Nasceu no passo 3 do plano da beta (decisões Q1 a Q7 da [auditoria de funções](AUDITORIA-FUNCOES.md), aceitas pelo dono em 6 nov 2026) e foi completado com Investir, Notícias e o chat.
+O app **de hoje** (versão 1.31.0, com o redesign "Tinta & Latão" até a fase H, D67; antes, a simplificação da 1.23.0: ver `AUDITORIA-INTERFACE.md`): onde mora cada assunto, o que tem em cada tela e o mapa de cores. Nasceu no passo 3 do plano da beta (decisões Q1 a Q7 da [auditoria de funções](AUDITORIA-FUNCOES.md), aceitas pelo dono em 6 nov 2026) e foi completado com Investir, Notícias e o chat.
 
 **Regras do mapa**
 1. **Cada assunto mora em um único lugar.** Nos outros lugares só existe um **atalho** (uma linha que leva até a casa dele).
@@ -32,7 +32,9 @@ O conteúdo é o mesmo; muda a arrumação (no celular, tudo como acima):
 - **Dinheiro > Contas e Dívidas**: lista à esquerda (4/12) e, à direita (8/12), o detalhe da conta escolhida com o extrato. Editar fica no botão do detalhe.
 - **Planejar**: acerto e agenda à esquerda (7/12), ferramentas à direita (5/12).
 - **Saúde**: panorama numa faixa e os 10 indicadores em grade (2 colunas até 1.439 px, 3 em 1.440, 4 em 1.920).
-- **Anotar** abre um painel de 460 px à direita; as janelas abrem no centro (até 560 px); o relatório tem 720 px de largura.
+- **Anotar** abre um painel de 460 px à direita; as janelas abrem no centro (até 560 px; "tem certeza?" com 440 px); o **Perguntar** abre num painel de 380 px à direita; o relatório tem 720 px de largura.
+- **Anotações** viram uma tabela (Data · Descrição · Categoria · Conta · Valor), ordenada pelo título da coluna; clicar na linha edita.
+- **Teclado (desde a 1.31.0, D5)**: N (anotar), 1–4 (tipo), Enter (salvar), Shift+Enter (salvar e anotar a próxima), Esc (fechar), / (procurar nas anotações), G e depois I, D, P ou S (ir para as abas), ? (Perguntar), setas num gráfico. Lista em Ajustes > Ajuda > Atalhos do teclado. Ao parar o mouse num botão da barra lateral, a dica mostra o nome e a tecla.
 
 ## 2. Onde mora cada assunto
 

@@ -5,6 +5,16 @@
 Formato: versão semântica (`MAIOR.MENOR.CORREÇÃO`). Cada versão diz **o que mudou para a pessoa que usa**.
 Antes da 1.0.0 as versões eram numeradas só pelo nome do cache do app (v1 a v16); estão aqui como marcos de desenvolvimento.
 
+## [1.31.0-beta.1]: 10 de novembro de 2026 · redesign, fase H: mouse e teclado no computador
+No computador, o Balancete agora atende quem usa **teclado e mouse** (D67, D5). No celular nada muda.
+- **Atalhos de teclado**: **N** abre uma anotação nova (Gastei, com o cursor no valor); **1 a 4** trocam o tipo; **Enter** salva; **Shift + Enter** salva e deixa o painel pronto para a próxima (mesmo tipo, conta e data); **Esc** fecha (e pergunta antes, se você já digitou algo); **/** procura nas anotações; **G** e depois **I, D, P ou S** vão para Início, Dinheiro, Planejar ou Saúde; **?** abre o Perguntar. Dá para anotar 5 gastos seguidos sem tocar no mouse. Quando você está escrevendo num campo, as letras são só letras (valem só Enter e Esc). A lista completa está em **Ajustes > Ajuda > Atalhos do teclado**.
+- **Dicas**: ao parar o mouse (ou chegar pelo teclado) num botão da barra lateral, aparece o nome e a tecla do atalho; Esc fecha a dica. Os botões de tipo da anotação mostram as teclas 1 a 4.
+- **Anotações em tabela**: Data, Descrição, Categoria, Conta e Valor; clique no título da coluna para ordenar (de novo, inverte); clique na linha para editar. Os filtros ficam abertos.
+- **Gráficos**: o mouse parado numa barra mostra o mês e o valor (as outras esmaecem); com o teclado, as setas passam de mês em mês. Os meses sem anotação não se encavalam mais.
+- **Mouse**: linhas e cartões ganham fundo ao passar o mouse; o botão principal escurece um pouco; apertar encolhe de leve.
+- **Perguntar** abre como painel de 380 px à direita; a pergunta "tem certeza?" é uma janela menor (440 px); o aviso para enquanto o mouse está em cima dele e fica ao lado do painel de anotar; trocar de conta em Dinheiro esmaece o detalhe e leva o foco ao nome da conta.
+- Testes: 1162 verificações em 42 arquivos (novo: fase H, com as 5 anotações seguidas pelo teclado). No Chrome, `tools/conferir-teclado.js` aperta as teclas de verdade.
+
 ## [1.30.0-beta.1]: 10 de novembro de 2026 · redesign, fase G: o app no computador
 No computador (janela com 1.024 px de largura ou mais), o Balancete deixa de ser "um celular esticado" (D67, Relatório 02). **No celular nada muda.**
 - **Barra lateral à esquerda** no lugar da barra de baixo: a marca, o botão **"+ Nova anotação"** em destaque (com a tecla **N** à vista; o atalho funciona na fase H), os 4 destinos, os atalhos **Anotações** e **Hoje no Brasil**, e embaixo **Perguntar**, **Ajustes** e **quando foi a última cópia** dos dados. Em telas de 1.024 a 1.279 px ela mostra só os ícones (o nome aparece ao passar o mouse); o botão « recolhe ou abre a barra, e o app lembra a escolha.
