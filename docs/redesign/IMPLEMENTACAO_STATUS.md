@@ -21,7 +21,7 @@
 | F | Movimento (animações MM e MD) | **Concluída** (10 nov 2026), versão **1.29.0-beta.1** |
 | G | Layout do computador (barra lateral, colunas) | **Concluída** (10 nov 2026), versão **1.30.0-beta.1** |
 | H | Mouse e teclado no computador (atalhos, hover, tabela) | **Concluída** (10 nov 2026), versão **1.31.0-beta.1** |
-| I | Validação final, matriz de preservação, documentação | A fazer |
+| I | Validação final, matriz de preservação, documentação | **Concluída** (10 nov 2026), versão **1.32.0-beta.1**. **Redesign concluído** |
 
 ## Fase A: o que foi feito e como conferir
 
@@ -116,6 +116,27 @@ No celular as telas que rolam aparecem inteiras (até 4.200 px); no computador, 
 - **Correção**: o rótulo "sem anotações" dos meses vazios cabia mal e se encavalava com o vizinho (também no celular); agora se ajusta à largura da barra.
 - **Testes**: 42 arquivos, **1162 verificações, todos verdes** (novo: `tests/42-fase-h-mouse-teclado.test.js`). Chrome: `tools/conferir-teclado.js` com teclas de verdade (5 anotações seguidas: N · valor · Tab · Shift+Enter), e `conferir-computador`, `conferir-larguras` (320 px) e `conferir-primeira-tela` continuam OK. Fotos: `docs/redesign/capturas/fase-h/` e `fase-h/teclado/`.
 - **Não verificado:** com leitor de tela de verdade (NVDA, VoiceOver); teclados de outros idiomas (a tecla "?" e "/" mudam de lugar, mas o app olha o caractere, não a posição); Safari no Mac.
+
+## Fase I: o que foi feito
+- **Regressão**: golden master igual (só a regra do panorama, D1, aprovada); 1174 verificações em 43 arquivos; cada fluxo de ponta a ponta do prompt tem teste (lista em `RELATORIO_TESTES.md`).
+- **Visual**: 10 larguras × claro/escuro × letra Normal/Enorme, 14 telas cada (560): nenhuma rolagem para o lado, nada passando da largura, nada encoberto. **Corrigido**: 182 textos cortados com "…" agora quebram a linha.
+- **Acessibilidade**: axe-core 4.10.2 (WCAG A/AA) em 44 telas e janelas, celular e computador, claro e escuro: nenhuma falha séria ou crítica. **Corrigido**: `aria-pressed` em abas, escolhas e interruptores (12 lugares).
+- **Offline**: abre sem internet, com as letras e as telas; notícias da última cópia; versão nova substitui a antiga.
+- **Ferramenta**: `tools/conferir-final.js`; teste novo `43`. Fotos finais em `capturas/fase-i/` e `capturas/fase-i/matriz/`.
+- **Não verificado**: leitor de tela de verdade, aparelhos de verdade, Safari e Firefox.
+
+## Resumo dos itens dos relatórios (ao fim da fase I)
+| Grupo | Feito | Parcial | Descartado | Total |
+|---|---|---|---|---|
+| MF (problemas do celular) | 22 | 0 | 0 | 22 |
+| R (recomendações do celular) | 16 | 0 | 0 | 16 |
+| MM (movimento do celular) | 10 | 6 | 0 | 16 |
+| DF (problemas do computador) | 15 | 0 | 0 | 15 |
+| RD (recomendações do computador) | 12 | 2 | 0 | 14 |
+| MD (movimento do computador) | 11 | 3 | 1 | 15 |
+| **Total** | **86** | **11** | **1** | **98** |
+
+"Feito" = implementado; "Parcial" = implementado em parte, com o motivo na própria linha e em `IMPLEMENTACAO_DESVIOS.md`; "Descartado" = não implementado por decisão registrada. Nenhum item ficou "A fazer".
 
 ## Itens dos relatórios
 

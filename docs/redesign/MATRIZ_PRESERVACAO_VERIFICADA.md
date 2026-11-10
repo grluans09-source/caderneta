@@ -2,7 +2,7 @@
 
 > Pedido do prompt de redesign: cada função de antes (PF-01 a PF-50 do celular, PD-01 a PD-34 do computador) com **onde ficou**, **como foi testada** e o **resultado**.
 > Teste automático: `tests/38-matriz-preservacao.test.js` (roda em `npm test`, com a massa de teste e o relógio parado em 9/11/2026). Cada linha abaixo é uma verificação dele.
-> Situação em 1.31.0-beta.1: **50 de 50 funções do celular preservadas** e **34 de 34 funções do computador preservadas** (PD-01 a PD-34). A apresentação nova do computador está pronta nas telas da fase G; teclado, tabela e mouse entraram na fase H (coluna "Apresentação").
+> Situação final (1.32.0-beta.1, fase I): **50 de 50 funções do celular** e **34 de 34 funções do computador** preservadas e verificadas. Na fase I, todos os testes rodaram de novo (1174 verificações, golden master igual) e as telas foram conferidas em 10 larguras, 2 temas e 2 tamanhos de letra (`RELATORIO_TESTES.md`).
 
 ## Celular (Relatório 01, seção 28)
 | ID | Função | Onde ficou (desde a 1.27.0) | Como foi testada | Resultado |

@@ -169,7 +169,9 @@ html[data-tam="gg"] .perg .perg-t{display:none}html[data-tam="gg"] .perg{padding
 .chatm .ch-busca input:focus{border-color:var(--latao-claro);outline:none}
 .chatm .ch-grupos{margin:.5rem 0}
 .chatm .chip{background:transparent;color:var(--tinta-ink);border-color:var(--latao-claro);box-shadow:none}
-.chatm .chip[aria-pressed="true"]{background:var(--latao-claro);color:var(--tinta)}
+.chatm .chip[aria-pressed="true"],
+.chatm .chip[aria-checked="true"],
+.chatm .chip[aria-selected="true"]{background:var(--latao-claro);color:var(--tinta)}
 .ch-tit{font-size:.82rem;color:var(--tinta-2);margin:.3rem 0}
 .ch-q{display:block;width:100%;text-align:left;min-height:2.9rem;padding:.55rem .8rem;margin:.3rem 0;border:1px solid var(--tinta-linha);border-left:4px solid var(--latao);border-radius:.8rem;background:var(--tinta-campo);color:var(--tinta-ink);font-size:.95rem}
 .ch-q:active{background:var(--tinta-campo)}
@@ -199,7 +201,7 @@ h2>.ajuda-t,.q>.ajuda-t{flex:1 0 100%}
 /* DF-03: estados de hover básicos (só com mouse) */
 @media (hover:hover) and (pointer:fine){
   .btn:not(:disabled):hover{filter:brightness(1.07)}
-  .btn.sec:hover,.chip:not([aria-pressed="true"]):hover,.opt:not([aria-pressed="true"]):hover,.opc button:not([aria-pressed="true"]):hover,.item:hover,.rel-item:hover,.ferr:hover,.alerta:hover,.mesnav button:hover,.mes button:hover{background:var(--sel)}
+  .btn.sec:hover,.chip:not([aria-pressed="true"]):not([aria-checked="true"]):not([aria-selected="true"]):hover,.opt:not([aria-pressed="true"]):not([aria-checked="true"]):not([aria-selected="true"]):hover,.opc button:not([aria-pressed="true"]):not([aria-checked="true"]):not([aria-selected="true"]):hover,.item:hover,.rel-item:hover,.ferr:hover,.alerta:hover,.mesnav button:hover,.mes button:hover{background:var(--sel)}
   nav button:not([aria-current]):hover{opacity:1;filter:brightness(1.25)}
   .link:hover,a:hover{text-decoration-thickness:2px}
   .ajuda:hover{color:var(--ink)}
@@ -352,7 +354,9 @@ html[data-tam="g"] .abas-din,html[data-tam="gg"] .abas-din{flex-wrap:wrap}
 .grupo{font-family:var(--serif,inherit);font-size:1.15rem;letter-spacing:.04em;margin:1.8rem 0 .2rem;padding-bottom:.35rem;border-bottom:2px solid var(--latao)}
 .linha-falta{margin-top:.9rem}
 .chip{min-height:2.9rem;padding:.55rem .95rem;border-radius:.6rem;border:2px solid var(--campo);background:var(--card);font-weight:600;font-size:.95rem}
-.chip[aria-pressed="true"]{background:var(--sel);color:var(--ink);border-color:var(--latao);box-shadow:inset 0 0 0 1px var(--latao);font-weight:700}
+.chip[aria-pressed="true"],
+.chip[aria-checked="true"],
+.chip[aria-selected="true"]{background:var(--sel);color:var(--ink);border-color:var(--latao);box-shadow:inset 0 0 0 1px var(--latao);font-weight:700}
 .chip.novo{border-style:dashed;color:var(--in)}
 .campo{margin-top:.9rem}
 .campo label{display:block;font-weight:700;margin-bottom:.35rem}
@@ -373,7 +377,9 @@ html[data-tam="g"] .abas-din,html[data-tam="gg"] .abas-din{flex-wrap:wrap}
 .colrot{display:none;font-size:.75rem;letter-spacing:.07em;font-weight:700;color:var(--ink2);text-transform:uppercase}
 .opt{display:block;width:100%;min-height:3.1rem;border:2px solid var(--campo);border-radius:.6rem;padding:.5rem .6rem;background:var(--card);font-weight:600;font-size:.95rem;line-height:1.25;position:relative;z-index:1}
 .opt small{display:block;font-weight:400;color:var(--ink3);font-size:.78rem}
-.opt[aria-pressed="true"]{border-color:var(--latao);background:var(--sel);box-shadow:inset 0 0 0 1px var(--latao)}
+.opt[aria-pressed="true"],
+.opt[aria-checked="true"],
+.opt[aria-selected="true"]{border-color:var(--latao);background:var(--sel);box-shadow:inset 0 0 0 1px var(--latao)}
 .opt.novo{border-style:dashed;color:var(--in);background:transparent}
 .lnk{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:0}
 .lnk path{stroke:var(--latao);stroke-width:3;fill:none;stroke-linecap:round;stroke-dasharray:var(--L,0);stroke-dashoffset:var(--L,0);animation:dr .55s ease-out forwards}
@@ -431,12 +437,18 @@ svg.grafico{width:100%;height:auto;display:block}
 /* ajustes */
 .opc{display:flex;gap:.45rem}
 .opc button{flex:1;min-height:3rem;border-radius:.6rem;border:2px solid var(--campo);background:var(--card);text-align:center;font-weight:700}
-.opc button[aria-pressed="true"]{background:var(--sel);color:var(--ink);border-color:var(--latao);box-shadow:inset 0 0 0 1px var(--latao);font-weight:700}
+.opc button[aria-pressed="true"],
+.opc button[aria-checked="true"],
+.opc button[aria-selected="true"]{background:var(--sel);color:var(--ink);border-color:var(--latao);box-shadow:inset 0 0 0 1px var(--latao);font-weight:700}
 .linha-sw{display:flex;align-items:center;gap:1rem;justify-content:space-between;min-height:3.2rem}
 .sw{position:relative;width:3.4rem;height:2rem;border-radius:2rem;background:var(--campo);flex:none;border:0}
 .sw::after{content:"";position:absolute;top:.2rem;left:.2rem;width:1.6rem;height:1.6rem;border-radius:50%;background:var(--tinta-forte);transition:transform var(--dur-fast) var(--ease-standard)}
-.sw[aria-pressed="true"]{background:var(--latao)}
-.sw[aria-pressed="true"]::after{transform:translateX(1.4rem)}
+.sw[aria-pressed="true"],
+.sw[aria-checked="true"],
+.sw[aria-selected="true"]{background:var(--latao)}
+.sw[aria-pressed="true"]::after,
+.sw[aria-checked="true"]::after,
+.sw[aria-selected="true"]::after{transform:translateX(1.4rem)}
 .item{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:3.2rem;padding:.4rem 0;border-bottom:1px solid var(--rule)}
 .item:last-child{border-bottom:0}
 .item small{color:var(--ink3)}
@@ -536,8 +548,12 @@ html.calmo *,html.calmo *:before,html.calmo *:after{animation:none!important;tra
 .btn.perigo{background:var(--out-bg);color:var(--out);border:2px solid var(--out);box-shadow:none;text-shadow:none}
 .link,.como{color:var(--ouro);font-weight:700;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
 .chip,.opc button,.opt{border:2px solid var(--campo);background:var(--card);box-shadow:0 1px 0 var(--rule2)}
-.chip[aria-pressed="true"],.opc button[aria-pressed="true"],.opt[aria-pressed="true"]{background:var(--selbg);color:var(--selink);border-color:var(--selbg);box-shadow:inset 0 0 0 1px var(--latao);font-weight:700}
-.opt[aria-pressed="true"] small{color:var(--selink);opacity:.85}
+.chip[aria-pressed="true"],.opc button[aria-pressed="true"],.opt[aria-pressed="true"],
+.chip[aria-checked="true"],
+.chip[aria-selected="true"],.opc button[aria-checked="true"],.opc button[aria-selected="true"],.opt[aria-checked="true"],.opt[aria-selected="true"]{background:var(--selbg);color:var(--selink);border-color:var(--selbg);box-shadow:inset 0 0 0 1px var(--latao);font-weight:700}
+.opt[aria-pressed="true"] small,
+.opt[aria-checked="true"] small,
+.opt[aria-selected="true"] small{color:var(--selink);opacity:.85}
 .opt.novo,.chip.novo{border:2px dashed var(--latao);color:var(--ouro);box-shadow:none}
 .gaveta:after,.lanc[data-a]:after,.item:after{content:"›";color:var(--latao);font-size:1.6rem;line-height:1;margin-left:.3rem;flex:none}
 .ag .lanc:after{content:none}
@@ -868,9 +884,13 @@ h3,.ind-top h3{font-size:var(--fs-h3);line-height:var(--lh-h3);font-weight:600}
 /* campos, chips e escolhas: borda de controle; selecionado em tinta */
 .campo input,.campo select,.busca input,.filtros select,.linha-f input,.bcol{background:var(--color-surface);border:1.5px solid var(--color-border-field);border-radius:var(--raio)}
 .chip,.opc button,.opt{border:1.5px solid var(--color-border-field);background:var(--color-surface);box-shadow:none}
-.chip[aria-pressed="true"],.opc button[aria-pressed="true"],.opt[aria-pressed="true"]{background:var(--color-action);color:var(--color-on-action);border-color:var(--color-action);box-shadow:none}
+.chip[aria-pressed="true"],.opc button[aria-pressed="true"],.opt[aria-pressed="true"],
+.chip[aria-checked="true"],
+.chip[aria-selected="true"],.opc button[aria-checked="true"],.opc button[aria-selected="true"],.opt[aria-checked="true"],.opt[aria-selected="true"]{background:var(--color-action);color:var(--color-on-action);border-color:var(--color-action);box-shadow:none}
 .opt.novo,.chip.novo{border:1.5px dashed var(--color-action);color:var(--color-text);box-shadow:none}
-.sw[aria-pressed="true"]{background:var(--color-action)}
+.sw[aria-pressed="true"],
+.sw[aria-checked="true"],
+.sw[aria-selected="true"]{background:var(--color-action)}
 .sw::after{background:var(--color-surface)}
 /* foco: anel de 2 px tinta com 2 px de afastamento (latão claro sobre fundo tinta) */
 :focus-visible{outline:2px solid var(--color-action);outline-offset:2px}
@@ -1075,7 +1095,9 @@ body.folha-aberta::after{animation:fFade var(--dur-fast) var(--ease-standard)}
 .f-seg::before{content:"";position:absolute;top:.25rem;bottom:.25rem;left:.25rem;width:calc((100% - .5rem - .9rem)/4);border-radius:.6rem;background:var(--color-surface);box-shadow:inset 0 -3px 0 var(--cor-tipo);transform:translateX(calc(var(--i,0) * (100% + .3rem)));transition:transform 200ms var(--ease-standard)}
 .f-seg .seg{position:relative;z-index:1;transition:color 200ms var(--ease-standard)}
 .f-seg .seg[aria-checked="true"]{background:none;box-shadow:none}
-.folha .lc-cats .opt[aria-pressed="true"],.f-barra .btn{background:var(--cor-tipo);border-color:var(--cor-tipo);color:var(--cor-tipo-ink)}
+.folha .lc-cats .opt[aria-pressed="true"],.f-barra .btn,
+.folha .lc-cats .opt[aria-checked="true"],
+.folha .lc-cats .opt[aria-selected="true"]{background:var(--cor-tipo);border-color:var(--cor-tipo);color:var(--cor-tipo-ink)}
 .f-barra .btn,.folha .opt,.folha .chip{transition:background-color 200ms var(--ease-standard),border-color 200ms var(--ease-standard),color 200ms var(--ease-standard)}
 /* MM-05: escolher um botão responde na hora */
 .opt:active,.chip:active,.btn:active{transform:scale(.98)}
@@ -1292,6 +1314,9 @@ html.calmo .linha-real{stroke-dashoffset:0}
   /* RD-04 / RD-10: as teclas aparecem na folha */
   .f-seg .seg::after{content:attr(data-tecla);display:inline-block;margin-left:.35rem;padding:0 .3rem;border-radius:.25rem;background:rgba(0,0,0,.08);font:600 11px/14px ui-monospace,Consolas,monospace;opacity:.75}
 }
+
+/* ===== Redesign, fase I: nenhum texto cortado com "…" (seção 8.2 do prompt): o nome e o detalhe das linhas quebram a linha e aparecem inteiros ===== */
+.txt b,.txt i,.ferr .ft>span{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:break-word}
 </style>
 </head>
 <body>
@@ -1350,7 +1375,7 @@ html.calmo .linha-real{stroke-dashoffset:0}
 /* ---------- utilidades ---------- */
 var KEY="caderneta:v2";
 /* versão do app (siga o CHANGELOG.md; subir junto com VERSAO em sw.js e "version" em package.json) */
-var VERSAO_APP="1.31.0-beta.1";
+var VERSAO_APP="1.32.0-beta.1";
 var RE_ID=/^[A-Za-z0-9_-]+$/, RE_DATA=/^\d{4}-\d{2}-\d{2}$/;
 var MES=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
 var MES3=["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
@@ -3524,7 +3549,7 @@ var DIN_ABA="contas";
 /* abas de Dinheiro (redesign D4: Investir virou "Investimentos", aqui dentro) */
 function abasDinheiro(atual){
   var abas=[["contas","Contas"],["investir","Investimentos"],["dividas","Dívidas"],["bens","Bens"],["pessoas","Pessoas"]];
-  return '<div class="chips abas-din" role="tablist" aria-label="O que ver">'+abas.map(function(a){return '<button class="chip" role="tab" data-a="dinAba" data-v="'+a[0]+'" aria-pressed="'+(atual===a[0])+'" aria-selected="'+(atual===a[0])+'">'+a[1]+'</button>'}).join("")+'</div>';
+  return '<div class="chips abas-din" role="tablist" aria-label="O que ver">'+abas.map(function(a){return '<button class="chip" role="tab" data-a="dinAba" data-v="'+a[0]+'" aria-selected="'+(atual===a[0])+'">'+a[1]+'</button>'}).join("")+'</div>';
 }
 /* no computador, Contas e Dívidas mostram o detalhe e o extrato da conta escolhida ao lado da lista */
 var DIN_SEL=null;
@@ -3678,7 +3703,7 @@ function telaAjustes(){
       '<h2>Cores</h2><div class="opc">'+op("tema","auto","Automático",c.tema)+op("tema","claro","Claro",c.tema)+op("tema","escuro","Escuro",c.tema)+'</div>'+
       '<h2>Movimento'+ajuda('"Parado" desliga as animações. Também desliga sozinho se o seu celular estiver com animações reduzidas.')+'</h2><div class="opc">'+op("movimento","vivo","Vivo",c.movimento)+op("movimento","parado","Parado",c.movimento)+'</div>'+
       '<h2>Linguagem</h2><div class="card"><div class="linha-sw"><div><b>Modo contador</b><p class="faint">Mostra os nomes técnicos da contabilidade e o balancete.'+ajuda('<b>Ativo</b> é o que você tem; <b>passivo</b>, o que você deve; <b>patrimônio líquido</b>, a diferença (o "é meu de verdade"). <b>DRE</b> é o resumo do que entrou e saiu no período. O <b>balancete</b> é a lista das contas do mês com os dois lados de cada anotação.')+'</p></div>'+
-      '<button class="sw" data-a="cfg" data-g="contador" data-val="'+(!c.contador)+'" role="switch" aria-checked="'+c.contador+'" aria-pressed="'+c.contador+'" aria-label="Modo contador"></button></div></div>',
+      '<button class="sw" data-a="cfg" data-g="contador" data-val="'+(!c.contador)+'" role="switch" aria-checked="'+c.contador+'" aria-label="Modo contador"></button></div></div>',
       false,"Letra, cores, movimento e modo contador")+
     recolhivel("ajCategorias","Categorias",
       '<div class="card" style="padding:.3rem 1rem">'+cats.map(function(k){
@@ -3777,7 +3802,7 @@ function escolha(id,rotulo,lista,sel){
   return '<div class="campo esc"><span class="rot" id="'+id+'Rot">'+esc(rotulo)+'</span>'+
     (lista.length>8?'<input type="search" class="esc-busca" data-esc="'+id+'" placeholder="Buscar" aria-label="Buscar: '+esc(rotulo)+'" autocomplete="off">':'')+
     '<div class="chips esc-chips" role="radiogroup" aria-labelledby="'+id+'Rot">'+lista.map(function(o){var on=o.id===atual;
-      return '<button type="button" class="chip" role="radio" data-a="escolha" data-campo="'+id+'" data-v="'+esc(o.id)+'" aria-checked="'+on+'" aria-pressed="'+on+'">'+esc(o.nome)+'</button>'}).join("")+'</div>'+
+      return '<button type="button" class="chip" role="radio" data-a="escolha" data-campo="'+id+'" data-v="'+esc(o.id)+'" aria-checked="'+on+'">'+esc(o.nome)+'</button>'}).join("")+'</div>'+
     '<input type="hidden" id="'+id+'" value="'+esc(atual)+'"></div>';
 }
 document.addEventListener("input",function(e){
@@ -3793,7 +3818,7 @@ function desenharFolha(){
     '<header class="capa f"><button class="volta" data-a="fFechar" aria-label="Voltar">←</button><h1 id="folhaTit" tabindex="-1">'+esc(tit)+'</h1></header>';
   /* tipo em controle segmentado no topo (antes: o botão "Tipo" no canto) */
   if(!F.pagar)h+='<div class="f-seg" role="radiogroup" aria-label="O que aconteceu?">'+TIPOS.map(function(t){var on=F.tipo===t[0];
-    return '<button type="button" class="seg seg-'+t[3]+'" role="radio" data-a="fTipo" data-t="'+t[0]+'" aria-checked="'+on+'" aria-pressed="'+on+'" data-tecla="'+(TIPOS.indexOf(t)+1)+'">'+t[1]+'</button>'}).join("")+'</div>';
+    return '<button type="button" class="seg seg-'+t[3]+'" role="radio" data-a="fTipo" data-t="'+t[0]+'" aria-checked="'+on+'" data-tecla="'+(TIPOS.indexOf(t)+1)+'">'+t[1]+'</button>'}).join("")+'</div>';
   h+='<label class="rot" for="fValor">Quanto?</label><input id="fValor" class="dinheiro '+cl+'" inputmode="decimal" enterkeyhint="done" autocomplete="off" placeholder="R$ 0,00" aria-describedby="fValorErro"><p class="f-erro" id="fValorErro" role="alert" hidden></p>';
   h+='<div id="fArred"></div>';
 
@@ -4630,7 +4655,7 @@ function modalBem(id,daFolha){
     (b?'<p class="sub">Vale hoje <b>'+esc(brl(saldoConta(b)))+'</b></p>':'')+
     '<div class="campo"><label for="bNome">Nome</label><input id="bNome" maxlength="30" placeholder="Ex.: Carro, Casa, Celular" value="'+esc(b?b.nome:"")+'"></div>'+
     (!b&&!daFolha?'<div class="campo"><label for="bValor">Quanto vale hoje?</label><p class="faint" style="margin-bottom:.4rem">Já está quitado? Então é só isso. Se ainda falta pagar, ligue a opção abaixo.</p><input id="bValor" inputmode="decimal" placeholder="R$ 0,00"></div>'+
-      '<div class="linha-sw" style="margin-top:.9rem"><div><b>Ainda estou pagando</b><p class="faint">Financiamento, consórcio ou parcelas que faltam.</p></div><button class="sw" id="bDevo" data-a="bDevo" role="switch" aria-checked="false" aria-pressed="false" aria-label="Ainda estou pagando"></button></div>'+
+      '<div class="linha-sw" style="margin-top:.9rem"><div><b>Ainda estou pagando</b><p class="faint">Financiamento, consórcio ou parcelas que faltam.</p></div><button class="sw" id="bDevo" data-a="bDevo" role="switch" aria-checked="false" aria-label="Ainda estou pagando"></button></div>'+
       '<div id="bDevoWrap" hidden><div class="campo"><label for="bFalta">Quanto ainda falta pagar?</label><p class="faint" style="margin-bottom:.4rem">Só o que você ainda deve hoje, sem os juros que ainda vão vir. Os juros você separa quando for pagando cada parcela.</p><input id="bFalta" inputmode="decimal" placeholder="R$ 0,00"></div>'+
       '<div class="campo"><label for="bParc">Em quantas parcelas?</label><input id="bParc" type="number" min="1" max="360" inputmode="numeric" value="12"></div>'+
       '<div class="campo"><label for="bProx">A próxima parcela vence em</label><input id="bProx" type="date" value="'+addMes(hojeISO(),1)+'"></div></div>':'')+
@@ -4720,7 +4745,7 @@ function modalPessoaNova(dir){
     '<div id="pGavWrap"><span class="rot">'+(emp?"De qual conta saiu o dinheiro?":"Em qual conta o dinheiro entrou?")+'</span><div class="chips" id="pGavs">'+
       ativos.map(function(c){return '<button class="chip" data-a="pGav" data-id="'+c.id+'" aria-pressed="'+(PS.gav===c.id)+'">'+esc(c.nome)+'</button>'}).join("")+'</div></div>'+
     '<div class="linha-sw" style="margin-top:.9rem"><div><b>Foi antes de eu usar o app</b><p class="faint">Só anota a dívida, sem mexer no saldo das contas.</p></div>'+
-      '<button class="sw" id="pAntes" data-a="pAntes" role="switch" aria-checked="false" aria-pressed="false" aria-label="Foi antes de eu usar o app"></button></div>'+
+      '<button class="sw" id="pAntes" data-a="pAntes" role="switch" aria-checked="false" aria-label="Foi antes de eu usar o app"></button></div>'+
     '<button class="btn" data-a="pSalvar">Salvar</button><button class="btn sec" data-a="mFechar">Cancelar</button>');
   ligarDinheiro($("#pValor"),0);
 }
@@ -5382,7 +5407,7 @@ var ACOES={
   instalar:function(){var p=PEDIDO_INSTALAR; if(!p)return; PEDIDO_INSTALAR=null; p.prompt(); p.userChoice.then(function(r){if(r&&r.outcome==="accepted"){lsSet(KEY+":dicaInstalar","1")} desenhar()}).catch(function(){})},
   escolha:function(d,b){
     var h=document.getElementById(d.campo); if(!h)return; h.value=d.v;
-    var g=b.closest(".esc-chips"); if(g)g.querySelectorAll(".chip").forEach(function(c){var on=c===b; c.setAttribute("aria-checked",String(on)); c.setAttribute("aria-pressed",String(on))});
+    var g=b.closest(".esc-chips"); if(g)g.querySelectorAll(".chip").forEach(function(c){var on=c===b; c.setAttribute("aria-checked",String(on));});
   },
   dinAba:function(d){if(d.v==="investir"){ir("investir");return} DIN_ABA=d.v; if(VIEW!=="contas")ir("contas"); else desenhar()},
   gaveta:function(d){
@@ -5398,7 +5423,7 @@ var ACOES={
   /* pessoas */
   pessoaNova:function(d){modalPessoaNova(d.d)},
   pessoa:function(d){modalPessoa(d.id)},
-  pAntes:function(){PS.antes=!PS.antes; var b=$("#pAntes"); b.setAttribute("aria-pressed",String(PS.antes)); b.setAttribute("aria-checked",String(PS.antes)); $("#pGavWrap").hidden=PS.antes},
+  pAntes:function(){PS.antes=!PS.antes; var b=$("#pAntes"); b.setAttribute("aria-checked",String(PS.antes)); $("#pGavWrap").hidden=PS.antes},
   pGav:function(d){PS.gav=d.id; document.querySelectorAll("#pGavs .chip").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.id===d.id))})},
   pSalvar:salvarPessoaNova,
   pEditar:function(){
@@ -5488,7 +5513,7 @@ var ACOES={
   comprarBem:function(){novaFolha({tipo:"bem"})},
   fBemNovo:function(){modalBem(null,true)},
   bVar:function(d){BM.sinal=+d.s; var t=$("#bTaxa"); if(t&&BM.sinal&&(!BM.tocou||!(parseFloat(t.value)>0)))t.value=BM.sinal<0?15:5; rotuloBem()},
-  bDevo:function(){BM.devo=!BM.devo; var b=$("#bDevo"); b.setAttribute("aria-pressed",String(BM.devo)); b.setAttribute("aria-checked",String(BM.devo)); $("#bDevoWrap").hidden=!BM.devo},
+  bDevo:function(){BM.devo=!BM.devo; var b=$("#bDevo"); b.setAttribute("aria-checked",String(BM.devo)); $("#bDevoWrap").hidden=!BM.devo},
   bSalvar:salvarBem,
   bAjuste:function(){var id=BM.id; modalAjusteBem(id)},
   ajSalvar:salvarAjusteBem,

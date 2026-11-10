@@ -5,6 +5,14 @@
 Formato: versão semântica (`MAIOR.MENOR.CORREÇÃO`). Cada versão diz **o que mudou para a pessoa que usa**.
 Antes da 1.0.0 as versões eram numeradas só pelo nome do cache do app (v1 a v16); estão aqui como marcos de desenvolvimento.
 
+## [1.32.0-beta.1]: 10 de novembro de 2026 · redesign, fase I: validação final (redesign concluído)
+A última fase do redesign "Tinta & Latão" (D67): tudo foi conferido de novo, no celular e no computador, e duas coisas foram corrigidas.
+- **Nada mais cortado com "…"**: nomes e detalhes das anotações, da agenda e das ferramentas do Planejar agora quebram a linha e aparecem inteiros (os valores em R$ continuam sem quebrar no meio).
+- **Leitor de tela**: as abas de Dinheiro, os tipos da anotação, as escolhas das janelas e os interruptores agora dizem corretamente qual está marcado (a ferramenta axe-core apontava 12 lugares).
+- **Conferido**: as contas são as mesmas de antes do redesign (golden master); 560 telas em 10 larguras, tema claro e escuro, letra Normal e Enorme, sem nada cortado, encoberto ou passando da tela; nenhuma falha séria de acessibilidade em 44 telas; sem internet o app abre, com as letras e as telas, e a versão nova substitui a antiga. Relatório completo em `docs/redesign/RELATORIO_TESTES.md`.
+- **Ainda não conferido**: com leitor de tela de verdade e em aparelhos de verdade.
+- Testes: 1174 verificações em 43 arquivos (novo: fase I). No Chrome, `tools/conferir-final.js` (visual, acessibilidade e sem internet).
+
 ## [1.31.0-beta.1]: 10 de novembro de 2026 · redesign, fase H: mouse e teclado no computador
 No computador, o Balancete agora atende quem usa **teclado e mouse** (D67, D5). No celular nada muda.
 - **Atalhos de teclado**: **N** abre uma anotação nova (Gastei, com o cursor no valor); **1 a 4** trocam o tipo; **Enter** salva; **Shift + Enter** salva e deixa o painel pronto para a próxima (mesmo tipo, conta e data); **Esc** fecha (e pergunta antes, se você já digitou algo); **/** procura nas anotações; **G** e depois **I, D, P ou S** vão para Início, Dinheiro, Planejar ou Saúde; **?** abre o Perguntar. Dá para anotar 5 gastos seguidos sem tocar no mouse. Quando você está escrevendo num campo, as letras são só letras (valem só Enter e Esc). A lista completa está em **Ajustes > Ajuda > Atalhos do teclado**.

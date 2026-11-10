@@ -1,6 +1,6 @@
 # Mapa do app
 
-O app **de hoje** (versão 1.31.0, com o redesign "Tinta & Latão" até a fase H, D67; antes, a simplificação da 1.23.0: ver `AUDITORIA-INTERFACE.md`): onde mora cada assunto, o que tem em cada tela e o mapa de cores. Nasceu no passo 3 do plano da beta (decisões Q1 a Q7 da [auditoria de funções](AUDITORIA-FUNCOES.md), aceitas pelo dono em 6 nov 2026) e foi completado com Investir, Notícias e o chat.
+O app **de hoje** (versão 1.32.0, com o redesign "Tinta & Latão" concluído, D67; antes, a simplificação da 1.23.0: ver `AUDITORIA-INTERFACE.md`): onde mora cada assunto, o que tem em cada tela e o mapa de cores. Nasceu no passo 3 do plano da beta (decisões Q1 a Q7 da [auditoria de funções](AUDITORIA-FUNCOES.md), aceitas pelo dono em 6 nov 2026) e foi completado com Investir, Notícias e o chat.
 
 **Regras do mapa**
 1. **Cada assunto mora em um único lugar.** Nos outros lugares só existe um **atalho** (uma linha que leva até a casa dele).
@@ -202,5 +202,5 @@ Abre uma janela preta e dourada com **63 perguntas prontas** em 5 grupos (Meu di
 - Os 3 modelos de interface testados depois (Balança, Razão e Cofre) viraram um só: a Balança (D39), que hoje é o Mordomo (D54).
 - Notificações: continuam fora (o app não tem servidor).
 
-## Redesign em andamento (D67, desde a 1.25.0)
-O que já mudou na tela (fases A e B): a **ajuda dos termos é um ⓘ** no fim da linha do título (antes "?"); a **abertura** aparece só no primeiro uso e ao atualizar; **um aviso por vez** no rodapé, e o balão do Perguntar fala uma vez só; **meta estourada** = pote cheio e vermelho com "R$ X acima" (o pote enche conforme o gasto); **bordas de campo** mais escuras; a **dica de instalar** muda conforme o aparelho (em Ajustes > Ajuda fica o passo a passo). Na fase C (1.26.0): **cores e letras novas** (veja "Regra geral de cores" acima; letras Fraunces e Atkinson). O resto deste mapa continua valendo até a fase D (barra de baixo e lugares novos); cada mudança será anotada aqui.
+## Redesign "Tinta & Latão" (D67): concluído na 1.32.0
+O mapa acima já descreve o app redesenhado (celular e computador). A situação item a item está em `docs/redesign/IMPLEMENTACAO_STATUS.md` e os testes finais em `docs/redesign/RELATORIO_TESTES.md`. *Registro histórico* do que mudou nas primeiras fases (A e B): a **ajuda dos termos é um ⓘ** no fim da linha do título (antes "?"); a **abertura** aparece só no primeiro uso e ao atualizar; **um aviso por vez** no rodapé, e o balão do Perguntar fala uma vez só; **meta estourada** = pote cheio e vermelho com "R$ X acima" (o pote enche conforme o gasto); **bordas de campo** mais escuras; a **dica de instalar** muda conforme o aparelho (em Ajustes > Ajuda fica o passo a passo). Na fase C (1.26.0): **cores e letras novas** (veja "Regra geral de cores" acima; letras Fraunces e Atkinson). O resto deste mapa continua valendo até a fase D (barra de baixo e lugares novos); cada mudança será anotada aqui.
